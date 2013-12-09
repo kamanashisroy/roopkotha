@@ -120,7 +120,7 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 		// clear
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.bg%);
 		g.setColor(0xFFFFFF);
-		g.fill_rect(this.leftMargin, this.panelTop, this.width, this.menuY - this.panelTop);
+		g.fillRect(this.leftMargin, this.panelTop, this.width, this.menuY - this.panelTop);
 
 		g.setFont(this.item_font);
 
@@ -151,7 +151,7 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 					g.setColor(0x006699);
 					int x = this.width - 3 * roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.RESOLUTION - this.rightMargin;
 					int y = this.menuY - this.bottomMargin - this.PADDING - 2 * roopkotha.ListView.display.RESOLUTION;
-					g.fill_triangle(x + roopkotha.ListView.display.RESOLUTION / 2, y + roopkotha.ListView.display.RESOLUTION, x + roopkotha.ListView.display.RESOLUTION,
+					g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y + roopkotha.ListView.display.RESOLUTION, x + roopkotha.ListView.display.RESOLUTION,
 							y, x, y);
 					dlg.printf("No more place to draw\n");
 					Watchdog.logMsgDoNotUse(&dlg);
@@ -168,7 +168,9 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 	}
 
 	private void native_paint(roopkotha.Graphics g) {
-		Watchdog.logMsgDoNotUse("Drawing list...\n");
+		etxt dlg = etxt.stack(64);
+		dlg.printf("Drawing list...\n");
+		Watchdog.logMsgDoNotUse(&dlg);
 		/* Draw the ListView Items */
 		this.show_items(g);
 		if (this.vpos > 0) {
@@ -178,7 +180,7 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 			g.setColor(0x006699);
 			int x = this.width - 3 * roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.RESOLUTION - this.rightMargin;
 			int y = this.panelTop + this.topMargin + this.PADDING + roopkotha.ListView.display.RESOLUTION;
-			g.fill_triangle(x + roopkotha.ListView.display.RESOLUTION / 2, y, x + roopkotha.ListView.display.RESOLUTION, y + roopkotha.ListView.display.RESOLUTION,
+			g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y, x + roopkotha.ListView.display.RESOLUTION, y + roopkotha.ListView.display.RESOLUTION,
 					x, y + roopkotha.ListView.display.RESOLUTION);
 		}
 
@@ -191,7 +193,7 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 			g.setColor(0xFFFFFF);
 			g.setFont(roopkotha.Menu.get_base_font());
 			// #endif
-			g.draw_string(hint
+			g.drawString(hint
 					, 0
 					, 0
 					, this.width

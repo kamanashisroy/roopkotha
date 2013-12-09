@@ -1,2 +1,3 @@
 
+NOPLATFORM=1
 NOAROOP=yes

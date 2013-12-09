@@ -21,17 +21,17 @@
 using aroop;
 using shotodol;
 using roopkotha;
-//#define roopkotha.ActionInput.log(...) SYNC_LOG(SYNC_VERB, __FILE__ ":" __VA_ARGS__)
-//#define roopkotha.ActionInput.log(...)
 
-public class roopkotha.ActionInput {
+public class roopkotha.ActionInput : Replicable {
 
-	enum event {
+	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_")]
+	public enum event {
 		KEYBOARD_EVENT = 1,
 		SCREEN_EVENT = (1<<4), // touch / mouse event
 	}
 
-	enum key_event {
+	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_KEY_")]
+	public enum key_event {
 		KEY_UP = 1,
 		KEY_DOWN = 2,
 		KEY_LEFT = 3,
@@ -53,7 +53,7 @@ public class roopkotha.ActionInput {
 	public static int log(char*data, ...) {
 		return 0;
 	}
-#if 0
+#if false
 	public static int platform_init(int (*handle_event)(int flags, int key_code, int x, int y)) { /*< \private This will be implemented in the platform module */
 		return 0;
 	}

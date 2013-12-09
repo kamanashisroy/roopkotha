@@ -21,10 +21,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-extern int xultb_window_platform_create(roopkotha.Window win);
-extern int xultb_window_platform_destroy(roopkotha.Window win);
-
-public class roopkotha.Window : Replicable {
+public abstract class roopkotha.Window : Replicable {
 	txt title;
 	public int width;
 	public int halfWidth;
@@ -33,7 +30,7 @@ public class roopkotha.Window : Replicable {
 	public int panelTop;
 	public int PADDING;
 	internal ActionListener? lis;
-  public virtual void init(int w, int h) {
+	public virtual void init(int w, int h) {
 		/** The width of the list */
 		this.width = w;
 		this.halfWidth = w>>1;
@@ -44,27 +41,25 @@ public class roopkotha.Window : Replicable {
 		this.menuY = h - 0;//xultb_menu_get_base_height();
 		//this.panelTop = this.vtable->TITLE_FONT->get_height(this->vtable->TITLE_FONT)+ this->vtable->PADDING*2;
 	}
-  public virtual void show() {
-		//XULTB_CORE_UNIMPLEMENTED();
-	}
-  public void show_full(ArrayList<Replicable>*left_option, aroop.txt right_option) {
+	public abstract void show();
+	public void show_full(ArrayList<Replicable>*left_option, aroop.txt right_option) {
 		//xultb_menu_set(left_option, right_option);
 		this.show();
 	}
-  public bool is_showing() {
+	public bool is_showing() {
 		//XULTB_CORE_UNIMPLEMENTED();
 		return true;
 	}
-  public virtual void set_title(aroop.txt title) {
+	public virtual void set_title(aroop.txt title) {
 		this.title = title;
 	}
 
-  public virtual void paint(roopkotha.Graphics g) {
+	public virtual void paint(roopkotha.Graphics g) {
 		paint_title_impl(g);
 		//xultb_menu_paint(g, this->width, this->height);
 		return;
 	}
-  public virtual bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
+	public virtual bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
 		//if(xultb_menu_handle_event(this, target, flags, key_code, x, y)) {
 		//	xultb_guicore_set_dirty(this);
 		//	return 1;
@@ -75,18 +70,18 @@ public class roopkotha.Window : Replicable {
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);
-		g.fill_rect(0, 0, this.width, this.panelTop);
+		g.fillRect(0, 0, this.width, this.panelTop);
 		// #ifdef net.ayaslive.miniim.ui.core.window.titleShadow
 		// draw shadow
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleShadow%);
 		g.setColor(0x009900);
-		g.draw_line(0, this.panelTop, this.width, this.panelTop);
+		g.drawLine(0, this.panelTop, this.width, this.panelTop);
 		// #endif
 		/* Write the title */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleFg%);
 		g.setColor(0xFFFFFF);
 		//g.setFont(this.vtable->TITLE_FONT);
-		g.draw_string(this.title, 0, 2
+		g.drawString(this.title, 0, 2
 				, this.width
 				, this.height
 				//, 1);
@@ -95,10 +90,6 @@ public class roopkotha.Window : Replicable {
 	public Window() {
 		this.init(200, 400);
 		lis = null;
-		xultb_window_platform_create(this);
-	}
-	~Window() {
-		xultb_window_platform_destroy(this);
 	}
 }
 

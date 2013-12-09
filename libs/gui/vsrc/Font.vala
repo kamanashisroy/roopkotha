@@ -22,7 +22,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.Font {
+public abstract class roopkotha.Font : Replicable {
 	enum style {
 		STYLE_UNDERLINED = 1,
 		STYLE_BOLD = (1 << 1),
@@ -41,25 +41,19 @@ public class roopkotha.Font {
 		FACE_SYSTEM = 2,
 	}
 
-	public int get_height() {
-		return 0;
-	}
+	public abstract int getHeight();
 
-	public int substring_width(aroop.txt str, int offset, int width) {
-		return 0;
-	}
+	public abstract int subStringWidth(aroop.txt str, int offset, int width);
 
 	public static roopkotha.Font? create() {
 		// TODO call platform font create function
 		return null;
 	}
 #if false
-	struct xultb_font*xultb_font_platform_create();
 	struct xultb_font*xultb_font_get(int face, int style, int size);
 	int xultb_font_get_face(struct xultb_font*font);
 	int xultb_font_get_style(struct xultb_font*font);
 	int xultb_font_get_size(struct xultb_font*font);
-	int xultb_font_system_init();
 #endif
 }
 

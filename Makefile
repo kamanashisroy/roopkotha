@@ -11,12 +11,14 @@ cleanankhi:
 	$(CLEAN) -C editor/pad
 
 makecore:
-	$(BUILD) -C platform/linux_gui
 	$(BUILD) -C libs/gui
+	$(BUILD) -C platform/linux_gui
+	$(BUILD) -C libs/guiimpl
 
 cleancore:
-	$(CLEAN) -C platform/linux_gui
 	$(CLEAN) -C libs/gui
+	$(CLEAN) -C platform/linux_gui
+	$(CLEAN) -C libs/guiimpl
 
 clean:cleancore cleanankhi
 

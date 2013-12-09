@@ -50,13 +50,13 @@ public class roopkotha.Menu : Replicable {
 		/* draw the background of the menu */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgBase%);
 		g.setColor(0x006699);
-		g.fill_rect(0, height - BASE_HEIGHT, width, BASE_HEIGHT);
+		g.fillRect(0, height - BASE_HEIGHT, width, BASE_HEIGHT);
 
 		// #ifdef net.ayaslive.miniim.ui.core.menu.baseShadow
 		// draw shadow
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.baseShadow%);
 		g.setColor(0x006699);
-		g.draw_line(0, height - BASE_HEIGHT, width, height - BASE_HEIGHT);
+		g.drawLine(0, height - BASE_HEIGHT, width, height - BASE_HEIGHT);
 		// #endif
 
 		/* draw left and right menu options */
@@ -65,14 +65,14 @@ public class roopkotha.Menu : Replicable {
 		g.setColor(0xFFFFFF);
 
 		if(left != null && left.length() != 0) {
-			roopkotha.ActionInput.register_action(left, 0, height - BASE_HEIGHT, BASE_FONT.substring_width(left, 0, left.length()), height);
-			g.draw_string(left, roopkotha.Menu.display.PADDING, 0, width, height - roopkotha.Menu.display.PADDING, roopkotha.Graphics.anchor.LEFT
+			roopkotha.ActionInput.register_action(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(left, 0, left.length()), height);
+			g.drawString(left, roopkotha.Menu.display.PADDING, 0, width, height - roopkotha.Menu.display.PADDING, roopkotha.Graphics.anchor.LEFT
 					| roopkotha.Graphics.anchor.BOTTOM);
 	//		SYNC_LOG(SYNC_VERB, "left option:%s\n", left.str);
 		}
 		if(right != null && right.length() != 0) {
-			roopkotha.ActionInput.register_action(right, width - BASE_FONT.substring_width(right, 0, right.length()), height - BASE_HEIGHT, width, height);
-			g.draw_string(right, roopkotha.Menu.display.PADDING, 0, width - roopkotha.Menu.display.PADDING, height - roopkotha.Menu.display.PADDING,
+			roopkotha.ActionInput.register_action(right, width - BASE_FONT.subStringWidth(right, 0, right.length()), height - BASE_HEIGHT, width, height);
+			g.drawString(right, roopkotha.Menu.display.PADDING, 0, width - roopkotha.Menu.display.PADDING, height - roopkotha.Menu.display.PADDING,
 					roopkotha.Graphics.anchor.RIGHT | roopkotha.Graphics.anchor.BOTTOM);
 		}
 	}
@@ -83,7 +83,7 @@ public class roopkotha.Menu : Replicable {
 		/* we'll simply check each option and find the maximal width */
 		for (i = 0; (menuOptions != null)  && i < menuOptions.count_unsafe(); i++) {
 			txt cmd = menuOptions.get(i);			
-			currentWidth = TOWER_FONT.substring_width(cmd, 0, cmd.length());
+			currentWidth = TOWER_FONT.subStringWidth(cmd, 0, cmd.length());
 			if (currentWidth > menuMaxWidth) {
 				menuMaxWidth = currentWidth; /* update */
 			}
@@ -115,11 +115,11 @@ public class roopkotha.Menu : Replicable {
 		/* draw active menu's background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bg%);
 		g.setColor(0xFFFFFF);
-		g.fill_rect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
+		g.fillRect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
 		/* draw border of the menu */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.borderTower%); // gray
 		g.setColor(0xCCCCCC); // gray
-		g.draw_rect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
+		g.drawRect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
 
 		/* draw menu options (from up to bottom) */
 		g.setFont(TOWER_FONT);
@@ -135,10 +135,10 @@ public class roopkotha.Menu : Replicable {
 				/* draw a background */
 				// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgHover%);
 				g.setColor(0x0099CC);
-				g.fill_rect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
+				g.fillRect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
 				// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.borderHover%);
 				g.setColor(0x006699);
-				g.draw_rect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
+				g.drawRect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
 				/**
 				 * The simplest way to separate selected menu option is by
 				 * drawing it with different color. However, it also may be
@@ -150,10 +150,10 @@ public class roopkotha.Menu : Replicable {
 			}
 
 			roopkotha.ActionInput.register_action(cmd, 0, menuOptionY
-					, TOWER_FONT.substring_width(cmd, 0, cmd.length())
+					, TOWER_FONT.subStringWidth(cmd, 0, cmd.length())
 					, menuOptionY + roopkotha.Menu.display.PADDING*2 + TOWER_FONT_HEIGHT);
 			menuOptionY += roopkotha.Menu.display.PADDING;
-			g.draw_string(cmd, roopkotha.Menu.display.PADDING, menuOptionY, 1000, 1000,
+			g.drawString(cmd, roopkotha.Menu.display.PADDING, menuOptionY, 1000, 1000,
 					roopkotha.Graphics.anchor.LEFT | Graphics.anchor.TOP);
 
 			menuOptionY += roopkotha.Menu.display.PADDING + TOWER_FONT_HEIGHT;
@@ -331,8 +331,8 @@ public class roopkotha.Menu : Replicable {
 		menuOptions = null;
 		TOWER_FONT = roopkotha.Font.create(); // Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
 		BASE_FONT = roopkotha.Font.create(); // Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);
-		TOWER_FONT_HEIGHT = TOWER_FONT.get_height();
-		BASE_FONT_HEIGHT = BASE_FONT.get_height();
+		TOWER_FONT_HEIGHT = TOWER_FONT.getHeight();
+		BASE_FONT_HEIGHT = BASE_FONT.getHeight();
 		TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
 		BASE_HEIGHT = BASE_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
 	//	SELECT = aroop.txt.alloc("Select", 6, null, 0);

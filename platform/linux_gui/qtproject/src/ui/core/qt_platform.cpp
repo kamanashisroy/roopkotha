@@ -17,5 +17,29 @@
  * along with MiniIM.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+/*
+ * qt_window.cpp
+ *
+ *  Created on: Jan 14, 2011
+ *      Author: ayaskanti
+ */
+#include "core/config.h"
+#include "core/decorator.h"
+#include <QtGui>
 
+#include "qt_guicore.h"
 
+C_CAPSULE_START
+
+static QApplication*app;
+int qt_impl_guicore_init(void*UNUSED_VAR(nothing), int*argc, char *argv[]) {
+    app = new QApplication(*argc, argv);
+    return 0;
+}
+
+int qt_impl_guicore_step(void*UNUSED_VAR(nothing)) {
+    app->processEvents(0,100);
+	return 0;
+}
+
+C_CAPSULE_END

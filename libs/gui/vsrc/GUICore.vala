@@ -22,7 +22,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.GUICore {
+public abstract class roopkotha.GUICore : Spindle {
 #if FIXME_LATER
 static struct opp_queue painter_queue;
 static struct xultb_graphics*gr = NULL;
@@ -56,11 +56,9 @@ int xultb_guicore_system_init(int*argc, char *argv[]) {
 		return 0;
 	}
 
-	public static int log(char*data, ...) {
-		return 0;
-	}
-
 	public static int unimplemented() {
+		print("Something is unimplemented");
+		core.assert(false);
 		return 0;
 	}
 #if FIXME_LATER
@@ -82,24 +80,30 @@ static int xultb_perform_tasks(void*data, void*func_data) {
 }
 
 int xultb_guicore_walk(int ms) {
-	opp_factory_do_full(&tasks, xultb_perform_tasks, &ms, OPPN_ALL, 0, 0);
-	xultb_guicore_platform_walk(ms);
-	// see if we need to refresh anything ..
-	while(1) {
-		struct xultb_window*win = (struct xultb_window*)opp_dequeue(&painter_queue);
-		if(!win) {
-			break;
-		}
-		// TODO repaint a window only once ..
-		GUI_LOG("Painting window\n");
-		xultb_gui_input_reset(win);
-		gr->start(gr);
-		win->vtable->paint(win, gr);
-		OPPUNREF(win);
-	}
-	xultb_guicore_platform_walk(ms);
 	return 0;
 }
 #endif
 
+	public override int step() {
+#if false
+		opp_factory_do_full(&tasks, xultb_perform_tasks, &ms, OPPN_ALL, 0, 0);
+		// see if we need to refresh anything ..
+		while(1) {
+			struct xultb_window*win = (struct xultb_window*)opp_dequeue(&painter_queue);
+			if(!win) {
+				break;
+			}
+			// TODO repaint a window only once ..
+			GUI_LOG("Painting window\n");
+			xultb_gui_input_reset(win);
+			gr->start(gr);
+			win->vtable->paint(win, gr);
+			OPPUNREF(win);
+		}
+#endif
+		return 0;
+    }
+    public override int cancel() {
+		return 0;
+    }
 }

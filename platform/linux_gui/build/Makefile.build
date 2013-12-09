@@ -1,0 +1,30 @@
+
+include ../../../.config.mk
+CURRENTPATH=$(ROOPKOTHA_HOME)/platform/linux_gui/build
+#include platform.mk
+
+ifeq ("$(PLATFORM)","win")
+MAKESTATIC=make
+else
+MAKESTATIC=make;make staticlib
+endif
+
+ifeq ("$(QMAKE)","")
+QMAKE=qmake
+endif
+
+INCLUDEPATH+=$(VALA_HOME)/aroop/core/inc
+INCLUDEPATH+=$(ROOPKOTHA_HOME)/libs/gui/include
+INCLUDEPATH+=$(ONUBODH_HOME)/libs/rawimg/include
+INCLUDEPATH+=$(SHOTODOL_HOME)/libs/iostream/include
+INCLUDEPATH+=$(SHOTODOL_HOME)/libs/propeller/include
+
+all:
+	echo "INCLUDEPATH+=$(INCLUDEPATH)\n" > ../qtproject/.config.pro
+	$(QMAKE) ../qtproject/qtproject.pro
+	make clean
+	$(MAKESTATIC)
+
+
+
+

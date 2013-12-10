@@ -7,19 +7,18 @@
 #include "core/config.h"
 #include "core/decorator.h"
 #include "core/txt.h"
-#include "qt_graphics.h"
 //#include <QtCore>
 #include <QPainter>
 #include <QColor>
 #include <QGraphicsView>
 #include <QPixmap>
 #include <QVariant>
+#include "qt_graphics.h"
 
-#include "shotodol_gui.h"
 
 C_CAPSULE_START
 
-void qt_impl_draw_image(QTRoopkothaGraphics*UNUSED_VAR(g), struct xultb_img*UNUSED_VAR(img), int UNUSED_VAR(x), int UNUSED_VAR(y), int UNUSED_VAR(anchor)) {
+void qt_impl_draw_image(QTRoopkothaGraphics*UNUSED_VAR(g), aroop_cl_onubodh_onubodh_raw_image*UNUSED_VAR(img), int UNUSED_VAR(x), int UNUSED_VAR(y), int UNUSED_VAR(anchor)) {
 //			qtg->painter->drawImage(x, y, img->data);
 }
 
@@ -98,12 +97,13 @@ void qt_impl_start(QTRoopkothaGraphics*qtg) {
     }
 }
 
-void qt_impl_graphics_create(QTRoopkothaGraphics*qtg) {
-	new (qtg) QTRoopkothaGraphics();
+QTRoopkothaGraphics*qt_impl_graphics_create() {
+	return new QTRoopkothaGraphics();
 }
 
 void qt_impl_graphics_destroy(QTRoopkothaGraphics*qtg) {
-	qtg->~QTRoopkothaGraphics();
+	//qtg->~QTRoopkothaGraphics();
+	delete qtg;
 }
 
 

@@ -2,8 +2,13 @@
 #define QT_GUICORE_H
 
 C_CAPSULE_START
-int qt_impl_guicore_init(void*nothing, int*argc, char *argv[]);
-int qt_impl_guicore_step(void*nothing);
+
+typedef void QTRoopkothaGUICore;
+int qt_impl_guicore_init(QTRoopkothaGUICore*qtgcore, int*argc, char *argv[]);
+int qt_impl_guicore_step(QTRoopkothaGUICore*qtgcore);
+QTRoopkothaGUICore*qt_impl_guicore_create();
+void qt_impl_guicore_destroy(QTRoopkothaGUICore*qtgcore);
+
 C_CAPSULE_END
 
 #endif // QT_GUICORE_H

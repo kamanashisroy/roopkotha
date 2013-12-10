@@ -1,12 +1,10 @@
 using aroop;
 
 namespace roopkotha {
-	[CCode (cname="class QTRoopkothaGraphics", cheader_filename = "shotodol_linux_gui.h")]
-	public struct GraphicsPlatformImpl {
+	[CCode (cname="QTRoopkothaGraphics",has_copy_function=true, free_function="qt_impl_graphics_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	public class GraphicsPlatformImpl {
 		[CCode (cname="qt_impl_graphics_create")]
-		public GraphicsPlatformImpl();
-		[CCode (cname="qt_impl_graphics_destroy")]
-		public void destroy();
+		public static GraphicsPlatformImpl create();
 		[CCode (cname="qt_impl_draw_image")]
 		public void drawImage(onubodh.RawImage img, int x, int y, int anc);
 		[CCode (cname="qt_impl_draw_line")]
@@ -32,36 +30,30 @@ namespace roopkotha {
 		[CCode (cname="qt_impl_start")]
 		public void start();
 	}
-	[CCode (cname="class QTRoopkothaFont", cheader_filename = "shotodol_linux_gui.h")]
-	public struct FontPlatformImpl {
+	[CCode (cname="QTRoopkothaFont",has_copy_function=true, free_function="qt_impl_font_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	public class FontPlatformImpl {
 		[CCode (cname="qt_impl_font_create")]
-		public FontPlatformImpl();
-		[CCode (cname="qt_impl_font_destroy")]
-		public void destroy();
+		public static FontPlatformImpl create();
 		[CCode (cname="qt_impl_font_get_height")]
 		public int getHeight();
 		[CCode (cname="qt_impl_font_get_substring_width")]
 		public int subStringWidth(aroop.txt str, int offset, int width);
 	}
 	
-	[CCode (cname="class QTRoopkothaWindow", cheader_filename = "shotodol_linux_gui.h")]
-	public struct WindowPlatformImpl {
+	[CCode (cname="QTRoopkothaWindow",has_copy_function=true, free_function="qt_impl_window_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	public class WindowPlatformImpl {
 		[CCode (cname="qt_impl_window_create")]
-		public WindowPlatformImpl();
-		[CCode (cname="qt_impl_window_destroy")]
-		public void destroy();
+		public static WindowPlatformImpl create();
 		[CCode (cname="qt_impl_window_show")]
 		public void show();
 		[CCode (cname="qt_impl_window_paint_end")]
 		public void paint_end(GraphicsPlatformImpl g);
 	}
 	
-	[CCode (cname="void", cheader_filename = "shotodol_linux_gui.h")]
-	public struct GUICorePlatformImpl {
-		[CCode (cname="aroop_do_nothing")]
-		public GUICorePlatformImpl();
-		[CCode (cname="aroop_do_nothing")]
-		public void destroy();
+	[CCode (cname="QTRoopkothaGUICore",has_copy_function=true, free_function="qt_impl_guicore_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	public class GUICorePlatformImpl {
+		[CCode (cname="qt_impl_guicore_create")]
+		public static GUICorePlatformImpl create();
 		[CCode (cname="qt_impl_guicore_step")]
 		public int step();
 		[CCode (cname="qt_impl_guicore_init")]

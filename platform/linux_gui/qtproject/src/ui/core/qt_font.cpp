@@ -6,7 +6,6 @@
 #include <QFont>
 #include <QFontMetrics>
 #include "qt_font.h"
-//#include "ui/core/xultb_font.h"
 
 C_CAPSULE_START
 
@@ -20,12 +19,13 @@ int qt_impl_font_get_substring_width(QTRoopkothaFont*qtfont, struct aroop_txt*st
     return qtfont->metrics.width(text, width);
 }
 
-void qt_impl_font_create(QTRoopkothaFont*qtfont) {
-	new (qtfont) QTRoopkothaFont();
+QTRoopkothaFont*qt_impl_font_create() {
+	return new QTRoopkothaFont();
 }
 
 void qt_impl_font_destroy(QTRoopkothaFont*qtfont) {
-	qtfont->~QTRoopkothaFont();
+	//qtfont->~QTRoopkothaFont();
+	delete qtfont;
 }
 
 #if false

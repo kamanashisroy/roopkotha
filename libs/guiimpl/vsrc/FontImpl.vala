@@ -5,7 +5,7 @@ using roopkotha;
 public class roopkotha.FontImpl : roopkotha.Font {
 	internal FontPlatformImpl plat;
 	public FontImpl() {
-		plat = FontPlatformImpl();
+		plat = FontPlatformImpl.create();
 	}
 	
 	public override int getHeight() {
@@ -17,6 +17,5 @@ public class roopkotha.FontImpl : roopkotha.Font {
 	}
 	
 	~FontImpl() {
-		plat.destroy();
 	}
 }

@@ -6,11 +6,10 @@ public class roopkotha.GUICoreImpl : roopkotha.GUICore {
 	GUICorePlatformImpl plat;
 	public GUICoreImpl() {
 		base();
-		plat = GUICorePlatformImpl();
+		plat = GUICorePlatformImpl.create();
 	}
 	
 	~GUICoreImpl() {
-		plat.destroy();
 	}
 	
 	public override int step() {
@@ -30,8 +29,8 @@ public class roopkotha.GUICoreImpl : roopkotha.GUICore {
 	public override int start(Propeller?plr) {
 		// TODO fill me
 		int argc=1; 
-		string argv[] = {"fine"};
-		plat.cmain(&argc, argv);
+		//unowned string argv[2] = {"fine"};
+		//plat.cmain(&argc, argv);
 		return 0;
 	}
 }

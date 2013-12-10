@@ -5,10 +5,9 @@ using roopkotha;
 public class roopkotha.GraphicsImpl : roopkotha.Graphics {
 	internal GraphicsPlatformImpl plat;
 	public GraphicsImpl() {
-		plat = GraphicsPlatformImpl();
+		plat = GraphicsPlatformImpl.create();
 	}
 	~GraphicsImpl() {
-		plat.destroy();
 	}
 	public override void drawImage(onubodh.RawImage img, int x, int y, int anc) {
 		plat.drawImage(img, x, y, anc);
@@ -41,7 +40,8 @@ public class roopkotha.GraphicsImpl : roopkotha.Graphics {
 		plat.setColor(rgb);
 	}
 	public override void setFont(roopkotha.Font font) {
-		plat.setFont((font as FontImpl).plat);
+		FontImpl fonti = (font as FontImpl);
+		plat.setFont(fonti.plat);
 	}
 	public override void start() {
 		plat.start();

@@ -5,12 +5,6 @@
 #include "core/decorator.h"
 #include "core/txt.h"
 
-#include <QPainter>
-#include <QColor>
-#include <QGraphicsView>
-#include <QPixmap>
-#include <QVariant>
-#include <QMouseEvent>
 #include "qt_graphics.h"
 #include "shotodol_gui.h"
 
@@ -18,6 +12,13 @@ C_CAPSULE_START
 int qt_process_mouse_event_helper(int flags, int key_code, int x, int y);
 C_CAPSULE_END
 
+#ifdef __cplusplus
+#include <QPainter>
+#include <QColor>
+#include <QGraphicsView>
+#include <QPixmap>
+#include <QVariant>
+#include <QMouseEvent>
 class QTRoopkothaWindow: public QWidget {
 Q_OBJECT
 public:
@@ -180,10 +181,15 @@ protected:
 public:
     QPixmap*page;
 };
+#else
+typedef void QTRoopkothaWindow;
+#endif
 
 C_CAPSULE_START
 void qt_impl_window_show(QTRoopkothaWindow*qwin);
 void qt_impl_window_paint_end(QTRoopkothaWindow*qw, QTRoopkothaGraphics*qtg);
+QTRoopkothaWindow*qt_impl_window_create();
+void qt_impl_window_destroy(QTRoopkothaWindow*qw);
 C_CAPSULE_END
 
 #endif // QT_WINDOW_H

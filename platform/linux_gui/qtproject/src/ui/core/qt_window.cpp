@@ -3,6 +3,7 @@
 #include "core/decorator.h"
 #include "core/txt.h"
 #include <QtGui>
+
 #include "qt_window.h"
 
 C_CAPSULE_START
@@ -40,12 +41,13 @@ int xultb_gui_input_platform_init(int (*handle_event)(int flags, int key_code, i
 }
 #endif
 
-void qt_impl_window_create(QTRoopkothaWindow*qw) {
-	new (qw) QTRoopkothaWindow();
+QTRoopkothaWindow*qt_impl_window_create() {
+	return new QTRoopkothaWindow();
 }
 
 void qt_impl_window_destroy(QTRoopkothaWindow*qw) {
-	qw->~QTRoopkothaWindow();
+	//qw->~QTRoopkothaWindow();
+	delete qw;
 }
 
 C_CAPSULE_END

@@ -6,11 +6,10 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	WindowPlatformImpl plat;
 	public WindowImpl() {
 		base();
-		plat = WindowPlatformImpl();
+		plat = WindowPlatformImpl.create();
 	}
 	
 	~WindowImpl() {
-		plat.destroy();
 	}
 	
 	public override void show() {
@@ -24,6 +23,7 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	
 	public override void paint(roopkotha.Graphics g) {
 		base.paint(g);
-		plat.paint_end((g as GraphicsImpl).plat);
+		GraphicsImpl gi = (g as GraphicsImpl);
+		plat.paint_end(gi.plat);
 	}
 }

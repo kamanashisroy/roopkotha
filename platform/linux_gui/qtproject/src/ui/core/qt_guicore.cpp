@@ -31,13 +31,20 @@
 
 C_CAPSULE_START
 
+QTRoopkothaGUICore*qt_impl_guicore_create() {
+	return NULL;
+}
+void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
+}
+
+
 static QApplication*app;
-int qt_impl_guicore_init(void*UNUSED_VAR(nothing), int*argc, char *argv[]) {
+int qt_impl_guicore_init(QTRoopkothaGUICore*UNUSED_VAR(nothing), int*argc, char *argv[]) {
     app = new QApplication(*argc, argv);
     return 0;
 }
 
-int qt_impl_guicore_step(void*UNUSED_VAR(nothing)) {
+int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
     app->processEvents(0,100);
 	return 0;
 }

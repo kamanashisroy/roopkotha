@@ -22,7 +22,7 @@ using shotodol;
 using roopkotha;
 
 public class roopkotha.Menu : Replicable {
-	enum display {
+	public enum display {
 		PADDING = 3
 	}
 	static bool menu_is_active = false;

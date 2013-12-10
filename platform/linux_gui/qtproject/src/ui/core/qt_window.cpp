@@ -24,16 +24,16 @@ void qt_impl_window_show(QTRoopkothaWindow*qw) {
     qw->show();
 }
 
-#if false
-static int (*qt_handle_event)(int flags, int key_code, int x, int y) = NULL;
+//static int (*qt_handle_event)(int flags, int key_code, int x, int y) = NULL;
 int qt_process_mouse_event_helper(int flags, int key_code, int x, int y) {
-	if(qt_handle_event) {
+	//if(qt_handle_event) {
 //		GUI_INPUT_LOG("event callback ..\n");
-        return qt_handle_event(flags, key_code, x, y);
-	}
+        //return qt_handle_event(flags, key_code, x, y);
+	//}
 	return 0;
 }
 
+#if false
 int xultb_gui_input_platform_init(int (*handle_event)(int flags, int key_code, int x, int y)) {
 	//GUI_INPUT_LOG("Setting event handler\n");
 	qt_handle_event = handle_event;

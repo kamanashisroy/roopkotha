@@ -4,7 +4,6 @@
 C_CAPSULE_START
 
 typedef void QTRoopkothaGUICore;
-int qt_impl_guicore_init(QTRoopkothaGUICore*qtgcore, int*argc, char *argv[]);
 int qt_impl_guicore_step(QTRoopkothaGUICore*qtgcore);
 QTRoopkothaGUICore*qt_impl_guicore_create();
 void qt_impl_guicore_destroy(QTRoopkothaGUICore*qtgcore);

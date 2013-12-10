@@ -31,17 +31,15 @@
 
 C_CAPSULE_START
 
+static QApplication*app;
 QTRoopkothaGUICore*qt_impl_guicore_create() {
-	return NULL;
+	char*argv[2] = {"disgusting","man"};
+	int argc = 1;
+	app = new QApplication(argc, argv);
+	return app;
 }
 void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
-}
-
-
-static QApplication*app;
-int qt_impl_guicore_init(QTRoopkothaGUICore*UNUSED_VAR(nothing), int*argc, char *argv[]) {
-    app = new QApplication(*argc, argv);
-    return 0;
+	delete app;
 }
 
 int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {

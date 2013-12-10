@@ -22,43 +22,62 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public abstract class roopkotha.ListView : roopkotha.Window {
+public class roopkotha.ListView : roopkotha.WindowImpl {
  
-        roopkotha.Font item_font;
-        bool continuous_scrolling;
+	roopkotha.Font item_font;
+	bool continuous_scrolling;
 
-        int vpos; /* Index of the showing Item */
-        int selected_index;
+	int vpos; /* Index of the showing Item */
+	int selected_index;
 
-        int leftMargin;
-        int topMargin;
-        int rightMargin;
-        int bottomMargin;
-        int RESOLUTION;
+	int leftMargin;
+	int topMargin;
+	int rightMargin;
+	int bottomMargin;
+	int RESOLUTION;
 
-        aroop.txt default_command;
-				//ActionListener lis;
-        aroop.ArrayList<Replicable>? _items;
+	aroop.txt default_command;
+			//ActionListener lis;
+	aroop.ArrayList<Replicable> _items;
 
 	public enum display {
 		HMARGIN = 3,
 		VMARGIN = 2,
 		RESOLUTION = 8,
 	}
-
-	public void set_action_listener(ActionListener lis) {
-		if(lis != null)this.lis = lis;
+	
+	public ListView(etxt*aTitle, etxt*aDefault_command) {
+		base(aTitle);
+		default_command = new txt.memcopy_etxt(aDefault_command);
+		vpos = 0;
+		continuous_scrolling = true;
+		item_font = new FontImpl();
+		
+		_items = ArrayList<Replicable>();
+		etxt dlg = etxt.from_static("Created xultb_list\n");
+		Watchdog.logMsgDoNotUse(&dlg);
+	}
+	
+	~ListView() {
+		_items.destroy();
 	}
 
-  public aroop.ArrayList<Replicable>*get_items() {
+	public void set_action_listener(ActionListener aLis) {
+		if(aLis != null)this.lis = aLis;
+	}
+
+	public aroop.ArrayList<Replicable>*get_items() {
 		return &this._items;
 	}
 
-  public virtual roopkotha.ListViewItem getListItem(Replicable data) {
+	public virtual roopkotha.ListViewItem getListItem(Replicable data) {
 		return (roopkotha.ListViewItem)data;
 	}
 
- 	public abstract int get_count();
+ 	public virtual int get_count() {
+		return get_items().count_unsafe();
+	}
+	
 	public aroop.txt? get_hint() {
 		return null;
 	}
@@ -77,7 +96,10 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 		return;
 	}
 
-	public abstract int get_selected_index();
+	public virtual int get_selected_index() {
+		return selected_index;
+	}
+	
 	public virtual bool handle_item(Replicable?target, int flags, int key_code, int x, int y) {
 		return false;
 	}
@@ -304,71 +326,5 @@ public abstract class roopkotha.ListView : roopkotha.Window {
 #if 0
 static struct roopkotha.ListViewItem* xultb_list_get_list_item(struct xultb_list*list, void*data) {
 	return NULL;
-}
-#endif
-
-
-#if 0
-static struct opp_vtable_xultb_window vtable_xultb_window_list;
-
-OPP_CB(xultb_list) {
-	struct xultb_list*list = (struct xultb_list*)data;
-	switch(callback) {
-	case OPPN_ACTION_INITIALIZE:
-		memset(list, 0, sizeof(struct xultb_list));
-		Watchdog.logMsgDoNotUse("Creating list ..\n");
-		{
-			va_list apa;
-			if(opp_super_cb(xultb_window)(&this.super_data, OPPN_ACTION_INITIALIZE, NULL, apa, 0)) {
-				va_end(apa);
-				return -1;
-			}
-			va_end(apa);
-		}
-		this.super_data.vtable = &vtable_xultb_window_list;
-		opp_vtable_set(list, xultb_list);
-		opp_indexed_list_create2(&this._items, 4);
-		this.vpos = 0;
-		this.continuous_scrolling = true;
-		this.item_font = roopkotha.Font_create();
-		if(cb_data) {
-			Watchdog.logMsgDoNotUse("Setting title ..\n");
-			aroop.txt*title = cb_data;
-			if(title)this.super_data.title = title;
-			aroop.txt*default_command = va_arg(ap, aroop.txt*);
-			if(default_command)this.default_command = OPPREF(default_command);
-		}
-		Watchdog.logMsgDoNotUse("Created xultb_list\n");
-		return 0;
-	case OPPN_ACTION_FINALIZE:
-#if FIXME_LATER
-		OPPUNREF(this.default_command);
-#endif
-		opp_factory_destroy(&this._items);
-		{
-			va_list ap;
-			if(vtable_xultb_window.oppcb(&this.super_data, OPPN_ACTION_FINALIZE, NULL, ap, 0)) {
-				return -1;
-			}
-		}
-		break;
-	}
-	return 0;
-}
-
-static struct opp_factory xultb_list_factory;
-struct xultb_list*xultb_list_create(aroop.txt*title, aroop.txt*default_command) {
-	return opp_alloc4(&xultb_list_factory, 0, 0, title, default_command);
-}
-
-int xultb_list_system_init() {
-	vtable_xultb_window_list = vtable_xultb_window;
-	vtable_xultb_window_list.paint = xultb_list_window_paint_wrapper;
-	vtable_xultb_window_list.handle_event = xultb_list_window_handle_event_wrapper;
-	SYNC_ASSERT(OPP_FACTORY_CREATE(
-			&xultb_list_factory
-			, 1,sizeof(xultb_list)
-			, OPP_CB_FUNC(xultb_list)) == 0);
-	return 0;
 }
 #endif

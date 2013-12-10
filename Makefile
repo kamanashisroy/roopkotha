@@ -2,13 +2,13 @@
 -include .config.mk
 -include $(SHOTODOL_HOME)/plugin.mk
 
-all:makecore makeankhi makeshotodol
+all:makecore makeapp makeshotodol
 
-makeankhi:
-	$(BUILD) -C editor/pad
+makeapp:
+	$(BUILD) -C guiapps/pad
 
-cleanankhi:
-	$(CLEAN) -C editor/pad
+cleanapp:
+	$(CLEAN) -C guiapps/pad
 
 makecore:
 	$(BUILD) -C libs/gui
@@ -20,6 +20,6 @@ cleancore:
 	$(CLEAN) -C platform/linux_gui
 	$(CLEAN) -C libs/guiimpl
 
-clean:cleancore cleanankhi
+clean:cleancore cleanapp
 
 include tests/test.mk

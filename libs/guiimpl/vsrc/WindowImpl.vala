@@ -4,8 +4,8 @@ using roopkotha;
 
 public class roopkotha.WindowImpl : roopkotha.Window {
 	WindowPlatformImpl plat;
-	public WindowImpl() {
-		base();
+	public WindowImpl(etxt*aTitle) {
+		base(aTitle);
 		plat = WindowPlatformImpl.create();
 	}
 	

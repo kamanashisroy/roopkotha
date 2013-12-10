@@ -29,7 +29,12 @@ public abstract class roopkotha.Window : Replicable {
 	public int menuY;
 	public int panelTop;
 	public int PADDING;
-	internal ActionListener? lis;
+	public ActionListener? lis;
+	public Window(etxt*aTitle) {
+		title = new txt.memcopy_etxt(aTitle);
+		this.init(200, 400);
+		lis = null;
+	}
 	public virtual void init(int w, int h) {
 		/** The width of the list */
 		this.width = w;
@@ -86,10 +91,6 @@ public abstract class roopkotha.Window : Replicable {
 				, this.height
 				//, 1);
 				, roopkotha.Graphics.anchor.TOP |roopkotha.Graphics.anchor.HCENTER);
-	}
-	public Window() {
-		this.init(200, 400);
-		lis = null;
 	}
 }
 

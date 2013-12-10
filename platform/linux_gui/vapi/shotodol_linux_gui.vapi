@@ -56,8 +56,6 @@ namespace roopkotha {
 		public static GUICorePlatformImpl create();
 		[CCode (cname="qt_impl_guicore_step")]
 		public int step();
-		[CCode (cname="qt_impl_guicore_init")]
-		public int cmain(int*argc, string argv[]);
 	}
 }
 

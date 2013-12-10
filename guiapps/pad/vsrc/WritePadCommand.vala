@@ -1,5 +1,6 @@
 using aroop;
 using shotodol;
+using roopkotha;
 
 public class onubodh.WritePadCommand : M100Command {
 	etxt prfx;
@@ -28,6 +29,7 @@ public class onubodh.WritePadCommand : M100Command {
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		parseOptions(cmdstr, &vals);
 		do {
+			test_ui();
 			container<txt>? mod;
 			if((mod = vals.search(Options.INFILE, match_all)) == null) {
 				break;
@@ -42,5 +44,29 @@ public class onubodh.WritePadCommand : M100Command {
 		} while(false);
 		bye(pad, false);
 		return 0;
+	}
+
+	GUICoreImpl impl;
+	void test_ui() {
+		print("test gui started .\n");
+		impl = new GUICoreImpl();
+		//xultb_guicore_system_init(&argc, argv);
+
+		etxt title = etxt.from_static("Test");
+		etxt dc = etxt.from_static("quit");
+
+		ListView lv = new ListView(&title, &dc);	
+
+		etxt elem = etxt.from_static("good");
+		//etxt*item = xultb_list_item_create_label(&elem, NULL);
+		//lv.addListViewItem(0, item);
+
+		//elem = xultb_str_alloc_static("very good");
+		//item = xultb_list_item_create_label(elem, NULL);
+		//opp_indexed_list_set(&list->_items, 1, item);
+
+		lv.show();
+
+		MainTurbine.gearup(impl);
 	}
 }

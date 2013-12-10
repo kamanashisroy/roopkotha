@@ -14,7 +14,7 @@ namespace roopkotha {
 		[CCode (cname="qt_impl_draw_round_rect")]
 		public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight);
 		[CCode (cname="qt_impl_draw_string")]
-		public void drawString(aroop.txt str, int x, int y, int width, int height, int anc);
+		public void drawString(etxt*str, int x, int y, int width, int height, int anc);
 		[CCode (cname="qt_impl_fill_rect")]
 		public void fillRect(int x, int y, int width, int height);
 		[CCode (cname="qt_impl_fill_round_rect")]
@@ -37,7 +37,7 @@ namespace roopkotha {
 		[CCode (cname="qt_impl_font_get_height")]
 		public int getHeight();
 		[CCode (cname="qt_impl_font_get_substring_width")]
-		public int subStringWidth(aroop.txt str, int offset, int width);
+		public int subStringWidth(etxt*str, int offset, int width);
 	}
 	
 	[CCode (cname="QTRoopkothaWindow",has_copy_function=true, free_function="qt_impl_window_destroy", cheader_filename = "shotodol_linux_gui.h")]

@@ -49,7 +49,7 @@ public abstract class roopkotha.Graphics : Replicable {
 	void drawRGB(int *rgbData, int offset, int scanlength, int x, int y, int width, int height, boolean processAlpha);
 #endif
 	public abstract void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight);
-	public abstract void drawString(aroop.txt str, int x, int y, int width, int height, int anc);
+	public abstract void drawString(etxt*str, int x, int y, int width, int height, int anc);
 #if 0
 	void drawSubstring(String str, int offset, int len, int x, int y, int anc);
 	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);

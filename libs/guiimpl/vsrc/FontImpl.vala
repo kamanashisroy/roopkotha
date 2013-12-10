@@ -12,7 +12,7 @@ public class roopkotha.FontImpl : roopkotha.Font {
 		return plat.getHeight();
 	}
 	
-	public override int subStringWidth(aroop.txt str, int offset, int width) {
+	public override int subStringWidth(etxt*str, int offset, int width) {
 		return plat.subStringWidth(str, offset, width);
 	}
 	

@@ -43,7 +43,7 @@ public abstract class roopkotha.Font : Replicable {
 
 	public abstract int getHeight();
 
-	public abstract int subStringWidth(aroop.txt str, int offset, int width);
+	public abstract int subStringWidth(etxt*str, int offset, int width);
 
 	public static roopkotha.Font? create() {
 		// TODO call platform font create function

@@ -21,7 +21,7 @@ public class roopkotha.GraphicsImpl : roopkotha.Graphics {
 	public override void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
 		plat.drawRoundRect(x, y, width, height, arcWidth, arcHeight);
 	}
-	public override void drawString(aroop.txt str, int x, int y, int width, int height, int anc) {
+	public override void drawString(etxt*str, int x, int y, int width, int height, int anc) {
 		plat.drawString(str, x, y, width, height, anc);
 	}
 	public override void fillRect(int x, int y, int width, int height) {

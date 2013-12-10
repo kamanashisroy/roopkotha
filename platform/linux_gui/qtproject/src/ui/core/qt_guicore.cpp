@@ -33,7 +33,7 @@ C_CAPSULE_START
 
 static QApplication*app;
 QTRoopkothaGUICore*qt_impl_guicore_create() {
-	char*argv[2] = {"disgusting","man"};
+	char*argv[2] = {"yourapp","man"};
 	int argc = 1;
 	app = new QApplication(argc, argv);
 	return app;

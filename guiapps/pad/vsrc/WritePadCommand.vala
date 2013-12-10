@@ -47,9 +47,13 @@ public class onubodh.WritePadCommand : M100Command {
 	}
 
 	GUICoreImpl impl;
+	//Turbine gtb;
 	void test_ui() {
 		print("test gui started .\n");
 		impl = new GUICoreImpl();
+		//gtb = new Turbine();
+		//gtb.gearup(impl);
+		MainTurbine.gearup(impl);
 		//xultb_guicore_system_init(&argc, argv);
 
 		etxt title = etxt.from_static("Test");
@@ -66,7 +70,6 @@ public class onubodh.WritePadCommand : M100Command {
 		//opp_indexed_list_set(&list->_items, 1, item);
 
 		lv.show();
-
-		MainTurbine.gearup(impl);
+		//gtb.startup();
 	}
 }

@@ -233,18 +233,18 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 
 	public override bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
 		roopkotha.ListView list = (roopkotha.ListView )this;
-		roopkotha.ActionInput.log("handling menu command\n");
+		roopkotha.GUIInput.log("handling menu command\n");
 		if(base.handle_event(target, flags, key_code, x, y)) {
 			return true;
 		}
 
-		roopkotha.ActionInput.log("Handle menu commands2\n");
+		roopkotha.GUIInput.log("Handle menu commands2\n");
 		// dispatch selected element events
 		if(this.handle_item(target, flags, key_code, x, y)) {
 			return true;
 		}
-		roopkotha.ActionInput.log("So the target is list item\n");
-		if((flags & roopkotha.ActionInput.event.SCREEN_EVENT) != 0) {
+		roopkotha.GUIInput.log("So the target is list item\n");
+		if((flags & roopkotha.GUIInput.eventType.SCREEN_EVENT) != 0) {
 			ArrayList<Replicable>*items = list.get_items();
 			int i;
 #if FIXME_LATER
@@ -252,7 +252,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 				void*obj;
 				opp_at_ncode(obj, items, i,
 					if(obj == target) {
-						roopkotha.ActionInput.log("let us make it selected: %d\n", i);
+						roopkotha.GUIInput.log("let us make it selected: %d\n", i);
 						this.selected_index = i;
 						roopkotha.GUICore.set_dirty(this); // may be we should refresh partial
 						i = -2;
@@ -263,8 +263,8 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 			}
 #endif
 		} else {
-			int consumed = 0;
-			roopkotha.ActionInput.log("Try to edit with keycode:%d, selected index:%d\n", key_code, this.selected_index);
+			bool consumed = false;
+			roopkotha.GUIInput.log("Try to edit with keycode:%d, selected index:%d\n", key_code, this.selected_index);
 			// if it is keyboard event then perform keyboard tasks
 			Replicable? obj = list.get_selected();
 			if(obj != null) {
@@ -273,14 +273,14 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 					consumed = item.DoEdit(flags, key_code, x, y);
 				}
 			}
-			if(consumed != 0) {
+			if(consumed) {
 				roopkotha.GUICore.set_dirty(this); // TODO tell it to refresh only a portion ..
 				return true;
 			}
 			key_code = (x != 0)?x:key_code; // handle arrow keys ..
 		}
 		/* else traverse the list items and work for menu */
-		if (key_code == roopkotha.ActionInput.key_event.KEY_UP) {
+		if (key_code == roopkotha.GUIInput.keyEventType.KEY_UP) {
 			this.selected_index--;
 			if (this.selected_index < 0) {
 				if (this.continuous_scrolling) {
@@ -298,7 +298,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 			/*----------------------------------------------- repaint only the list and menu */
 			roopkotha.GUICore.set_dirty2(this, roopkotha.ListView.display.HMARGIN, this.panelTop
 					, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
-		} else if (key_code == roopkotha.ActionInput.key_event.KEY_DOWN) {
+		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_DOWN) {
 			this.selected_index++;
 			int count = list.get_count();
 			if (count != -1 && this.selected_index >= count) {
@@ -311,7 +311,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 			/*----------------------------------------------- repaint only the list and menu */
 			roopkotha.GUICore.set_dirty2(this, roopkotha.ListView.display.HMARGIN
 					, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
-		} else if (key_code == roopkotha.ActionInput.key_event.KEY_ENTER) {
+		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_ENTER) {
 			if(this.lis != null) {
 				this.lis.perform_action(this.default_command/*target*/); // should not it be target !
 				/*----------------------------------------------- repaint only the list and menu */

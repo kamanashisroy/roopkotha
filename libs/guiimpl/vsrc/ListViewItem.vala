@@ -27,36 +27,35 @@ using roopkotha;
  * */
 /*! \memberof xultb_list_item */
 public abstract class roopkotha.ListViewItem : Replicable {
-	enum sometype {
-		XULTB_LIST_ITEM_LABEL,
-		XULTB_LIST_ITEM_SELECTION,
-		XULTB_LIST_ITEM_TEXT_INPUT,
-		XULTB_LIST_ITEM_CHECKBOX,
+	public enum itemtype {
+		LABEL,
+		SELECTION,
+		TEXT_INPUT,
+		CHECKBOX,
 	}
 
 
-	enum display {
-		XULTB_LIST_ITEM_PADDING = 2,
-		XULTB_LIST_ITEM_RESOLUTION = 3,
-		XULTB_LIST_ITEM_DPADDING = 5,
+	public enum display {
+		PADDING = 2,
+		RESOLUTION = 3,
+		DPADDING = 5,
 	}
-	Replicable target;
-	aroop.txt label;
-	aroop.txt text;
-	bool checked;
-	bool is_editable;
-	bool is_radio;
-	bool wrapped;
-	bool truncate_text_to_fit_width;
+	protected Replicable?target;
+	protected etxt label;
+	protected etxt text;
+	protected bool checked;
+	protected bool is_editable;
+	protected bool is_radio;
+	protected bool wrapped;
+	protected bool truncate_text_to_fit_width;
 	public bool focused;
-	onubodh.RawImage img;
-	int type; // enum sometype
-	void *__more__;
+	protected onubodh.RawImage? img;
+	protected itemtype type; // enum sometype
 	public roopkotha.Font ITEM_FONT;
 	public int FONT_HEIGHT;
 	public abstract int paint(roopkotha.Graphics g, int x, int y, int width, bool selected);
-	public abstract int DoEdit(int flags, int key_code, int x, int y);
-	public abstract int update(aroop.txt text);
+	public abstract bool DoEdit(int flags, int key_code, int x, int y);
+	public abstract int update(etxt*xt);
 }
 
 

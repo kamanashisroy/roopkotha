@@ -26,11 +26,8 @@ public class roopkotha.GUICoreImpl : roopkotha.GUICore {
 	}
 #endif
 
-	public override int start(Propeller?plr) {
-		// TODO fill me
-		int argc=1; 
-		//unowned string argv[2] = {"fine"};
-		//plat.cmain(&argc, argv);
+	public override int start(Propeller?plr) { 
+		print("GUICore stepping started..\n");
 		return 0;
 	}
 }

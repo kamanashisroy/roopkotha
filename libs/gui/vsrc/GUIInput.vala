@@ -22,16 +22,16 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.ActionInput : Replicable {
+public class roopkotha.GUIInput : Replicable {
 
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_")]
-	public enum event {
+	public enum eventType {
 		KEYBOARD_EVENT = 1,
 		SCREEN_EVENT = (1<<4), // touch / mouse event
 	}
 
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_KEY_")]
-	public enum key_event {
+	public enum keyEventType {
 		KEY_UP = 1,
 		KEY_DOWN = 2,
 		KEY_LEFT = 3,

@@ -13,8 +13,9 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	}
 	
 	public override void show() {
+		Watchdog.logString("WindowImpl:show\n");
+		roopkotha.GUICore.setDirty(this);
 #if FIXME_LATER
-		xultb_guicore_set_dirty(win);
 		xultb_guicore_walk(0); // XXX should I force it to render ??
 		//GUI_LOG("Showing Window ..[It should be called once ..]\n");
 #endif
@@ -22,6 +23,7 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	}
 	
 	public override void paint(roopkotha.Graphics g) {
+		Watchdog.logString("WindowImpl:paint\n");
 		base.paint(g);
 		GraphicsImpl gi = (g as GraphicsImpl);
 		plat.paint_end(gi.plat);

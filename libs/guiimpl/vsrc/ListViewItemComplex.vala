@@ -213,7 +213,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 		return ret;
 	}
 	
-	public override bool DoEdit(int flags, int key_code, int x, int y) {
+	public override bool doEdit(int flags, int key_code, int x, int y) {
 		switch(type) {
 			case ListViewItem.itemtype.TEXT_INPUT:
 			{
@@ -257,5 +257,55 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	}
 	bool is_printable(int key_code) {
 		return ((key_code >= 0x20) && (key_code <= 0x7E));
+	}
+	
+	public ListViewItemComplex.createLabel(etxt*aLabel, onubodh.RawImage*aImg) {
+		ListViewItemComplex.createLabelFull(aLabel, aImg, true, false, null);
+	}
+
+	public ListViewItemComplex.createLabelFull(etxt*aLabel, onubodh.RawImage*aImg
+			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, Replicable?aTarget) {
+		label = etxt.dup_etxt(aLabel);
+		img = aImg;
+		is_editable = aChange_bg_on_focus;
+		target = aTarget;
+		type = ListViewItem.itemtype.LABEL;
+		truncate_text_to_fit_width = aTruncate_text_to_fit_width;
+	}
+
+	public ListViewItemComplex.createSelectionBox(etxt*aLabel, etxt*aText, bool aEditable) {
+		label = etxt.dup_etxt(aLabel);
+		text = etxt.dup_etxt(aText);
+		is_editable = aEditable;
+		type = ListViewItem.itemtype.SELECTION;
+	}
+
+	public ListViewItemComplex.createTextInputFull(etxt*aLabel, etxt*aText, bool aWrapped, bool aEditable) {
+		label = etxt.dup_etxt(aLabel);
+		text = etxt.dup_etxt(aText);
+		wrapped = aWrapped;
+		is_editable = aEditable;
+		type = ListViewItem.itemtype.TEXT_INPUT;
+	}
+
+	public ListViewItemComplex.createTextInput(etxt*aLabel, etxt*aText) {
+		ListViewItemComplex.createTextInputFull(aLabel, aText, false, true);
+	}
+
+	public ListViewItemComplex.createCheckboxFull(etxt*aLabel, bool aChecked, bool aEditable, bool aIsRadio) {
+		label = etxt.dup_etxt(aLabel);
+		checked = aChecked;
+		is_editable = aEditable;
+		type = ListViewItem.itemtype.CHECKBOX;
+		img = null;
+		is_radio = aIsRadio;
+	}
+
+	public ListViewItemComplex.createCheckbox(etxt*aLabel, bool aChecked, bool aEditable) {
+		ListViewItemComplex.createCheckboxFull(aLabel, aChecked, aEditable, false);
+	}
+
+	public ListViewItemComplex.createRadioButton(etxt*aLabel, bool aChecked, bool aEditable) {
+		ListViewItemComplex.createCheckboxFull(aLabel, aChecked, aEditable, true);
 	}
 }

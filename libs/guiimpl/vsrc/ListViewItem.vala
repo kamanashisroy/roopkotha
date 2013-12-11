@@ -22,10 +22,10 @@ using aroop;
 using shotodol;
 using roopkotha;
 /*!
- * \class xultb_list_item
- * This is rendered in \ref xultb_list.
+ * \class ListViewItem
+ * This is rendered in \ref ListView.
  * */
-/*! \memberof xultb_list_item */
+/*! \memberof ListViewItem */
 public abstract class roopkotha.ListViewItem : Replicable {
 	public enum itemtype {
 		LABEL,
@@ -54,22 +54,6 @@ public abstract class roopkotha.ListViewItem : Replicable {
 	public roopkotha.Font ITEM_FONT;
 	public int FONT_HEIGHT;
 	public abstract int paint(roopkotha.Graphics g, int x, int y, int width, bool selected);
-	public abstract bool DoEdit(int flags, int key_code, int x, int y);
+	public abstract bool doEdit(int flags, int key_code, int x, int y);
 	public abstract int update(etxt*xt);
 }
-
-
-#if FIXME_LATER
-// define LIST_ITEM_SIGNATURE 0x93
-xultb_list_item xultb_list_item_create_label(aroop.txt label, xultb_img img);
-xultb_list_item xultb_list_item_create_label_full(aroop.txt label, xultb_img img
-		, bool change_bg_on_focus , bool truncate_text_to_fit_width, Replicable target);
-xultb_list_item xultb_list_item_create_selection_box(aroop.txt label, aroop.txt text, bool editable);
-xultb_list_item xultb_list_item_create_text_input_full(aroop.txt label, aroop.txt text, bool wrapped, bool editable);
-xultb_list_item xultb_list_item_create_text_input(aroop.txt label, aroop.txt text);
-xultb_list_item xultb_list_item_create_checkbox(aroop.txt label, bool checked, bool editable);
-xultb_list_item xultb_list_item_create_radio_button(aroop.txt label, bool checked, bool editable);
-
-int xultb_list_item_system_init();
-#endif
-

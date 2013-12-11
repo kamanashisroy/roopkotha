@@ -179,11 +179,11 @@ public class roopkotha.Menu : Replicable {
 		return;
 	}
 	public static int get_base_height() {
-		GUICore.unimplemented();
+		core.assert("This is unimplemented" == null);
 		return 0;
 	}
 	public static roopkotha.Font? get_base_font() {
-		GUICore.unimplemented();
+		core.assert("This is unimplemented" == null);
 		return null;
 	}
 	public static bool is_active() {
@@ -208,7 +208,7 @@ public class roopkotha.Menu : Replicable {
 					if(((currentlySelectedIndex - 1) >= 0))currentlySelectedIndex--;
 					return true;
 				} else {
-					roopkotha.GUIInput.log("Menu is closed\n");
+					Watchdog.logString("Menu is closed\n");
 					return false;
 				}
 				break;
@@ -217,7 +217,7 @@ public class roopkotha.Menu : Replicable {
 					if(!((currentlySelectedIndex + 1) >= menuOptions.count_unsafe()))currentlySelectedIndex++;
 					return true;
 				} else {
-					roopkotha.GUIInput.log("Menu is closed\n");
+					Watchdog.logString("Menu is closed\n");
 					return false;
 				}
 				break;
@@ -239,18 +239,18 @@ public class roopkotha.Menu : Replicable {
 						target = cmd;
 					}
 				} else {
-					roopkotha.GUIInput.log("Menu is closed\n");
+					Watchdog.logString("Menu is closed\n");
 					return false;
 				}
 				break;
 			default:
-				roopkotha.GUIInput.log("This is not traversing key\n");
+				Watchdog.logString("This is not traversing key\n");
 				return false;
 			}
 		}
 
 		if(target == null) {
-			roopkotha.GUIInput.log("No target\n");
+			Watchdog.logString("No target\n");
 			return false;
 		}
 
@@ -258,22 +258,24 @@ public class roopkotha.Menu : Replicable {
 		int i;
 		bool right = false, left = false;
 
-		roopkotha.GUIInput.log("Menu Clicked\n");
+		Watchdog.logString("Menu Clicked\n");
 		aroop.txt firstOption = null;
 
 		if(target.is_same(rightOption)) {
 			right = true;
-			roopkotha.GUIInput.log("Right menu\n");
+			Watchdog.logString("Right menu\n");
 		} else if(menu_is_active) {
 			if(target.is_same(CANCEL)) {
 				left = true;
-				roopkotha.GUIInput.log("Close menu\n");
+				Watchdog.logString("Close menu\n");
 			} else if(menuOptions != null)for (i=0;i<menuOptions.count_unsafe();i++) {
 				txt cmd = menuOptions.get(i);
 				if(cmd.equals(target)) {
 					left = true;
 					i = -2; // break
-					roopkotha.GUIInput.log("Left menu:%s\n", cmd.to_string());
+					Watchdog.logString("Left menu:");
+					Watchdog.logString(/*"Left menu:%s\n", */cmd.to_string());
+					Watchdog.logString("\n");
 				}
 				if(i == 0) {
 					firstOption = cmd;
@@ -281,10 +283,10 @@ public class roopkotha.Menu : Replicable {
 			}
 		} else if(target.is_same(MENU)){
 			left = true;
-			roopkotha.GUIInput.log("Open menu\n");
+			Watchdog.logString("Open menu\n");
 		}
 		if(!right && !left) {
-			roopkotha.GUIInput.log("Not a menu event\n");
+			Watchdog.logString("Not a menu event\n");
 			return false;
 		}
 

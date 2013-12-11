@@ -23,8 +23,18 @@ using shotodol;
 using roopkotha;
 
 public abstract class roopkotha.GUICore : Spindle {
+	Queue<Window> painter;
+	Graphics gfx;
+	static GUICore? gcore;
+	public GUICore(Graphics g) {
+		painter = Queue<Window>();
+		gfx = g;
+		gcore = this;
+	}
+	~GUICore() {
+		painter.destroy();
+	}
 #if FIXME_LATER
-static struct opp_queue painter_queue;
 static struct xultb_graphics*gr = NULL;
 static struct opp_factory tasks;
 int xultb_guicore_system_init(int*argc, char *argv[]) {
@@ -45,22 +55,15 @@ int xultb_guicore_system_init(int*argc, char *argv[]) {
 }
 #endif
 
-	public static int set_dirty2(roopkotha.Window win, int x1, int y1, int x2, int y2) {
-		return set_dirty(win);
+	public static int setDirtyFull(roopkotha.Window win, int x1, int y1, int x2, int y2) {
+		return gcore.setDirty(win);
 	}
 
-	public static int set_dirty(roopkotha.Window win) {
-#if FIXME_LATER
-		opp_enqueue(&painter_queue, win);
-#endif
+	public static int setDirty(roopkotha.Window win) {
+		gcore.painter.enqueue(win);
 		return 0;
 	}
 
-	public static int unimplemented() {
-		print("Something is unimplemented");
-		core.assert(false);
-		return 0;
-	}
 #if FIXME_LATER
 int xultb_guicore_register_task(struct xultb_gui_task*task) {
 	opp_alloc4(&tasks, 0, 0, task);
@@ -78,28 +81,20 @@ static int xultb_perform_tasks(void*data, void*func_data) {
 	task->cb_run(task, ms);
 	return 0;
 }
-
-int xultb_guicore_walk(int ms) {
-	return 0;
-}
 #endif
-
+	
 	public override int step() {
-#if false
-		opp_factory_do_full(&tasks, xultb_perform_tasks, &ms, OPPN_ALL, 0, 0);
-		// see if we need to refresh anything ..
-		while(1) {
-			struct xultb_window*win = (struct xultb_window*)opp_dequeue(&painter_queue);
-			if(!win) {
+		do {
+			Window? win = painter.dequeue();
+			if(win == null) {
 				break;
 			}
-			// TODO repaint a window only once ..
-			GUI_LOG("Painting window\n");
-			xultb_gui_input_reset(win);
-			gr->start(gr);
-			win->vtable->paint(win, gr);
-			OPPUNREF(win);
-		}
+			//xultb_gui_input_reset(win);
+			gfx.start();
+			win.paint(gfx);
+		} while(true);
+#if false
+		opp_factory_do_full(&tasks, xultb_perform_tasks, &ms, OPPN_ALL, 0, 0);
 #endif
 		return 0;
     }

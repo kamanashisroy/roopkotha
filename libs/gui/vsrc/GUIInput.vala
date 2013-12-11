@@ -50,9 +50,6 @@ public class roopkotha.GUIInput : Replicable {
 	public static int init() {
 		return 0;
 	}
-	public static int log(char*data, ...) {
-		return 0;
-	}
 #if false
 	public static int platform_init(int (*handle_event)(int flags, int key_code, int x, int y)) { /*< \private This will be implemented in the platform module */
 		return 0;

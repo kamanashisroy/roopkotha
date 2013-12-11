@@ -53,23 +53,25 @@ public class onubodh.WritePadCommand : M100Command {
 		impl = new GUICoreImpl();
 		//gtb = new Turbine();
 		//gtb.gearup(impl);
-		MainTurbine.gearup(impl);
 		//xultb_guicore_system_init(&argc, argv);
 
 		etxt title = etxt.from_static("Test");
 		etxt dc = etxt.from_static("quit");
 
-		ListView lv = new ListView(&title, &dc);	
+		SimpleListView lv = new SimpleListView(&title, &dc);	
 
+		Watchdog.logString("WritePadCommand:test_ui:adding list item\n");
 		etxt elem = etxt.from_static("good");
-		//etxt*item = xultb_list_item_create_label(&elem, NULL);
-		//lv.addListViewItem(0, item);
+		ListViewItemComplex item = new ListViewItemComplex.createLabel(&elem, null);
+		lv.setListViewItem(0, item);
 
 		//elem = xultb_str_alloc_static("very good");
-		//item = xultb_list_item_create_label(elem, NULL);
+		//item = xultb_list_item_createLabel(elem, NULL);
 		//opp_indexed_list_set(&list->_items, 1, item);
 
+		MainTurbine.gearup(impl);
 		lv.show();
+		Watchdog.logString("WritePadCommand:test_ui:list show\n");
 		//gtb.startup();
 	}
 }

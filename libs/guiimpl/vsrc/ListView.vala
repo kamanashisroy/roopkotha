@@ -22,7 +22,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.ListView : roopkotha.WindowImpl {
+public abstract class roopkotha.ListView : roopkotha.WindowImpl {
  
 	roopkotha.Font item_font;
 	bool continuous_scrolling;
@@ -38,8 +38,6 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 
 	aroop.txt default_command;
 			//ActionListener lis;
-	aroop.ArrayList<Replicable> _items;
-
 	public enum display {
 		HMARGIN = 3,
 		VMARGIN = 2,
@@ -52,29 +50,21 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 		vpos = 0;
 		continuous_scrolling = true;
 		item_font = new FontImpl();
-		
-		_items = ArrayList<Replicable>();
 		etxt dlg = etxt.from_static("Created xultb_list\n");
 		Watchdog.logMsgDoNotUse(&dlg);
 	}
 	
 	~ListView() {
-		_items.destroy();
 	}
 
-	public void set_action_listener(ActionListener aLis) {
+	public void setActionListener(ActionListener aLis) {
 		if(aLis != null)this.lis = aLis;
 	}
 
-	public aroop.ArrayList<Replicable>*get_items() {
-		return &this._items;
-	}
+	public abstract aroop.ArrayList<Replicable>*get_items();
+	public abstract roopkotha.ListViewItem getListItem(Replicable data);
 
-	public virtual roopkotha.ListViewItem getListItem(Replicable data) {
-		return (roopkotha.ListViewItem)data;
-	}
-
- 	public virtual int get_count() {
+ 	public virtual int getCount() {
 		return get_items().count_unsafe();
 	}
 	
@@ -82,7 +72,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 		return null;
 	}
 
-	public Replicable? get_selected() {
+	public Replicable? getSelected() {
 		ArrayList<Replicable>*items = this.get_items();
 		if(items == null) {
 			return null;
@@ -96,7 +86,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 		return;
 	}
 
-	public virtual int get_selected_index() {
+	public virtual int getSelected_index() {
 		return selected_index;
 	}
 	
@@ -189,7 +179,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 #endif
 	}
 
-	private void native_paint(roopkotha.Graphics g) {
+	void native_paint(roopkotha.Graphics g) {
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Drawing list...\n");
 		Watchdog.logMsgDoNotUse(&dlg);
@@ -208,7 +198,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 
 		base.paint(g);
 		aroop.txt hint = this.get_hint();
-		if (hint != null && !roopkotha.Menu.is_active() && this.selected_index != -1 && this.get_count()
+		if (hint != null && !roopkotha.Menu.is_active() && this.selected_index != -1 && this.getCount()
 				!= 0) {
 			// #ifndef net.ayaslive.miniim.ui.core.list.draw_menu_at_last
 			// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.bg%);
@@ -230,20 +220,23 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 		this.native_paint(g);
 	}
 
-
 	public override bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
 		roopkotha.ListView list = (roopkotha.ListView )this;
-		roopkotha.GUIInput.log("handling menu command\n");
+		etxt dlg = etxt.stack(128);
+		dlg.printf("handling menu command\n");
+		Watchdog.logMsgDoNotUse(&dlg);
 		if(base.handle_event(target, flags, key_code, x, y)) {
 			return true;
 		}
 
-		roopkotha.GUIInput.log("Handle menu commands2\n");
+		dlg.printf("Handle menu commands2\n");
+		Watchdog.logMsgDoNotUse(&dlg);
 		// dispatch selected element events
 		if(this.handle_item(target, flags, key_code, x, y)) {
 			return true;
 		}
-		roopkotha.GUIInput.log("So the target is list item\n");
+		dlg.printf("So the target is list item\n");
+		Watchdog.logMsgDoNotUse(&dlg);
 		if((flags & roopkotha.GUIInput.eventType.SCREEN_EVENT) != 0) {
 			ArrayList<Replicable>*items = list.get_items();
 			int i;
@@ -252,9 +245,10 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 				void*obj;
 				opp_at_ncode(obj, items, i,
 					if(obj == target) {
-						roopkotha.GUIInput.log("let us make it selected: %d\n", i);
+						dlg.printf("let us make it selected: %d\n", i);
+						Watchdog.logMsgDoNotUse(&dlg);
 						this.selected_index = i;
-						roopkotha.GUICore.set_dirty(this); // may be we should refresh partial
+						roopkotha.GUICore.setDirty(this); // may be we should refresh partial
 						i = -2;
 					}
 				) else {
@@ -264,17 +258,18 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 #endif
 		} else {
 			bool consumed = false;
-			roopkotha.GUIInput.log("Try to edit with keycode:%d, selected index:%d\n", key_code, this.selected_index);
+			dlg.printf("Try to edit with keycode:%d, selected index:%d\n", key_code, this.selected_index);
+			Watchdog.logMsgDoNotUse(&dlg);
 			// if it is keyboard event then perform keyboard tasks
-			Replicable? obj = list.get_selected();
+			Replicable? obj = list.getSelected();
 			if(obj != null) {
 				roopkotha.ListViewItem? item = list.getListItem(obj);
 				if(item != null) {
-					consumed = item.DoEdit(flags, key_code, x, y);
+					consumed = item.doEdit(flags, key_code, x, y);
 				}
 			}
 			if(consumed) {
-				roopkotha.GUICore.set_dirty(this); // TODO tell it to refresh only a portion ..
+				roopkotha.GUICore.setDirty(this); // TODO tell it to refresh only a portion ..
 				return true;
 			}
 			key_code = (x != 0)?x:key_code; // handle arrow keys ..
@@ -284,7 +279,7 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 			this.selected_index--;
 			if (this.selected_index < 0) {
 				if (this.continuous_scrolling) {
-					this.selected_index = list.get_count() - 1;
+					this.selected_index = list.getCount() - 1;
 				} else {
 					this.selected_index = 0; /* stay within limits */
 				}
@@ -296,11 +291,11 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 #endif
 			}
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.GUICore.set_dirty2(this, roopkotha.ListView.display.HMARGIN, this.panelTop
+			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN, this.panelTop
 					, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
 		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_DOWN) {
 			this.selected_index++;
-			int count = list.get_count();
+			int count = list.getCount();
 			if (count != -1 && this.selected_index >= count) {
 				if (this.continuous_scrolling) {
 					this.selected_index = 0;
@@ -309,13 +304,13 @@ public class roopkotha.ListView : roopkotha.WindowImpl {
 				}
 			}
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.GUICore.set_dirty2(this, roopkotha.ListView.display.HMARGIN
+			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
 					, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
 		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_ENTER) {
 			if(this.lis != null) {
 				this.lis.perform_action(this.default_command/*target*/); // should not it be target !
 				/*----------------------------------------------- repaint only the list and menu */
-				roopkotha.GUICore.set_dirty2(this, roopkotha.ListView.display.HMARGIN
+				roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
 						, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
 			}
 		}

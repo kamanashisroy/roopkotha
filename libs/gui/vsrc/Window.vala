@@ -58,12 +58,19 @@ public abstract class roopkotha.Window : Replicable {
 	public virtual void set_title(aroop.txt title) {
 		this.title = title;
 	}
+	
+	public virtual void prePaint(roopkotha.Graphics g) {
+		g.start();
+	}
 
 	public virtual void paint(roopkotha.Graphics g) {
 		paint_title_impl(g);
 		//xultb_menu_paint(g, this->width, this->height);
-		return;
 	}
+	
+	public virtual void postPaint(roopkotha.Graphics g) {
+	}
+	
 	public virtual bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
 		//if(xultb_menu_handle_event(this, target, flags, key_code, x, y)) {
 		//	xultb_guicore_set_dirty(this);

@@ -21,10 +21,8 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 #endif
 		plat.show();
 	}
-	
-	public override void paint(roopkotha.Graphics g) {
-		Watchdog.logString("WindowImpl:paint\n");
-		base.paint(g);
+		
+	public override void postPaint(roopkotha.Graphics g) {
 		GraphicsImpl gi = (g as GraphicsImpl);
 		plat.paint_end(gi.plat);
 	}

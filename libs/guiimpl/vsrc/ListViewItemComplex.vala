@@ -3,7 +3,13 @@ using shotodol;
 using roopkotha;
 
 public class roopkotha.ListViewItemComplex : ListViewItem {
-	 void draw_selectionbox_icon(Graphics g, int x, int y, bool focused) {
+	public roopkotha.Font? ITEM_FONT;
+	public int FONT_HEIGHT;
+	public ListViewItemComplex.common() {
+		ITEM_FONT = new FontImpl();
+		print("Item font is set");
+	}
+	void draw_selectionbox_icon(Graphics g, int x, int y, bool focused) {
 		// now indicate that it is checked ..
 		/* draw a rectangle */
 		// #expand g.setColor(focused?(isEditable?%net.ayaslive.miniim.ui.core.list.listitemfactory.boxHover%:%net.ayaslive.miniim.ui.core.list.listitemfactory.boxHoverInactive%):%net.ayaslive.miniim.ui.core.list.listitemfactory.box%);
@@ -56,6 +62,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 			imgspacing = ListViewItem.display.RESOLUTION + ListViewItem.display.PADDING;
 		}
 
+		print("Painting new label %s\n", label.to_string());
 		core.assert(ITEM_FONT != null);
 		// Write the Label
 		labelWidth = labelHeight = start = pos = ret = lineCount = 0;
@@ -106,9 +113,11 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 							, x + imgspacing + ListViewItem.display.PADDING + ITEM_FONT.subStringWidth(&label, start, pos)
 							, y + ret + ListViewItem.display.PADDING + FONT_HEIGHT);
 				}
-				etxt xt = etxt.same_same(&text);
+				//etxt xt = etxt.same_same(&text);
+				etxt xt = etxt.same_same(&label);
 				xt.shift(start);
 				xt.trim_to_length(pos);
+				print("Label:%s:%s\n", label.to_string(), xt.to_string());
 				g.drawString(&xt
 						, x + imgspacing + ListViewItem.display.PADDING
 						,y + ret + ListViewItem.display.PADDING
@@ -265,7 +274,9 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 
 	public ListViewItemComplex.createLabelFull(etxt*aLabel, onubodh.RawImage*aImg
 			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, Replicable?aTarget) {
+		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
+		print("Created new label %s:%s\n", label.to_string(), aLabel.to_string());
 		img = aImg;
 		is_editable = aChange_bg_on_focus;
 		target = aTarget;
@@ -274,6 +285,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	}
 
 	public ListViewItemComplex.createSelectionBox(etxt*aLabel, etxt*aText, bool aEditable) {
+		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
 		text = etxt.dup_etxt(aText);
 		is_editable = aEditable;
@@ -281,6 +293,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	}
 
 	public ListViewItemComplex.createTextInputFull(etxt*aLabel, etxt*aText, bool aWrapped, bool aEditable) {
+		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
 		text = etxt.dup_etxt(aText);
 		wrapped = aWrapped;
@@ -293,6 +306,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	}
 
 	public ListViewItemComplex.createCheckboxFull(etxt*aLabel, bool aChecked, bool aEditable, bool aIsRadio) {
+		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
 		checked = aChecked;
 		is_editable = aEditable;

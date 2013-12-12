@@ -119,7 +119,6 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	private void show_items(roopkotha.Graphics g) {
 		int i = -1;
 		aroop.ArrayList<Replicable>*items = this.get_items();
-		void*obj;
 		int posY = this.panelTop + this.topMargin;
 
 		etxt dlg = etxt.stack(64);
@@ -141,45 +140,39 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		}
 		dlg.printf("Iterating items(%d)\n", this.vpos);
 		Watchdog.logMsgDoNotUse(&dlg);
-#if FIXME_LATER
 		for (i = this.vpos;;i++) {
-			int break_here = 0;
-			opp_at_ncode(obj, items, i,
-				/* see if selected index is more than the item count */
-				dlg.printf("Showing item\n");
-				Watchdog.logMsgDoNotUse(&dlg);
-				posY += this.show_item(g, obj, posY, i == this.selected_index);
-				if (posY > (this.menuY - this.bottomMargin)) {
-					if (this.selected_index >= i && this.vpos < this.selected_index) {
-						this.vpos++;
-						/* try to draw again */
-						this.show_items(g);
-					}
-					/* no more place to draw */
-
-					// So there are more elements left ..
-					// draw an arrow
-					// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.indicator%);
-					g.setColor(0x006699);
-					int x = this.width - 3 * roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.RESOLUTION - this.rightMargin;
-					int y = this.menuY - this.bottomMargin - this.PADDING - 2 * roopkotha.ListView.display.RESOLUTION;
-					g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y + roopkotha.ListView.display.RESOLUTION, x + roopkotha.ListView.display.RESOLUTION,
-							y, x, y);
-					dlg.printf("No more place to draw\n");
-					Watchdog.logMsgDoNotUse(&dlg);
-					break_here = 1;
-				}
-			) else {
+			Replicable? obj = items.get(i);
+			if(obj == null) {
 				break;
 			}
-			if(break_here) {
+			/* see if selected index is more than the item count */
+			dlg.printf("Showing item\n");
+			Watchdog.logMsgDoNotUse(&dlg);
+			posY += this.show_item(g, obj, posY, i == this.selected_index);
+			if (posY > (this.menuY - this.bottomMargin)) {
+				if (this.selected_index >= i && this.vpos < this.selected_index) {
+					this.vpos++;
+					/* try to draw again */
+					this.show_items(g);
+				}
+				/* no more place to draw */
+
+				// So there are more elements left ..
+				// draw an arrow
+				// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.indicator%);
+				g.setColor(0x006699);
+				int x = this.width - 3 * roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.RESOLUTION - this.rightMargin;
+				int y = this.menuY - this.bottomMargin - this.PADDING - 2 * roopkotha.ListView.display.RESOLUTION;
+				g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y + roopkotha.ListView.display.RESOLUTION, x + roopkotha.ListView.display.RESOLUTION,
+						y, x, y);
+				dlg.printf("No more place to draw\n");
+				Watchdog.logMsgDoNotUse(&dlg);
 				break;
 			}
 		}
-#endif
 	}
 
-	void native_paint(roopkotha.Graphics g) {
+	public override void paint(roopkotha.Graphics g) {
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Drawing list...\n");
 		Watchdog.logMsgDoNotUse(&dlg);
@@ -195,8 +188,9 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y, x + roopkotha.ListView.display.RESOLUTION, y + roopkotha.ListView.display.RESOLUTION,
 					x, y + roopkotha.ListView.display.RESOLUTION);
 		}
-
+#if FIXMELATTER
 		base.paint(g);
+#endif
 		aroop.txt hint = this.get_hint();
 		if (hint != null && !roopkotha.Menu.is_active() && this.selected_index != -1 && this.getCount()
 				!= 0) {
@@ -213,11 +207,8 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 					, roopkotha.Graphics.anchor.HCENTER|roopkotha.Graphics.anchor.BOTTOM);
 			/* TODO show "<>"(90 degree rotated) icon to indicate that we can traverse through the list  */
 		}
-	}
-
-	public override void paint(roopkotha.Graphics g) {
-		roopkotha.ListView list = (roopkotha.ListView)this;
-		this.native_paint(g);
+		dlg.printf("All done...\n");
+		Watchdog.logMsgDoNotUse(&dlg);
 	}
 
 	public override bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
@@ -240,22 +231,16 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		if((flags & roopkotha.GUIInput.eventType.SCREEN_EVENT) != 0) {
 			ArrayList<Replicable>*items = list.get_items();
 			int i;
-#if FIXME_LATER
-			for(i=0;items && i>=0;i++) {
-				void*obj;
-				opp_at_ncode(obj, items, i,
-					if(obj == target) {
-						dlg.printf("let us make it selected: %d\n", i);
-						Watchdog.logMsgDoNotUse(&dlg);
-						this.selected_index = i;
-						roopkotha.GUICore.setDirty(this); // may be we should refresh partial
-						i = -2;
-					}
-				) else {
-					break;
+			if(items != null)for(i=0;;i++) {
+				Replicable?obj = items.get(i);
+				if(obj == target) {
+					dlg.printf("let us make it selected: %d\n", i);
+					Watchdog.logMsgDoNotUse(&dlg);
+					this.selected_index = i;
+					roopkotha.GUICore.setDirty(this); // may be we should refresh partial
+					i = -2;
 				}
 			}
-#endif
 		} else {
 			bool consumed = false;
 			dlg.printf("Try to edit with keycode:%d, selected index:%d\n", key_code, this.selected_index);
@@ -317,9 +302,3 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		return true;
 	}
 }
-
-#if 0
-static struct roopkotha.ListViewItem* xultb_list_get_list_item(struct xultb_list*list, void*data) {
-	return NULL;
-}
-#endif

@@ -60,6 +60,7 @@ int xultb_guicore_system_init(int*argc, char *argv[]) {
 	}
 
 	public static int setDirty(roopkotha.Window win) {
+		print("Someone set the window dirty\n");
 		gcore.painter.enqueue(win);
 		return 0;
 	}
@@ -90,8 +91,9 @@ static int xultb_perform_tasks(void*data, void*func_data) {
 				break;
 			}
 			//xultb_gui_input_reset(win);
-			gfx.start();
+			win.prePaint(gfx);
 			win.paint(gfx);
+			win.postPaint(gfx);
 		} while(true);
 #if false
 		opp_factory_do_full(&tasks, xultb_perform_tasks, &ms, OPPN_ALL, 0, 0);

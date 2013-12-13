@@ -7,6 +7,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	public int FONT_HEIGHT;
 	public ListViewItemComplex.common() {
 		ITEM_FONT = new FontImpl();
+		FONT_HEIGHT = ITEM_FONT.getHeight();
 		print("Item font is set");
 	}
 	void draw_selectionbox_icon(Graphics g, int x, int y, bool focused) {

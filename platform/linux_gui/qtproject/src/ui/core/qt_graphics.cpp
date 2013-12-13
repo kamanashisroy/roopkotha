@@ -34,27 +34,37 @@ void qt_impl_draw_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, i
     qtg->painter->drawRoundedRect(x, y, width, height, arcWidth, arcHeight,  Qt::RelativeSize);
 }
 
+//#define QT_GRAPHICS_DEBUG
+#ifdef QT_GRAPHICS_DEBUG
+#include <stdio.h>
+#endif
 void qt_impl_draw_string(QTRoopkothaGraphics*qtg, struct aroop_txt*str, int x, int y, int width, int height, int anchor) {
 	//GUI_LOG("Drawing string [%d]%s\n", str->len, str->str);
-    QString text(str->str);
-    int flags = 0;
+	QString text(str->str);
+	int flags = 0;
 
-    text.resize(str->len);
-    if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_TOP) {
-    	flags |= Qt::AlignTop;
-    }
-    if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_LEFT) {
-    	flags |= Qt::AlignLeft;
-    }
-    if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_RIGHT) {
+	text.resize(str->len);
+	if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_TOP) {
+		flags |= Qt::AlignTop;
+	}
+	if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_LEFT) {
+		flags |= Qt::AlignLeft;
+	}
+	if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_RIGHT) {
 		flags |= Qt::AlignRight;
 	}
-    if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_HCENTER) {
-    	flags |= Qt::AlignHCenter;
-    }
-    if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_BOTTOM) {
-    	flags |= Qt::AlignBottom;
-    }
+	if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_HCENTER) {
+		flags |= Qt::AlignHCenter;
+	}
+	if(anchor & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_BOTTOM) {
+		flags |= Qt::AlignBottom;
+	}
+
+#ifdef QT_GRAPHICS_DEBUG
+	QByteArray ba = text.toLocal8Bit();
+	const char *c_str2 = ba.data();
+	printf("str2: %s(width:%d,height:%d)(x:%d,y:%d)\n", c_str2, width, height, x, y);
+#endif
 	qtg->painter->drawText(x, y, width, height, flags, text);
 //    qtg->painter->drawText(x, y, text);
 }

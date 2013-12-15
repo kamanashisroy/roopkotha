@@ -1,0 +1,7 @@
+libs/propeller
+libs/watchdog
+-ONUBODH_HOME
+libs/rawimg
+-ROOPKOTHA_HOME
+libs/gui
+platform/linux_gui

@@ -51,9 +51,10 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 			{'9', 'w', 'x', 'y', 'z', 'W', 'X', 'Y', 'Z'},
 	};
 #endif	
+	RoopDocument? doc;
 	public DocumentView(etxt*title, etxt*defaultCommand) {
 		base("Products", defaultCommand);
-		this.defaultCommand = defaultCommand;
+		//this.defaultCommand = defaultCommand;
 	}
 #if false	
 	public void setEventListener(EventListener el) {
@@ -63,7 +64,6 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	public void setMediaLoader(MediaLoader ml) {
 		this.ml = ml;
 	}
-#endif
 	public Element getSelectedItem() {
 		return node.getElement(super.getSelectedIndex());
 	}
@@ -94,72 +94,76 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		}
 		this.repaint();
 	}
+#endif
 	
 	public void show() {
+#if false
 		searching = false;
 		super.show(rightOption, leftMenuOptions);
+#endif
 	}
 	
 	public final void setRightOption(String rightOption) {
+#if false
 		this.rightOption = rightOption;
 		// \xxx no locking :(
 		if(isShowing()) {
 			Menu.getInstance().setRightOption(rightOption);
 		}
+#endif
 	}
 	
 	public final void setLeftOption(int pos, String command) {
+#if false
 		// \xxx no locking :(
 		if(isShowing()) {
 			Menu.getInstance().setLeftOption(pos, command);
 		} else {
 			leftMenuOptions[pos] = command;
 		}
+#endif
 	}
 
 	/// List implementation
 	/*@{*/
 	protected int getCount() {
-		if(node == null) {
+		if(doc == null) {
 			return 0;
 		}
-		return node.getChildCount();
+		return doc.getChildCount();
 	}
 
+#if false
 	protected String getHint() {
 		return null;
 	}
+#endif
 
 	protected Enumeration getItems() {
 		pos = 0;
 		return this;
 	}
 
-	protected ListItem getListItem(Object node) {
+	protected ListViewItem getListItem(Replicable given) {
 		// get the element
-		Element elem = (Element)node;
-		final String name = elem.getName();
+		AugmentedContent elem = (AugmentedContent)given;
+		switch(elem.ctype) {
+			case MARKUP_CONTENT:
+				//return MarkupItem.getInstance(elem, ml, false, el);
+				return null;
+			case LABEL_CONTENT:
+			{
+				etxt data = etxt.from_static(".");
+				// see if the label has any image
+				//Image img = null;
+				//String src = elem.getAttributeValue("src");
+				//if(src != null) {
+					//img = ml.getImage(src);
+				//}
+				return ListItemFactory.createLabel(text, img, elem.getAttributeValue("href") != null, false);
+			}
+		}
 		final String label = elem.getAttributeValue("l");
-		if(name == null || name.equals("m")) {
-			return MarkupItem.getInstance(elem, ml, false, el);
-		} else if(name.equals("l")) {
-			String text = ".";
-			if(elem.getChildCount() > 0) {
-				text = elem.getText(0);
-				if(text != null) {
-					text = text.trim();
-				} else {
-					text = ".";
-				}
-			}
-			
-			// see if the label has any image
-			Image img = null;
-			String src = elem.getAttributeValue("src");
-			if(src != null) {
-				img = ml.getImage(src);
-			}
-			return ListItemFactory.createLabel(text, img, elem.getAttributeValue("href") != null, false);
 		} else if(name.equals("t")) {
 			
 			// get current text
@@ -252,6 +256,7 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		}
 	}
 	
+#if false
 	public boolean handleElement(int keyCode, int gameAction) {
 		int index = super.getSelectedIndex();
 		
@@ -311,8 +316,10 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		item.free();
 		return true;
 	}
+#endif
 	/*@}*/
 	
+#if false
 	/** Searching */
 	private void doSearch() {
 		int length = 0;
@@ -376,7 +383,9 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		elem.addChild(Node.TEXT, buff.toString());
 		buff.setLength(0);
 	}
+#endif
 
+#if false
 	/** Enumeration implementation */
 	/*@{*/
 	private int pos = 0;
@@ -391,4 +400,5 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		return node.getChild(pos++);
 	}
 	/*@}*/
+#endif
 }

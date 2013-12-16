@@ -9,4 +9,7 @@ public class roopkotha.RoopDocument : Replicable {
 	ArrayList<AugmentedContent> content;
 	public RoopDocument() {
 	}
+	public int getChildCount() {
+		return content.count_unsafe();
+	}
 }

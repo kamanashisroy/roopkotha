@@ -5,18 +5,50 @@ using roopkotha;
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.AugmentedContent : Replicable {
-	etxt content;
-	enum ContentType {
-		MARKUP_CONTENT,	
+public abstract class roopkotha.AugmentedContent : Replicable {
+	public enum ContentType {
 		LABEL_CONTENT,	
+		TEXT_INPUT_CONTENT,
+		SELECTION_CONTENT,
+		RADIO_CONTENT,
+		CHECKBOX_CONTENT,
+		MARKUP_CONTENT,
 	}
-	public ctype {public get;}
+	protected ContentType _cType;
+	public ContentType ctype {public get {return _cType;}}
 	public AugmentedContent() {
 	}
-	public int getText(etxt*data) {
-		// TODO fill me
+	public virtual int getLabel(etxt*data) {
 		return 0;
+	}
+	public virtual int getText(etxt*data) {
+		return 0;
+	}
+	public virtual onubodh.RawImage?getImage() {
+		// TODO fill me
+		//Image img = null;
+		//String src = elem.getAttributeValue("src");
+		//if(src != null) {
+			//img = ml.getImage(src);
+		//}
+		return null;
+	}
+	public virtual bool hasAction() {
+		// elem.getAttributeValue("href") != null
+		return false;
+	}
+	public virtual bool isPassword() {
+		// TODO fill me
+		return false;
+	}
+	public virtual bool canBeWrapped() {
+		// TODO fill me
+		return false;
+	}
+	public virtual bool isChecked() {
+		// TODO fill me
+		//isPositiveAttribute(elem, "c")
+		return false;
 	}
 }
 

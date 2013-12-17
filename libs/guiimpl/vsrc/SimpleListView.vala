@@ -34,15 +34,15 @@ public class roopkotha.SimpleListView : roopkotha.ListView {
 		myitems.destroy();
 	}
 	
-	public override aroop.ArrayList<Replicable>*get_items() {
+	protected override aroop.ArrayList<Replicable>*getItems() {
 		return &myitems;
 	}
 	
-	public override roopkotha.ListViewItem getListItem(Replicable data) {
+	protected override roopkotha.ListViewItem getListItem(Replicable data) {
 		return (roopkotha.ListViewItem)data;
 	}
 	
-	public void setListViewItem(int aIndex, ListViewItem aItem) {
+	protected void setListViewItem(int aIndex, ListViewItem aItem) {
 		Watchdog.logString("SimpleListView:adding list item\n");
 		myitems.set(aIndex, aItem);
 	}

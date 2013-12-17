@@ -61,11 +61,11 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		if(aLis != null)this.lis = aLis;
 	}
 
-	public abstract aroop.ArrayList<Replicable>*get_items();
-	public abstract roopkotha.ListViewItem getListItem(Replicable data);
+	protected abstract aroop.ArrayList<Replicable>*getItems();
+	protected abstract roopkotha.ListViewItem getListItem(Replicable data);
 
- 	public virtual int getCount() {
-		return get_items().count_unsafe();
+ 	protected virtual int getCount() {
+		return getItems().count_unsafe();
 	}
 	
 	public aroop.txt? get_hint() {
@@ -73,7 +73,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	}
 
 	public Replicable? getSelected() {
-		ArrayList<Replicable>*items = this.get_items();
+		ArrayList<Replicable>*items = this.getItems();
 		if(items == null) {
 			return null;
 		}
@@ -118,7 +118,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 
 	private void show_items(roopkotha.Graphics g) {
 		int i = -1;
-		aroop.ArrayList<Replicable>*items = this.get_items();
+		aroop.ArrayList<Replicable>*items = this.getItems();
 		int posY = this.panelTop + this.topMargin;
 
 		etxt dlg = etxt.stack(64);
@@ -229,7 +229,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		dlg.printf("So the target is list item\n");
 		Watchdog.logMsgDoNotUse(&dlg);
 		if((flags & roopkotha.GUIInput.eventType.SCREEN_EVENT) != 0) {
-			ArrayList<Replicable>*items = list.get_items();
+			ArrayList<Replicable>*items = list.getItems();
 			int i;
 			if(items != null)for(i=0;;i++) {
 				Replicable?obj = items.get(i);

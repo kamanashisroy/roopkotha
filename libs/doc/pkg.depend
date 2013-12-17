@@ -3,5 +3,6 @@ libs/watchdog
 -ONUBODH_HOME
 libs/rawimg
 -ROOPKOTHA_HOME
+libs/guiimpl
 libs/gui
 platform/linux_gui

@@ -52,9 +52,8 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	};
 #endif	
 	RoopDocument? doc;
-	public DocumentView(etxt*title, etxt*defaultCommand) {
-		base("Products", defaultCommand);
-		//this.defaultCommand = defaultCommand;
+	public DocumentView(etxt*aTitle, etxt*aDefaultCommand) {
+		base(aTitle, aDefaultCommand);
 	}
 #if false	
 	public void setEventListener(EventListener el) {
@@ -96,14 +95,14 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	}
 #endif
 	
-	public void show() {
 #if false
+	public void show() {
 		searching = false;
 		super.show(rightOption, leftMenuOptions);
-#endif
 	}
+#endif
 	
-	public final void setRightOption(String rightOption) {
+	public void setRightOption(etxt*rightOption) {
 #if false
 		this.rightOption = rightOption;
 		// \xxx no locking :(
@@ -113,7 +112,7 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 #endif
 	}
 	
-	public final void setLeftOption(int pos, String command) {
+	public void setLeftOption(int pos, etxt*command) {
 #if false
 		// \xxx no locking :(
 		if(isShowing()) {
@@ -124,6 +123,7 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 #endif
 	}
 
+#if false
 	/// List implementation
 	/*@{*/
 	protected int getCount() {
@@ -133,127 +133,88 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		return doc.getChildCount();
 	}
 
-#if false
 	protected String getHint() {
 		return null;
 	}
 #endif
 
-	protected Enumeration getItems() {
-		pos = 0;
-		return this;
+	protected override ArrayList<Replicable>*getItems() {
+		return (doc == null)?null:&doc.contents;
 	}
 
-	protected ListViewItem getListItem(Replicable given) {
+	protected override ListViewItem getListItem(Replicable given) {
 		// get the element
 		AugmentedContent elem = (AugmentedContent)given;
 		switch(elem.ctype) {
-			case MARKUP_CONTENT:
-				//return MarkupItem.getInstance(elem, ml, false, el);
-				return null;
-			case LABEL_CONTENT:
+			case AugmentedContent.ContentType.TEXT_INPUT_CONTENT:
 			{
-				etxt data = etxt.from_static(".");
-				// see if the label has any image
-				//Image img = null;
-				//String src = elem.getAttributeValue("src");
-				//if(src != null) {
-					//img = ml.getImage(src);
-				//}
-				return ListItemFactory.createLabel(text, img, elem.getAttributeValue("href") != null, false);
+				etxt data = etxt.EMPTY();
+				elem.getText(&data);
+				etxt label = etxt.EMPTY();
+				elem.getLabel(&label);
+				
+				return new ListViewItemComplex.createTextInputFull(&label, &data, elem.canBeWrapped(), true);
 			}
-		}
-		final String label = elem.getAttributeValue("l");
-		} else if(name.equals("t")) {
-			
-			// get current text
-			String text = null;
-			if(elem.getChildCount() == 0 || (text = elem.getText(0)) == null) {
-				
-				// get hint of this field
-				text = elem.getAttributeValue("h");
-				if(text == null) {
-					text = "";
-				}
-			} else {
-				
-				// get rid of spaces
-				text = text.trim();
-			}
-			
-			// see if it is password field
-			if(DefaultComplexListener.isPositiveAttribute(elem, "p")) {
-				
-				// in this case we hide the content of the password ..
-				text = "**********************************".substring(0, text.length());
-			}
-			
-			// do not scroll continuously when there is textfield
-			continuousScrolling = false;
-			return ListItemFactory.createTextInput(label, text, DefaultComplexListener.isPositiveAttribute(elem, "w"), true);
-		} else if(name.equals("s")) {
-			
-			// get selected index
-			StringBuffer buffer = new StringBuffer();
-			boolean first = true;
-			final int count = elem.getChildCount();
-			for(int i=0; i<count; i++) {
-				Element op = elem.getElement(i);
-				
-				// see if it is selected
-				if(DefaultComplexListener.isPositiveAttribute(op, "s")) {
-					String tmp = op.getText(0);
-					if(tmp == null) {
-						continue;
+				break;
+			case AugmentedContent.ContentType.SELECTION_CONTENT:
+			{
+#if false
+				// get selected index
+				etxt buffer = etxt.EMPTY();
+				boolean first = true;
+				final int count = elem.getChildCount();
+				for(int i=0; i<count; i++) {
+					Element op = elem.getElement(i);
+					
+					// see if it is selected
+					if(DefaultComplexListener.isPositiveAttribute(op, "s")) {
+						String tmp = op.getText(0);
+						if(tmp == null) {
+							continue;
+						}
+						if(first) {
+							first = false;
+						} else {
+							buffer.append(',');
+						}
+						buffer.append(tmp.trim());
 					}
-					if(first) {
-						first = false;
-					} else {
-						buffer.append(',');
-					}
-					buffer.append(tmp.trim());
 				}
-			}
-			
-			// do not scroll continuously when there is selection box
-			continuousScrolling = false;
-			return ListItemFactory.createSelectionBox(label, buffer.toString(), true);
-		} else if(name.equals("r")) {
-			// render radio button
-			
-			return ListItemFactory.createRadioButton(label, DefaultComplexListener.isPositiveAttribute(elem, "c"), true);
-		} else if(name.equals("ch")){
-			// so it is checkbox
-			
-			return ListItemFactory.createCheckBox(label, DefaultComplexListener.isPositiveAttribute(elem, "c"), true);
-		} else if(name.equals("o")){
-			// so it is selection option
-			// get current text
-			String text = null;
-			if(elem.getChildCount() == 0 || (text = elem.getText(0)) == null) {
 				
-				// get hint of this field
-				text = elem.getAttributeValue("h");
-				if(text == null) {
-					text = "";
-				}
-			} else {
-				
-				// get rid of spaces
-				text = text.trim();
+				// do not scroll continuously when there is selection box
+				continuousScrolling = false;
+				return new ListViewItemComplex.createSelectionBox(label, buffer.toString(), true);
+#endif
 			}
-
-			// see if it is multiple selection box ..
-			if(isMultipleSelection) {
-				
-				// see if it is selected ..
-				return ListItemFactory.createCheckBox(text, DefaultComplexListener.isPositiveAttribute(elem, "s"), true);
-			} else {
-				return ListItemFactory.createLabel(text, null, true, false);
+				break;
+			case AugmentedContent.ContentType.RADIO_CONTENT:
+			{
+				etxt label = etxt.EMPTY();
+				elem.getLabel(&label);
+				return new ListViewItemComplex.createRadioButton(&label, elem.isChecked(), true);
 			}
-		} else {
-			return MarkupItem.getInstance(elem, ml, false, el);
+				break;
+			case AugmentedContent.ContentType.CHECKBOX_CONTENT:
+			{
+				etxt label = etxt.EMPTY();
+				elem.getLabel(&label);
+				return new ListViewItemComplex.createCheckbox(&label, elem.isChecked(), true);
+			}
+				break;
+			case AugmentedContent.ContentType.MARKUP_CONTENT:
+			{
+				//return new MarkupItem.getInstance(elem, ml, false, el);
+			}
+				break;
+			case AugmentedContent.ContentType.LABEL_CONTENT:
+				break;
+			default:
+				break;
 		}
+		etxt data = etxt.EMPTY();
+		elem.getText(&data);
+		// see if the label has any image
+		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 	}
 	
 #if false

@@ -55,6 +55,9 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	public DocumentView(etxt*aTitle, etxt*aDefaultCommand) {
 		base(aTitle, aDefaultCommand);
 	}
+	public void setDocument(RoopDocument aDoc) {
+		doc = aDoc;
+	}
 #if false	
 	public void setEventListener(EventListener el) {
 		this.el = el;
@@ -145,10 +148,10 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	protected override ListViewItem getListItem(Replicable given) {
 		// get the element
 		AugmentedContent elem = (AugmentedContent)given;
+		etxt data = etxt.stack(128);
 		switch(elem.ctype) {
 			case AugmentedContent.ContentType.TEXT_INPUT_CONTENT:
 			{
-				etxt data = etxt.EMPTY();
 				elem.getText(&data);
 				etxt label = etxt.EMPTY();
 				elem.getLabel(&label);
@@ -211,7 +214,6 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 			default:
 				break;
 		}
-		etxt data = etxt.EMPTY();
 		elem.getText(&data);
 		// see if the label has any image
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);

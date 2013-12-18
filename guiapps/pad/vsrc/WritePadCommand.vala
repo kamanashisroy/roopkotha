@@ -29,7 +29,7 @@ public class onubodh.WritePadCommand : M100Command {
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		parseOptions(cmdstr, &vals);
 		do {
-			test_ui();
+			test_ui2();
 			container<txt>? mod;
 			if((mod = vals.search(Options.INFILE, match_all)) == null) {
 				break;
@@ -73,5 +73,24 @@ public class onubodh.WritePadCommand : M100Command {
 		lv.show();
 		Watchdog.logString("WritePadCommand:test_ui:list show\n");
 		//gtb.startup();
+	}
+
+	void test_ui2() {
+		print("test gui started .\n");
+		impl = new GUICoreImpl();
+
+		etxt title = etxt.from_static("Test");
+		etxt dc = etxt.from_static("quit");
+
+		DocumentView lv = new DocumentView(&title, &dc);	
+		PlainDocument pd = new PlainDocument();
+
+		etxt elem = etxt.from_static("good");
+		pd.addLine(&elem);
+		lv.setDocument(pd);
+
+		MainTurbine.gearup(impl);
+		lv.show();
+		Watchdog.logString("WritePadCommand:test_ui:list show\n");
 	}
 }

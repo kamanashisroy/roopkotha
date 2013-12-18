@@ -4,3 +4,4 @@ core/commands
 core/base
 -ROOPKOTHA_HOME
 libs/guiimpl
+libs/doc

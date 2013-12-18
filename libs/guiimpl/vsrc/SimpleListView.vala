@@ -42,7 +42,7 @@ public class roopkotha.SimpleListView : roopkotha.ListView {
 		return (roopkotha.ListViewItem)data;
 	}
 	
-	protected void setListViewItem(int aIndex, ListViewItem aItem) {
+	public void setListViewItem(int aIndex, ListViewItem aItem) {
 		Watchdog.logString("SimpleListView:adding list item\n");
 		myitems.set(aIndex, aItem);
 	}

@@ -8,5 +8,9 @@ using roopkotha;
 public class roopkotha.RoopDocument : Replicable {
 	internal ArrayList<AugmentedContent> contents;
 	public RoopDocument() {
+		contents = ArrayList<AugmentedContent>();
+	}
+	~RoopDocument() {
+		contents.destroy();
 	}
 }

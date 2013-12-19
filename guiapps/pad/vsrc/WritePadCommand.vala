@@ -29,18 +29,20 @@ public class onubodh.WritePadCommand : M100Command {
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		parseOptions(cmdstr, &vals);
 		do {
-			test_ui2();
 			container<txt>? mod;
-			if((mod = vals.search(Options.INFILE, match_all)) == null) {
+			if((mod = vals.search(Options.INFILE, match_all)) != null) {
+				unowned txt infile = mod.get();
+				if(uiOpenFile(infile) != 0) {
+					break;
+				}
+				bye(pad, true);
+				return 0;
+			}
+			if((mod = vals.search(Options.OUTFILE, match_all)) != null) {
+				unowned txt outfile = mod.get();
+				print("unimplemented\n");
 				break;
 			}
-			unowned txt infile = mod.get();
-			if((mod = vals.search(Options.OUTFILE, match_all)) == null) {
-				break;
-			}
-			unowned txt outfile = mod.get();
-			bye(pad, true);
-			return 0;
 		} while(false);
 		bye(pad, false);
 		return 0;
@@ -92,5 +94,35 @@ public class onubodh.WritePadCommand : M100Command {
 		MainTurbine.gearup(impl);
 		lv.show();
 		Watchdog.logString("WritePadCommand:test_ui:list show\n");
+	}
+
+	int uiOpenFile(etxt*fn) {
+		Watchdog.logString("WritePadCommand:Open file ...\n");
+		impl = new GUICoreImpl();
+
+
+		try {
+			FileInputStream fistm = new FileInputStream.from_file(fn);
+			Watchdog.logString("WritePadCommand:Open file: Opened file for reading ...\n");
+
+			etxt title = etxt.from_static("Test");
+			etxt dc = etxt.from_static("quit");
+			DocumentView lv = new DocumentView(&title, &dc);	
+			PlainDocument pd = new PlainDocument();
+			Watchdog.logString("WritePadCommand:Open file: Reading ...\n");
+
+			pd.setInputStream(fistm);
+			pd.tryReading();
+			fistm.close();
+			lv.setDocument(pd, 0);
+			MainTurbine.gearup(impl);
+			lv.show();
+			Watchdog.logString("WritePadCommand:Open file: Done.\n");
+		} catch(IOStreamError.FileInputStreamError e) {
+			Watchdog.logString("WritePadCommand:Open file: Could not open file\n");
+			return -1;
+		}
+
+		return 0;
 	}
 }

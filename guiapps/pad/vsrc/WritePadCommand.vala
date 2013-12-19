@@ -87,7 +87,7 @@ public class onubodh.WritePadCommand : M100Command {
 
 		etxt elem = etxt.from_static("good");
 		pd.addLine(&elem);
-		lv.setDocument(pd);
+		lv.setDocument(pd, 0);
 
 		MainTurbine.gearup(impl);
 		lv.show();

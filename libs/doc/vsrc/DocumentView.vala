@@ -54,9 +54,29 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	RoopDocument? doc;
 	public DocumentView(etxt*aTitle, etxt*aDefaultCommand) {
 		base(aTitle, aDefaultCommand);
+		etxt dlg = etxt.from_static("Created DocumentView\n");
+		Watchdog.logMsgDoNotUse(&dlg);
 	}
-	public void setDocument(RoopDocument aDoc) {
+	public void setDocument(RoopDocument aDoc, int aSelectedIndex) {
 		doc = aDoc;
+		etxt dlg = etxt.stack(64);
+		dlg.printf("Set Document of %d lines\n", getCount());
+		Watchdog.logMsgDoNotUse(&dlg);
+#if false
+		searching = false;
+		continuousScrolling = true;
+		
+		base.setSelectedIndex(aSelectedIndex);
+		// see if the node is selection box ..
+		if(node instanceof Element) {
+			Element elem = (Element)node;
+			if(elem.getName().equals("s")) {
+				// see if it has multiple choice ..
+				isMultipleSelection = DefaultComplexListener.isPositiveAttribute(elem, "m");
+			}
+		}
+		repaint();
+#endif
 	}
 #if false	
 	public void setEventListener(EventListener el) {
@@ -68,33 +88,6 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	}
 	public Element getSelectedItem() {
 		return node.getElement(super.getSelectedIndex());
-	}
-	
-	protected void setSelectedIndex(int index) {
-		super.setSelectedIndex(index);
-	}
-	
-	protected int getSelectedIndex() {
-		return super.getSelectedIndex();
-	}
-	
-	public void setNode(Node node, int selectedIndex) {
-		this.node = node;
-		SimpleLogger.debug(this, "setNode()\t\t" + node);
-		searching = false;
-		continuousScrolling = true;
-		
-		super.setSelectedIndex(selectedIndex);
-		
-		// see if the node is selection box ..
-		if(node instanceof Element) {
-			Element elem = (Element)node;
-			if(elem.getName().equals("s")) {
-				// see if it has multiple choice ..
-				isMultipleSelection = DefaultComplexListener.isPositiveAttribute(elem, "m");
-			}
-		}
-		this.repaint();
 	}
 #endif
 	
@@ -142,14 +135,17 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 #endif
 
 	protected override ArrayList<Replicable>*getItems() {
+		print("Showing list item 0\n");
+		core.assert(doc != null);
 		return (doc == null)?null:&doc.contents;
 	}
 
 	protected override ListViewItem getListItem(Replicable given) {
 		// get the element
+		print("Showing list item 2\n");
 		AugmentedContent elem = (AugmentedContent)given;
 		etxt data = etxt.stack(128);
-		switch(elem.ctype) {
+		switch(elem.cType) {
 			case AugmentedContent.ContentType.TEXT_INPUT_CONTENT:
 			{
 				elem.getText(&data);
@@ -215,6 +211,9 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 				break;
 		}
 		elem.getText(&data);
+		etxt dlg = etxt.stack(256);
+		dlg.printf("Plain line :%s\n", data.to_string());
+		Watchdog.logMsgDoNotUse(&dlg);
 		// see if the label has any image
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 	}

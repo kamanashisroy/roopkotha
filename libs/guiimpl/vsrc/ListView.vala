@@ -50,7 +50,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		vpos = 0;
 		continuous_scrolling = true;
 		item_font = new FontImpl();
-		etxt dlg = etxt.from_static("Created xultb_list\n");
+		etxt dlg = etxt.from_static("Created ListView\n");
 		Watchdog.logMsgDoNotUse(&dlg);
 	}
 	
@@ -103,6 +103,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		  li = getListItem(obj);
 		}
 #else
+		print("Showing list item 1\n");
 		li = this.getListItem(data);
 #endif
 		if(li == null)
@@ -141,8 +142,10 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		dlg.printf("Iterating items(%d)\n", this.vpos);
 		Watchdog.logMsgDoNotUse(&dlg);
 		for (i = this.vpos;;i++) {
+			print("Showing list item :%d\n", i);
 			Replicable? obj = items.get(i);
 			if(obj == null) {
+				print("Showing list item :%d:Object is NULL\n", i);
 				break;
 			}
 			/* see if selected index is more than the item count */

@@ -7,7 +7,9 @@ using roopkotha;
  */
 public abstract class roopkotha.AugmentedContent : Replicable {
 	public enum ContentType {
-		LABEL_CONTENT,	
+		UNKNOWN_CONTENT,
+		PLAIN_CONTENT,
+		LABEL_CONTENT,
 		TEXT_INPUT_CONTENT,
 		SELECTION_CONTENT,
 		RADIO_CONTENT,
@@ -15,8 +17,9 @@ public abstract class roopkotha.AugmentedContent : Replicable {
 		MARKUP_CONTENT,
 	}
 	protected ContentType _cType;
-	public ContentType ctype {public get {return _cType;}}
+	public ContentType cType {public get {return _cType;}}
 	public AugmentedContent() {
+		_cType = ContentType.UNKNOWN_CONTENT;
 	}
 	public virtual int getLabel(etxt*data) {
 		return 0;

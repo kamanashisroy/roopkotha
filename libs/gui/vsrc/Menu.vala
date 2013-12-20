@@ -63,13 +63,13 @@ public abstract class roopkotha.Menu : Replicable {
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.fgBase%);
 		g.setColor(0xFFFFFF);
 
-		if(left != null && left.length() != 0) {
+		if(left != null && !left.is_empty_magical()) {
 			roopkotha.GUIInput.register_action(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(left, 0, left.length()), height);
 			g.drawString(left, roopkotha.Menu.display.PADDING, 0, width, height - roopkotha.Menu.display.PADDING, roopkotha.Graphics.anchor.LEFT
 					| roopkotha.Graphics.anchor.BOTTOM);
 	//		SYNC_LOG(SYNC_VERB, "left option:%s\n", left.str);
 		}
-		if(right != null && right.length() != 0) {
+		if(right != null && !right.is_empty_magical()) {
 			roopkotha.GUIInput.register_action(right, width - BASE_FONT.subStringWidth(right, 0, right.length()), height - BASE_HEIGHT, width, height);
 			g.drawString(right, roopkotha.Menu.display.PADDING, 0, width - roopkotha.Menu.display.PADDING, height - roopkotha.Menu.display.PADDING,
 					roopkotha.Graphics.anchor.RIGHT | roopkotha.Graphics.anchor.BOTTOM);

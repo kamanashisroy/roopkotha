@@ -2,24 +2,9 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.WritePad : Replicable {
-	GUICoreImpl impl;
-	DocumentView lv;
-	PlainDocument emptyDoc;
+public class roopkotha.WritePad : WritePadMenu {
 	public WritePad() {
-		init();
-	}
-	void init() {
-		impl = new GUICoreImpl();
-		etxt title = etxt.from_static("Roopkotha");
-		etxt dc = etxt.from_static("quit");
-		lv = new DocumentView(&title, &dc);	
-		emptyDoc = new PlainDocument();
-		etxt elem = etxt.from_static("Write something here..");
-		emptyDoc.addLine(&elem);
-		lv.setDocument(emptyDoc, 0);
-		MainTurbine.gearup(impl);
-		lv.show();
+		base();
 	}
 	public int loadFile(etxt*fn) {
 		Watchdog.logString("WritePadCommand:Open file ...\n");
@@ -33,7 +18,7 @@ public class roopkotha.WritePad : Replicable {
 			pd.setInputStream(fistm);
 			pd.tryReading();
 			fistm.close();
-			lv.setDocument(pd, 0);
+			show(pd);
 
 			Watchdog.logString("WritePadCommand:Open file: Done.\n");
 		} catch(IOStreamError.FileInputStreamError e) {
@@ -43,10 +28,12 @@ public class roopkotha.WritePad : Replicable {
 		return 0;
 	}
 	void test_doc() {
+		PlainDocument testDoc = new PlainDocument();
 		etxt elem = etxt.from_static("good");
-		emptyDoc.addLine(&elem);
-		lv.show();
+		testDoc.addLine(&elem);
+		show(testDoc);
 	}
+#if false
 	//Turbine gtb;
 	void test_ui() {
 		Watchdog.logString("test gui started .\n");
@@ -71,6 +58,5 @@ public class roopkotha.WritePad : Replicable {
 		Watchdog.logString("WritePadCommand:test_ui:list show\n");
 		//gtb.startup();
 	}
-
-
+#endif
 }

@@ -33,9 +33,12 @@ C_CAPSULE_START
 
 static QApplication*app;
 QTRoopkothaGUICore*qt_impl_guicore_create() {
-	char*argv[2] = {"yourapp","man"};
+	char*argv[2] = {"yourapp", "man"};
 	int argc = 1;
+	printf("**************************Allocating new application**************\n");
 	app = new QApplication(argc, argv);
+	printf(" argv0: %s\n", app->arguments().at(0).data());
+	app->setAttribute(Qt::AA_ImmediateWidgetCreation); // This is important, otherwise the application gets crashed when we show window or something.
 	return app;
 }
 void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
@@ -43,7 +46,7 @@ void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
 }
 
 int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
-    app->processEvents(0,100);
+  app->processEvents(0,100);
 	return 0;
 }
 

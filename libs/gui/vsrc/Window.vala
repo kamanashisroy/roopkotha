@@ -52,7 +52,7 @@ public abstract class roopkotha.Window : Replicable {
 		this.panelTop = TITLE_FONT.getHeight() + PADDING*2;
 	}
 	public abstract void show();
-	public void show_full(ArrayList<txt>*left_option, aroop.txt right_option) {
+	public void showFull(ArrayList<txt>*left_option, aroop.txt right_option) {
 		menu.set(left_option, right_option);
 		this.show();
 	}
@@ -69,7 +69,7 @@ public abstract class roopkotha.Window : Replicable {
 	}
 
 	public virtual void paint(roopkotha.Graphics g) {
-		//paint_title(g);
+		paint_title(g);
 		menu.paint(g, width, height);
 	}
 	
@@ -106,6 +106,7 @@ public abstract class roopkotha.Window : Replicable {
 				, panelTop
 				//, 1);
 				, roopkotha.Graphics.anchor.TOP |roopkotha.Graphics.anchor.HCENTER);
+		//core.assert("Reached" == null);
 	}
 }
 

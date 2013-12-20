@@ -48,6 +48,9 @@ public class onubodh.WritePadCommand : M100Command {
 				print("unimplemented\n");
 				break;
 			}
+			if(wpad == null) {
+				wpad = new WritePad();
+			}
 		} while(false);
 		bye(pad, false);
 		return 0;

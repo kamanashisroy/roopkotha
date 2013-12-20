@@ -5,8 +5,10 @@ using roopkotha;
 public class roopkotha.GUICoreImpl : roopkotha.GUICore {
 	GUICorePlatformImpl plat;
 	public GUICoreImpl() {
+		print("Creating new platform application\n");
 		plat = GUICorePlatformImpl.create();
 		base(new GraphicsImpl());
+		step();
 	}
 	
 	~GUICoreImpl() {

@@ -25,7 +25,7 @@ void qt_impl_window_show(QTRoopkothaWindow*qw) {
 }
 
 //static int (*qt_handle_event)(int flags, int key_code, int x, int y) = NULL;
-int qt_process_mouse_event_helper(int flags, int key_code, int x, int y) {
+int qt_process_mouse_event_helper(int UNUSED_VAR(flags), int UNUSED_VAR(key_code), int UNUSED_VAR(x), int UNUSED_VAR(y)) {
 	//if(qt_handle_event) {
 //		GUI_INPUT_LOG("event callback ..\n");
         //return qt_handle_event(flags, key_code, x, y);

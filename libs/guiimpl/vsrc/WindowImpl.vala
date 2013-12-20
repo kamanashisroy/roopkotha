@@ -5,6 +5,8 @@ using roopkotha;
 public class roopkotha.WindowImpl : roopkotha.Window {
 	WindowPlatformImpl plat;
 	public WindowImpl(etxt*aTitle) {
+		menu = new MenuImpl();
+		TITLE_FONT = new FontImpl();
 		base(aTitle);
 		plat = WindowPlatformImpl.create();
 	}

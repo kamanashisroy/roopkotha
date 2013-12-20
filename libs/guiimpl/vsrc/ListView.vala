@@ -36,7 +36,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	int bottomMargin;
 	int RESOLUTION;
 
-	aroop.txt default_command;
+	aroop.txt defaultCommand;
 			//ActionListener lis;
 	public enum display {
 		HMARGIN = 3,
@@ -46,7 +46,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	
 	public ListView(etxt*aTitle, etxt*aDefault_command) {
 		base(aTitle);
-		default_command = new txt.memcopy_etxt(aDefault_command);
+		defaultCommand = new txt.memcopy_etxt(aDefault_command);
 		vpos = 0;
 		continuous_scrolling = true;
 		item_font = new FontImpl();
@@ -94,7 +94,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		return false;
 	}
 	
-	private int show_item(roopkotha.Graphics g, Replicable data, int y, bool selected) {
+	private int showItem(roopkotha.Graphics g, Replicable data, int y, bool selected) {
 		roopkotha.ListViewItem? li = null;
 #if false
 		if(obj instanceof ListItem) {
@@ -117,7 +117,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		return ret;
 	}
 
-	private void show_items(roopkotha.Graphics g) {
+	private void showItems(roopkotha.Graphics g) {
 		int i = -1;
 		aroop.ArrayList<Replicable>*items = this.getItems();
 		int posY = this.panelTop + this.topMargin;
@@ -151,12 +151,12 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			/* see if selected index is more than the item count */
 			dlg.printf("Showing item\n");
 			Watchdog.logMsgDoNotUse(&dlg);
-			posY += this.show_item(g, obj, posY, i == this.selected_index);
+			posY += this.showItem(g, obj, posY, i == this.selected_index);
 			if (posY > (this.menuY - this.bottomMargin)) {
 				if (this.selected_index >= i && this.vpos < this.selected_index) {
 					this.vpos++;
 					/* try to draw again */
-					this.show_items(g);
+					this.showItems(g);
 				}
 				/* no more place to draw */
 
@@ -180,7 +180,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		dlg.printf("Drawing list...\n");
 		Watchdog.logMsgDoNotUse(&dlg);
 		/* Draw the ListView Items */
-		this.show_items(g);
+		this.showItems(g);
 		if (this.vpos > 0) {
 			// So there are elements that can be scrolled back ..
 			// draw an arrow
@@ -191,16 +191,16 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y, x + roopkotha.ListView.display.RESOLUTION, y + roopkotha.ListView.display.RESOLUTION,
 					x, y + roopkotha.ListView.display.RESOLUTION);
 		}
-#if FIXMELATTER
+#if FIXME_LATER
 		base.paint(g);
 #endif
 		aroop.txt hint = this.get_hint();
-		if (hint != null && !roopkotha.Menu.is_active() && this.selected_index != -1 && this.getCount()
+		if (hint != null && !menu.isActive() && this.selected_index != -1 && this.getCount()
 				!= 0) {
 			// #ifndef net.ayaslive.miniim.ui.core.list.draw_menu_at_last
 			// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.bg%);
 			g.setColor(0xFFFFFF);
-			g.setFont(roopkotha.Menu.get_base_font());
+			g.setFont(menu.getBaseFont());
 			// #endif
 			g.drawString(hint
 					, 0
@@ -296,7 +296,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 					, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
 		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_ENTER) {
 			if(this.lis != null) {
-				this.lis.perform_action(this.default_command/*target*/); // should not it be target !
+				this.lis.perform_action(this.defaultCommand/*target*/); // should not it be target !
 				/*----------------------------------------------- repaint only the list and menu */
 				roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
 						, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);

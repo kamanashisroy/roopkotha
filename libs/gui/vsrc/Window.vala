@@ -30,7 +30,10 @@ public abstract class roopkotha.Window : Replicable {
 	public int panelTop;
 	public int PADDING;
 	public ActionListener? lis;
+	protected Menu? menu;
+	protected Font?TITLE_FONT;
 	public Window(etxt*aTitle) {
+		core.assert(menu != null);
 		title = new txt.memcopy_etxt(aTitle);
 		this.init(200, 400);
 		lis = null;
@@ -43,12 +46,14 @@ public abstract class roopkotha.Window : Replicable {
 		/** The height of the list */
 		/** Menu start position by pixel along Y-axis */
 		this.height = h;
-		this.menuY = h - 0;//xultb_menu_get_base_height();
-		//this.panelTop = this.vtable->TITLE_FONT->get_height(this->vtable->TITLE_FONT)+ this->vtable->PADDING*2;
+		this.menuY = h - menu.getBaseHeight();
+		//this.menuY = h - 0;
+		core.assert(TITLE_FONT != null);
+		this.panelTop = TITLE_FONT.getHeight() + PADDING*2;
 	}
 	public abstract void show();
-	public void show_full(ArrayList<Replicable>*left_option, aroop.txt right_option) {
-		//xultb_menu_set(left_option, right_option);
+	public void show_full(ArrayList<txt>*left_option, aroop.txt right_option) {
+		menu.set(left_option, right_option);
 		this.show();
 	}
 	public bool is_showing() {
@@ -64,8 +69,8 @@ public abstract class roopkotha.Window : Replicable {
 	}
 
 	public virtual void paint(roopkotha.Graphics g) {
-		paint_title_impl(g);
-		//xultb_menu_paint(g, this->width, this->height);
+		paint_title(g);
+		menu.paint(g, width, height);
 	}
 	
 	public virtual void postPaint(roopkotha.Graphics g) {
@@ -78,7 +83,9 @@ public abstract class roopkotha.Window : Replicable {
 		//}
 		return false;
 	}
-	private void paint_title_impl(roopkotha.Graphics g) {
+
+	void paint_title(roopkotha.Graphics g) {
+		core.assert("Reached" == null);
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);
@@ -92,10 +99,12 @@ public abstract class roopkotha.Window : Replicable {
 		/* Write the title */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleFg%);
 		g.setColor(0xFFFFFF);
-		//g.setFont(this.vtable->TITLE_FONT);
-		g.drawString(this.title, 0, 2
-				, this.width
-				, this.height
+		g.setFont(TITLE_FONT);
+		print(title.to_string());
+		g.drawString(title, 0, 2
+				, width
+				//, height
+				, panelTop
 				//, 1);
 				, roopkotha.Graphics.anchor.TOP |roopkotha.Graphics.anchor.HCENTER);
 	}

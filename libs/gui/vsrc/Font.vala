@@ -45,10 +45,6 @@ public abstract class roopkotha.Font : Replicable {
 
 	public abstract int subStringWidth(etxt*str, int offset, int width);
 
-	public static roopkotha.Font? create() {
-		// TODO call platform font create function
-		return null;
-	}
 #if false
 	struct xultb_font*xultb_font_get(int face, int style, int size);
 	int xultb_font_get_face(struct xultb_font*font);

@@ -25,10 +25,12 @@ public class roopkotha.PlainDocument : RoopDocument {
 	}
 
 	public void tryReading() {
-		etxt data = etxt.stack(512);
-		core.assert(listrm != null);
-		while(listrm.read(&data) > 0) {
+		do {
+			etxt data = etxt.stack(512);
+			core.assert(listrm != null);
+			int ln = listrm.read(&data);
+			if(ln == 0) break;
 			addLine(&data);
-		}
+		} while(true);
 	}
 }

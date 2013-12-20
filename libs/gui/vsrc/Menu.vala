@@ -21,32 +21,31 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.Menu : Replicable {
+public abstract class roopkotha.Menu : Replicable {
 	public enum display {
 		PADDING = 3
 	}
-	static bool menu_is_active = false;
+	bool menu_is_active = false;
 	//static aroop.txt SELECT;
-	static txt MENU;
-	static txt CANCEL;
-	static txt rightOption; /* < will be displayed when menu is inactive */
-	static ArrayList<txt>*menuOptions;
+	txt MENU;
+	txt CANCEL;
+	txt rightOption; /* < will be displayed when menu is inactive */
+	ArrayList<txt>*menuOptions;
 
-	static int menuMaxWidth = -1;
-	static int menuMaxHeight = -1;
+	int menuMaxWidth = -1;
+	int menuMaxHeight = -1;
 
 
-	static int BASE_FONT_HEIGHT;
-	static int TOWER_MENU_ITEM_HEIGHT;
-	static int TOWER_FONT_HEIGHT;
-	static roopkotha.Font TOWER_FONT;
-	static roopkotha.Font BASE_FONT;
+	int BASE_FONT_HEIGHT;
+	int TOWER_MENU_ITEM_HEIGHT;
+	int TOWER_FONT_HEIGHT;
+	protected roopkotha.Font? TOWER_FONT;
+	protected roopkotha.Font? BASE_FONT;
 
-	static int BASE_HEIGHT;
+	int BASE_HEIGHT;
+	int currentlySelectedIndex = 0;
 
-	static int currentlySelectedIndex = 0;
-
-	static void draw_base(roopkotha.Graphics g, int width, int height, aroop.txt? left, aroop.txt? right) {
+	void draw_base(roopkotha.Graphics g, int width, int height, aroop.txt? left, aroop.txt? right) {
 		/* draw the background of the menu */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgBase%);
 		g.setColor(0x006699);
@@ -77,7 +76,7 @@ public class roopkotha.Menu : Replicable {
 		}
 	}
 
-	private static void precalculate() {
+	void precalculate() {
 		int currentWidth = 0;
 		int i;
 		/* we'll simply check each option and find the maximal width */
@@ -95,7 +94,7 @@ public class roopkotha.Menu : Replicable {
 		menuMaxWidth += 2 * roopkotha.Menu.display.PADDING; /* roopkotha.Menu.display.PADDING from left and right */
 	}
 
-	private static void draw_tower(roopkotha.Graphics g, int width, int height,
+	void draw_tower(roopkotha.Graphics g, int width, int height,
 				int selectedOptionIndex) {
 
 		/* draw menu options */
@@ -105,7 +104,7 @@ public class roopkotha.Menu : Replicable {
 
 		/* check out the max width of a menu (for the specified menu font) */
 		if(menuMaxWidth == -1) {
-			roopkotha.Menu.precalculate();
+			precalculate();
 		}
 		/* Tower top position */
 		int menuOptionY = height - BASE_HEIGHT - menuMaxHeight - 1;
@@ -161,7 +160,7 @@ public class roopkotha.Menu : Replicable {
 		}
 	}
 
-	public static void paint(roopkotha.Graphics g, int width, int height) {
+	internal void paint(roopkotha.Graphics g, int width, int height) {
 		if(menu_is_active) {
 			draw_base(g, width, height, CANCEL, rightOption);
 			draw_tower(g, width, height, currentlySelectedIndex);
@@ -178,18 +177,18 @@ public class roopkotha.Menu : Replicable {
 		}
 		return;
 	}
-	public static int get_base_height() {
-		core.assert("This is unimplemented" == null);
-		return 0;
+	internal int getBaseHeight() {
+		//core.assert("This is unimplemented" == null);
+		return BASE_HEIGHT;
 	}
-	public static roopkotha.Font? get_base_font() {
+	public roopkotha.Font? getBaseFont() {
 		core.assert("This is unimplemented" == null);
 		return null;
 	}
-	public static bool is_active() {
+	public bool isActive() {
 		return menu_is_active;
 	}
-	public static int set(ArrayList<txt>*left_option, aroop.txt? right_option) {
+	internal int set(ArrayList<txt>*left_option, aroop.txt? right_option) {
 		if(right_option != null) {
 			rightOption = right_option;
 		} else {
@@ -200,7 +199,7 @@ public class roopkotha.Menu : Replicable {
 		currentlySelectedIndex = 0;
 		return 0;
 	}
-	public static bool handle_event(roopkotha.Window win, txt?target, int flags, int key_code, int x, int y) {
+	public bool handle_event(roopkotha.Window win, txt?target, int flags, int key_code, int x, int y) {
 		if((flags & roopkotha.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
 			switch(x) {
 			case roopkotha.GUIInput.keyEventType.KEY_UP:
@@ -328,11 +327,11 @@ public class roopkotha.Menu : Replicable {
 		}
 		return true; /* menu action has done something, so the action is digested */
 	}
-	public static int system_init() {
+	public Menu() {
 	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
 		menuOptions = null;
-		TOWER_FONT = roopkotha.Font.create(); // Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
-		BASE_FONT = roopkotha.Font.create(); // Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);
+		core.assert(TOWER_FONT != null);
+		core.assert(BASE_FONT != null);
 		TOWER_FONT_HEIGHT = TOWER_FONT.getHeight();
 		BASE_FONT_HEIGHT = BASE_FONT.getHeight();
 		TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
@@ -341,7 +340,6 @@ public class roopkotha.Menu : Replicable {
 		CANCEL = new aroop.txt("Cancel", 6, null, 0);
 		MENU = new aroop.txt("Menu", 4, null, 0);
 		rightOption = aroop.txt.BLANK_STRING;
-		return 0;
 	}
 }
 

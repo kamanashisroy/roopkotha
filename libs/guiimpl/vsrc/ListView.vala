@@ -191,9 +191,9 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y, x + roopkotha.ListView.display.RESOLUTION, y + roopkotha.ListView.display.RESOLUTION,
 					x, y + roopkotha.ListView.display.RESOLUTION);
 		}
-#if FIXME_LATER
+//#if FIXME_LATER
 		base.paint(g);
-#endif
+//#endif
 		aroop.txt hint = this.get_hint();
 		if (hint != null && !menu.isActive() && this.selected_index != -1 && this.getCount()
 				!= 0) {

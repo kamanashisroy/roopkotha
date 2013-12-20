@@ -7,7 +7,7 @@ public class roopkotha.PlainContent : AugmentedContent {
 	public PlainContent(etxt*asciiData) {
 		base();
 		data = new txt.memcopy_etxt(asciiData);
-		_cType = ContentType.PLAIN_CONTENT;
+		cType = ContentType.PLAIN_CONTENT;
 		print("PlainContent:%s\n", data.to_string());
 	}
 	public override int getText(etxt*tData) {

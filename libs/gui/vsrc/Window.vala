@@ -69,7 +69,7 @@ public abstract class roopkotha.Window : Replicable {
 	}
 
 	public virtual void paint(roopkotha.Graphics g) {
-		paint_title(g);
+		//paint_title(g);
 		menu.paint(g, width, height);
 	}
 	
@@ -85,7 +85,6 @@ public abstract class roopkotha.Window : Replicable {
 	}
 
 	void paint_title(roopkotha.Graphics g) {
-		core.assert("Reached" == null);
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);

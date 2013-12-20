@@ -16,10 +16,9 @@ public abstract class roopkotha.AugmentedContent : Replicable {
 		CHECKBOX_CONTENT,
 		MARKUP_CONTENT,
 	}
-	protected ContentType _cType;
-	public ContentType cType {public get {return _cType;}}
+	public ContentType cType {public get;protected set;}
 	public AugmentedContent() {
-		_cType = ContentType.UNKNOWN_CONTENT;
+		cType = ContentType.UNKNOWN_CONTENT;
 	}
 	public virtual int getLabel(etxt*data) {
 		return 0;

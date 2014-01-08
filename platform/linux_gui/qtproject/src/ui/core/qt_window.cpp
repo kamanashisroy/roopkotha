@@ -29,7 +29,7 @@ static void*qt_handle_event_data;
 int qt_process_mouse_event_helper(int flags, int key_code, int x, int y) {
 	if(qt_handle_event) {
 		//GUI_INPUT_LOG("event callback ..\n");
-    return qt_handle_event(flags, key_code, x, y, qt_handle_event_data);
+    return qt_handle_event(qt_handle_event_data, flags, key_code, x, y);
 	}
 	return 0;
 }

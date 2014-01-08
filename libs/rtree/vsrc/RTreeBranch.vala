@@ -31,6 +31,8 @@ public class roopkotha.RTreeBranch : Replicable {
 
 	static RTreeBranch create() {
 		RTreeBranch b = factory.alloc_full();
+		//core.memclean_raw(&b.child,sizeof(RTreeNode));
+		b.memclean_raw();
 		b.factoryBuild();
 		return b;
 	}

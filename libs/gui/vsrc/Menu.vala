@@ -45,7 +45,7 @@ public abstract class roopkotha.Menu : Replicable {
 	int BASE_HEIGHT;
 	int currentlySelectedIndex = 0;
 
-	void draw_base(roopkotha.Graphics g, int width, int height, aroop.txt? left, aroop.txt? right) {
+	void draw_base(roopkotha.Window parent, roopkotha.Graphics g, int width, int height, aroop.txt? left, aroop.txt? right) {
 		/* draw the background of the menu */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgBase%);
 		g.setColor(0x006699);
@@ -64,13 +64,13 @@ public abstract class roopkotha.Menu : Replicable {
 		g.setColor(0xFFFFFF);
 
 		if(left != null && !left.is_empty_magical()) {
-			roopkotha.GUIInput.register_action(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(left, 0, left.length()), height);
+			parent.gi.registerScreenEvent(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(left, 0, left.length()), height);
 			g.drawString(left, roopkotha.Menu.display.PADDING, 0, width, height - roopkotha.Menu.display.PADDING, roopkotha.Graphics.anchor.LEFT
 					| roopkotha.Graphics.anchor.BOTTOM);
 	//		SYNC_LOG(SYNC_VERB, "left option:%s\n", left.str);
 		}
 		if(right != null && !right.is_empty_magical()) {
-			roopkotha.GUIInput.register_action(right, width - BASE_FONT.subStringWidth(right, 0, right.length()), height - BASE_HEIGHT, width, height);
+			parent.gi.registerScreenEvent(right, width - BASE_FONT.subStringWidth(right, 0, right.length()), height - BASE_HEIGHT, width, height);
 			g.drawString(right, roopkotha.Menu.display.PADDING, 0, width - roopkotha.Menu.display.PADDING, height - roopkotha.Menu.display.PADDING,
 					roopkotha.Graphics.anchor.RIGHT | roopkotha.Graphics.anchor.BOTTOM);
 		}
@@ -94,7 +94,7 @@ public abstract class roopkotha.Menu : Replicable {
 		menuMaxWidth += 2 * roopkotha.Menu.display.PADDING; /* roopkotha.Menu.display.PADDING from left and right */
 	}
 
-	void draw_tower(roopkotha.Graphics g, int width, int height,
+	void draw_tower(roopkotha.Window parent, roopkotha.Graphics g, int width, int height,
 				int selectedOptionIndex) {
 
 		/* draw menu options */
@@ -148,7 +148,7 @@ public abstract class roopkotha.Menu : Replicable {
 				g.setColor(0xFFFFFF);
 			}
 
-			roopkotha.GUIInput.register_action(cmd, 0, menuOptionY
+			parent.gi.registerScreenEvent(cmd, 0, menuOptionY
 					, TOWER_FONT.subStringWidth(cmd, 0, cmd.length())
 					, menuOptionY + roopkotha.Menu.display.PADDING*2 + TOWER_FONT_HEIGHT);
 			menuOptionY += roopkotha.Menu.display.PADDING;
@@ -160,19 +160,19 @@ public abstract class roopkotha.Menu : Replicable {
 		}
 	}
 
-	internal void paint(roopkotha.Graphics g, int width, int height) {
+	internal void paint(roopkotha.Window parent, roopkotha.Graphics g, int width, int height) {
 		if(menu_is_active) {
-			draw_base(g, width, height, CANCEL, rightOption);
-			draw_tower(g, width, height, currentlySelectedIndex);
+			draw_base(parent, g, width, height, CANCEL, rightOption);
+			draw_tower(parent, g, width, height, currentlySelectedIndex);
 		} else {
 			aroop.txt cmd;
 			if(menuOptions != null && menuOptions.count_unsafe() == 1) {
 				cmd = menuOptions.get(0);
-				draw_base(g, width, height, cmd, rightOption);
+				draw_base(parent, g, width, height, cmd, rightOption);
 			} else if(menuOptions != null && menuOptions.count_unsafe() > 1){
-				draw_base(g, width, height, MENU, rightOption);
+				draw_base(parent, g, width, height, MENU, rightOption);
 			} else {
-				draw_base(g, width, height, null, rightOption);
+				draw_base(parent, g, width, height, null, rightOption);
 			}
 		}
 		return;

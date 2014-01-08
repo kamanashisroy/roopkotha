@@ -53,7 +53,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 		}
 	}
 
-	public override int paint(roopkotha.Graphics g, int x, int y, int width, bool selected) {
+	public override int paint(roopkotha.Window parent, roopkotha.Graphics g, int x, int y, int width, bool selected) {
 		int start, pos, ret, labelWidth, labelHeight, lineCount;
 		int imgspacing = 0;
 		if (img != null) {
@@ -109,7 +109,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 					g.setColor(0xFFFFFF);
 				}
 				if (is_editable && target != null && type == ListViewItem.itemtype.LABEL) {
-					GUIInput.register_action(target, x + imgspacing + ListViewItem.display.PADDING
+					parent.gi.registerScreenEvent(target, x + imgspacing + ListViewItem.display.PADDING
 							, y + ret + ListViewItem.display.PADDING
 							, x + imgspacing + ListViewItem.display.PADDING + ITEM_FONT.subStringWidth(&label, start, pos)
 							, y + ret + ListViewItem.display.PADDING + FONT_HEIGHT);
@@ -203,7 +203,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 		g.setColor(focused ? (is_editable ? 0x006699 : 0x999999) : 0xCCCCCC);
 
 		if(is_editable && target != null) {
-			GUIInput.register_action(target, x + labelWidth, y + ListViewItem.display.PADDING, width,
+			parent.gi.registerScreenEvent(target, x + labelWidth, y + ListViewItem.display.PADDING, width,
 					y + ret - ListViewItem.display.PADDING);
 		}
 		/* draw a square */

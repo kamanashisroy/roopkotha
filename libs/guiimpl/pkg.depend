@@ -4,4 +4,5 @@ libs/watchdog
 libs/rawimg
 -ROOPKOTHA_HOME
 libs/gui
+libs/rtree
 platform/linux_gui

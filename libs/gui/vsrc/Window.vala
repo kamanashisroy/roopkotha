@@ -30,6 +30,7 @@ public abstract class roopkotha.Window : Replicable {
 	public int panelTop;
 	public int PADDING;
 	public ActionListener? lis;
+	public GUIInput gi;
 	protected Menu? menu;
 	protected Font?TITLE_FONT;
 	public Window(etxt*aTitle) {
@@ -70,13 +71,13 @@ public abstract class roopkotha.Window : Replicable {
 
 	public virtual void paint(roopkotha.Graphics g) {
 		paint_title(g);
-		menu.paint(g, width, height);
+		menu.paint(this, g, width, height);
 	}
 	
 	public virtual void postPaint(roopkotha.Graphics g) {
 	}
 	
-	public virtual bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
+	public virtual bool handle_event(Replicable?target, int flags, int key_code, int x, int y) {
 		//if(xultb_menu_handle_event(this, target, flags, key_code, x, y)) {
 		//	xultb_guicore_set_dirty(this);
 		//	return 1;

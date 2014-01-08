@@ -4,11 +4,16 @@ using roopkotha;
 
 public class roopkotha.WindowImpl : roopkotha.Window {
 	WindowPlatformImpl plat;
+	GUIInputImpl giimpl;
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
 		TITLE_FONT = new FontImpl();
 		base(aTitle);
 		plat = WindowPlatformImpl.create();
+		giimpl = new GUIInputImpl();
+		giimpl.reset(this);
+		gi = giimpl;
+		plat.setEventHandler(giimpl.eventCallback);
 	}
 	
 	~WindowImpl() {
@@ -17,10 +22,6 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	public override void show() {
 		Watchdog.logString("WindowImpl:show\n");
 		roopkotha.GUICore.setDirty(this);
-#if FIXME_LATER
-		xultb_guicore_walk(0); // XXX should I force it to render ??
-		//GUI_LOG("Showing Window ..[It should be called once ..]\n");
-#endif
 		plat.show();
 	}
 		

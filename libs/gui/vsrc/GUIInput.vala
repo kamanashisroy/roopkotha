@@ -22,7 +22,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class roopkotha.GUIInput : Replicable {
+public abstract class roopkotha.GUIInput : Replicable {
 
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_")]
 	public enum eventType {
@@ -41,19 +41,7 @@ public class roopkotha.GUIInput : Replicable {
 		KEY_F2 = 7,
 	}
 
-	public static int register_action(void*data, int x, int y, int width, int height) {
-		return 0;
-	}
-	public static int reset(roopkotha.Window win) { /*< This should be called before registering action */
-		return 0;
-	}
-	public static int init() {
-		return 0;
-	}
-#if false
-	public static int platform_init(int (*handle_event)(int flags, int key_code, int x, int y)) { /*< \private This will be implemented in the platform module */
-		return 0;
-	}
-#endif
+	public abstract int registerScreenEvent(Replicable?target, int x, int y, int width, int height);
+	public abstract int reset(roopkotha.Window win); /*< This should be called before registering action */
 }
 

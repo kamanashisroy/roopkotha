@@ -186,6 +186,8 @@ typedef void QTRoopkothaWindow;
 #endif
 
 C_CAPSULE_START
+typedef int (*qt_window_handle_event_t)(int flags, int key_code, int x, int y, void*cb_data);
+int qt_impl_window_set_event_handler(QTRoopkothaWindow*UNUSED_VAR(qw), qt_window_handle_event_t handler, void*data);
 void qt_impl_window_show(QTRoopkothaWindow*qwin);
 void qt_impl_window_paint_end(QTRoopkothaWindow*qw, QTRoopkothaGraphics*qtg);
 QTRoopkothaWindow*qt_impl_window_create();

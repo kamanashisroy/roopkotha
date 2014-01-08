@@ -24,24 +24,26 @@ void qt_impl_window_show(QTRoopkothaWindow*qw) {
     qw->show();
 }
 
-//static int (*qt_handle_event)(int flags, int key_code, int x, int y) = NULL;
-int qt_process_mouse_event_helper(int UNUSED_VAR(flags), int UNUSED_VAR(key_code), int UNUSED_VAR(x), int UNUSED_VAR(y)) {
-	//if(qt_handle_event) {
-//		GUI_INPUT_LOG("event callback ..\n");
-        //return qt_handle_event(flags, key_code, x, y);
-	//}
+static qt_window_handle_event_t qt_handle_event;
+static void*qt_handle_event_data;
+int qt_process_mouse_event_helper(int flags, int key_code, int x, int y) {
+	if(qt_handle_event) {
+		//GUI_INPUT_LOG("event callback ..\n");
+    return qt_handle_event(flags, key_code, x, y, qt_handle_event_data);
+	}
 	return 0;
 }
 
-#if false
-int xultb_gui_input_platform_init(int (*handle_event)(int flags, int key_code, int x, int y)) {
+int qt_impl_window_set_event_handler(QTRoopkothaWindow*UNUSED_VAR(qw), qt_window_handle_event_t handler, void*data) {
 	//GUI_INPUT_LOG("Setting event handler\n");
-	qt_handle_event = handle_event;
+	qt_handle_event = handler;
+	qt_handle_event_data = data;
 	return 0;
 }
-#endif
 
 QTRoopkothaWindow*qt_impl_window_create() {
+	qt_handle_event_data = NULL;
+	qt_handle_event = NULL;
 	return new QTRoopkothaWindow();
 }
 

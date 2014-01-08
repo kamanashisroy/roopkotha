@@ -109,7 +109,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		if(li == null)
 		  return 0;
 		li.focused = selected;
-		int ret = li.paint(g, this.leftMargin + roopkotha.ListView.display.HMARGIN
+		int ret = li.paint(this, g, this.leftMargin + roopkotha.ListView.display.HMARGIN
 				, y + roopkotha.ListView.display.VMARGIN
 				, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN - 1 - this.leftMargin - this.rightMargin
 				, selected) + roopkotha.ListView.display.VMARGIN + roopkotha.ListView.display.VMARGIN;
@@ -214,7 +214,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		Watchdog.logMsgDoNotUse(&dlg);
 	}
 
-	public override bool handle_event(Replicable target, int flags, int key_code, int x, int y) {
+	public override bool handle_event(Replicable?target, int flags, int key_code, int x, int y) {
 		roopkotha.ListView list = (roopkotha.ListView )this;
 		etxt dlg = etxt.stack(128);
 		dlg.printf("handling menu command\n");

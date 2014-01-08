@@ -19,7 +19,7 @@ public class roopkotha.GUICoreImpl : roopkotha.GUICore {
 		base.step();
 		plat.step();
 		return 0;
-    }
+  }
 
 	public override int start(Propeller?plr) { 
 		print("GUICore stepping started..\n");

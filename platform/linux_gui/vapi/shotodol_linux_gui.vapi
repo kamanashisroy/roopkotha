@@ -39,7 +39,8 @@ namespace roopkotha {
 		[CCode (cname="qt_impl_font_get_substring_width")]
 		public int subStringWidth(etxt*str, int offset, int width);
 	}
-	
+	[CCode (cname="qt_window_handle_event_t")]
+	public delegate int WindowEventHandler(int flags, int key_code, int x, int y);
 	[CCode (cname="QTRoopkothaWindow",has_copy_function=true, free_function="qt_impl_window_destroy", cheader_filename = "shotodol_linux_gui.h")]
 	public class WindowPlatformImpl {
 		[CCode (cname="qt_impl_window_create")]
@@ -48,6 +49,8 @@ namespace roopkotha {
 		public void show();
 		[CCode (cname="qt_impl_window_paint_end")]
 		public void paint_end(GraphicsPlatformImpl g);
+		[CCode (cname="qt_impl_window_set_event_handler")]
+		public int setEventHandler(WindowEventHandler eh);
 	}
 	
 	[CCode (cname="QTRoopkothaGUICore",has_copy_function=true, free_function="qt_impl_guicore_destroy", cheader_filename = "shotodol_linux_gui.h")]

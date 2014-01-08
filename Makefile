@@ -13,12 +13,14 @@ cleanapp:
 makecore:
 	$(BUILD) -C libs/gui
 	$(BUILD) -C platform/linux_gui
+	$(BUILD) -C libs/rtree
 	$(BUILD) -C libs/guiimpl
 	$(BUILD) -C libs/doc
 
 cleancore:
 	$(CLEAN) -C libs/gui
 	$(CLEAN) -C platform/linux_gui
+	$(CLEAN) -C libs/rtree
 	$(CLEAN) -C libs/guiimpl
 	$(CLEAN) -C libs/doc
 

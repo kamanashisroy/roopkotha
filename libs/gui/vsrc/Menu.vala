@@ -294,18 +294,14 @@ public abstract class roopkotha.Menu : Replicable {
 	//				}
 		if (right) {
 	//		SYNC_LOG(SYNC_VERB, "TODO: handle right command:%s\n", ((aroop.txt )target).str);
-			if(win.lis != null) {
-				win.lis.perform_action(rightOption);
-			}
+			win.onAction(rightOption);
 			menu_is_active = false;
 		} else if (menu_is_active) {
 			if(target.is_same(CANCEL as Replicable)) {
 				menu_is_active = false;
 			} else {
 	//			SYNC_LOG(SYNC_VERB, "TODO: handle left command:%s\n", ((aroop.txt )target).str);
-				if(win.lis != null) {
-					win.lis.perform_action(target);
-				}
+				win.onAction(target);
 				menu_is_active = false;
 			}
 		} else {
@@ -317,9 +313,7 @@ public abstract class roopkotha.Menu : Replicable {
 			if(menuOptions.count_unsafe() == 1) {
 	//				SYNC_LOG(SYNC_VERB, "TODO: handle first left command:%s\n", ((aroop.txt )target).str);
 				/* this is direct action */
-				if(win.lis != null) {
-					win.lis.perform_action(firstOption);
-				}
+				win.onAction(firstOption);
 			} else {
 				currentlySelectedIndex = 0;
 				menu_is_active = true;

@@ -32,7 +32,7 @@ public class roopkotha.GUIInputImpl : GUIInput {
 	int onScreenEvent(Replicable?target) {
 		// Note: -1 to make up for the +1 when data was inserted
 		//printf("Hit data rect %d\n", id-1);
-		win.handle_event(target, evt.flags, evt.key_code, evt.x, evt.y);
+		win.onEvent(target, evt.flags, evt.key_code, evt.x, evt.y);
 		//return 1; // keep going
 		return 0;
 	}
@@ -53,7 +53,7 @@ public class roopkotha.GUIInputImpl : GUIInput {
 			print("Finding point:(%d,%d)\n", x, y);
 			rtr.search(&r, onScreenEvent);
 		} else {
-			win.handle_event(null, flags, key_code, x, y);
+			win.onEvent(null, flags, key_code, x, y);
 		}
 		return 0;
 	}

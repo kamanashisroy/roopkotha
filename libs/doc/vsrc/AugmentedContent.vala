@@ -52,5 +52,10 @@ public abstract class roopkotha.AugmentedContent : Replicable {
 		//isPositiveAttribute(elem, "c")
 		return false;
 	}
+	public virtual bool isDefaultSelected() {
+		// TODO fill me
+		//isPositiveAttribute(elem, "s")
+		return false;
+	}
 }
 

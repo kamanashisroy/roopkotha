@@ -37,7 +37,6 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	int RESOLUTION;
 
 	aroop.txt defaultCommand;
-			//ActionListener lis;
 	public enum display {
 		HMARGIN = 3,
 		VMARGIN = 2,
@@ -55,10 +54,6 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	}
 	
 	~ListView() {
-	}
-
-	public void setActionListener(ActionListener aLis) {
-		if(aLis != null)this.lis = aLis;
 	}
 
 	protected abstract aroop.ArrayList<Replicable>*getItems();
@@ -90,7 +85,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		return selected_index;
 	}
 	
-	public virtual bool handle_item(Replicable?target, int flags, int key_code, int x, int y) {
+	public virtual bool onItemEvent(Replicable?target, int flags, int key_code, int x, int y) {
 		return false;
 	}
 	
@@ -214,19 +209,19 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		Watchdog.logMsgDoNotUse(&dlg);
 	}
 
-	public override bool handle_event(Replicable?target, int flags, int key_code, int x, int y) {
+	public override bool onEvent(Replicable?target, int flags, int key_code, int x, int y) {
 		roopkotha.ListView list = (roopkotha.ListView )this;
 		etxt dlg = etxt.stack(128);
 		dlg.printf("handling menu command\n");
 		Watchdog.logMsgDoNotUse(&dlg);
-		if(base.handle_event(target, flags, key_code, x, y)) {
+		if(base.onEvent(target, flags, key_code, x, y)) {
 			return true;
 		}
 
 		dlg.printf("Handle menu commands2\n");
 		Watchdog.logMsgDoNotUse(&dlg);
 		// dispatch selected element events
-		if(this.handle_item(target, flags, key_code, x, y)) {
+		if(this.onItemEvent(target, flags, key_code, x, y)) {
 			return true;
 		}
 		dlg.printf("So the target is list item\n");
@@ -295,12 +290,12 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
 					, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
 		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_ENTER) {
-			if(this.lis != null) {
-				this.lis.perform_action(this.defaultCommand/*target*/); // should not it be target !
-				/*----------------------------------------------- repaint only the list and menu */
-				roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
+			onAction(defaultCommand/*target*/); // should not it be target !
+#if false
+			/*----------------------------------------------- repaint only the list and menu */
+			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
 						, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
-			}
+#endif
 		}
 		return true;
 	}

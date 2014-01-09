@@ -21,6 +21,9 @@ using aroop;
 using shotodol;
 using roopkotha;
 
+
+public delegate void roopkotha.WindowActionCB(txt action);
+
 public abstract class roopkotha.Window : Replicable {
 	txt title;
 	public int width;
@@ -29,7 +32,7 @@ public abstract class roopkotha.Window : Replicable {
 	public int menuY;
 	public int panelTop;
 	public int PADDING;
-	public ActionListener? lis;
+	WindowActionCB?windowActionCB;
 	public GUIInput gi;
 	protected Menu? menu;
 	protected Font?TITLE_FONT;
@@ -37,7 +40,7 @@ public abstract class roopkotha.Window : Replicable {
 		core.assert(menu != null);
 		title = new txt.memcopy_etxt(aTitle);
 		this.init(200, 400);
-		lis = null;
+		windowActionCB = null;
 	}
 	public virtual void init(int w, int h) {
 		/** The width of the list */
@@ -76,8 +79,20 @@ public abstract class roopkotha.Window : Replicable {
 	
 	public virtual void postPaint(roopkotha.Graphics g) {
 	}
+
+	public void onAction(txt action) {
+		if(windowActionCB != null) {
+			windowActionCB(action);
+		}
+	}
+
+	public void setActionCB(WindowActionCB cb) {
+		if(windowActionCB != null) {
+			windowActionCB = cb;
+		}
+	}
 	
-	public virtual bool handle_event(Replicable?target, int flags, int key_code, int x, int y) {
+	public virtual bool onEvent(Replicable?target, int flags, int key_code, int x, int y) {
 		//if(xultb_menu_handle_event(this, target, flags, key_code, x, y)) {
 		//	xultb_guicore_set_dirty(this);
 		//	return 1;

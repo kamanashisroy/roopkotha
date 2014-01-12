@@ -17,127 +17,86 @@
  * along with MiniIM.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+using aroop;
+using shotodol;
+using roopkotha;
 
-#include "opp/opp_salt.h"
-#include "opp/opp_any_obj.h"
-#include "core/logger.h"
-#include "ui/core/xultb_font.h"
-#include "ui/core/xultb_text_format.h"
-#include "ui/page/xultb_markup_item.h"
-
-#if 0
-opp_vtable_declare(xultb_markup_item,
-//	int (*initialize)(struct xultb_markup_item*item, void*data);
-//	void (*render_node)(struct xultb_markup_item*item, struct xultb_font*font, struct xultb_ml_elem*elem);
-//	void (*render_text)(struct xultb_markup_item*item, struct xultb_font*font, const char*text);
-//	void (*render_image)(struct xultb_markup_item*item, struct xultb_ml_elem*elem);
-	void (*break_line)(struct xultb_markup_item*item);
-	void (*clear_line)(struct xultb_markup_item*item);
-	void (*clear_line_full)(struct xultb_markup_item*item, int y, int height);
-	void (*update_height)(struct xultb_markup_item*item, struct xultb_font*font);
-	void (*update_height_force)(struct xultb_markup_item*item, int newHeight);
-	/** List item implementation .. */
-	/*@{*/
-//	int (*paint)(struct graphics g, int x, int y, int width, boolean selected);
-	/*@}*/
-
-	void (*free)();
-
-	/// traverser
-	/*@{*/
-	void (*set_listener)(struct xultb_markup_item*item, struct xultb_event_listener*lis);
-
-	void (*free_traverser)(struct xultb_markup_item*item);
-	/** Key press listener to traverse the browsable elements */
-	int (*key_pressed)(struct xultb_markup_item*item, int key_code, int game_action);
-	void (*search_focusable_elements)(struct xultb_markup_item*item, struct xultb_ml_node*elem);
-	void (*set_focus)(struct xultb_markup_item*item, struct xultb_ml_node*elem);
-//	int (*is_focused)(struct xultb_markup_item*item, struct xultb_ml_elem*elem);
-	int (*is_active)(struct xultb_markup_item*item, struct xultb_ml_node*elem);
-	/*@}*/
-);
-#endif
-
-opp_class_declare_novtable(xultb_markup_item,
-	opp_class_extend(struct xultb_list_item);
-//	struct xultb_ml_node*root; // Document root
-	/**
-	 * y-coordinate position of the image
-	 */
-	int xPos; // = 0
-	int yPos;// = 0;
-
-//	struct xultb_graphics*g;// = null;
-
-	int lineHeight; // = 0;
-	int width;
-	xultb_bool_t selected;// = false;
-	struct xultb_media_loader*loader;// = null;
-);
-
-static int minLineHeight = 0;// = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN,Font.SIZE_SMALL).getHeight()+PADDING;
-
-static void clear_line_full(struct xultb_markup_item*item, struct xultb_graphics*g, int y, int height) {
-	if (!item->selected)
-		return;
-	int oldColor = g->get_color(g);
-	// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.bgHover%);
-	g->set_color(g, 0xCCCCCC);
-	g->fill_rect(g, 0, y, item->width, height);
-	g->set_color(g, oldColor);
-}
-
-static void clear_line(struct xultb_markup_item*item, struct xultb_graphics*g) {
-	if (!item->selected)
-		return;
-	clear_line_full(item, g, item->yPos, item->lineHeight);
-}
-
-static void break_line(struct xultb_markup_item*item, struct xultb_graphics*g) {
-	// put a line break
-	item->yPos += item->lineHeight;
-	item->xPos = 0;
-
-	// reset line height to minimum
-	item->lineHeight = minLineHeight;
-
-	// clear the next line
-	clear_line(item, g);
-}
-
-static void update_height(struct xultb_markup_item*item, struct xultb_graphics*g, int newHeight) {
-	if (newHeight > item->lineHeight) {
-		// fill with background color
-		clear_line_full(item, g, item->yPos + item->lineHeight, newHeight - item->lineHeight);
+public class roopkotha.HTMLMarkupContent : FormattedContent {
+	txt data;
+	enum XMLCapsule {
+		TAG_START = 100, // "<"
+		TAG_END, // ">"
 	}
-	item->lineHeight = newHeight;
-}
 
-static void update_height_for_font(struct xultb_markup_item*item, struct xultb_graphics*g, xultb_font_t*font) {
-	if (!font) {
-		return;
+	public HTMLMarkupContent(etxt*asciiData) {
+		base();
+		data = new txt.memcopy_etxt(asciiData);
+		cType = ContentType.FormattedContent;
+		print("FormattedContent:%s\n", data.to_string());
 	}
-	const int height = font->get_height(font);
-	if (item->lineHeight < (height + XULTB_LIST_ITEM_PADDING)) {
-		update_height(item, g, height + XULTB_LIST_ITEM_PADDING);
+
+	public override int getText(etxt*tData) {
+		tData.concat(data);
+		return 0;
+	}
+
+	public override bool isFocused() {
+		xultb_str_t*focused = xultb_ml_get_attribute_value(elem, "focused");
+		if(focused && xultb_str_equals_static(focused, "yes")) {
+			return true;
+		}
+		return false;
+	}
+
+	public override bool isActive() {
+		xultb_str_t*active = xultb_ml_get_attribute_value(elem, "active");
+		if(active && xultb_str_equals_static(active, "yes")) {
+			return true;
+		}
+		return false;
+	}
+
+	public void format(etxt*extract, FormattedTextCapsule*cap) {
+		// sanity check
+		if(extract.charAt(0) != XMLCapsule.TAG_START || extract.charAt(extract.length()-1) != XMLCapsule.TAG_END) {
+			cap.textType = FormattedTextCapsule.FormattedTextType.UNKNOWN;
+			return;
+		}
+		cap.textType = extract.charAt(1);
+	}
+	public void peelCapsule(etxt*extract, etxt*output) {
+		// sanity check
+		if(extract.charAt(0) != XMLCapsule.TAG_START || extract.charAt(extract.length()-1) != XMLCapsule.TAG_END) {
+			cap.textType = FormattedTextCapsule.FormattedTextType.UNKNOWN;
+			return;
+		}
+		int nextCapsule = 0;
+		int len = extract.length();
+		for (i = 0;i<len; i++) {
+			if(extract.charAt(i) == XMLCapsule.TAG_END) {
+				nextCapsule = i;
+				break;
+			}
+		}
+		if(nextCapsule == 0 || nextCapsule == len - 1) { // There is no internal capsule
+			return;
+		}
+		int nextCapsuleEnd = 0;
+		for (i = len-1;i; i--) {
+			if(extract.charAt(i) == XMLCapsule.TAG_START) {
+				nextCapsuleEnd = i;
+				break;
+			}
+		}
+		if(nextCapsuleEnd > nextCapsule) { // There is no internal capsule
+			return;
+		}
+		*output = etxt.same_same(extract);
+		output.trim(nextCapsuleEnd-1);
+		output.shift(nextCapsule+1);
 	}
 }
 
-static xultb_bool_t is_focused(struct xultb_ml_node*elem) {
-	xultb_str_t*focused = xultb_ml_get_attribute_value(elem, "focused");
-	if(focused && xultb_str_equals_static(focused, "yes")) {
-		return XULTB_TRUE;
-	}
-	return XULTB_FALSE;
-}
-
-static int is_active(struct xultb_ml_node*elem) {
-	xultb_str_t*active = xultb_ml_get_attribute_value(elem, "active");
-	if(active && xultb_str_equals_static(active, "yes")) {
-		return 1;
-	}
-	return 0;
-}
 
 static void renderImage(struct xultb_markup_item*item, struct xultb_ml_node*elem) {
 #if 0
@@ -183,138 +142,6 @@ static void renderImage(struct xultb_markup_item*item, struct xultb_ml_node*elem
 		}
 	}
 #endif
-}
-
-static void render_text(struct xultb_markup_item*item, struct xultb_graphics*g, xultb_font_t*font, xultb_str_t* text) {
-	int off, ret;
-//	text = text.replace('\n', ' ').replace('\r', ' ').trim(); /*< skip the newlines */
-	if (text->len == 0) { /*< empty xultb_str_t* .. skip */
-		return;
-	}
-	g->set_font(g, font);
-	update_height_for_font(item, g, font);
-
-	off = 0;
-	while ((ret = xultb_wrap_next(text, font, off, item->width - item->xPos)) != -1) {
-		xultb_str_t subtext;
-		// draw the texts ..
-		if (ret > off) {
-			// draw the line
-			xultb_substring(text, off, ret, &subtext);
-			g->draw_string(g, &subtext, item->xPos, item->yPos, 1000, 1000, XULTB_GRAPHICS_TOP
-					| XULTB_GRAPHICS_LEFT);
-			item->xPos += font->substring_width(font, text, off, ret - off);
-		}
-		if (ret == off /* no place to write a word .. */
-		|| ret < text->len /* there are more words so that we span into new line .. */
-		|| item->width - item->xPos < 0 /* pushed too much */
-		) {
-			break_line(item, g);
-		}
-		off = ret;
-	}
-
-	if (item->xPos != 0) {
-		item->xPos += 4;/* finally add a space: 4px */
-		if (item->width - item->xPos < 0) { /* pushed too much */
-			break_line(item, g);
-		}
-	}
-}
-
-static void render_node(struct xultb_markup_item*item, struct xultb_graphics*g
-		, struct xultb_font*font, struct xultb_ml_node*elem) {
-	xultb_str_t* tagName = elem->vtable->get_name(elem); /* Element name */
-	struct xultb_font*newFont = font;
-	int oldColor = g->get_color(g);
-	SYNC_ASSERT(tagName->len != 0);
-
-	if (xultb_str_equals_static(tagName, "br")) {
-		break_line(item, g);
-	} else if (xultb_str_equals_static(tagName, "img")) {
-		renderImage(item, elem);
-	} else if (xultb_str_equals_static(tagName, "b")) {
-		newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-				| XULTB_FONT_STYLE_BOLD, xultb_font_get_size(font));
-	} else if (xultb_str_equals_static(tagName, "i")) {
-		newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-				| XULTB_FONT_STYLE_ITALIC, xultb_font_get_size(font));
-	} else if (xultb_str_equals_static(tagName, "big")) {
-		newFont
-				= xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font), XULTB_FONT_SIZE_LARGE);
-	} else if (xultb_str_equals_static(tagName, "small")) {
-		newFont
-				= xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font), XULTB_FONT_SIZE_SMALL);
-	} else if (xultb_str_equals_static(tagName, "strong") || xultb_str_equals_static(tagName, "em")) {
-		/// \xxx what to do for strong text ??
-		newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-				| XULTB_FONT_STYLE_BOLD, XULTB_FONT_SIZE_MEDIUM);
-	} else if (xultb_str_equals_static(tagName, "u")) {
-		newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-				| XULTB_FONT_STYLE_UNDERLINED, xultb_font_get_size(font));
-	} else if (xultb_str_equals_static(tagName, "p")) {
-		// line break
-		break_line(item, g);
-		break_line(item, g);
-	} else if (xultb_str_equals_static(tagName, "a")) {
-
-		xultb_str_t* link = xultb_ml_get_attribute_value(elem, "href");
-
-		// draw the anchor
-		if (!OPP_FACTORY_USE_COUNT(&elem->children) || !link) {
-			// skip empty links
-		} else if (is_focused(elem)) {
-			// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.aFgHover%);
-			g->set_color(g, 0x0000FF);
-			// #expand newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font) | %net.ayaslive.miniim.ui.core.markup.aFontHover%, xultb_font_get_size(font));
-			newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-					| XULTB_FONT_STYLE_UNDERLINED | XULTB_FONT_STYLE_BOLD, xultb_font_get_size(font));
-			// SimpleLogger.debug(this, "renderNode()\t\tFocused:" + elem->getChild(0));
-		} else if (is_active(elem)) {
-			// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.aFgActive%);
-			g->set_color(g, 0xCC99FF);
-
-			// #expand newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font) | %net.ayaslive.miniim.ui.core.markup.aFontActive%, xultb_font_get_size(font));
-			newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-					| XULTB_FONT_STYLE_UNDERLINED, xultb_font_get_size(font));
-			// SimpleLogger.debug(this, "renderNode()\t\tActive:" + elem->getChild(0));
-		} else {
-			// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.aFg%);
-			g->set_color(g, 0x0000FF);
-
-			// #expand newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font) | %net.ayaslive.miniim.ui.core.markup.aFont%, xultb_font_get_size(font));
-			newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font)
-					| XULTB_FONT_STYLE_UNDERLINED, xultb_font_get_size(font));
-		}
-	} else {
-		// We do not know how to handle this element
-		// SimpleLogger.debug(this, "renderNode()\t\tNothing to do for: " + tagName);
-		// go on with inner elements
-	}
-	// render the inner nodes
-	// System.out.println("<"+tagName+">");
-//	int count = OPP_FACTORY_USE_COUNT(elem->children);//elem->getChildCount(elem);
-	int i;
-	for (i = 0;; i++) {
-		struct xultb_ml_elem*obj;
-		opp_at_ncode(obj, &elem->children, i,
-			switch (obj->type) {
-			case XULTB_ELEMENT_TEXT:
-				render_text(item, g, newFont, obj->content);
-				break;
-			case XULTB_ELEMENT_NODE:
-				render_node(item, g, newFont, (struct xultb_ml_node*) obj);
-				break;
-			default:
-				SYNC_LOG(SYNC_VERB, "Nothing to do for %s\n", obj->content->str);
-				break;
-			}
-		) else {
-			break;
-		}
-	}
-	// System.out.println("</"+tagName+">");
-	g->set_color(g, oldColor);
 }
 
 static int getActualCardHeight(struct xultb_markup_item*item) {
@@ -403,4 +230,165 @@ int xultb_markup_item_system_init() {
 int xultb_markup_item_system_deinit() {
 	opp_factory_destroy(&markup_item_factory);
 	return 0;
+}
+
+
+
+static void xultb_page_set_node(struct xultb_page*mlist
+		, struct xultb_ml_node*node, int selectedIndex) {
+	mlist->root = node;
+//	searching = false;
+	mlist->continuousScrolling = XULTB_TRUE;
+
+	opp_extvt(mlist)->set_selected_index(&mlist->super_data, selectedIndex);
+
+#if 0
+	// see if the node is selection box ..
+	if(node instanceof Element) {
+		Element elem = (Element)node;
+		if(elem.getName().equals("s")) {
+			// see if it has multiple choice ..
+			isMultipleSelection = DefaultComplexListener.isPositiveAttribute(elem, "m");
+		}
+	}
+#endif
+	mlist->super_data.super_data.vtable->show_full(&mlist->super_data.super_data, &mlist->left_menu, mlist->right_menu);
+}
+
+static struct xultb_list_item*xultb_page_get_item_helper(struct xultb_list*list, void*data) {
+	struct xultb_page*mlist = (struct xultb_page*)list;
+	struct xultb_ml_node*elem = (struct xultb_ml_node*)data;
+	xultb_str_t*name = elem->vtable->get_name(elem);
+	xultb_str_t*label = xultb_ml_get_attribute_value(elem, "l");
+	if (!name || xultb_str_equals_static(name, "m")) {
+		return (struct xultb_list_item*)xultb_markup_item_create(elem, mlist->ml, XULTB_FALSE, mlist->el);
+	} else if (xultb_str_equals_static(name, "l")) {
+		xultb_str_t*text = DOT;
+#if 0
+		if (OPP_FACTORY_USE_COUNT(&elem->children)) {
+			void*obj;
+			opp_at_ncode(obj, &elem->children, 0,
+				text = ((struct xultb_ml_elem*)obj)->content;
+				if (text) {
+					text = xultb_str_trim(text);
+				} else {
+					text = DOT;
+				}
+			);
+		}
+#else
+		text = xultb_ml_get_text(elem);
+		text = xultb_str_trim(text);
+#endif
+
+		// see if the label has any image
+		struct xultb_img*img = NULL;
+		xultb_str_t*src = xultb_ml_get_attribute_value(elem, "src");
+		if (src) {
+			img = mlist->ml->get_image(src);
+		}
+		return xultb_list_item_create_label_full(text, img, xultb_ml_get_attribute_value(elem,
+				"href") != NULL, XULTB_FALSE, elem);
+	} else if (xultb_str_equals_static(name, "t")) {
+
+		// get current text
+		xultb_str_t*text = BLANK_STRING;
+		if (/*!OPP_FACTORY_USE_COUNT(&elem->children) || */!(text = xultb_ml_get_text(elem))) {
+
+			// get hint of this field
+			text = xultb_ml_get_attribute_value(elem, "h");
+			if (!text) {
+				text = BLANK_STRING;
+			}
+		} else {
+			// get rid of spaces
+			text = xultb_str_trim(text);
+		}
+
+		// see if it is password field
+		if (xultb_list_item_attr_is_positive(elem, "p")) {
+
+			// in this case we hide the content of the password ..
+			text = xultb_str_clone(ASTERISKS_STRING->str, text->len, 0);
+		}
+
+		// do not scroll continuously when there is textfield
+		mlist->continuousScrolling = XULTB_FALSE;
+		GUI_LOG("Text input box...... label:[%1.1s], text:[%1.1s]\n", label?label->str:"", text?text->str:"");
+
+		struct xultb_list_item*ret = xultb_list_item_create_text_input_full(label, text,
+				xultb_list_item_attr_is_positive(elem, "w"), XULTB_TRUE);
+		return ret;
+	} else if (xultb_str_equals_static(name, "s")) {
+
+		// get selected index
+		xultb_str_t*buffer = xultb_str_alloc(NULL, 512, NULL, 0);
+		int first = XULTB_TRUE;
+		int i;
+//		int count = OPP_FACTORY_USE_COUNT(&elem->children);
+		for (i = 0; ; i++) {
+			struct xultb_ml_node*obj;
+			opp_at_ncode2(obj, struct xultb_ml_node*, (&elem->children), i,
+				// see if it is selected
+				if (obj->elem.type == XULTB_ELEMENT_NODE && xultb_list_item_attr_is_positive(obj, "s")) {
+					xultb_str_t*tmp = xultb_ml_get_text(obj);
+					if (tmp) {
+						if (first) {
+							first = XULTB_FALSE;
+						} else {
+							xultb_str_cat_char(buffer, ',');
+						}
+						tmp = xultb_str_trim(tmp);
+						xultb_str_cat(buffer, tmp);
+					}
+				}
+			) else {
+				break;
+			}
+		}
+
+		// do not scroll continuously when there is selection box
+		mlist->continuousScrolling = XULTB_FALSE;
+		return xultb_list_item_create_selection_box(label, buffer,
+				XULTB_TRUE);
+	} else if (xultb_str_equals_static(name, "r")) {
+		// render radio button
+
+		return xultb_list_item_create_radio_button(label,
+				xultb_list_item_attr_is_positive(elem, "c"), XULTB_TRUE);
+	} else if (xultb_str_equals_static(name, "ch")) {
+		// so it is checkbox
+
+		return xultb_list_item_create_checkbox(label,
+				xultb_list_item_attr_is_positive(elem, "c"), XULTB_TRUE);
+	} else if (xultb_str_equals_static(name, "o")) {
+		// so it is selection option
+		// get current text
+		xultb_str_t*text = NULL;
+		if (OPP_FACTORY_USE_COUNT(&elem->children) == 0 || (text = xultb_ml_get_text(elem)) == NULL) {
+
+			// get hint of this field
+			text = xultb_ml_get_attribute_value(elem, "h");
+			if (text == NULL) {
+				text = BLANK_STRING;
+			}
+		} else {
+
+			// get rid of spaces
+			text = xultb_str_trim(text);
+		}
+
+		// see if it is multiple selection box ..
+		if (mlist->isMultipleSelection) {
+
+			// see if it is selected ..
+			return xultb_list_item_create_checkbox(text,
+					xultb_list_item_attr_is_positive(elem, "s"), XULTB_TRUE);
+		} else {
+			return xultb_list_item_create_label_full(text, NULL, XULTB_TRUE, XULTB_FALSE, NULL);
+		}
+	} else {
+		return (struct xultb_list_item*)xultb_markup_item_create(elem, mlist->ml, XULTB_FALSE, mlist->el);
+	}
+	return NULL;
 }

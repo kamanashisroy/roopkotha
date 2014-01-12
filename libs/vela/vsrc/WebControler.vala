@@ -191,7 +191,7 @@ public void onContentReady(struct xultb_resource_id*id, void*cb_data, void*obj) 
 	struct xultb_web_controler*web = (struct xultb_web_controler*)cb_data;
 	// \todo set menu command ..
 	if(id->type == XULTB_RESOURCE_IMG) {
-#if 0
+#if false
 		Window.pushBalloon(null, null, hashCode(), 0);
 #endif
 		SYNC_LOG(SYNC_VERB, "handleContent()\t\t[+]Image -> %s\n", id->url->str);

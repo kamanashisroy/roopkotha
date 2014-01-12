@@ -14,7 +14,7 @@ public abstract class roopkotha.AugmentedContent : Replicable {
 		SELECTION_CONTENT,
 		RADIO_CONTENT,
 		CHECKBOX_CONTENT,
-		MARKUP_CONTENT,
+		FORMATTED_CONTENT,
 	}
 	public ContentType cType {public get;protected set;}
 	public AugmentedContent() {
@@ -55,6 +55,12 @@ public abstract class roopkotha.AugmentedContent : Replicable {
 	public virtual bool isDefaultSelected() {
 		// TODO fill me
 		//isPositiveAttribute(elem, "s")
+		return false;
+	}
+	public virtual bool isFocused() {
+		return false;
+	}
+	public virtual bool isActive() {
 		return false;
 	}
 }

@@ -200,7 +200,7 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 				return new ListViewItemComplex.createCheckbox(&label, elem.isChecked(), true);
 			}
 				break;
-			case AugmentedContent.ContentType.MARKUP_CONTENT:
+			case AugmentedContent.ContentType.FORMATTED_CONTENT:
 			{
 				//return new MarkupItem.getInstance(elem, ml, false, el);
 			}

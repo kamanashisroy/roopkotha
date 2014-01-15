@@ -26,11 +26,18 @@ struct roopkotha.FormattedTextCapsule {
 		BR,
 		IMG,
 		B,
+		I,
+		BIG,
+		SMALL,
+		EM,
+		U,
+		P,
+		A,
 		UNKNOWN,
 	}
 	FormattedTextType textType;
-	
 }
+
 public class roopkotha.FormattedContent : AugmentedContent {
 	txt data;
 
@@ -45,4 +52,5 @@ public class roopkotha.FormattedContent : AugmentedContent {
 		tData.concat(data);
 		return 0;
 	}
+	public override int getNextChild(FormattedTextCapsule*node, FormattedTextCapsule*child);
 }

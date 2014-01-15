@@ -3,6 +3,18 @@ using shotodol;
 using roopkotha;
 
 public class roopkotha.ListViewItemComplex : ListViewItem {
+	protected Replicable?target;
+	protected etxt label;
+	protected etxt text;
+	protected bool checked;
+	protected bool is_editable;
+	protected bool is_radio;
+	protected bool wrapped;
+	protected bool truncate_text_to_fit_width;
+	public bool focused;
+	protected onubodh.RawImage? img;
+	protected itemtype type; // enum sometype
+	public abstract int paint(roopkotha.Window parent, roopkotha.Graphics g, int x, int y, int width, bool selected);
 	public roopkotha.Font? ITEM_FONT;
 	public int FONT_HEIGHT;
 	public ListViewItemComplex.common() {

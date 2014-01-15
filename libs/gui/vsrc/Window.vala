@@ -124,5 +124,7 @@ public abstract class roopkotha.Window : Replicable {
 				, roopkotha.Graphics.anchor.TOP |roopkotha.Graphics.anchor.HCENTER);
 		//core.assert("Reached" == null);
 	}
+
+	public abstract roopkotha.Font getFont(roopkotha.Font.Face face, roopkotha.Font.Variant vars);
 }
 

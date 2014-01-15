@@ -28,4 +28,9 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 		GraphicsImpl gi = (g as GraphicsImpl);
 		plat.paint_end(gi.plat);
 	}
+
+	public override roopkotha.Font getFont(roopkotha.Font.Face face, roopkotha.Font.Variant vars) {
+		// TODO use a font factory ..
+		return new FontImpl();
+	}
 }

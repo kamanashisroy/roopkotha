@@ -16,7 +16,7 @@ public class roopkotha.FontImpl : roopkotha.Font {
 		return plat.subStringWidth(str, offset, width);
 	}
 	
-	public override FontImpl getVariant(Font.Variants stl) {
+	public override Font getVariant(Font.Variant stl) {
 		// TODO fill me
 		return this;
 	}

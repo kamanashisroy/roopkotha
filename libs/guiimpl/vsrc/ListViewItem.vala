@@ -39,6 +39,9 @@ public abstract class roopkotha.ListViewItem : Replicable {
 		RESOLUTION = 3,
 		DPADDING = 5,
 	}
+	public bool focused;
+	protected itemtype type; // enum sometype
+	public abstract int paint(roopkotha.Window parent, roopkotha.Graphics g, int x, int y, int width, bool selected);
 	public abstract bool doEdit(int flags, int key_code, int x, int y);
 	public abstract int update(etxt*xt);
 }

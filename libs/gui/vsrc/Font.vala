@@ -23,7 +23,7 @@ using shotodol;
 using roopkotha;
 
 public abstract class roopkotha.Font : Replicable {
-	enum Variant {
+	public enum Variant {
 		UNDERLINED = 1,
 		BOLD = (1 << 1),
 		ITALIC = (1 << 2),
@@ -33,7 +33,7 @@ public abstract class roopkotha.Font : Replicable {
 		LARGE = (1 << 6),
 	}
 
-	enum Face {
+	public enum Face {
 		DEFAULT = 1,
 		SYSTEM = 2,
 	}

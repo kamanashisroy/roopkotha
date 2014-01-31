@@ -1,3 +1,5 @@
+using aroop;
+
 /*
  * xultb_web_variables.c
  *
@@ -5,20 +7,16 @@
  *      Author: kamanashisroy
  */
 
-#include "opp/opp_factory.h"
-#include "opp/opp_salt.h"
-#include "io/xultb_ml_common.h"
-#include "ui/page/xultb_web_variables.h"
-#include "core/logger.h"
-#include "opp/opp_hash_table.h"
-
-static struct opp_factory variables;
-struct opp_factory*xultb_get_web_variables(struct xultb_ml_node*root) {
-	int i;
-	struct xultb_ml_node*node;
-
-	// TODO cleanup all the old variables ..
-
+public class roopkotha.vela.WebVariables : Replicable {
+	HashTable<txt> tbl;
+	public WebVariables() {
+		tbl = HashTable<txt>(4);
+	}
+	~WebVariables() {
+		tbl.destroy();
+	}
+	void getVariables(PageAppDocument doc) {
+#if false
 	for(i=0;;i++) {
 		opp_at_ncode2(node, struct xultb_ml_node*, &root->children, i,
 			xultb_str_t*var_name = NULL;
@@ -35,17 +33,7 @@ struct opp_factory*xultb_get_web_variables(struct xultb_ml_node*root) {
 		}
 	}
 	return &variables;
+#endif
+	}
 }
 
-int xultb_web_variables_init() {
-	SYNC_ASSERT(!opp_hash_table_create(
-				&variables
-				, 4
-				, 0));
-	return 0;
-}
-
-int xultb_web_variables_deinit() {
-	opp_factory_destroy(&variables);
-	return 0;
-}

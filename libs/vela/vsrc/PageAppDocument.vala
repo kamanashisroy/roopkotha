@@ -1,14 +1,15 @@
 using aroop;
 using shotodol;
 using roopkotha;
+using roopkotha.vela;
 
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.VelaAppDocument : RoopDocument {
+public class roopkotha.vela.PageAppDocument : RoopDocument {
 	int counter;
 	InputStream? instrm;
-	public VelaAppDocument() {
+	public PageAppDocument() {
 		counter = 0;
 		instrm = null;
 		base();
@@ -16,7 +17,7 @@ public class roopkotha.VelaAppDocument : RoopDocument {
 	
 	public void spellChunk(etxt*asciiData) {
 		/* TODO parse xml content */
-		PlainContent c = new PlainContent(asciiData);
+		HTMLMarkupContent c = new HTMLMarkupContent(asciiData);
 		print("PlainDocument:Adding line:%s\n", asciiData.to_string());
 		contents.set(counter++, c);
 	}

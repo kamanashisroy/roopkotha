@@ -36,16 +36,16 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	int bottomMargin;
 	int RESOLUTION;
 
-	aroop.txt defaultCommand;
+	EventOwner? defaultCommand;
 	public enum display {
 		HMARGIN = 3,
 		VMARGIN = 2,
 		RESOLUTION = 8,
 	}
 	
-	public ListView(etxt*aTitle, etxt*aDefault_command) {
+	public ListView(etxt*aTitle, etxt*aDefaultCommand) {
 		base(aTitle);
-		defaultCommand = new txt.memcopy_etxt(aDefault_command);
+		defaultCommand = new EventOwner(this, aDefaultCommand);
 		vpos = 0;
 		continuous_scrolling = true;
 		item_font = new FontImpl();
@@ -209,7 +209,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		Watchdog.logMsgDoNotUse(&dlg);
 	}
 
-	public override bool onEvent(Replicable?target, int flags, int key_code, int x, int y) {
+	public override bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		roopkotha.ListView list = (roopkotha.ListView )this;
 		etxt dlg = etxt.stack(128);
 		dlg.printf("handling menu command\n");

@@ -22,7 +22,7 @@ using shotodol;
 using roopkotha;
 
 
-public delegate void roopkotha.WindowActionCB(txt action);
+public delegate void roopkotha.WindowActionCB(EventOwner action);
 
 public abstract class roopkotha.Window : Replicable {
 	txt title;
@@ -56,7 +56,7 @@ public abstract class roopkotha.Window : Replicable {
 		this.panelTop = TITLE_FONT.getHeight() + PADDING*2;
 	}
 	public abstract void show();
-	public void showFull(ArrayList<txt>*left_option, aroop.txt right_option) {
+	public void showFull(ArrayList<EventOwner>*left_option, EventOwner right_option) {
 		menu.set(left_option, right_option);
 		this.show();
 	}
@@ -80,9 +80,9 @@ public abstract class roopkotha.Window : Replicable {
 	public virtual void postPaint(roopkotha.Graphics g) {
 	}
 
-	public void onAction(txt action) {
+	public void onAction(EventOwner owner) {
 		if(windowActionCB != null) {
-			windowActionCB(action);
+			windowActionCB(owner);
 		}
 	}
 
@@ -92,7 +92,7 @@ public abstract class roopkotha.Window : Replicable {
 		}
 	}
 	
-	public virtual bool onEvent(Replicable?target, int flags, int key_code, int x, int y) {
+	public virtual bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		//if(xultb_menu_handle_event(this, target, flags, key_code, x, y)) {
 		//	xultb_guicore_set_dirty(this);
 		//	return 1;

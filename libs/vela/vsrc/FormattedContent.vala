@@ -20,37 +20,48 @@
 using aroop;
 using shotodol;
 using roopkotha;
+using roopkotha.vela;
 
-struct roopkotha.FormattedTextCapsule {
-	enum FormattedTextType {
+public enum roopkotha.vela.FormattedTextType {
 		BR,
 		IMG,
 		B,
 		I,
 		BIG,
 		SMALL,
+		STRONG,
 		EM,
 		U,
 		P,
 		A,
+		PLAIN,
 		UNKNOWN,
-	}
-	FormattedTextType textType;
 }
 
-public class roopkotha.FormattedContent : AugmentedContent {
+public struct roopkotha.vela.FormattedTextCapsule {
+	
+	public roopkotha.vela.FormattedTextType textType;
+	public etxt content;
+	public FormattedTextCapsule() {
+		textType = FormattedTextType.PLAIN;
+		content = etxt.EMPTY();
+	}
+}
+
+public delegate int roopkotha.vela.VisitAugmentedContent(FormattedTextCapsule capsule);
+
+public abstract class roopkotha.vela.FormattedContent : AugmentedContent {
 	txt data;
 
 	public FormattedContent(etxt*asciiData) {
 		base();
 		data = new txt.memcopy_etxt(asciiData);
-		cType = ContentType.FormattedContent;
+		cType = AugmentedContent.ContentType.FORMATTED_CONTENT;
 		print("FormattedContent:%s\n", data.to_string());
 	}
 
-	public override int getText(etxt*tData) {
+	public override void getText(etxt*tData) {
 		tData.concat(data);
-		return 0;
 	}
-	public override int getNextChild(FormattedTextCapsule*node, FormattedTextCapsule*child);
+	public abstract int traverseCapsules(VisitAugmentedContent visitCapsule);
 }

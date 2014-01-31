@@ -32,6 +32,7 @@ public abstract class roopkotha.ListViewItem : Replicable {
 		SELECTION,
 		TEXT_INPUT,
 		CHECKBOX,
+		OTHER,
 	}
 
 	public enum display {

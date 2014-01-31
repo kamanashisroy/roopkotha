@@ -3,7 +3,7 @@ using shotodol;
 using roopkotha;
 
 public class roopkotha.ListViewItemComplex : ListViewItem {
-	protected Replicable?target;
+	protected EventOwner?target;
 	protected etxt label;
 	protected etxt text;
 	protected bool checked;
@@ -283,7 +283,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	}
 
 	public ListViewItemComplex.createLabelFull(etxt*aLabel, onubodh.RawImage*aImg
-			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, Replicable?aTarget) {
+			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, EventOwner?aTarget) {
 		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
 		print("Created new label %s:%s\n", label.to_string(), aLabel.to_string());

@@ -15,7 +15,7 @@ public class roopkotha.GUIInputImpl : GUIInput {
 		rtr = null;
 		win = null;
 	}
-	public override int registerScreenEvent(Replicable?target, int x, int y, int width, int height) {
+	public override int registerScreenEvent(EventOwner?target, int x, int y, int width, int height) {
 		RTreeRect2DInt rect = RTreeRect2DInt.boundary(x,y,x+width,y+height); // XXX will it work from stack ? or do we need memory allocation ?
 		rtr.insertRect(&rect, 0, target);
 		print("Adding rect:(%d,%d,%d,%d)\n", x, y, x+width, y+height);
@@ -29,10 +29,10 @@ public class roopkotha.GUIInputImpl : GUIInput {
 	}
 
 	GUIInputEvent evt;
-	int onScreenEvent(Replicable?target) {
+	int onScreenEvent(Replicable target) {
 		// Note: -1 to make up for the +1 when data was inserted
 		//printf("Hit data rect %d\n", id-1);
-		win.onEvent(target, evt.flags, evt.key_code, evt.x, evt.y);
+		win.onEvent((EventOwner)target, evt.flags, evt.key_code, evt.x, evt.y);
 		//return 1; // keep going
 		return 0;
 	}

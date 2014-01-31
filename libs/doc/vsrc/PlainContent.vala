@@ -10,8 +10,7 @@ public class roopkotha.PlainContent : AugmentedContent {
 		cType = ContentType.PLAIN_CONTENT;
 		print("PlainContent:%s\n", data.to_string());
 	}
-	public override int getText(etxt*tData) {
+	public override void getText(etxt*tData) {
 		tData.concat(data);
-		return 0;
 	}
 }

@@ -20,11 +20,11 @@ public abstract class roopkotha.AugmentedContent : Replicable {
 	public AugmentedContent() {
 		cType = ContentType.UNKNOWN_CONTENT;
 	}
-	public virtual int getLabel(etxt*data) {
-		return 0;
+	public virtual void getLabel(etxt*data) {
 	}
-	public virtual int getText(etxt*data) {
-		return 0;
+	public virtual void getAction(etxt*data) {
+	}
+	public virtual void getText(etxt*data) {
 	}
 	public virtual onubodh.RawImage?getImage() {
 		// TODO fill me

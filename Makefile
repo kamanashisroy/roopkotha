@@ -16,6 +16,7 @@ makecore:
 	$(BUILD) -C libs/rtree
 	$(BUILD) -C libs/guiimpl
 	$(BUILD) -C libs/doc
+	$(BUILD) -C libs/vela
 
 cleancore:
 	$(CLEAN) -C libs/gui
@@ -23,6 +24,7 @@ cleancore:
 	$(CLEAN) -C libs/rtree
 	$(CLEAN) -C libs/guiimpl
 	$(CLEAN) -C libs/doc
+	$(CLEAN) -C libs/vela
 
 clean:cleancore cleanapp
 

@@ -17,13 +17,17 @@
  * along with MiniIM.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+using aroop;
+using shotodol;
+using roopkotha;
+using roopkotha.vela;
 
-public class WebControler : Replicable {
+public class vela.WebControler : Replicable {
 	PageView page;
 	RoopDocument?content;
 	MediaLoader ml;
-	WebEventListener el;
-	WebActionListener al;
+	//WebEventListener el;
+	//WebActionListener al;
 	ArrayList<txt>stack;
 	ArrayList<onubodh.RawImage> images;
 	bool isLoadingPage;
@@ -44,8 +48,8 @@ public class WebControler : Replicable {
 		page.setImageLoader(getImage);
 		stack = ArrayList<txt>(4);
 		images = ArrayList<onubodh.RawImage>(4);
-		isLoadingPage = XULTB_FALSE;
-		isGoingBack= XULTB_FALSE;
+		isLoadingPage = false;
+		isGoingBack= false;
 		baseUrl = currentUrl = null;
 		loader.setContentCallback(onContentReady);
 		loader.setContentErrorCallback(onResourceError);
@@ -97,35 +101,44 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		return true;
 	}
 
-	public bool pushWrapper(txt url, struct opp_factory*variables, xultb_bool_t back) {
-		return pushWrapperFull(new WebResource(web, base, url
-				, doc, variables), back);
+	public bool pushWrapper(txt url, WebVariables vars, bool back) {
+		return pushWrapperFull(new WebResource(base, url
+				, doc, vars), back);
 	}
 
-	public void onWindowEvent(txt action) {
-		print("Action is %s\n", action.to_string());
+	public void onWindowEvent(EventOwner action) {
+		etxt label = etxt.EMPTY();
+		action.getLabel(&label);
+		print("Action is %s\n", label.to_string());
 
 		// Normal mode ..
-		if(action == page.default_command) {
+		//if(action.equals(page.default_command)) {
+		Replicable?src = action.getSource();
+		if(src == page) {
 			// GUI_INPUT_LOG("item action !\n");
-			struct xultb_ml_node*elem = (struct xultb_ml_node*)web->mlist->super_data.vtable->get_selected(&web->mlist->super_data);
-			xultb_str_t*ref = xultb_ml_get_attribute_value(elem, "href");
-			if(ref) {
-				push_wrapper_impl(web, ref, NULL, XULTB_FALSE);
+			AugmentedContent?content = page.getSelected();
+			etxt appAction = etxt.EMPTY();
+			if(content != null && (content.getAction(&appAction),!appAction.is_empty())) {
+				pushWrapper(&appAction, null, false);
 				return;
 			}
-		} else if(action == BACK_ACTION) {
+		} else if(src == BACK_ACTION) {
 	//		GUI_INPUT_LOG("Back back back .. \n");
+			core.assert("Stack is unimplemented\n" == null);
+#if false
 			xultb_str_t*last = opp_indexed_list_get(&web->stack, OPP_FACTORY_USE_COUNT(&web->stack) - 1);
 			if(last) {
 	//			GUI_INPUT_LOG("It should render %s\n", last->str);
 				OPPUNREF(web->base);
-				push_wrapper_impl(web, last, NULL, XULTB_TRUE);
+				pushWrapper(last, null, true);
 				OPPUNREF(last);
 				return;
 			}
+#endif
 		}
 
+		// TODO specialize the target action
+#if false
 		// see if the action is menu command
 		while(action) {
 			struct xultb_ml_node*x = xultb_ml_get_node(web->root, "x");
@@ -157,16 +170,17 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 				}
 			}
 			if(url) {
-				push_wrapper_impl(web, url, xultb_get_web_variables(web->mlist->root), XULTB_FALSE);
+				pushWrapper(url, page.getVariables(), false);
 			}
 			break;
 		}
+#endif
 	}
 
 #if false
 	public void onPageEvent(struct xultb_ml_node*elem, enum markup_event_type type) {
 		push_wrapper_impl(cb_data, xultb_ml_get_attribute_value(elem, "href")
-				, xultb_get_web_variables(((struct xultb_web_controler*)cb_data)->mlist->root), XULTB_FALSE);
+				, xultb_get_web_variables(((struct xultb_web_controler*)cb_data)->mlist->root), false);
 	}
 #else
 	public void onPageEvent(txt target) {
@@ -174,7 +188,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 	}
 #endif
 
-	Onubodh.RawImage getImage() {
+	onubodh.RawImage getImage() {
 		return null;
 	}
 
@@ -186,120 +200,121 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 #endif
 	}
 
-#define WEB_ASSERT_RETURN(x,y,z) if(!x) {SYNC_LOG(SYNC_VERB, y); return z;}
-public void onContentReady(struct xultb_resource_id*id, void*cb_data, void*obj) {
-	struct xultb_web_controler*web = (struct xultb_web_controler*)cb_data;
-	// \todo set menu command ..
-	if(id->type == XULTB_RESOURCE_IMG) {
+	//#define WEB_ASSERT_RETURN(x,y,z) if(!x) {SYNC_LOG(SYNC_VERB, y); return z;}
+	public void onContentReady(WebResource id, Replicable content) {
 #if false
+		// \todo set menu command ..
+		if(id->type == XULTB_RESOURCE_IMG) {
+	#if false
+			Window.pushBalloon(null, null, hashCode(), 0);
+	#endif
+			SYNC_LOG(SYNC_VERB, "handleContent()\t\t[+]Image -> %s\n", id->url->str);
+			OPP_ALLOC2(&web->images, content);
+			xultb_guicore_set_dirty(&web->mlist->super_data.super_data);
+			return;
+		}
+		struct xultb_ml_node*root = content;
+		struct xultb_ml_node*x = xultb_ml_get_node(root, "x");
+		WEB_ASSERT_RETURN(x, "no x\n",);
+		struct xultb_ml_node*list = xultb_ml_get_node(x, "ls");
+		WEB_ASSERT_RETURN(list, "no ls\n",);
+	#if 0
 		Window.pushBalloon(null, null, hashCode(), 0);
-#endif
-		SYNC_LOG(SYNC_VERB, "handleContent()\t\t[+]Image -> %s\n", id->url->str);
-		OPP_ALLOC2(&web->images, obj);
-		xultb_guicore_set_dirty(&web->mlist->super_data.super_data);
-		return;
-	}
-	struct xultb_ml_node*root = obj;
-	struct xultb_ml_node*x = xultb_ml_get_node(root, "x");
-	WEB_ASSERT_RETURN(x, "no x\n",);
-	struct xultb_ml_node*list = xultb_ml_get_node(x, "ls");
-	WEB_ASSERT_RETURN(list, "no ls\n",);
-#if 0
-	Window.pushBalloon(null, null, hashCode(), 0);
-#endif
-#if 0
-	synchronized (this) {
-#endif
-	if(web->current_url && !web->isGoingBack) {
-		if(xultb_strcmp(web->current_url, id->url)) {
-			SYNC_LOG(SYNC_VERB, "handleContent()\t\t%s\t\t[+]\n", web->current_url->str);
-			opp_indexed_list_set(&web->stack, OPP_FACTORY_USE_COUNT(&web->stack), web->current_url);
-		} else {
-			SYNC_LOG(SYNC_VERB, "handleContent()\t\t%s\t\t[*]\n", web->current_url->str);
-		}
-	} else if(web->isGoingBack){
-		// SYNC_LOG(SYNC_VERB, "handleContent()\t\t" + stack.lastElement() + "\t\t[-]");
-		opp_indexed_list_set(&web->stack,OPP_FACTORY_USE_COUNT(&web->stack)-1, NULL);
-	}
-	OPPUNREF(web->current_url);
-	web->current_url = OPPREF(id->url);
-
-	// save the current doc and base
-	web->root = OPPREF(root);
-	OPPUNREF(web->base);
-	web->base = xultb_str_alloc(NULL, 128, NULL, 0);
-
-	xultb_str_t*url = id->url;
-	int last = xultb_str_indexof_char(url, '/');
-	if(last == -1) {
-//		xultb_str_cat(web->base, url);
-//		xultb_str_cat_char(web->base, '/');
-	} else {
-		xultb_str_cat(web->base, id->url);
-		web->base->len = last+2;
-		SYNC_LOG(SYNC_VERB, "Web controller base(%d):%s\n", web->base->len, web->base->str);
-	}
-#if 0
-	}
-	reset_menu(web);
-#endif
-	int i = 0, j = 0, k = 0;
-	struct xultb_ml_node*menu,*cmd;
-	web->mlist->right_menu = NULL;
-	if (OPP_FACTORY_USE_COUNT(&web->stack)) {
-		web->mlist->right_menu = BACK_ACTION;
-	}
-	for(i=0;;i++) {
-		opp_at_ncode(menu, (&x->children), i,
-			if(menu->elem.type == XULTB_ELEMENT_NODE && xultb_str_equals_static(menu->name, "m")) {
-				for(j = 0;; j++) {
-				opp_at_ncode(cmd, (&menu->children), j,
-					xultb_str_t*target = xultb_ml_get_text(cmd);
-					if(target) {
-						if(!web->mlist->right_menu) {
-							GUI_LOG("Adding right command %s\n", target->str);
-							web->mlist->right_menu = target;
-						} else {
-							GUI_LOG("Adding command %s\n", target->str);
-							opp_indexed_list_set(&web->mlist->left_menu, k++, target);
-						}
-					}
-				) else {
-					break;
-				}
-				}
+	#endif
+	#if 0
+		synchronized (this) {
+	#endif
+		if(web->current_url && !web->isGoingBack) {
+			if(xultb_strcmp(web->current_url, id->url)) {
+				SYNC_LOG(SYNC_VERB, "handleContent()\t\t%s\t\t[+]\n", web->current_url->str);
+				opp_indexed_list_set(&web->stack, OPP_FACTORY_USE_COUNT(&web->stack), web->current_url);
+			} else {
+				SYNC_LOG(SYNC_VERB, "handleContent()\t\t%s\t\t[*]\n", web->current_url->str);
 			}
-		) else {
-			break;
+		} else if(web->isGoingBack){
+			// SYNC_LOG(SYNC_VERB, "handleContent()\t\t" + stack.lastElement() + "\t\t[-]");
+			opp_indexed_list_set(&web->stack,OPP_FACTORY_USE_COUNT(&web->stack)-1, NULL);
 		}
-	}
-#if 0
-	String tmp = x.getAttributeValue("c");
-	long cacheTimeout = (tmp != null)?(Integer.parseInt(tmp)*1000):-1;
-	// See if we can cache it
-	if(cacheTimeout != -1) {
+		OPPUNREF(web->current_url);
+		web->current_url = OPPREF(id->url);
 
-		// see if it already cached
-		if(!Document.exists(MINI_WEB, url)) {
+		// save the current doc and base
+		web->root = OPPREF(root);
+		OPPUNREF(web->base);
+		web->base = xultb_str_alloc(NULL, 128, NULL, 0);
 
-			SimpleLogger.debug(this, "handleContent()\t\t[######] <<  " + url);
-			// cache it
-			doc.store(MINI_WEB, url, false, cacheTimeout);
+		xultb_str_t*url = id->url;
+		int last = xultb_str_indexof_char(url, '/');
+		if(last == -1) {
+	//		xultb_str_cat(web->base, url);
+	//		xultb_str_cat_char(web->base, '/');
+		} else {
+			xultb_str_cat(web->base, id->url);
+			web->base->len = last+2;
+			SYNC_LOG(SYNC_VERB, "Web controller base(%d):%s\n", web->base->len, web->base->str);
 		}
+	#if 0
+		}
+		reset_menu(web);
+	#endif
+		int i = 0, j = 0, k = 0;
+		struct xultb_ml_node*menu,*cmd;
+		web->mlist->right_menu = NULL;
+		if (OPP_FACTORY_USE_COUNT(&web->stack)) {
+			web->mlist->right_menu = BACK_ACTION;
+		}
+		for(i=0;;i++) {
+			opp_at_ncode(menu, (&x->children), i,
+				if(menu->elem.type == XULTB_ELEMENT_NODE && xultb_str_equals_static(menu->name, "m")) {
+					for(j = 0;; j++) {
+					opp_at_ncode(cmd, (&menu->children), j,
+						xultb_str_t*target = xultb_ml_get_text(cmd);
+						if(target) {
+							if(!web->mlist->right_menu) {
+								GUI_LOG("Adding right command %s\n", target->str);
+								web->mlist->right_menu = target;
+							} else {
+								GUI_LOG("Adding command %s\n", target->str);
+								opp_indexed_list_set(&web->mlist->left_menu, k++, target);
+							}
+						}
+					) else {
+						break;
+					}
+					}
+				}
+			) else {
+				break;
+			}
+		}
+	#if 0
+		String tmp = x.getAttributeValue("c");
+		long cacheTimeout = (tmp != null)?(Integer.parseInt(tmp)*1000):-1;
+		// See if we can cache it
+		if(cacheTimeout != -1) {
 
-	}
+			// see if it already cached
+			if(!Document.exists(MINI_WEB, url)) {
+
+				SimpleLogger.debug(this, "handleContent()\t\t[######] <<  " + url);
+				// cache it
+				doc.store(MINI_WEB, url, false, cacheTimeout);
+			}
+
+		}
+	#endif
+		// SYNC_LOG(SYNC_ERROR, "handleContent(): no commands\n");
+		xultb_str_t*title = xultb_ml_get_attribute_value(list, "t");
+		if(!title) {
+			title = MINI_WEB;
+		}
+		web->mlist->super_data.super_data.vtable->set_title(&web->mlist->super_data.super_data, title);
+		web->mlist->vtable->set_node(web->mlist, list, get_default_selected_item(list));
+	//	web->mlist->super_data.super_data.vtable->show_full(&web->mlist->super_data.super_data
+	//			, left_menu, right_menu);
+		clearFlags(web);
 #endif
-	// SYNC_LOG(SYNC_ERROR, "handleContent(): no commands\n");
-	xultb_str_t*title = xultb_ml_get_attribute_value(list, "t");
-	if(!title) {
-		title = MINI_WEB;
 	}
-	web->mlist->super_data.super_data.vtable->set_title(&web->mlist->super_data.super_data, title);
-	web->mlist->vtable->set_node(web->mlist, list, get_default_selected_item(list));
-//	web->mlist->super_data.super_data.vtable->show_full(&web->mlist->super_data.super_data
-//			, left_menu, right_menu);
-	clearFlags(web);
-}
 
 	public void onResourceError(WebResource target, int code, txt reason) {
 		clearFlags();

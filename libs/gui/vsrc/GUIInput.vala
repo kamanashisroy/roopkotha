@@ -22,6 +22,33 @@ using aroop;
 using shotodol;
 using roopkotha;
 
+public class roopkotha.EventOwner : Replicable {
+	Replicable?source;
+	etxt label;
+	public EventOwner.from_etxt(etxt*target) {
+		source = null;
+		if(target != null) {
+			label = etxt.same_same(target);
+		} else {
+			label = etxt.EMPTY();
+		}
+	}
+	public EventOwner(Replicable target, etxt*displayText) {
+		source = target;
+		if(displayText != null) {
+			label = etxt.same_same(displayText);
+		} else {
+			label = etxt.EMPTY();
+		}
+	}
+	public void getLabel(etxt*otxt) {
+		*otxt = etxt.same_same(&label);
+	}
+	public Replicable getSource() {
+		return source;
+	}
+}
+
 public abstract class roopkotha.GUIInput : Replicable {
 
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_")]
@@ -41,7 +68,7 @@ public abstract class roopkotha.GUIInput : Replicable {
 		KEY_F2 = 7,
 	}
 
-	public abstract int registerScreenEvent(Replicable?target, int x, int y, int width, int height);
+	public abstract int registerScreenEvent(EventOwner?target, int x, int y, int width, int height);
 	public abstract int reset(roopkotha.Window win); /*< This should be called before registering action */
 }
 

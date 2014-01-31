@@ -21,7 +21,9 @@
 using aroop;
 using shotodol;
 using roopkotha;
+using roopkotha.vela;
 
+#if false
 public class roopkotha.PageViewItem : roopkotha.ListViewItem {
 	int update(struct xultb_list_item*item, xultb_str_t*text) {
 		struct xultb_ml_node*node = item->target;
@@ -33,14 +35,11 @@ public class roopkotha.PageViewItem : roopkotha.ListViewItem {
 		return 0;
 	}
 }
+#endif
 
-public class roopkotha.PageView : roopkotha.DocumentView {
+public class roopkotha.vela.PageView : roopkotha.DocumentView {
 	RoopDocument? doc;
-
-	txt*DOT;
-	txt*BLANK_STRING;
-	txt*ASTERISKS_STRING;
-
+#if false
 	static int update_impl(struct xultb_list_item*item, xultb_str_t*text) {
 		struct xultb_ml_node*node = item->target;
 		SYNC_ASSERT(node);
@@ -50,8 +49,9 @@ public class roopkotha.PageView : roopkotha.DocumentView {
 		node->elem.content = new_text;
 		return 0;
 	}
+#endif
 
-#if 0
+#if false
 /** Searching */
 static void do_search() {
 	int length = 0;

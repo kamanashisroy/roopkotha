@@ -15,6 +15,7 @@ public class roopkotha.vela.WebVariables : Replicable {
 	~WebVariables() {
 		tbl.destroy();
 	}
+#if false
 	void getVariables(PageAppDocument doc) {
 #if false
 	for(i=0;;i++) {
@@ -35,5 +36,6 @@ public class roopkotha.vela.WebVariables : Replicable {
 	return &variables;
 #endif
 	}
+#endif
 }
 

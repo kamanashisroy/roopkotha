@@ -3,15 +3,17 @@ using shotodol;
 using roopkotha;
 
 public class roopkotha.WritePadMenu : Replicable {
-	ArrayList<txt> leftOptions;
-	txt rightOption;
+	ArrayList<EventOwner> leftOptions;
+	EventOwner rightOption;
 	GUICoreImpl impl;
 	DocumentView lv;
 	PlainDocument emptyDoc;
 	public WritePadMenu() {
-		leftOptions = ArrayList<txt>();
-		rightOption = new txt.from_static("Quit");
-		txt openFile = new txt.from_static("Open");
+		leftOptions = ArrayList<EventOwner>();
+		etxt rightOptionText = etxt.from_static("Quit");
+		rightOption = new EventOwner(this, &rightOptionText);
+		etxt openFileText = etxt.from_static("Open");
+		EventOwner openFile = new EventOwner(this, &openFileText);
 		leftOptions.set(0, openFile);
 		guiinit();
 	}

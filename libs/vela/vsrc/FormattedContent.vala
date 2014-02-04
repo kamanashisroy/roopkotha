@@ -42,13 +42,20 @@ public struct roopkotha.vela.FormattedTextCapsule {
 	
 	public roopkotha.vela.FormattedTextType textType;
 	public etxt content;
+	public etxt hyperLink;
+	public bool isFocused;
+	public bool isActive;
+	public bool isText;
 	public FormattedTextCapsule() {
 		textType = FormattedTextType.PLAIN;
 		content = etxt.EMPTY();
+		hyperLink = etxt.EMPTY();
+		isFocused = false;
+		isText = false;
 	}
 }
 
-public delegate int roopkotha.vela.VisitAugmentedContent(FormattedTextCapsule capsule);
+public delegate int roopkotha.vela.VisitAugmentedContent(FormattedTextCapsule*capsule);
 
 public abstract class roopkotha.vela.FormattedContent : AugmentedContent {
 	txt data;

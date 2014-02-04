@@ -25,7 +25,8 @@ using roopkotha.vela;
 public class vela.WebControler : Replicable {
 	PageView page;
 	RoopDocument?content;
-	MediaLoader ml;
+	WebResourceLoader loader;
+	//MediaLoader ml;
 	//WebEventListener el;
 	//WebActionListener al;
 	ArrayList<txt>stack;
@@ -34,16 +35,16 @@ public class vela.WebControler : Replicable {
 	bool isGoingBack;
 	txt currentUrl;
 	txt baseUrl;
-	RoopDocument doc;
+	PageAppDocument doc;
 	txt BACK_ACTION;
 	txt VELA;
 
-	public WebControler(PageView view, WebResourceLoader loader) {
+	public WebControler(PageView view, WebResourceLoader rl) {
 		BACK_ACTION = new txt.from_static("Back");
 		VELA = new txt.from_static("Vela");
 		page = view;
 		content = null;
-		page.setAction(onWindowEvent);
+		page.setActionCB(onWindowEvent);
 		page.setPageEvent(onPageEvent);
 		page.setImageLoader(getImage);
 		stack = ArrayList<txt>(4);
@@ -51,6 +52,7 @@ public class vela.WebControler : Replicable {
 		isLoadingPage = false;
 		isGoingBack= false;
 		baseUrl = currentUrl = null;
+		loader = rl;
 		loader.setContentCallback(onContentReady);
 		loader.setContentErrorCallback(onResourceError);
 	}
@@ -67,9 +69,9 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 }
 #endif
 
+#if false
 	int getDefaultSelectedItem(RoopDocument aDoc) {
 		int ret = 0;
-#if false
 		for(i=0;i>0;i++) {
 			opp_at_ncode2(s, struct xultb_ml_node*, (&node->children), i,
 				if (s->elem.type == XULTB_ELEMENT_NODE && xultb_list_item_attr_is_positive(s, "s")) {
@@ -80,9 +82,9 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 				break;
 			}
 		}
-#endif
 		return ret;
 	}
+#endif
 
 	public bool pushWrapperFull(WebResource id, bool back) {
 		if (isLoadingPage) { // check if we are on action ..
@@ -101,9 +103,8 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		return true;
 	}
 
-	public bool pushWrapper(txt url, WebVariables vars, bool back) {
-		return pushWrapperFull(new WebResource(base, url
-				, doc, vars), back);
+	public bool pushWrapper(etxt*url, WebVariables?vars, bool back) {
+		return pushWrapperFull(new WebResource(baseUrl, url, doc, vars), back);
 	}
 
 	public void onWindowEvent(EventOwner action) {
@@ -116,11 +117,14 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		Replicable?src = action.getSource();
 		if(src == page) {
 			// GUI_INPUT_LOG("item action !\n");
-			AugmentedContent?content = page.getSelected();
+			AugmentedContent?content = (AugmentedContent)page.getSelected();
 			etxt appAction = etxt.EMPTY();
-			if(content != null && (content.getAction(&appAction),!appAction.is_empty())) {
-				pushWrapper(&appAction, null, false);
-				return;
+			if(content != null) {
+				content.getAction(&appAction);
+				if(!appAction.is_empty()) {
+					pushWrapper(&appAction, null, false);
+					return;
+				}
 			}
 		} else if(src == BACK_ACTION) {
 	//		GUI_INPUT_LOG("Back back back .. \n");
@@ -183,12 +187,13 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 				, xultb_get_web_variables(((struct xultb_web_controler*)cb_data)->mlist->root), false);
 	}
 #else
-	public void onPageEvent(txt target) {
+	public void onPageEvent(etxt*target) {
 		pushWrapper(target, page.getVariables(), false);
 	}
 #endif
 
-	onubodh.RawImage getImage() {
+	onubodh.RawImage?getImage(etxt*imgAddr) {
+		// TODO fill me
 		return null;
 	}
 
@@ -316,10 +321,10 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 #endif
 	}
 
-	public void onResourceError(WebResource target, int code, txt reason) {
+	public void onResourceError(WebResource id, int code, etxt*reason) {
 		clearFlags();
 		print("onResourceError()\n");
-		if(id.type == WebResource.Type.DOCUMENT) {
+		if(id.tp == WebResource.Type.DOCUMENT) {
 			// what to do ??
 		} else {
 			// images.put(url, Image.createImage("/ui/error.png"));

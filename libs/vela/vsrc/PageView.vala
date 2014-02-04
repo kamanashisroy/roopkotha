@@ -23,6 +23,8 @@ using shotodol;
 using roopkotha;
 using roopkotha.vela;
 
+public delegate void roopkotha.vela.PageEventCB(etxt*action);
+public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(etxt*imgAddr);
 #if false
 public class roopkotha.PageViewItem : roopkotha.ListViewItem {
 	int update(struct xultb_list_item*item, xultb_str_t*text) {
@@ -38,7 +40,16 @@ public class roopkotha.PageViewItem : roopkotha.ListViewItem {
 #endif
 
 public class roopkotha.vela.PageView : roopkotha.DocumentView {
-	RoopDocument? doc;
+	//RoopDocument? doc;
+	PageEventCB?pageEventCB;
+	GetImageCB?getImageCB;
+	public PageView() {
+		etxt ttl = etxt.from_static("Vela");
+		etxt abt = etxt.from_static("About");
+		base(&ttl, &abt);
+		pageEventCB = null;
+		getImageCB = null;
+	}
 #if false
 	static int update_impl(struct xultb_list_item*item, xultb_str_t*text) {
 		struct xultb_ml_node*node = item->target;
@@ -94,4 +105,20 @@ static void do_search() {
 }
 #endif
 
+	public void setPageEvent(PageEventCB cb) {
+		if(pageEventCB != null) {
+			pageEventCB = cb;
+		}
+	}
+	
+	public void setImageLoader(GetImageCB cb) {
+		if(getImageCB != null) {
+			getImageCB = cb;
+		}
+	}
+	
+	public WebVariables?getVariables() {
+		// TODO fill me
+		return null;
+	}
 }

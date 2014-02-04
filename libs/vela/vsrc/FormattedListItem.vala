@@ -143,7 +143,7 @@ public class roopkotha.FormattedListItem : ListViewItem {
 				xt.shift(off);
 				xt.trim_to_length(ret);
 				g.drawString(&xt, xPos, yPos, 1000, 1000, roopkotha.Graphics.anchor.TOP | roopkotha.Graphics.anchor.LEFT);
-				xPos += font.substringWidth(text, off, ret - off);
+				xPos += font.subStringWidth(text, off, ret - off);
 			}
 			if (ret == off /* no place to write a word .. */
 			|| ret < text.length() /* there are more words so that we span into new line .. */
@@ -190,18 +190,17 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		} else if (cap.textType ==  FormattedTextType.A) {
 
 			//xultb_str_t* link = xultb_ml_get_attribute_value(elem, "href");
-			etxt link = etxt.EMPTY();
-			cap.getAction(&link);
+			etxt link = etxt.same_same(&cap.hyperLink);
 
 			// draw the anchor
-			if (!OPP_FACTORY_USE_COUNT(&elem->children) || !link) {
+			if (link.is_empty()/* || !OPP_FACTORY_USE_COUNT(&elem->children)*/) {
 				// skip empty links
-			} else if (cap.isFocused()) {
+			} else if (cap.isFocused) {
 				// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.aFgHover%);
 				g.setColor(0x0000FF);
 				// #expand newFont = xultb_font_get(xultb_font_get_face(font), xultb_font_get_style(font) | %net.ayaslive.miniim.ui.core.markup.aFontHover%, xultb_font_get_size(font));
 				newFont = font.getVariant(Font.Variant.UNDERLINED | Font.Variant.BOLD);
-			} else if (cap.is_active()) {
+			} else if (cap.isActive) {
 				// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.aFgActive%);
 				g.setColor(0xCC99FF);
 
@@ -226,6 +225,7 @@ public class roopkotha.FormattedListItem : ListViewItem {
 				} else {
 					renderFormattedText(g, child, newFont);
 				}
+				return 0;
 		});
 		// System.out.println("</"+tagName+">");
 		g.setColor(oldColor);
@@ -244,9 +244,9 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		selected = aSelected;
 		// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.fg%);
 		g.setColor(0x006699);
-		roopkotha.Font*font = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.PLAIN | roopkotha.Font.Variant.SMALL);
+		roopkotha.Font font = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.PLAIN | roopkotha.Font.Variant.SMALL);
 		if(minLineHeight == -1) {
-			minLineHeight = font.getHeight()+PADDING;
+			minLineHeight = font.getHeight()+ListViewItem.display.PADDING;
 		}
 		lineHeight = minLineHeight;
 		//	g.translate(x, y);
@@ -257,6 +257,7 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		// draw the node recursively
 		content.traverseCapsules((cap) => {
 			renderFormattedText(g, cap, font);
+			return 0;
 		});
 
 
@@ -269,5 +270,15 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		//g->translate(-x, -y);
 		//g->set_font(ITEM_FONT);
 		return ret;
+	}
+
+	public override bool doEdit(int flags, int key_code, int x, int y) {
+		// TODO fill me
+		return false;
+	}
+
+	public override int update(etxt*xt) {
+		// TODO fill me 
+		return 0;
 	}
 }

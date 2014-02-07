@@ -45,13 +45,11 @@ public struct roopkotha.vela.FormattedTextCapsule {
 	public etxt hyperLink;
 	public bool isFocused;
 	public bool isActive;
-	public bool isText;
 	public FormattedTextCapsule() {
 		textType = FormattedTextType.PLAIN;
 		content = etxt.EMPTY();
 		hyperLink = etxt.EMPTY();
 		isFocused = false;
-		isText = false;
 	}
 }
 

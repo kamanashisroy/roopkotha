@@ -23,24 +23,14 @@ using shotodol;
 using roopkotha;
 using roopkotha.vela;
 
+/**
+ * You can only trust the numbers. 
+ * [-Maturity- 10]
+ */
 public delegate void roopkotha.vela.PageEventCB(etxt*action);
 public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(etxt*imgAddr);
-#if false
-public class roopkotha.PageViewItem : roopkotha.ListViewItem {
-	int update(struct xultb_list_item*item, xultb_str_t*text) {
-		struct xultb_ml_node*node = item->target;
-		SYNC_ASSERT(node);
-		xultb_str_t*new_text = OPPREF(text);
-		OPPUNREF(node->elem.content);
-		GUI_INPUT_LOG("setting new text %s\n", new_text->str);
-		node->elem.content = new_text;
-		return 0;
-	}
-}
-#endif
 
 public class roopkotha.vela.PageView : roopkotha.DocumentView {
-	//RoopDocument? doc;
 	PageEventCB?pageEventCB;
 	GetImageCB?getImageCB;
 	public PageView() {

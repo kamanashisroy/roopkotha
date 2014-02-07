@@ -4,6 +4,10 @@ using roopkotha;
 using roopkotha.vela;
 
 /**
+ * You can only trust the numbers. 
+ * [-Maturity- 30]
+ */
+/**
  * This is the base class for all the documents we render in roopkotha
  */
 public class roopkotha.vela.PageAppDocument : RoopDocument {
@@ -15,8 +19,7 @@ public class roopkotha.vela.PageAppDocument : RoopDocument {
 		base();
 	}
 	
-	public void spellChunk(etxt*asciiData) {
-		/* TODO parse xml content */
+	public virtual void spellChunk(etxt*asciiData) {
 		HTMLMarkupContent c = new HTMLMarkupContent(asciiData);
 		print("PlainDocument:Adding line:%s\n", asciiData.to_string());
 		contents.set(counter++, c);
@@ -30,9 +33,13 @@ public class roopkotha.vela.PageAppDocument : RoopDocument {
 		do {
 			etxt data = etxt.stack(512);
 			core.assert(instrm != null);
-			int bytesRead = instrm.read(&data);
-			if(bytesRead == 0) break;
-			spellChunk(&data);
+			try {
+				int bytesRead = instrm.read(&data);
+				if(bytesRead == 0) break;
+				spellChunk(&data);
+			} catch(IOStreamError.InputStreamError e) {
+				break;
+			}
 		} while(true);
 	}
 }

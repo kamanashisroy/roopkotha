@@ -40,8 +40,8 @@ public abstract class roopkotha.Menu : Replicable {
 	int BASE_FONT_HEIGHT;
 	int TOWER_MENU_ITEM_HEIGHT;
 	int TOWER_FONT_HEIGHT;
-	protected roopkotha.Font? TOWER_FONT;
-	protected roopkotha.Font? BASE_FONT;
+	protected roopkotha.Font TOWER_FONT;
+	protected roopkotha.Font BASE_FONT;
 
 	int BASE_HEIGHT;
 	int currentlySelectedIndex = 0;
@@ -175,6 +175,11 @@ public abstract class roopkotha.Menu : Replicable {
 	}
 
 	internal void paint(roopkotha.Window parent, roopkotha.Graphics g, int width, int height) {
+#if false
+		if(TOWER_FONT == null) {
+			setupFont();
+		}
+#endif
 		if(menu_is_active) {
 			draw_base(parent, g, width, height, CANCEL, rightOption);
 			draw_tower(parent, g, width, height, currentlySelectedIndex);
@@ -335,15 +340,25 @@ public abstract class roopkotha.Menu : Replicable {
 		}
 		return true; /* menu action has done something, so the action is digested */
 	}
-	public Menu() {
+	void setupFont() {
+#if false
+			TOWER_FONT = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.PLAIN | roopkotha.Font.Variant.SMALL);
+			BASE_FONT = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.BOLD | roopkotha.Font.Variant.SMALL);
+#endif
+			core.assert(TOWER_FONT != null);
+			core.assert(BASE_FONT != null);
+			TOWER_FONT_HEIGHT = TOWER_FONT.getHeight();
+			BASE_FONT_HEIGHT = BASE_FONT.getHeight();
+			TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
+			BASE_HEIGHT = BASE_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
+	}
+	public Menu(Font aTowerFont, Font aBaseFont) {
 	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
+		memclean_raw();
+		TOWER_FONT = aTowerFont;
+		BASE_FONT = aBaseFont;
 		menuOptions = null;
-		core.assert(TOWER_FONT != null);
-		core.assert(BASE_FONT != null);
-		TOWER_FONT_HEIGHT = TOWER_FONT.getHeight();
-		BASE_FONT_HEIGHT = BASE_FONT.getHeight();
-		TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
-		BASE_HEIGHT = BASE_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
+		setupFont();
 	//	SELECT = aroop.txt.alloc("Select", 6, null, 0);
 		etxt cancelText = aroop.etxt.from_static("Cancel");
 		CANCEL = new EventOwner.from_etxt(&cancelText);

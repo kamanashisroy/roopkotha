@@ -6,9 +6,11 @@ all:makecore makeapp makeshotodol
 
 makeapp:
 	$(BUILD) -C guiapps/pad
+	$(BUILD) -C guiapps/vela
 
 cleanapp:
 	$(CLEAN) -C guiapps/pad
+	$(CLEAN) -C guiapps/vela
 
 makecore:
 	$(BUILD) -C libs/gui

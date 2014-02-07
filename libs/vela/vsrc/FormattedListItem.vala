@@ -220,7 +220,7 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		}
 		// render the inner nodes
 		content.traverseCapsules((child) => {
-				if (child.isText) {
+				if (cap.textType == FormattedTextType.PLAIN) {
 					renderText(g, newFont, &cap.content);
 				} else {
 					renderFormattedText(g, child, newFont);

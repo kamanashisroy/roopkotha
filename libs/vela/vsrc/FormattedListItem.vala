@@ -3,8 +3,8 @@ using shotodol;
 using roopkotha;
 using roopkotha.vela;
 
-public delegate onubodh.RawImage roopkotha.MediaLoader(etxt*src);
-public class roopkotha.FormattedListItem : ListViewItem {
+public delegate onubodh.RawImage roopkotha.vela.MediaLoader(etxt*src);
+public class roopkotha.vela.FormattedListItem : ListViewItem {
 	/**
 	 * y-coordinate position of the image
 	 */
@@ -15,11 +15,15 @@ public class roopkotha.FormattedListItem : ListViewItem {
 	protected int width;
 	protected bool selected;// = false;
 	protected FormattedContent content;
-	protected roopkotha.MediaLoader loader;// = null;
+	protected roopkotha.vela.MediaLoader loader;// = null;
 
 	int minLineHeight = -1;// = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN,Font.SIZE_SMALL).getHeight()+display.PADDING;
 
-	protected void factoryBuild(FormattedContent aContent) {
+	public FormattedListItem() {
+		//memclean_raw();
+	}
+
+	public void factoryBuild(FormattedContent aContent) {
 		xPos = yPos = 0;
 		lineHeight = 0;
 		selected = false;
@@ -164,7 +168,9 @@ public class roopkotha.FormattedListItem : ListViewItem {
 
 	protected void renderFormattedText(roopkotha.Graphics g, FormattedTextCapsule*cap, roopkotha.Font font) {
 		int oldColor = g.getColor();
+		core.assert(font != null);
 		roopkotha.Font newFont = font;
+		core.assert(newFont != null);
 
 		if (cap.textType == FormattedTextType.BR) {
 			breakLine(g);
@@ -218,9 +224,11 @@ public class roopkotha.FormattedListItem : ListViewItem {
 			// SimpleLogger.debug(this, "renderNode()\t\tNothing to do for: " + tagName);
 			// go on with inner elements
 		}
+		core.assert(newFont != null);
 		// render the inner nodes
 		content.traverseCapsules((child) => {
 				if (cap.textType == FormattedTextType.PLAIN) {
+					core.assert(newFont != null);
 					renderText(g, newFont, &cap.content);
 				} else {
 					renderFormattedText(g, child, newFont);
@@ -245,6 +253,7 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.fg%);
 		g.setColor(0x006699);
 		roopkotha.Font font = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.PLAIN | roopkotha.Font.Variant.SMALL);
+		core.assert(font != null);
 		if(minLineHeight == -1) {
 			minLineHeight = font.getHeight()+ListViewItem.display.PADDING;
 		}
@@ -254,6 +263,7 @@ public class roopkotha.FormattedListItem : ListViewItem {
 		// draw the line background
 		clearLine(g);
 
+		content.traverseCapsulesInit();
 		// draw the node recursively
 		content.traverseCapsules((cap) => {
 			renderFormattedText(g, cap, font);

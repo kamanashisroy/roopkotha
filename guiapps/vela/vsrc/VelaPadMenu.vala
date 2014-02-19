@@ -11,7 +11,7 @@ public class roopkotha.VelaPadMenu : Replicable {
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
 	GUICoreImpl impl;
-#if false
+#if true
 	PageView pg;
 #else
 	DocumentView lv;
@@ -28,8 +28,10 @@ public class roopkotha.VelaPadMenu : Replicable {
 	}
 	void guiinit() {
 		impl = new GUICoreImpl();
-#if false
-		pg = new PageView();	
+#if true
+		etxt velaTitle = etxt.from_static("Vela");
+		etxt aboutVela = etxt.from_static("About");
+		pg = new PageView.of_title(&velaTitle, &aboutVela);	
 #else
 		etxt title = etxt.from_static("Roopkotha");
 		etxt dc = etxt.from_static("quit");
@@ -38,7 +40,7 @@ public class roopkotha.VelaPadMenu : Replicable {
 		emptyDoc = new PageAppDocument();
 		/*etxt elem = etxt.from_static("Write something here..");
 		emptyDoc.addLine(&elem);*/
-#if false
+#if true
 		pg.setDocument(emptyDoc, 0);
 		pg.show();
 #else
@@ -48,7 +50,7 @@ public class roopkotha.VelaPadMenu : Replicable {
 		MainTurbine.gearup(impl);
 	}
 	protected void show(PageAppDocument pd) {
-#if false
+#if true
 		pg.setDocument(pd, 0);
 		pg.showFull(&leftOptions, rightOption);
 #else

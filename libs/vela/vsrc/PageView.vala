@@ -25,7 +25,7 @@ using roopkotha.vela;
 
 /**
  * You can only trust the numbers. 
- * [-Maturity- 10]
+ * [-Maturity- 20]
  */
 public delegate void roopkotha.vela.PageEventCB(etxt*action);
 public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(etxt*imgAddr);
@@ -33,12 +33,25 @@ public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(etxt*imgAddr);
 public class roopkotha.vela.PageView : roopkotha.DocumentView {
 	PageEventCB?pageEventCB;
 	GetImageCB?getImageCB;
+	FormattedListItem fli;
+	etxt velaTitle;
+	etxt aboutVela;
 	public PageView() {
-		etxt ttl = etxt.from_static("Vela");
-		etxt abt = etxt.from_static("About");
-		base(&ttl, &abt);
+		velaTitle = etxt.from_static("Vela");
+		aboutVela = etxt.from_static("About");
+		base(&velaTitle, &aboutVela);
+		initPage();
+	}
+
+	public PageView.of_title(etxt*ttl,etxt*abt) {
+		base(ttl, abt);
+		initPage();
+	}
+
+	void initPage() {
 		pageEventCB = null;
 		getImageCB = null;
+		fli = new FormattedListItem();
 	}
 #if false
 	static int update_impl(struct xultb_list_item*item, xultb_str_t*text) {
@@ -94,6 +107,23 @@ static void do_search() {
 	}
 }
 #endif
+
+	protected override ListViewItem getListItem(Replicable given) {
+		print("Generating formatted list item\n");
+		AugmentedContent elem = (AugmentedContent)given;
+		if(elem.cType == AugmentedContent.ContentType.FORMATTED_CONTENT) {
+			fli.factoryBuild((FormattedContent)elem);
+			print("-- formatted item generated\n");
+			return fli;
+		}
+		etxt data = etxt.stack(128);
+		elem.getText(&data);
+		etxt dlg = etxt.stack(256);
+		dlg.printf("Plain line :%s\n", data.to_string());
+		Watchdog.logMsgDoNotUse(&dlg);
+		// see if the label has any image
+		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
+	}
 
 	public void setPageEvent(PageEventCB cb) {
 		if(pageEventCB != null) {

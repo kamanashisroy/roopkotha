@@ -36,7 +36,11 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 		parser = new XMLParser();
 		map = WordMap();
 		map.extract.buffer(asciiData.length());
+#if true
+		map.source = etxt.dup_etxt(asciiData);
+#else
 		map.source = etxt.same_same(asciiData);
+#endif
 		map.map.buffer(asciiData.length());
 		parser.transform(&map);
 		print("FormattedContent:%s\n", asciiData.to_string());
@@ -72,70 +76,76 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 		return false;
 	}
 
-	VisitAugmentedContent convoy;
-	void traverseCB(XMLIterator*xit) {
-		FormattedTextCapsule cap = FormattedTextCapsule();
-		if(xit.nextIsText) {
-			cap.content = etxt.stack(128);
-			cap.textType = FormattedTextType.PLAIN;
-			xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &cap.content);
-			convoy(&cap);
-		} else {
-			if(xit.nextTag.equals_static_string("B")) {
-				cap.textType = FormattedTextType.B;
-			} else if(xit.nextTag.equals_static_string("BR")) {
-				cap.textType = FormattedTextType.BR;
-			} else if(xit.nextTag.equals_static_string("IMG")) {
-				cap.textType = FormattedTextType.IMG;
-			} else if(xit.nextTag.equals_static_string("I")) {
-				cap.textType = FormattedTextType.I;
-			} else if(xit.nextTag.equals_static_string("BIG")) {
-				cap.textType = FormattedTextType.BIG;
-			} else if(xit.nextTag.equals_static_string("SMALL")) {
-				cap.textType = FormattedTextType.SMALL;
-			} else if(xit.nextTag.equals_static_string("STRONG")) {
-				cap.textType = FormattedTextType.STRONG;
-			} else if(xit.nextTag.equals_static_string("EM")) {
-				cap.textType = FormattedTextType.EM;
-			} else if(xit.nextTag.equals_static_string("U")) {
-				cap.textType = FormattedTextType.U;
-			} else if(xit.nextTag.equals_static_string("P")) {
-				cap.textType = FormattedTextType.P;
-			} else if(xit.nextTag.equals_static_string("A")) {
-				cap.textType = FormattedTextType.A;
+	XMLIterator rxit;
+	public override void traverseCapsulesInit() {
+		rxit = XMLIterator(&map);
+		rxit.extract = etxt.same_same(&map.extract);
+	}
+	public override int traverseCapsules(VisitAugmentedContent visitCapsule) {
+		print("Traversing capsules ..\n");
+		parser.traversePreorder2(&rxit, 2, (xit) => {
+			FormattedTextCapsule cap = FormattedTextCapsule();
+			if(xit.nextIsText) {
+				print("Traversing text capsules ..\n");
+				cap.content = etxt.stack(128);
+				cap.textType = FormattedTextType.PLAIN;
+				xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &cap.content);
+				print("Text\t\t- pos:%d,clen:%d,text content:%s\n", xit.pos, xit.content.length(), cap.content.to_string());
+				print("[%s]", map.source.to_string());
+				visitCapsule(&cap);
 			} else {
-				cap.textType = FormattedTextType.UNKNOWN;
-			}
-			etxt attrKey = etxt.EMPTY();
-      etxt attrVal = etxt.EMPTY();
-      while(xit.nextAttr(&attrKey, &attrVal)) {
-				// TODO trim key and value
-        print("key:[%s],val:[%s]\n", attrKey.to_string(), attrVal.to_string());
-				if(attrKey.equals_static_string("href")) {
-					cap.hyperLink.destroy();
-					cap.hyperLink = etxt.same_same(&attrVal);
-				} else if(attrKey.equals_static_string("f")) {
-					if(attrVal.equals_static_string("true"))	{
-						cap.isFocused = true;
-					}
-				} else if(attrKey.equals_static_string("a")) {
-					if(attrVal.equals_static_string("true"))	{
-						cap.isActive = true;
+				print("Traversing non-text capsules ..%s\n",xit.nextTag.to_string());
+				if(xit.nextTag.equals_static_string("B")) {
+					cap.textType = FormattedTextType.B;
+				} else if(xit.nextTag.equals_static_string("BR")) {
+					cap.textType = FormattedTextType.BR;
+				} else if(xit.nextTag.equals_static_string("IMG")) {
+					cap.textType = FormattedTextType.IMG;
+				} else if(xit.nextTag.equals_static_string("I")) {
+					cap.textType = FormattedTextType.I;
+				} else if(xit.nextTag.equals_static_string("BIG")) {
+					cap.textType = FormattedTextType.BIG;
+				} else if(xit.nextTag.equals_static_string("SMALL")) {
+					cap.textType = FormattedTextType.SMALL;
+				} else if(xit.nextTag.equals_static_string("STRONG")) {
+					cap.textType = FormattedTextType.STRONG;
+				} else if(xit.nextTag.equals_static_string("EM")) {
+					cap.textType = FormattedTextType.EM;
+				} else if(xit.nextTag.equals_static_string("U")) {
+					cap.textType = FormattedTextType.U;
+				} else if(xit.nextTag.equals_static_string("P")) {
+					cap.textType = FormattedTextType.P;
+				} else if(xit.nextTag.equals_static_string("A")) {
+					cap.textType = FormattedTextType.A;
+				} else {
+					cap.textType = FormattedTextType.UNKNOWN;
+				}
+				etxt attrKey = etxt.EMPTY();
+				etxt attrVal = etxt.EMPTY();
+				while(xit.nextAttr(&attrKey, &attrVal)) {
+					// TODO trim key and value
+					print("key:[%s],val:[%s]\n", attrKey.to_string(), attrVal.to_string());
+					if(attrKey.equals_static_string("href")) {
+						cap.hyperLink.destroy();
+						cap.hyperLink = etxt.same_same(&attrVal);
+					} else if(attrKey.equals_static_string("f")) {
+						if(attrVal.equals_static_string("true"))	{
+							cap.isFocused = true;
+						}
+					} else if(attrKey.equals_static_string("a")) {
+						if(attrVal.equals_static_string("true"))	{
+							cap.isActive = true;
+						}
 					}
 				}
-      }
-			convoy(&cap);
-		}
-	}	
-
-	public override int traverseCapsules(VisitAugmentedContent visitCapsule) {
-		convoy = visitCapsule;
-		parser.traversePreorder(&map, 1, traverseCB);
+				visitCapsule(&cap);
+			}
+		});
 		return 0;
 	}
 
 #if false
-	int update(struct xultb_list_item*item, xultb_str_t*text) {
+	int update(etxt*xt) {
 		struct xultb_ml_node*node = item->target;
 		SYNC_ASSERT(node);
 		xultb_str_t*new_text = OPPREF(text);

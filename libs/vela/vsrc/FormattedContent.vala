@@ -68,5 +68,6 @@ public abstract class roopkotha.vela.FormattedContent : AugmentedContent {
 	public override void getText(etxt*tData) {
 		tData.concat(data);
 	}
+	public abstract void traverseCapsulesInit();
 	public abstract int traverseCapsules(VisitAugmentedContent visitCapsule);
 }

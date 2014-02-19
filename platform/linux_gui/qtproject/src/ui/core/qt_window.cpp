@@ -25,25 +25,22 @@ void qt_impl_window_show(QTRoopkothaWindow*qw) {
 }
 
 static qt_window_handle_event_t qt_handle_event;
-static void*qt_handle_event_data;
 int qt_process_mouse_event_helper(int flags, int key_code, int x, int y) {
-	if(qt_handle_event) {
+	if(qt_handle_event.aroop_cb) {
 		//GUI_INPUT_LOG("event callback ..\n");
-    return qt_handle_event(qt_handle_event_data, flags, key_code, x, y);
+    return qt_handle_event.aroop_cb(qt_handle_event.aroop_closure_data, flags, key_code, x, y);
 	}
 	return 0;
 }
 
-int qt_impl_window_set_event_handler(QTRoopkothaWindow*UNUSED_VAR(qw), qt_window_handle_event_t handler, void*data) {
+int qt_impl_window_set_event_handler(QTRoopkothaWindow*UNUSED_VAR(qw), qt_window_handle_event_t handler) {
 	//GUI_INPUT_LOG("Setting event handler\n");
 	qt_handle_event = handler;
-	qt_handle_event_data = data;
 	return 0;
 }
 
 QTRoopkothaWindow*qt_impl_window_create() {
-	qt_handle_event_data = NULL;
-	qt_handle_event = NULL;
+	qt_handle_event.aroop_cb = NULL;
 	return new QTRoopkothaWindow();
 }
 

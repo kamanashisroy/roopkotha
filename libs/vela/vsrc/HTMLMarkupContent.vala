@@ -88,7 +88,11 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 			cap.textType = FormattedTextType.UNKNOWN;
 			if(xit.nextIsText) {
 				print("Traversing text capsules ..\n");
+#if LOW_MEMORY
 				cap.content = etxt.stack(128);
+#else
+				cap.content = etxt.stack(1024);
+#endif
 				cap.textType = FormattedTextType.PLAIN;
 				xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &cap.content);
 				print("Text\t\t- pos:%d,clen:%d,text content:%s\n", xit.pos, xit.content.length(), cap.content.to_string());

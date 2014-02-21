@@ -31,7 +31,11 @@ public class roopkotha.vela.PageAppDocument : RoopDocument {
 
 	public void tryReading() {
 		do {
-			etxt data = etxt.stack(512);
+#if LOW_MEMORY
+			etxt data = etxt.stack(1024);
+#else
+			etxt data = etxt.stack(1<<12);
+#endif
 			core.assert(instrm != null);
 			try {
 				int bytesRead = instrm.read(&data);

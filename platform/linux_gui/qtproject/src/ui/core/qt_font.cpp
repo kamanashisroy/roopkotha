@@ -28,6 +28,38 @@ void qt_impl_font_destroy(QTRoopkothaFont*qtfont) {
 	delete qtfont;
 }
 
+/*
+		UNDERLINED = 1,
+		BOLD = (1 << 1),
+		ITALIC = (1 << 2),
+		PLAIN = (1 << 3),
+		SMALL = (1 << 4),
+		MEDIUM = (1 << 5),
+		LARGE = (1 << 6),
+	
+*/
+QTRoopkothaFont*qt_impl_font_get_variant(QTRoopkothaFont*qtfont, int variant) {
+	QFont newFont(qtfont->font);
+	if(variant & 1) {
+		newFont.setUnderline(true);
+	}
+	if(variant & (1<<1)) {
+		newFont.setBold(true);
+	}
+	if(variant & (1<<2)) {
+		newFont.setItalic(true);
+	}
+	if(variant & (1<<4)) {
+		newFont.setPixelSize(12);
+	}
+	if(variant & (1<<5)) {
+		newFont.setPixelSize(15);
+	}
+	if(variant & (1<<6)) {
+		newFont.setPixelSize(18);
+	}
+	return new QTRoopkothaFont(newFont);
+}
 #if false
 static struct xultb_font*some_default_font = NULL;
 struct xultb_font*xultb_font_get(int UNUSED_VAR(face), int UNUSED_VAR(style), int UNUSED_VAR(size)) {
@@ -37,18 +69,6 @@ struct xultb_font*xultb_font_get(int UNUSED_VAR(face), int UNUSED_VAR(style), in
 	return some_default_font;
 }
 
-int xultb_font_get_face(struct xultb_font*UNUSED_VAR(font)) {
-	// TODO implement me
-	return 0;
-}
-int xultb_font_get_style(struct xultb_font*UNUSED_VAR(font)) {
-	// TODO implement me
-	return 0;
-}
-int xultb_font_get_size(struct xultb_font*UNUSED_VAR(font)) {
-	// TODO implement me
-	return 0;
-}
 #endif
 
 C_CAPSULE_END

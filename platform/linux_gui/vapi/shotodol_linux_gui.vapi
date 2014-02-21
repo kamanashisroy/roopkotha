@@ -38,6 +38,8 @@ namespace roopkotha {
 		public int getHeight();
 		[CCode (cname="qt_impl_font_get_substring_width")]
 		public int subStringWidth(etxt*str, int offset, int width);
+		[CCode (cname="qt_impl_font_get_variant")]
+		public FontPlatformImpl getVariant(int val);
 	}
 	[CCode (cname="qt_window_handle_event_t")]
 	public delegate int WindowEventHandler(int flags, int key_code, int x, int y);

@@ -7,6 +7,10 @@ public class roopkotha.FontImpl : roopkotha.Font {
 	public FontImpl() {
 		plat = FontPlatformImpl.create();
 	}
+
+	public FontImpl.from(FontImpl src, Font.Variant stl) {
+		plat = src.plat.getVariant(stl);
+	}
 	
 	public override int getHeight() {
 		return plat.getHeight();
@@ -17,8 +21,7 @@ public class roopkotha.FontImpl : roopkotha.Font {
 	}
 	
 	public override Font getVariant(Font.Variant stl) {
-		// TODO fill me
-		return this;
+		return new FontImpl.from(this, stl);
 	}
 
 	~FontImpl() {

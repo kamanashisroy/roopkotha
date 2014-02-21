@@ -11,6 +11,8 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 	protected int xPos; // = 0
 	protected int yPos;// = 0;
 
+	protected int transX; // = 0
+	protected int transY;// = 0;
 	protected int lineHeight; // = 0;
 	protected int width;
 	protected bool selected;// = false;
@@ -25,6 +27,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 
 	public void factoryBuild(FormattedContent aContent) {
 		xPos = yPos = 0;
+		transX = transY = 0;
 		lineHeight = 0;
 		selected = false;
 		loader = null;
@@ -39,7 +42,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		int oldColor = g.getColor();
 		// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.bgHover%);
 		g.setColor(0xCCCCCC);
-		g.fillRect(0, y, width, height);
+		g.fillRect(xPos, y, width, height);
 		g.setColor(oldColor);
 	}
 
@@ -52,11 +55,12 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 	protected void breakLine(roopkotha.Graphics g) {
 		// put a line break
 		yPos += lineHeight;
-		xPos = 0;
+		xPos = transX;
 
 		// reset line height to minimum
 		lineHeight = minLineHeight;
 
+		core.assert(yPos != 0 && lineHeight != 0);
 		// clear the next line
 		clearLine(g);
 	}
@@ -67,6 +71,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 			clearLineFull(g, yPos + lineHeight, newHeight - lineHeight);
 		}
 		lineHeight = newHeight;
+		print("Line height:%d\n", lineHeight);
 	}
 
 	protected void updateHeightForFont(roopkotha.Graphics g, roopkotha.Font font) {
@@ -130,6 +135,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 
 	protected void renderText(roopkotha.Graphics g, roopkotha.Font font, etxt*text) {
 		int off, ret;
+		print(">> ... * Rendering text:%s\n", text.to_string());
 	//	text = text.replace('\n', ' ').replace('\r', ' ').trim(); /*< skip the newlines */
 		if (text.is_empty()) { /*< empty xultb_str_t* .. skip */
 			return;
@@ -146,6 +152,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 				etxt xt = etxt.same_same(text);
 				xt.shift(off);
 				xt.trim_to_length(ret);
+				print(">> ... * Drawing text(%d,%d):%s\n", xPos, yPos, xt.to_string());
 				g.drawString(&xt, xPos, yPos, 1000, 1000, roopkotha.Graphics.anchor.TOP | roopkotha.Graphics.anchor.LEFT);
 				xPos += font.subStringWidth(text, off, ret - off);
 			}
@@ -167,6 +174,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 	}
 
 	protected void renderFormattedText(roopkotha.Graphics g, FormattedTextCapsule*cap, roopkotha.Font font) {
+		print(">> ... * Rendering capsule:%d\n", cap.textType);
 		int oldColor = g.getColor();
 		core.assert(font != null);
 		roopkotha.Font newFont = font;
@@ -227,9 +235,9 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		core.assert(newFont != null);
 		// render the inner nodes
 		content.traverseCapsules((child) => {
-				if (cap.textType == FormattedTextType.PLAIN) {
+				if (child.textType == FormattedTextType.PLAIN) {
 					core.assert(newFont != null);
-					renderText(g, newFont, &cap.content);
+					renderText(g, newFont, &child.content);
 				} else {
 					renderFormattedText(g, child, newFont);
 				}
@@ -246,8 +254,10 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 #endif
 
 	public override int paint(roopkotha.Window parent, roopkotha.Graphics g, int x, int y, int aWidth, bool aSelected) {
-		xPos = 0;
-		yPos = 0;
+		transX = x;
+		transY = y;
+		xPos = transX;
+		yPos = transY;
 		width = aWidth; 
 		selected = aSelected;
 		// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.fg%);
@@ -258,6 +268,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 			minLineHeight = font.getHeight()+ListViewItem.display.PADDING;
 		}
 		lineHeight = minLineHeight;
+		print("Line height:%d\n", lineHeight);
 		//	g.translate(x, y);
 
 		// draw the line background
@@ -266,7 +277,11 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		content.traverseCapsulesInit();
 		// draw the node recursively
 		content.traverseCapsules((cap) => {
-			renderFormattedText(g, cap, font);
+			if (cap.textType == FormattedTextType.PLAIN) {
+				renderText(g, font, &cap.content);
+			} else {
+				renderFormattedText(g, cap, font);
+			}
 			return 0;
 		});
 

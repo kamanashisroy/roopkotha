@@ -83,8 +83,9 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 	}
 	public override int traverseCapsules(VisitAugmentedContent visitCapsule) {
 		print("Traversing capsules ..\n");
-		parser.traversePreorder2(&rxit, 2, (xit) => {
+		parser.traversePreorder2(&rxit, 1, (xit) => {
 			FormattedTextCapsule cap = FormattedTextCapsule();
+			cap.textType = FormattedTextType.UNKNOWN;
 			if(xit.nextIsText) {
 				print("Traversing text capsules ..\n");
 				cap.content = etxt.stack(128);

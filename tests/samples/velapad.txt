@@ -1,1 +1,1 @@
-Before break<BR/>After break <b>It is bold <I>It is italic and bold</I></b><BR/>break again
+fine<B>good<I>bitter</I>good<B>Nice</B></B>fine

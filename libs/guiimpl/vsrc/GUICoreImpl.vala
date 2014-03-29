@@ -21,7 +21,7 @@ public class roopkotha.GUICoreImpl : roopkotha.GUICore {
 		return 0;
   }
 
-	public override int start(Propeller?plr) { 
+	public override int start(shotodol.Spindle?plr) { 
 		print("GUICore stepping started..\n");
 		return 0;
 	}

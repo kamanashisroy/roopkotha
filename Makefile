@@ -30,4 +30,5 @@ cleancore:
 
 clean:cleancore cleanapp
 
-include tests/test.mk
+#include tests/test.mk
+

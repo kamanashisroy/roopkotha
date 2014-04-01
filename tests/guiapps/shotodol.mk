@@ -2,6 +2,7 @@
 all:
 	module -load ../../guiapps/pad/plugin.so
 	module -load ../../guiapps/vela/plugin.so
+	profiler
 	make -t velapad
 
 writepad:

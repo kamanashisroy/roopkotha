@@ -71,7 +71,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 			clearLineFull(g, yPos + lineHeight, newHeight - lineHeight);
 		}
 		lineHeight = newHeight;
-		print("Line height:%d\n", lineHeight);
+		//print("Line height:%d\n", lineHeight);
 	}
 
 	protected void updateHeightForFont(roopkotha.Graphics g, roopkotha.Font font) {
@@ -87,8 +87,8 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		}
 	}
 
-	static void renderImage(roopkotha.Graphics g, FormattedTextCapsule*cap) {
-	#if 0
+	protected void renderImage(roopkotha.Graphics g, FormattedTextCapsule*cap) {
+	#if false
 		xultb_str_t* src = elem->get_attribute_value(null, "src");
 		if (src == null) {
 			return;
@@ -135,7 +135,13 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 
 	protected void renderText(roopkotha.Graphics g, roopkotha.Font font, etxt*text) {
 		int off, ret;
-		print(">> ... * Rendering text:%s\n", text.to_string());
+		etxt talk = etxt.stack(128);
+		talk.printf("Rendering text:%s\n", text.to_string());
+#if GUI_DEBUG
+		font.dumpAll(&talk);
+#endif
+		talk.concat_char('\n');
+		Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 	//	text = text.replace('\n', ' ').replace('\r', ' ').trim(); /*< skip the newlines */
 		if (text.is_empty()) { /*< empty xultb_str_t* .. skip */
 			return;
@@ -152,7 +158,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 				etxt xt = etxt.same_same(text);
 				xt.shift(off);
 				xt.trim_to_length(ret);
-				print(">> ... * Drawing text(%d,%d):%s\n", xPos, yPos, xt.to_string());
+				//print(">> ... * Drawing text(%d,%d):%s\n", xPos, yPos, xt.to_string());
 				g.drawString(&xt, xPos, yPos, 1000, 1000, roopkotha.Graphics.anchor.TOP | roopkotha.Graphics.anchor.LEFT);
 				xPos += font.subStringWidth(text, off, ret - off);
 			}
@@ -173,8 +179,12 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		}
 	}
 
-	protected void renderFormattedText(roopkotha.Graphics g, FormattedTextCapsule*cap, roopkotha.Font font) {
-		print(">> ... * Rendering capsule:%d\n", cap.textType);
+	protected void renderFormattedText(roopkotha.Graphics g, roopkotha.Font font, FormattedTextCapsule*cap) {
+		{
+				etxt talk = etxt.stack(128);
+				talk.printf("Rendering capsule: %d\n", cap.textType);
+				Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+		}
 		int oldColor = g.getColor();
 		core.assert(font != null);
 		roopkotha.Font newFont = font;
@@ -235,16 +245,27 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		core.assert(newFont != null);
 		// render the inner nodes
 		content.traverseCapsules((child) => {
+				etxt talk = etxt.stack(128);
+				talk.printf("Rendering child of [%d]-", cap.textType);
+#if GUI_DEBUG
+				newFont.dumpAll(&talk);
+#endif
+				talk.concat_char('\n');
+				Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 				if (child.textType == FormattedTextType.PLAIN) {
 					core.assert(newFont != null);
 					renderText(g, newFont, &child.content);
 				} else {
-					renderFormattedText(g, child, newFont);
+					renderFormattedText(g, newFont, child);
 				}
 				return 0;
 		});
-		// System.out.println("</"+tagName+">");
 		g.setColor(oldColor);
+		{
+				etxt talk = etxt.stack(128);
+				talk.printf("End capsule: %d\n", cap.textType);
+				Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+		}
 	}
 
 #if false
@@ -277,10 +298,17 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		content.traverseCapsulesInit();
 		// draw the node recursively
 		content.traverseCapsules((cap) => {
+			etxt talk = etxt.stack(128);
+			talk.printf("Rendering[Paint] ..");
+#if GUI_DEBUG
+			font.dumpAll(&talk);
+#endif
+			talk.concat_char('\n');
+			Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 			if (cap.textType == FormattedTextType.PLAIN) {
 				renderText(g, font, &cap.content);
 			} else {
-				renderFormattedText(g, cap, font);
+				renderFormattedText(g, font, cap);
 			}
 			return 0;
 		});

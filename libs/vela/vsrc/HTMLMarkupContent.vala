@@ -144,6 +144,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 					}
 				}
 				visitCapsule(&cap);
+				print("End of non-text capsules ..%s\n",xit.nextTag.to_string());
 			}
 		});
 		return 0;

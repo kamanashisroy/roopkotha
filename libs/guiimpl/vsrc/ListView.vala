@@ -50,7 +50,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		continuous_scrolling = true;
 		item_font = new FontImpl();
 		etxt dlg = etxt.from_static("Created ListView\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 	}
 	
 	~ListView() {
@@ -119,7 +119,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Iterating items\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		// sanity check
 		if (items == null) {
 			return;
@@ -135,7 +135,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			this.selected_index = 0;
 		}
 		dlg.printf("Iterating items(%d)\n", this.vpos);
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		for (i = this.vpos;;i++) {
 			print("Showing list item :%d\n", i);
 			Replicable? obj = items.get(i);
@@ -145,7 +145,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			}
 			/* see if selected index is more than the item count */
 			dlg.printf("Showing item\n");
-			Watchdog.logMsgDoNotUse(&dlg);
+			Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 			posY += this.showItem(g, obj, posY, i == this.selected_index);
 			if (posY > (this.menuY - this.bottomMargin)) {
 				if (this.selected_index >= i && this.vpos < this.selected_index) {
@@ -164,7 +164,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 				g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y + roopkotha.ListView.display.RESOLUTION, x + roopkotha.ListView.display.RESOLUTION,
 						y, x, y);
 				dlg.printf("No more place to draw\n");
-				Watchdog.logMsgDoNotUse(&dlg);
+				Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 				break;
 			}
 		}
@@ -173,7 +173,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	public override void paint(roopkotha.Graphics g) {
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Drawing list...\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		/* Draw the ListView Items */
 		this.showItems(g);
 		if (this.vpos > 0) {
@@ -206,26 +206,26 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			/* TODO show "<>"(90 degree rotated) icon to indicate that we can traverse through the list  */
 		}
 		dlg.printf("All done...\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 	}
 
 	public override bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		roopkotha.ListView list = (roopkotha.ListView )this;
 		etxt dlg = etxt.stack(128);
 		dlg.printf("handling menu command\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		if(base.onEvent(target, flags, key_code, x, y)) {
 			return true;
 		}
 
 		dlg.printf("Handle menu commands2\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		// dispatch selected element events
 		if(this.onItemEvent(target, flags, key_code, x, y)) {
 			return true;
 		}
 		dlg.printf("So the target is list item\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		if((flags & roopkotha.GUIInput.eventType.SCREEN_EVENT) != 0) {
 			ArrayList<Replicable>*items = list.getItems();
 			int i;
@@ -233,7 +233,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 				Replicable?obj = items.get(i);
 				if(obj == target) {
 					dlg.printf("let us make it selected: %d\n", i);
-					Watchdog.logMsgDoNotUse(&dlg);
+					Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 					this.selected_index = i;
 					roopkotha.GUICore.setDirty(this); // may be we should refresh partial
 					i = -2;
@@ -242,7 +242,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		} else {
 			bool consumed = false;
 			dlg.printf("Try to edit with keycode:%d, selected index:%d\n", key_code, this.selected_index);
-			Watchdog.logMsgDoNotUse(&dlg);
+			Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 			// if it is keyboard event then perform keyboard tasks
 			Replicable? obj = list.getSelected();
 			if(obj != null) {

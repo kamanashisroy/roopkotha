@@ -120,7 +120,7 @@ static void do_search() {
 		elem.getText(&data);
 		etxt dlg = etxt.stack(256);
 		dlg.printf("Plain line :%s\n", data.to_string());
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		// see if the label has any image
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 	}

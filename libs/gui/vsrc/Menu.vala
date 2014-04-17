@@ -226,7 +226,7 @@ public abstract class roopkotha.Menu : Replicable {
 					if(((currentlySelectedIndex - 1) >= 0))currentlySelectedIndex--;
 					return true;
 				} else {
-					Watchdog.logString("Menu is closed\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu is closed\n");
 					return false;
 				}
 				break;
@@ -235,7 +235,7 @@ public abstract class roopkotha.Menu : Replicable {
 					if(!((currentlySelectedIndex + 1) >= menuOptions.count_unsafe()))currentlySelectedIndex++;
 					return true;
 				} else {
-					Watchdog.logString("Menu is closed\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu is closed\n");
 					return false;
 				}
 				break;
@@ -257,18 +257,18 @@ public abstract class roopkotha.Menu : Replicable {
 						target = cmd;
 					}
 				} else {
-					Watchdog.logString("Menu is closed\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu is closed\n");
 					return false;
 				}
 				break;
 			default:
-				Watchdog.logString("This is not traversing key\n");
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "This is not traversing key\n");
 				return false;
 			}
 		}
 
 		if(target == null) {
-			Watchdog.logString("No target\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "No target\n");
 			return false;
 		}
 
@@ -276,24 +276,24 @@ public abstract class roopkotha.Menu : Replicable {
 		int i;
 		bool right = false, left = false;
 
-		Watchdog.logString("Menu Clicked\n");
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu Clicked\n");
 		EventOwner? firstOption = null;
 
 		if(target.is_same(rightOption)) {
 			right = true;
-			Watchdog.logString("Right menu\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Right menu\n");
 		} else if(menu_is_active) {
 			if(target.is_same(CANCEL)) {
 				left = true;
-				Watchdog.logString("Close menu\n");
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Close menu\n");
 			} else if(menuOptions != null)for (i=0;i<menuOptions.count_unsafe();i++) {
 				EventOwner cmd = menuOptions.get(i);
 				if(cmd == target) {
 					left = true;
 					i = -2; // break
-					Watchdog.logString("Left menu:");
-					//Watchdog.logString(/*"Left menu:%s\n", */cmd.getLabel().to_string());
-					Watchdog.logString("\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Left menu:");
+					//Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), /*"Left menu:%s\n", */cmd.getLabel().to_string());
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "\n");
 				}
 				if(i == 0) {
 					firstOption = cmd;
@@ -301,10 +301,10 @@ public abstract class roopkotha.Menu : Replicable {
 			}
 		} else if(target == MENU){
 			left = true;
-			Watchdog.logString("Open menu\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Open menu\n");
 		}
 		if(!right && !left) {
-			Watchdog.logString("Not a menu event\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Not a menu event\n");
 			return false;
 		}
 

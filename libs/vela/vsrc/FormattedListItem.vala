@@ -141,7 +141,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		font.dumpAll(&talk);
 #endif
 		talk.concat_char('\n');
-		Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 	//	text = text.replace('\n', ' ').replace('\r', ' ').trim(); /*< skip the newlines */
 		if (text.is_empty()) { /*< empty xultb_str_t* .. skip */
 			return;
@@ -183,7 +183,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		{
 				etxt talk = etxt.stack(128);
 				talk.printf("Rendering capsule: %d\n", cap.textType);
-				Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 		}
 		int oldColor = g.getColor();
 		core.assert(font != null);
@@ -251,7 +251,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 				newFont.dumpAll(&talk);
 #endif
 				talk.concat_char('\n');
-				Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 				if (child.textType == FormattedTextType.PLAIN) {
 					core.assert(newFont != null);
 					renderText(g, newFont, &child.content);
@@ -264,7 +264,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		{
 				etxt talk = etxt.stack(128);
 				talk.printf("End capsule: %d\n", cap.textType);
-				Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 		}
 	}
 
@@ -304,7 +304,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 			font.dumpAll(&talk);
 #endif
 			talk.concat_char('\n');
-			Watchdog.watchit(0, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 			if (cap.textType == FormattedTextType.PLAIN) {
 				renderText(g, font, &cap.content);
 			} else {

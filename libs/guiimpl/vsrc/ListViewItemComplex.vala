@@ -242,7 +242,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 				bool changed = false;
 				etxt dlg = etxt.stack(64);
 				dlg.printf("Edit text field , key code:%d\n", key_code);
-				Watchdog.logMsgDoNotUse(&dlg);
+				Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 				// get current text
 				etxt xt = etxt.stack(text.length()+1);
 				xt.concat(&text);

@@ -19,7 +19,7 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	}
 	
 	public override void show() {
-		Watchdog.logString("WindowImpl:show\n");
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "WindowImpl:show\n");
 		roopkotha.GUICore.setDirty(this);
 		plat.show();
 	}

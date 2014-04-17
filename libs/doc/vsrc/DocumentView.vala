@@ -55,13 +55,13 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 	public DocumentView(etxt*aTitle, etxt*aDefaultCommand) {
 		base(aTitle, aDefaultCommand);
 		etxt dlg = etxt.from_static("Created DocumentView\n");
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 	}
 	public void setDocument(RoopDocument aDoc, int aSelectedIndex) {
 		doc = aDoc;
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Set Document of %d lines\n", getCount());
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 #if false
 		searching = false;
 		continuousScrolling = true;
@@ -213,7 +213,7 @@ public class roopkotha.DocumentView : roopkotha.ListView {
 		elem.getText(&data);
 		etxt dlg = etxt.stack(256);
 		dlg.printf("Plain line :%s\n", data.to_string());
-		Watchdog.logMsgDoNotUse(&dlg);
+		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 		// see if the label has any image
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 	}

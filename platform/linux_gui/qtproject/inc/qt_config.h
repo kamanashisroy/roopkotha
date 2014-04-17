@@ -21,6 +21,7 @@ typedef qint32 SYNC_SWORD32_T;
 #include "string.h"
 #include "stdlib.h"
 #include <assert.h>
+#include <time.h>
 #define SYNC_ASSERT(x) assert(x)
 
 #ifdef __cplusplus

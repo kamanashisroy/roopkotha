@@ -1,0 +1,5 @@
+static_objects.a
+plugin.so
+vsrc/*.c
+include/*.h
+vapi/*.vapi

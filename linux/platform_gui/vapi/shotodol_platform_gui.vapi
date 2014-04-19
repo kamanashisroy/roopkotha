@@ -1,7 +1,7 @@
 using aroop;
 
 namespace roopkotha {
-	[CCode (cname="QTRoopkothaGraphics",has_copy_function=true, free_function="qt_impl_graphics_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	[CCode (cname="QTRoopkothaGraphics",has_copy_function=true, free_function="qt_impl_graphics_destroy", cheader_filename = "shotodol_platform_gui.h")]
 	public class GraphicsPlatformImpl {
 		[CCode (cname="qt_impl_graphics_create")]
 		public static GraphicsPlatformImpl create();
@@ -30,7 +30,7 @@ namespace roopkotha {
 		[CCode (cname="qt_impl_start")]
 		public void start();
 	}
-	[CCode (cname="QTRoopkothaFont",has_copy_function=true, free_function="qt_impl_font_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	[CCode (cname="QTRoopkothaFont",has_copy_function=true, free_function="qt_impl_font_destroy", cheader_filename = "shotodol_platform_gui.h")]
 	public class FontPlatformImpl {
 		[CCode (cname="qt_impl_font_create")]
 		public static FontPlatformImpl create();
@@ -43,7 +43,7 @@ namespace roopkotha {
 	}
 	[CCode (cname="qt_window_handle_event_t")]
 	public delegate int WindowEventHandler(int flags, int key_code, int x, int y);
-	[CCode (cname="QTRoopkothaWindow",has_copy_function=true, free_function="qt_impl_window_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	[CCode (cname="QTRoopkothaWindow",has_copy_function=true, free_function="qt_impl_window_destroy", cheader_filename = "shotodol_platform_gui.h")]
 	public class WindowPlatformImpl {
 		[CCode (cname="qt_impl_window_create")]
 		public static WindowPlatformImpl create();
@@ -55,7 +55,7 @@ namespace roopkotha {
 		public int setEventHandler(WindowEventHandler eh);
 	}
 	
-	[CCode (cname="QTRoopkothaGUICore",has_copy_function=true, free_function="qt_impl_guicore_destroy", cheader_filename = "shotodol_linux_gui.h")]
+	[CCode (cname="QTRoopkothaGUICore",has_copy_function=true, free_function="qt_impl_guicore_destroy", cheader_filename = "shotodol_platform_gui.h")]
 	public class GUICorePlatformImpl {
 		[CCode (cname="qt_impl_guicore_create")]
 		public static GUICorePlatformImpl create();

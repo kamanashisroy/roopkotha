@@ -1,0 +1,8 @@
+libs/gui
+OS_PLATFORM/platform_gui
+libs/rtree
+libs/guiimpl
+libs/doc
+libs/vela
+guiapps/pad
+guiapps/vela

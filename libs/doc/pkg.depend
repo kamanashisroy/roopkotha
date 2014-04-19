@@ -6,4 +6,4 @@ libs/rawimg
 -ROOPKOTHA_HOME
 libs/guiimpl
 libs/gui
-platform/linux_gui
+OS_PLATFORM/platform_gui

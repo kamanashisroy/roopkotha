@@ -5,4 +5,4 @@ libs/rawimg
 -ROOPKOTHA_HOME
 libs/gui
 libs/rtree
-platform/linux_gui
+OS_PLATFORM/platform_gui

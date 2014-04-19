@@ -62,7 +62,7 @@ if yes_no_to_bool(prompt_yes_no("enable GUI debug ?(y/n) > ")) then
 	configLines["VALAFLAGS+"] = " -D GUI_DEBUG"
 end
 
-local conf = assert(io.open("./.config.mk", "w"))
+local conf = assert(io.open("build/.config.mk", "w"))
 for x in pairs(configLines) do
 	local op = configOps[x]
 	if op == nil then
@@ -71,4 +71,7 @@ for x in pairs(configLines) do
 	conf:write(x .. op .. configLines[x] .. "\n")
 end
 assert(conf:close())
+
+local shotodol = dofile(configLines["SHOTODOL_HOME"] .. "/build/shotodol.lua")
+shotodol.genmake(configLines["PROJECT_HOME"])
 

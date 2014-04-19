@@ -1,6 +1,6 @@
 
 include ../../../.config.mk
-CURRENTPATH=$(ROOPKOTHA_HOME)/platform/linux_gui/build
+CURRENTPATH=$(ROOPKOTHA_HOME)/linux/platform_gui/build
 #include platform.mk
 
 ifeq ("$(PLATFORM)","win")

@@ -1,7 +1,7 @@
 using aroop;
 using shotodol;
 
-public class onubodh.VelaModule : ModulePlugin {
+public class roopkotha.app.VelaModule : ModulePlugin {
 	VelaCommand cmd;
 	public override int init() {
 		cmd = new VelaCommand();

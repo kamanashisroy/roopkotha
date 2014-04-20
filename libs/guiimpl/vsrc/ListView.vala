@@ -20,11 +20,12 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public abstract class roopkotha.ListView : roopkotha.WindowImpl {
+public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
  
-	roopkotha.Font item_font;
+	roopkotha.gui.Font item_font;
 	bool continuous_scrolling;
 
 	int vpos; /* Index of the showing Item */
@@ -57,7 +58,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	}
 
 	protected abstract aroop.ArrayList<Replicable>*getItems();
-	protected abstract roopkotha.ListViewItem getListItem(Replicable data);
+	protected abstract roopkotha.gui.ListViewItem getListItem(Replicable data);
 
  	protected virtual int getCount() {
 		return getItems().count_unsafe();
@@ -89,8 +90,8 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		return false;
 	}
 	
-	private int showItem(roopkotha.Graphics g, Replicable data, int y, bool selected) {
-		roopkotha.ListViewItem? li = null;
+	private int showItem(roopkotha.gui.Graphics g, Replicable data, int y, bool selected) {
+		roopkotha.gui.ListViewItem? li = null;
 #if false
 		if(obj instanceof ListItem) {
 		  li = (ListItem)obj;
@@ -104,15 +105,15 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		if(li == null)
 		  return 0;
 		li.focused = selected;
-		int ret = li.paint(this, g, this.leftMargin + roopkotha.ListView.display.HMARGIN
-				, y + roopkotha.ListView.display.VMARGIN
-				, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN - 1 - this.leftMargin - this.rightMargin
-				, selected) + roopkotha.ListView.display.VMARGIN + roopkotha.ListView.display.VMARGIN;
+		int ret = li.paint(this, g, this.leftMargin + roopkotha.gui.ListView.display.HMARGIN
+				, y + roopkotha.gui.ListView.display.VMARGIN
+				, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN - 1 - this.leftMargin - this.rightMargin
+				, selected) + roopkotha.gui.ListView.display.VMARGIN + roopkotha.gui.ListView.display.VMARGIN;
 		li = null;
 		return ret;
 	}
 
-	private void showItems(roopkotha.Graphics g) {
+	private void showItems(roopkotha.gui.Graphics g) {
 		int i = -1;
 		aroop.ArrayList<Replicable>*items = this.getItems();
 		int posY = this.panelTop + this.topMargin;
@@ -159,9 +160,9 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 				// draw an arrow
 				// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.indicator%);
 				g.setColor(0x006699);
-				int x = this.width - 3 * roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.RESOLUTION - this.rightMargin;
-				int y = this.menuY - this.bottomMargin - this.PADDING - 2 * roopkotha.ListView.display.RESOLUTION;
-				g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y + roopkotha.ListView.display.RESOLUTION, x + roopkotha.ListView.display.RESOLUTION,
+				int x = this.width - 3 * roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.RESOLUTION - this.rightMargin;
+				int y = this.menuY - this.bottomMargin - this.PADDING - 2 * roopkotha.gui.ListView.display.RESOLUTION;
+				g.fillTriangle(x + roopkotha.gui.ListView.display.RESOLUTION / 2, y + roopkotha.gui.ListView.display.RESOLUTION, x + roopkotha.gui.ListView.display.RESOLUTION,
 						y, x, y);
 				dlg.printf("No more place to draw\n");
 				Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
@@ -170,7 +171,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		}
 	}
 
-	public override void paint(roopkotha.Graphics g) {
+	public override void paint(roopkotha.gui.Graphics g) {
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Drawing list...\n");
 		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
@@ -181,10 +182,10 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			// draw an arrow
 			// #expand g.setColor(%net.ayaslive.miniim.ui.core.list.indicator%);
 			g.setColor(0x006699);
-			int x = this.width - 3 * roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.RESOLUTION - this.rightMargin;
-			int y = this.panelTop + this.topMargin + this.PADDING + roopkotha.ListView.display.RESOLUTION;
-			g.fillTriangle(x + roopkotha.ListView.display.RESOLUTION / 2, y, x + roopkotha.ListView.display.RESOLUTION, y + roopkotha.ListView.display.RESOLUTION,
-					x, y + roopkotha.ListView.display.RESOLUTION);
+			int x = this.width - 3 * roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.RESOLUTION - this.rightMargin;
+			int y = this.panelTop + this.topMargin + this.PADDING + roopkotha.gui.ListView.display.RESOLUTION;
+			g.fillTriangle(x + roopkotha.gui.ListView.display.RESOLUTION / 2, y, x + roopkotha.gui.ListView.display.RESOLUTION, y + roopkotha.gui.ListView.display.RESOLUTION,
+					x, y + roopkotha.gui.ListView.display.RESOLUTION);
 		}
 //#if FIXME_LATER
 		base.paint(g);
@@ -201,8 +202,8 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 					, 0
 					, 0
 					, this.width
-					, this.height - roopkotha.Menu.display.PADDING
-					, roopkotha.Graphics.anchor.HCENTER|roopkotha.Graphics.anchor.BOTTOM);
+					, this.height - roopkotha.gui.Menu.display.PADDING
+					, roopkotha.gui.Graphics.anchor.HCENTER|roopkotha.gui.Graphics.anchor.BOTTOM);
 			/* TODO show "<>"(90 degree rotated) icon to indicate that we can traverse through the list  */
 		}
 		dlg.printf("All done...\n");
@@ -210,7 +211,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 	}
 
 	public override bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
-		roopkotha.ListView list = (roopkotha.ListView )this;
+		roopkotha.gui.ListView list = (roopkotha.gui.ListView )this;
 		etxt dlg = etxt.stack(128);
 		dlg.printf("handling menu command\n");
 		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
@@ -226,7 +227,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 		}
 		dlg.printf("So the target is list item\n");
 		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
-		if((flags & roopkotha.GUIInput.eventType.SCREEN_EVENT) != 0) {
+		if((flags & roopkotha.gui.GUIInput.eventType.SCREEN_EVENT) != 0) {
 			ArrayList<Replicable>*items = list.getItems();
 			int i;
 			if(items != null)for(i=0;;i++) {
@@ -235,7 +236,7 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 					dlg.printf("let us make it selected: %d\n", i);
 					Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
 					this.selected_index = i;
-					roopkotha.GUICore.setDirty(this); // may be we should refresh partial
+					roopkotha.gui.GUICore.setDirty(this); // may be we should refresh partial
 					i = -2;
 				}
 			}
@@ -246,19 +247,19 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 			// if it is keyboard event then perform keyboard tasks
 			Replicable? obj = list.getSelected();
 			if(obj != null) {
-				roopkotha.ListViewItem? item = list.getListItem(obj);
+				roopkotha.gui.ListViewItem? item = list.getListItem(obj);
 				if(item != null) {
 					consumed = item.doEdit(flags, key_code, x, y);
 				}
 			}
 			if(consumed) {
-				roopkotha.GUICore.setDirty(this); // TODO tell it to refresh only a portion ..
+				roopkotha.gui.GUICore.setDirty(this); // TODO tell it to refresh only a portion ..
 				return true;
 			}
 			key_code = (x != 0)?x:key_code; // handle arrow keys ..
 		}
 		/* else traverse the list items and work for menu */
-		if (key_code == roopkotha.GUIInput.keyEventType.KEY_UP) {
+		if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_UP) {
 			this.selected_index--;
 			if (this.selected_index < 0) {
 				if (this.continuous_scrolling) {
@@ -274,9 +275,9 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 #endif
 			}
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN, this.panelTop
-					, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
-		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_DOWN) {
+			roopkotha.gui.GUICore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN, this.panelTop
+					, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN, this.menuY);
+		} else if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_DOWN) {
 			this.selected_index++;
 			int count = list.getCount();
 			if (count != -1 && this.selected_index >= count) {
@@ -287,14 +288,14 @@ public abstract class roopkotha.ListView : roopkotha.WindowImpl {
 				}
 			}
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
-					, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
-		} else if (key_code == roopkotha.GUIInput.keyEventType.KEY_ENTER) {
+			roopkotha.gui.GUICore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN
+					, this.panelTop, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN, this.menuY);
+		} else if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_ENTER) {
 			onAction(defaultCommand/*target*/); // should not it be target !
 #if false
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.GUICore.setDirtyFull(this, roopkotha.ListView.display.HMARGIN
-						, this.panelTop, this.width - roopkotha.ListView.display.HMARGIN - roopkotha.ListView.display.HMARGIN, this.menuY);
+			roopkotha.gui.GUICore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN
+						, this.panelTop, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN, this.menuY);
 #endif
 		}
 		return true;

@@ -1,8 +1,8 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
-public class roopkotha.TextFormat : Replicable {
+public class roopkotha.gui.TextFormat : Replicable {
 	public static int wrap_next(etxt*str, Font? font, int pos, int width) {
 #if true
 	  int i = pos,start = pos;

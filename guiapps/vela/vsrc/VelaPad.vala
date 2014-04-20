@@ -1,13 +1,14 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 using roopkotha.vela;
 
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-public class roopkotha.VelaPad : VelaPadMenu {
+internal class roopkotha.app.VelaPad : VelaPadMenu {
 	public VelaPad() {
 		base();
 	}

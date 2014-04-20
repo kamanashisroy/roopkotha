@@ -2,7 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-public class onubodh.WritePadCommand : M100Command {
+public class roopkotha.app.WritePadCommand : M100Command {
 	etxt prfx;
 	WritePad? wpad;
 	enum Options {

@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 
-public class roopkotha.WritePadMenu : Replicable {
+public class roopkotha.app.WritePadMenu : Replicable {
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
 	GUICoreImpl impl;

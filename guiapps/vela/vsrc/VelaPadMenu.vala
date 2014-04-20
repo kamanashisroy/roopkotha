@@ -1,13 +1,13 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 using roopkotha.vela;
 
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-public class roopkotha.VelaPadMenu : Replicable {
+internal class roopkotha.app.VelaPadMenu : Replicable {
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
 	GUICoreImpl impl;

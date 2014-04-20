@@ -1,14 +1,15 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public struct roopkotha.GUIInputEvent {
+public struct roopkotha.gui.GUIInputEvent {
 	public int flags;
 	public int key_code;
 	public int x;
 	public int y;
 }
-public class roopkotha.GUIInputImpl : GUIInput {
+public class roopkotha.gui.GUIInputImpl : GUIInput {
 	RTreeBranch? rtr;
 	Window?win;
 	~GUIInputImpl() {
@@ -21,7 +22,7 @@ public class roopkotha.GUIInputImpl : GUIInput {
 		print("Adding rect:(%d,%d,%d,%d)\n", x, y, x+width, y+height);
 		return 0;
 	}
-	public override int reset(roopkotha.Window aWin) { /*< This should be called before registering action */
+	public override int reset(roopkotha.gui.Window aWin) { /*< This should be called before registering action */
 		rtr = null;
 		rtr = new RTreeBranch();
 		win = aWin;

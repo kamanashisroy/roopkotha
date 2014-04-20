@@ -1,6 +1,7 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 using roopkotha.vela;
 
 /**
@@ -10,7 +11,7 @@ using roopkotha.vela;
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.vela.PageAppDocument : RoopDocument {
+public class roopkotha.vela.PageAppDocument : roopkotha.doc.RoopDocument {
 	int counter;
 	InputStream? instrm;
 	public PageAppDocument() {

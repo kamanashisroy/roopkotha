@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.ListViewItemComplex : ListViewItem {
+public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 	protected EventOwner?target;
 	protected etxt label;
 	protected etxt text;
@@ -12,7 +13,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 	protected bool wrapped;
 	protected bool truncate_text_to_fit_width;
 	protected onubodh.RawImage? img;
-	public roopkotha.Font? ITEM_FONT;
+	public roopkotha.gui.Font? ITEM_FONT;
 	public int FONT_HEIGHT;
 	public ListViewItemComplex.common() {
 		ITEM_FONT = new FontImpl();
@@ -62,7 +63,7 @@ public class roopkotha.ListViewItemComplex : ListViewItem {
 		}
 	}
 
-	public override int paint(roopkotha.Window parent, roopkotha.Graphics g, int x, int y, int width, bool selected) {
+	public override int paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int x, int y, int width, bool selected) {
 		int start, pos, ret, labelWidth, labelHeight, lineCount;
 		int imgspacing = 0;
 		if (img != null) {

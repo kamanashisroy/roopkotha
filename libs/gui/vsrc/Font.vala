@@ -20,9 +20,9 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
-public abstract class roopkotha.Font : Replicable {
+public abstract class roopkotha.gui.Font : Replicable {
 	public enum Variant {
 		UNDERLINED = 1,
 		BOLD = (1 << 1),

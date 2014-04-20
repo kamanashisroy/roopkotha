@@ -2,7 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-internal class WritePadTest : UnitTest {
+internal class roopkotha.app.WritePadTest : UnitTest {
   etxt tname;
   public WritePadTest() {
     tname = etxt.from_static("WritePad Test");

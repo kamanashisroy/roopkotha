@@ -20,12 +20,12 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 /*! \class xultb_graphics
  * This is responsible for drawing the total interface.
  * It is implemented in the platform.
  **/
-public abstract class roopkotha.Graphics : Replicable {
+public abstract class roopkotha.gui.Graphics : Replicable {
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_")]
 	public enum anchor {
 		TOP = 1,
@@ -80,7 +80,7 @@ public abstract class roopkotha.Graphics : Replicable {
 #if 0
 	void setColorFull(int red, int green, int blue);
 #endif
-	public abstract void setFont(roopkotha.Font font);
+	public abstract void setFont(roopkotha.gui.Font font);
 #if 0
 	void setGrayScale(int val);
 	void setStrokeStyle(int stl);

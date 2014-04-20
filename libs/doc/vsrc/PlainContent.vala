@@ -1,8 +1,8 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
-public class roopkotha.PlainContent : AugmentedContent {
+public class roopkotha.doc.PlainContent : roopkotha.doc.AugmentedContent {
 	txt data;
 	public PlainContent(etxt*asciiData) {
 		base();

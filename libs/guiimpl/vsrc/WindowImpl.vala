@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.WindowImpl : roopkotha.Window {
+public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	WindowPlatformImpl plat;
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
@@ -20,16 +21,16 @@ public class roopkotha.WindowImpl : roopkotha.Window {
 	
 	public override void show() {
 		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "WindowImpl:show\n");
-		roopkotha.GUICore.setDirty(this);
+		roopkotha.gui.GUICore.setDirty(this);
 		plat.show();
 	}
 		
-	public override void postPaint(roopkotha.Graphics g) {
+	public override void postPaint(roopkotha.gui.Graphics g) {
 		GraphicsImpl gi = (g as GraphicsImpl);
 		plat.paint_end(gi.plat);
 	}
 
-	public override roopkotha.Font getFont(roopkotha.Font.Face face, roopkotha.Font.Variant vars) {
+	public override roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars) {
 		// TODO use a font factory ..
 		return new FontImpl();
 	}

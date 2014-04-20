@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.GUICoreImpl : roopkotha.GUICore {
+public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	GUICorePlatformImpl plat;
 	public GUICoreImpl() {
 		print("Creating new platform application\n");

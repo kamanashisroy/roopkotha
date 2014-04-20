@@ -19,12 +19,12 @@
  */
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
 
-public delegate void roopkotha.WindowActionCB(EventOwner action);
+public delegate void roopkotha.gui.WindowActionCB(EventOwner action);
 
-public abstract class roopkotha.Window : Replicable {
+public abstract class roopkotha.gui.Window : Replicable {
 	txt title;
 	public int width;
 	public int halfWidth;
@@ -68,16 +68,16 @@ public abstract class roopkotha.Window : Replicable {
 		this.title = title;
 	}
 	
-	public virtual void prePaint(roopkotha.Graphics g) {
+	public virtual void prePaint(roopkotha.gui.Graphics g) {
 		g.start();
 	}
 
-	public virtual void paint(roopkotha.Graphics g) {
+	public virtual void paint(roopkotha.gui.Graphics g) {
 		paint_title(g);
 		menu.paint(this, g, width, height);
 	}
 	
-	public virtual void postPaint(roopkotha.Graphics g) {
+	public virtual void postPaint(roopkotha.gui.Graphics g) {
 	}
 
 	public void onAction(EventOwner owner) {
@@ -100,7 +100,7 @@ public abstract class roopkotha.Window : Replicable {
 		return false;
 	}
 
-	void paint_title(roopkotha.Graphics g) {
+	void paint_title(roopkotha.gui.Graphics g) {
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);
@@ -121,10 +121,10 @@ public abstract class roopkotha.Window : Replicable {
 				//, height
 				, panelTop
 				//, 1);
-				, roopkotha.Graphics.anchor.TOP |roopkotha.Graphics.anchor.HCENTER);
+				, roopkotha.gui.Graphics.anchor.TOP |roopkotha.gui.Graphics.anchor.HCENTER);
 		//core.assert("Reached" == null);
 	}
 
-	public abstract roopkotha.Font getFont(roopkotha.Font.Face face, roopkotha.Font.Variant vars);
+	public abstract roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars);
 }
 

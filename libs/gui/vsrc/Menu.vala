@@ -19,9 +19,9 @@
  */
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
-public abstract class roopkotha.Menu : Replicable {
+public abstract class roopkotha.gui.Menu : Replicable {
 	public enum display {
 		PADDING = 3
 	}
@@ -40,13 +40,13 @@ public abstract class roopkotha.Menu : Replicable {
 	int BASE_FONT_HEIGHT;
 	int TOWER_MENU_ITEM_HEIGHT;
 	int TOWER_FONT_HEIGHT;
-	protected roopkotha.Font TOWER_FONT;
-	protected roopkotha.Font BASE_FONT;
+	protected roopkotha.gui.Font TOWER_FONT;
+	protected roopkotha.gui.Font BASE_FONT;
 
 	int BASE_HEIGHT;
 	int currentlySelectedIndex = 0;
 
-	void draw_base(roopkotha.Window parent, roopkotha.Graphics g, int width, int height, EventOwner? left, EventOwner? right) {
+	void draw_base(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height, EventOwner? left, EventOwner? right) {
 		/* draw the background of the menu */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgBase%);
 		g.setColor(0x006699);
@@ -69,8 +69,8 @@ public abstract class roopkotha.Menu : Replicable {
 			left.getLabel(&label);
 			if(!label.is_empty_magical()) {
 				parent.gi.registerScreenEvent(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(&label, 0, label.length()), height);
-				g.drawString(&label, roopkotha.Menu.display.PADDING, 0, width, height - roopkotha.Menu.display.PADDING, roopkotha.Graphics.anchor.LEFT
-						| roopkotha.Graphics.anchor.BOTTOM);
+				g.drawString(&label, roopkotha.gui.Menu.display.PADDING, 0, width, height - roopkotha.gui.Menu.display.PADDING, roopkotha.gui.Graphics.anchor.LEFT
+						| roopkotha.gui.Graphics.anchor.BOTTOM);
 //		SYNC_LOG(SYNC_VERB, "left option:%s\n", left.str);
 			}
 		}
@@ -79,8 +79,8 @@ public abstract class roopkotha.Menu : Replicable {
 			right.getLabel(&label);
 			if(!label.is_empty_magical()) {
 				parent.gi.registerScreenEvent(right, width - BASE_FONT.subStringWidth(&label, 0, label.length()), height - BASE_HEIGHT, width, height);
-				g.drawString(&label, roopkotha.Menu.display.PADDING, 0, width - roopkotha.Menu.display.PADDING, height - roopkotha.Menu.display.PADDING,
-						roopkotha.Graphics.anchor.RIGHT | roopkotha.Graphics.anchor.BOTTOM);
+				g.drawString(&label, roopkotha.gui.Menu.display.PADDING, 0, width - roopkotha.gui.Menu.display.PADDING, height - roopkotha.gui.Menu.display.PADDING,
+						roopkotha.gui.Graphics.anchor.RIGHT | roopkotha.gui.Graphics.anchor.BOTTOM);
 			}
 		}
 	}
@@ -98,15 +98,15 @@ public abstract class roopkotha.Menu : Replicable {
 			if (currentWidth > menuMaxWidth) {
 				menuMaxWidth = currentWidth; /* update */
 			}
-			menuMaxHeight += TOWER_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING; /*
+			menuMaxHeight += TOWER_FONT_HEIGHT + 2*roopkotha.gui.Menu.display.PADDING; /*
 													 * for a current menu
 													 * option
 													 */
 		}
-		menuMaxWidth += 2 * roopkotha.Menu.display.PADDING; /* roopkotha.Menu.display.PADDING from left and right */
+		menuMaxWidth += 2 * roopkotha.gui.Menu.display.PADDING; /* roopkotha.gui.Menu.display.PADDING from left and right */
 	}
 
-	void draw_tower(roopkotha.Window parent, roopkotha.Graphics g, int width, int height,
+	void draw_tower(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height,
 				int selectedOptionIndex) {
 
 		/* draw menu options */
@@ -164,17 +164,17 @@ public abstract class roopkotha.Menu : Replicable {
 
 			parent.gi.registerScreenEvent(cmd, 0, menuOptionY
 					, TOWER_FONT.subStringWidth(&label, 0, label.length())
-					, menuOptionY + roopkotha.Menu.display.PADDING*2 + TOWER_FONT_HEIGHT);
-			menuOptionY += roopkotha.Menu.display.PADDING;
-			g.drawString(&label, roopkotha.Menu.display.PADDING, menuOptionY, 1000, 1000,
-					roopkotha.Graphics.anchor.LEFT | Graphics.anchor.TOP);
+					, menuOptionY + roopkotha.gui.Menu.display.PADDING*2 + TOWER_FONT_HEIGHT);
+			menuOptionY += roopkotha.gui.Menu.display.PADDING;
+			g.drawString(&label, roopkotha.gui.Menu.display.PADDING, menuOptionY, 1000, 1000,
+					roopkotha.gui.Graphics.anchor.LEFT | Graphics.anchor.TOP);
 
-			menuOptionY += roopkotha.Menu.display.PADDING + TOWER_FONT_HEIGHT;
+			menuOptionY += roopkotha.gui.Menu.display.PADDING + TOWER_FONT_HEIGHT;
 			j++;
 		}
 	}
 
-	internal void paint(roopkotha.Window parent, roopkotha.Graphics g, int width, int height) {
+	internal void paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height) {
 #if false
 		if(TOWER_FONT == null) {
 			setupFont();
@@ -200,7 +200,7 @@ public abstract class roopkotha.Menu : Replicable {
 		//core.assert("This is unimplemented" == null);
 		return BASE_HEIGHT;
 	}
-	public roopkotha.Font? getBaseFont() {
+	public roopkotha.gui.Font? getBaseFont() {
 		core.assert("This is unimplemented" == null);
 		return null;
 	}
@@ -218,10 +218,10 @@ public abstract class roopkotha.Menu : Replicable {
 		currentlySelectedIndex = 0;
 		return 0;
 	}
-	public bool handle_event(roopkotha.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
-		if((flags & roopkotha.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
+	public bool handle_event(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
+		if((flags & roopkotha.gui.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
 			switch(x) {
-			case roopkotha.GUIInput.keyEventType.KEY_UP:
+			case roopkotha.gui.GUIInput.keyEventType.KEY_UP:
 				if(menu_is_active) {
 					if(((currentlySelectedIndex - 1) >= 0))currentlySelectedIndex--;
 					return true;
@@ -230,7 +230,7 @@ public abstract class roopkotha.Menu : Replicable {
 					return false;
 				}
 				break;
-			case roopkotha.GUIInput.keyEventType.KEY_DOWN:
+			case roopkotha.gui.GUIInput.keyEventType.KEY_DOWN:
 				if(menu_is_active) {
 					if(!((currentlySelectedIndex + 1) >= menuOptions.count_unsafe()))currentlySelectedIndex++;
 					return true;
@@ -239,7 +239,7 @@ public abstract class roopkotha.Menu : Replicable {
 					return false;
 				}
 				break;
-			case roopkotha.GUIInput.keyEventType.KEY_F1:
+			case roopkotha.gui.GUIInput.keyEventType.KEY_F1:
 	//			left = 1;
 				if(menu_is_active) {
 					target = CANCEL;
@@ -247,10 +247,10 @@ public abstract class roopkotha.Menu : Replicable {
 					target = MENU;
 				}
 				break;
-			case roopkotha.GUIInput.keyEventType.KEY_F2:
+			case roopkotha.gui.GUIInput.keyEventType.KEY_F2:
 				target = rightOption;
 				break;
-			case roopkotha.GUIInput.keyEventType.KEY_ENTER:
+			case roopkotha.gui.GUIInput.keyEventType.KEY_ENTER:
 				if(menuOptions != null && menu_is_active) {
 					EventOwner cmd = menuOptions.get(currentlySelectedIndex);
 					if(cmd != null) {
@@ -342,15 +342,15 @@ public abstract class roopkotha.Menu : Replicable {
 	}
 	void setupFont() {
 #if false
-			TOWER_FONT = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.PLAIN | roopkotha.Font.Variant.SMALL);
-			BASE_FONT = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.BOLD | roopkotha.Font.Variant.SMALL);
+			TOWER_FONT = parent.getFont(roopkotha.gui.Font.Face.DEFAULT, roopkotha.gui.Font.Variant.PLAIN | roopkotha.gui.Font.Variant.SMALL);
+			BASE_FONT = parent.getFont(roopkotha.gui.Font.Face.DEFAULT, roopkotha.gui.Font.Variant.BOLD | roopkotha.gui.Font.Variant.SMALL);
 #endif
 			core.assert(TOWER_FONT != null);
 			core.assert(BASE_FONT != null);
 			TOWER_FONT_HEIGHT = TOWER_FONT.getHeight();
 			BASE_FONT_HEIGHT = BASE_FONT.getHeight();
-			TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
-			BASE_HEIGHT = BASE_FONT_HEIGHT + 2*roopkotha.Menu.display.PADDING;
+			TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.gui.Menu.display.PADDING;
+			BASE_HEIGHT = BASE_FONT_HEIGHT + 2*roopkotha.gui.Menu.display.PADDING;
 	}
 	public Menu(Font aTowerFont, Font aBaseFont) {
 	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);

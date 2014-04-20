@@ -20,9 +20,9 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
-public abstract class roopkotha.GUICore : Spindle {
+public abstract class roopkotha.gui.GUICore : Spindle {
 	Queue<Window> painter;
 	Graphics gfx;
 	static GUICore? gcore;
@@ -55,11 +55,11 @@ int xultb_guicore_system_init(int*argc, char *argv[]) {
 }
 #endif
 
-	public static int setDirtyFull(roopkotha.Window win, int x1, int y1, int x2, int y2) {
+	public static int setDirtyFull(roopkotha.gui.Window win, int x1, int y1, int x2, int y2) {
 		return gcore.setDirty(win);
 	}
 
-	public static int setDirty(roopkotha.Window win) {
+	public static int setDirty(roopkotha.gui.Window win) {
 		print("Someone set the window dirty\n");
 		gcore.painter.enqueue(win);
 		return 0;

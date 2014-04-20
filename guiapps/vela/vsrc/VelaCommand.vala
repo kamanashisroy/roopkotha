@@ -6,7 +6,7 @@ using roopkotha;
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-public class onubodh.VelaCommand : M100Command {
+internal class roopkotha.app.VelaCommand : M100Command {
 	etxt prfx;
 	VelaPad? vpad;
 	enum Options {

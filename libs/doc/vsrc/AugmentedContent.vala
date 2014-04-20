@@ -1,11 +1,11 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public abstract class roopkotha.AugmentedContent : Replicable {
+public abstract class roopkotha.doc.AugmentedContent : Replicable {
 	public enum ContentType {
 		UNKNOWN_CONTENT,
 		PLAIN_CONTENT,

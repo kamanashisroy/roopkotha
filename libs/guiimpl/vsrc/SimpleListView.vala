@@ -20,9 +20,10 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.SimpleListView : roopkotha.ListView {
+public class roopkotha.gui.SimpleListView : roopkotha.gui.ListView {
 	aroop.ArrayList<Replicable> myitems;
 
 	public SimpleListView(etxt*aTitle, etxt*aDefaultCommand) {
@@ -38,8 +39,8 @@ public class roopkotha.SimpleListView : roopkotha.ListView {
 		return &myitems;
 	}
 	
-	protected override roopkotha.ListViewItem getListItem(Replicable data) {
-		return (roopkotha.ListViewItem)data;
+	protected override roopkotha.gui.ListViewItem getListItem(Replicable data) {
+		return (roopkotha.gui.ListViewItem)data;
 	}
 	
 	public void setListViewItem(int aIndex, ListViewItem aItem) {

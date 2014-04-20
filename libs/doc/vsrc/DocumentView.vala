@@ -20,10 +20,10 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
 
-public class roopkotha.DocumentView : roopkotha.ListView {
+public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 #if false
 	private Node node = null;
 	private EventListener el = null;

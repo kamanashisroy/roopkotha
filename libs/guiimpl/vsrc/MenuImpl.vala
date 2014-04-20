@@ -1,7 +1,8 @@
 using aroop;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.MenuImpl: Menu {
+public class roopkotha.gui.MenuImpl: Menu {
 	public MenuImpl() {
 		base(new FontImpl(), new FontImpl());
 	}

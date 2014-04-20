@@ -1,6 +1,6 @@
 using aroop;
 
-namespace roopkotha {
+namespace roopkotha.platform {
 	[CCode (cname="QTRoopkothaGraphics",has_copy_function=true, free_function="qt_impl_graphics_destroy", cheader_filename = "shotodol_platform_gui.h")]
 	public class GraphicsPlatformImpl {
 		[CCode (cname="qt_impl_graphics_create")]

@@ -19,10 +19,11 @@
  */
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 using roopkotha.vela;
 
-public class vela.WebControler : Replicable {
+public class roopkotha.vela.WebControler : Replicable {
 	PageView page;
 	RoopDocument?content;
 	WebResourceLoader loader;

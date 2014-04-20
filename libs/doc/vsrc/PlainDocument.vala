@@ -1,11 +1,11 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.PlainDocument : RoopDocument {
+public class roopkotha.doc.PlainDocument : roopkotha.doc.RoopDocument {
 	int counter;
 	LineInputStream? listrm;
 	public PlainDocument() {

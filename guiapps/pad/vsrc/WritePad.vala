@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 
-public class roopkotha.WritePad : WritePadMenu {
+public class roopkotha.app.WritePad : WritePadMenu {
 	public WritePad() {
 		base();
 	}

@@ -20,9 +20,9 @@
 
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
-public class roopkotha.EventOwner : Replicable {
+public class roopkotha.gui.EventOwner : Replicable {
 	Replicable?source;
 	etxt label;
 	public EventOwner.from_etxt(etxt*target) {
@@ -49,7 +49,7 @@ public class roopkotha.EventOwner : Replicable {
 	}
 }
 
-public abstract class roopkotha.GUIInput : Replicable {
+public abstract class roopkotha.gui.GUIInput : Replicable {
 
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_ACTION_INPUT_")]
 	public enum eventType {
@@ -69,6 +69,6 @@ public abstract class roopkotha.GUIInput : Replicable {
 	}
 
 	public abstract int registerScreenEvent(EventOwner?target, int x, int y, int width, int height);
-	public abstract int reset(roopkotha.Window win); /*< This should be called before registering action */
+	public abstract int reset(roopkotha.gui.Window win); /*< This should be called before registering action */
 }
 

@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.FontImpl : roopkotha.Font {
+public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 	internal FontPlatformImpl plat;
 	protected int flaggedVariantInfo;
 	public FontImpl() {

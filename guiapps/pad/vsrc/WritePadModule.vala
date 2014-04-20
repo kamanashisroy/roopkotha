@@ -1,7 +1,7 @@
 using aroop;
 using shotodol;
 
-public class onubodh.WritePadModule : ModulePlugin {
+public class roopkotha.app.WritePadModule : ModulePlugin {
 	WritePadCommand cmd;
 	public override int init() {
 		cmd = new WritePadCommand();

@@ -1,11 +1,11 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
 
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.RoopDocument : Replicable {
+public class roopkotha.doc.RoopDocument : Replicable {
 	public ArrayList<AugmentedContent> contents;
 	public RoopDocument() {
 		contents = ArrayList<AugmentedContent>();

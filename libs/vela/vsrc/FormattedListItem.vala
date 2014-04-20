@@ -1,10 +1,11 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 using roopkotha.vela;
 
 public delegate onubodh.RawImage roopkotha.vela.MediaLoader(etxt*src);
-public class roopkotha.vela.FormattedListItem : ListViewItem {
+public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 	/**
 	 * y-coordinate position of the image
 	 */
@@ -36,7 +37,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		content = aContent;
 	}
 
-	protected void clearLineFull(roopkotha.Graphics g, int y, int height) {
+	protected void clearLineFull(roopkotha.gui.Graphics g, int y, int height) {
 		if (!selected)
 			return;
 		int oldColor = g.getColor();
@@ -46,13 +47,13 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		g.setColor(oldColor);
 	}
 
-	protected void clearLine(roopkotha.Graphics g) {
+	protected void clearLine(roopkotha.gui.Graphics g) {
 		if (!selected)
 			return;
 		clearLineFull(g, yPos, lineHeight);
 	}
 
-	protected void breakLine(roopkotha.Graphics g) {
+	protected void breakLine(roopkotha.gui.Graphics g) {
 		// put a line break
 		yPos += lineHeight;
 		xPos = transX;
@@ -65,7 +66,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		clearLine(g);
 	}
 
-	protected void updateHeight(roopkotha.Graphics g, int newHeight) {
+	protected void updateHeight(roopkotha.gui.Graphics g, int newHeight) {
 		if (newHeight > lineHeight) {
 			// fill with background color
 			clearLineFull(g, yPos + lineHeight, newHeight - lineHeight);
@@ -74,7 +75,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		//print("Line height:%d\n", lineHeight);
 	}
 
-	protected void updateHeightForFont(roopkotha.Graphics g, roopkotha.Font font) {
+	protected void updateHeightForFont(roopkotha.gui.Graphics g, roopkotha.gui.Font font) {
 		core.assert(font != null);
 #if false
 		if (font == null) {
@@ -87,7 +88,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		}
 	}
 
-	protected void renderImage(roopkotha.Graphics g, FormattedTextCapsule*cap) {
+	protected void renderImage(roopkotha.gui.Graphics g, FormattedTextCapsule*cap) {
 	#if false
 		xultb_str_t* src = elem->get_attribute_value(null, "src");
 		if (src == null) {
@@ -133,7 +134,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 	#endif
 	}
 
-	protected void renderText(roopkotha.Graphics g, roopkotha.Font font, etxt*text) {
+	protected void renderText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, etxt*text) {
 		int off, ret;
 		etxt talk = etxt.stack(128);
 		talk.printf("Rendering text:%s\n", text.to_string());
@@ -159,7 +160,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 				xt.shift(off);
 				xt.trim_to_length(ret);
 				//print(">> ... * Drawing text(%d,%d):%s\n", xPos, yPos, xt.to_string());
-				g.drawString(&xt, xPos, yPos, 1000, 1000, roopkotha.Graphics.anchor.TOP | roopkotha.Graphics.anchor.LEFT);
+				g.drawString(&xt, xPos, yPos, 1000, 1000, roopkotha.gui.Graphics.anchor.TOP | roopkotha.gui.Graphics.anchor.LEFT);
 				xPos += font.subStringWidth(text, off, ret - off);
 			}
 			if (ret == off /* no place to write a word .. */
@@ -179,7 +180,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		}
 	}
 
-	protected void renderFormattedText(roopkotha.Graphics g, roopkotha.Font font, FormattedTextCapsule*cap) {
+	protected void renderFormattedText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, FormattedTextCapsule*cap) {
 		{
 				etxt talk = etxt.stack(128);
 				talk.printf("Rendering capsule: %d\n", cap.textType);
@@ -187,7 +188,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		}
 		int oldColor = g.getColor();
 		core.assert(font != null);
-		roopkotha.Font newFont = font;
+		roopkotha.gui.Font newFont = font;
 		core.assert(newFont != null);
 
 		if (cap.textType == FormattedTextType.BR) {
@@ -274,7 +275,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 	}
 #endif
 
-	public override int paint(roopkotha.Window parent, roopkotha.Graphics g, int x, int y, int aWidth, bool aSelected) {
+	public override int paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int x, int y, int aWidth, bool aSelected) {
 		transX = x;
 		transY = y;
 		xPos = transX;
@@ -283,7 +284,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 		selected = aSelected;
 		// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.fg%);
 		g.setColor(0x006699);
-		roopkotha.Font font = parent.getFont(roopkotha.Font.Face.DEFAULT, roopkotha.Font.Variant.PLAIN | roopkotha.Font.Variant.SMALL);
+		roopkotha.gui.Font font = parent.getFont(roopkotha.gui.Font.Face.DEFAULT, roopkotha.gui.Font.Variant.PLAIN | roopkotha.gui.Font.Variant.SMALL);
 		core.assert(font != null);
 		if(minLineHeight == -1) {
 			minLineHeight = font.getHeight()+ListViewItem.display.PADDING;

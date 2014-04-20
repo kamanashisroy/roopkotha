@@ -1,8 +1,9 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.platform;
+using roopkotha.gui;
 
-public class roopkotha.GraphicsImpl : roopkotha.Graphics {
+public class roopkotha.gui.GraphicsImpl : roopkotha.gui.Graphics {
 	internal GraphicsPlatformImpl plat;
 	public GraphicsImpl() {
 		plat = GraphicsPlatformImpl.create();
@@ -39,7 +40,7 @@ public class roopkotha.GraphicsImpl : roopkotha.Graphics {
 	public override void setColor(int rgb) {
 		plat.setColor(rgb);
 	}
-	public override void setFont(roopkotha.Font font) {
+	public override void setFont(roopkotha.gui.Font font) {
 		FontImpl fonti = (font as FontImpl);
 		plat.setFont(fonti.plat);
 	}

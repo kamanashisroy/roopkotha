@@ -19,7 +19,8 @@
  */
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.gui;
+using roopkotha.doc;
 using roopkotha.vela;
 
 public enum roopkotha.vela.FormattedTextType {
@@ -55,7 +56,7 @@ public struct roopkotha.vela.FormattedTextCapsule {
 
 public delegate int roopkotha.vela.VisitAugmentedContent(FormattedTextCapsule*capsule);
 
-public abstract class roopkotha.vela.FormattedContent : AugmentedContent {
+public abstract class roopkotha.vela.FormattedContent : roopkotha.doc.AugmentedContent {
 	txt data;
 
 	public FormattedContent(etxt*asciiData) {

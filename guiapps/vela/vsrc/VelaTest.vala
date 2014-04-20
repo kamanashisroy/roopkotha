@@ -2,7 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 
-internal class VelaTest : UnitTest {
+internal class roopkotha.app.VelaTest : UnitTest {
   etxt tname;
   public VelaTest() {
     tname = etxt.from_static("Vela Test");

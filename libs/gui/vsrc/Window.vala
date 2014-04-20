@@ -21,7 +21,14 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/**
+ * \ingroup roopkotha
+ * @defgroup gui GUI
+ */
 
+/** \addtogroup gui
+ *  @{
+ */
 public delegate void roopkotha.gui.WindowActionCB(EventOwner action);
 
 public abstract class roopkotha.gui.Window : Replicable {
@@ -128,3 +135,4 @@ public abstract class roopkotha.gui.Window : Replicable {
 	public abstract roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars);
 }
 
+/** @} */

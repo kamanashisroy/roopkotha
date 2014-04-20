@@ -24,6 +24,9 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
+/** \addtogroup vela
+ *  @{
+ */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 20]
@@ -143,3 +146,4 @@ static void do_search() {
 		return null;
 	}
 }
+/** @} */

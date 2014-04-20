@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.gui;
 using roopkotha.doc;
 
+/** \addtogroup padapp
+ *  @{
+ */
 public class roopkotha.app.WritePadMenu : Replicable {
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
@@ -35,3 +38,4 @@ public class roopkotha.app.WritePadMenu : Replicable {
 		lv.showFull(&leftOptions, rightOption);
 	}
 }
+/** @} */

@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha;
 using roopkotha.vela;
 
+/** \addtogroup vela
+ *  @{
+ */
 public class roopkotha.vela.WebResource : Replicable {
 	public enum Type {
 		DOCUMENT,
@@ -29,3 +32,4 @@ public abstract class roopkotha.vela.WebResourceLoader : Replicable {
 		onContentError = cb;
 	}
 }
+/** @} */

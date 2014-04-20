@@ -7,6 +7,9 @@ using aroop;
  *      Author: kamanashisroy
  */
 
+/** \addtogroup vela
+ *  @{
+ */
 public class roopkotha.vela.WebVariables : Replicable {
 	HashTable<txt> tbl;
 	public WebVariables() {
@@ -39,3 +42,4 @@ public class roopkotha.vela.WebVariables : Replicable {
 #endif
 }
 
+/** @} */

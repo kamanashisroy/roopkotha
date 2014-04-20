@@ -1,8 +1,17 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.rtree;
 
-public struct roopkotha.RTreeRect2DInt {
+/**
+ * \ingroup gui
+ * \defgroup rtree 2 dimentional RTree implementation
+ * 
+ */
+
+/** \addtogroup rtree
+ *  @{
+ */
+public struct roopkotha.rtree.RTreeRect2DInt {
 	int xmin;
 	int ymin;
 	int xmax;
@@ -36,8 +45,7 @@ public struct roopkotha.RTreeRect2DInt {
 	/*-----------------------------------------------------------------------------
 	| Calculate the n-dimensional volume of a rectangle
 	-----------------------------------------------------------------------------*/
-	int volume()
-	{
+	int volume() {
 		return (ymax - ymin)*(xmax - xmin);
 	}
 
@@ -107,3 +115,4 @@ public struct roopkotha.RTreeRect2DInt {
 	}
 
 }
+/** @} */

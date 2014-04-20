@@ -1,9 +1,12 @@
 using aroop;
 using shotodol;
 
-public delegate int roopkotha.searchHitCallback(Replicable target);
+/** \addtogroup rtree
+ *  @{
+ */
+public delegate int roopkotha.rtree.searchHitCallback(Replicable target);
 
-public class roopkotha.RTreeBranch : Replicable {
+public class roopkotha.rtree.RTreeBranch : Replicable {
 
 	internal RTreeRect2DInt rect;
 	internal RTreeNode child;
@@ -158,3 +161,4 @@ public class roopkotha.RTreeBranch : Replicable {
 	}
 
 }
+/** @} */

@@ -2,8 +2,8 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/**
- * This is the base class for all the documents we render in roopkotha
+/** \addtogroup doc
+ *  @{
  */
 public abstract class roopkotha.doc.AugmentedContent : Replicable {
 	public enum ContentType {
@@ -64,4 +64,4 @@ public abstract class roopkotha.doc.AugmentedContent : Replicable {
 		return false;
 	}
 }
-
+/** @} */

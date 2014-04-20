@@ -23,6 +23,9 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/** \addtogroup guiimpl
+ *  @{
+ */
 public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
  
 	roopkotha.gui.Font item_font;
@@ -301,3 +304,4 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		return true;
 	}
 }
+/** @} */

@@ -1,7 +1,12 @@
 using aroop;
 using shotodol;
 using roopkotha.platform;
+using roopkotha.rtree;
 using roopkotha.gui;
+
+/** \addtogroup guiimpl
+ *  @{
+ */
 
 public struct roopkotha.gui.GUIInputEvent {
 	public int flags;
@@ -60,3 +65,4 @@ public class roopkotha.gui.GUIInputImpl : GUIInput {
 	}
 }
 
+/** @} */

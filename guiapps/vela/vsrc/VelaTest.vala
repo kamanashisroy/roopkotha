@@ -2,6 +2,9 @@ using aroop;
 using shotodol;
 using roopkotha;
 
+/** \addtogroup velapp
+ *  @{
+ */
 internal class roopkotha.app.VelaTest : UnitTest {
   etxt tname;
   public VelaTest() {
@@ -18,4 +21,5 @@ internal class roopkotha.app.VelaTest : UnitTest {
     return 0;
   }
 }
+/** @} */
 

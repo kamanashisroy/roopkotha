@@ -2,6 +2,14 @@ using aroop;
 using shotodol;
 using roopkotha;
 
+/**
+ * \ingroup doc
+ * \defgroup padapp Simple application based on doc module.
+ */
+
+/** \addtogroup padapp
+ *  @{
+ */
 public class roopkotha.app.WritePadCommand : M100Command {
 	etxt prfx;
 	WritePad? wpad;
@@ -56,3 +64,4 @@ public class roopkotha.app.WritePadCommand : M100Command {
 		return 0;
 	}
 }
+/** @} */

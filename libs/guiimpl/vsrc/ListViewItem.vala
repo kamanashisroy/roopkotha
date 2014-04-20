@@ -22,6 +22,10 @@ using aroop;
 using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
+
+/** \addtogroup guiimpl
+ *  @{
+ */
 /*!
  * This is rendered in \ref ListView.
  * */
@@ -45,3 +49,4 @@ public abstract class roopkotha.gui.ListViewItem : Replicable {
 	public abstract bool doEdit(int flags, int key_code, int x, int y);
 	public abstract int update(etxt*xt);
 }
+/** @} */

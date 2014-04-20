@@ -22,6 +22,9 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/** \addtogroup gui
+ *  @{
+ */
 public class roopkotha.gui.EventOwner : Replicable {
 	Replicable?source;
 	etxt label;
@@ -72,3 +75,4 @@ public abstract class roopkotha.gui.GUIInput : Replicable {
 	public abstract int reset(roopkotha.gui.Window win); /*< This should be called before registering action */
 }
 
+/** @} */

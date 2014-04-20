@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/** \addtogroup guiimpl
+ *  @{
+ */
 public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	WindowPlatformImpl plat;
 	public WindowImpl(etxt*aTitle) {
@@ -35,3 +38,4 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		return new FontImpl();
 	}
 }
+/** @} */

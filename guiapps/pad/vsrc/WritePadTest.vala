@@ -2,6 +2,9 @@ using aroop;
 using shotodol;
 using roopkotha;
 
+/** \addtogroup padapp
+ *  @{
+ */
 internal class roopkotha.app.WritePadTest : UnitTest {
   etxt tname;
   public WritePadTest() {
@@ -50,4 +53,4 @@ internal class roopkotha.app.WritePadTest : UnitTest {
 	}
 #endif
 }
-
+/** @} */

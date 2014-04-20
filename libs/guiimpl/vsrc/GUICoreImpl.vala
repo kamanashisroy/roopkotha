@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/** \addtogroup guiimpl
+ *  @{
+ */
 public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	GUICorePlatformImpl plat;
 	public GUICoreImpl() {
@@ -27,3 +30,4 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		return 0;
 	}
 }
+/** @} */

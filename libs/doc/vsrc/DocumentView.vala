@@ -22,7 +22,14 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/**
+ * \ingroup gui
+ * @defgroup doc Document rendering
+ */
 
+/** \addtogroup doc
+ *  @{
+ */
 public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 #if false
 	private Node node = null;
@@ -364,3 +371,4 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 	/*@}*/
 #endif
 }
+/** @} */

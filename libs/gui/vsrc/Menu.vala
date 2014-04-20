@@ -21,6 +21,9 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/** \addtogroup gui
+ *  @{
+ */
 public abstract class roopkotha.gui.Menu : Replicable {
 	public enum display {
 		PADDING = 3
@@ -369,4 +372,5 @@ public abstract class roopkotha.gui.Menu : Replicable {
 		rightOption = FILLER;
 	}
 }
+/** @} */
 

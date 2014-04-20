@@ -1,6 +1,9 @@
 using aroop;
 using shotodol;
 
+/** \addtogroup velapp
+ *  @{
+ */
 public class roopkotha.app.VelaModule : ModulePlugin {
 	VelaCommand cmd;
 	public override int init() {
@@ -20,3 +23,4 @@ public class roopkotha.app.VelaModule : ModulePlugin {
 		return new VelaModule();
 	}
 }
+/** @} */

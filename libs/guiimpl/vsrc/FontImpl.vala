@@ -3,6 +3,13 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/**
+ * \ingroup gui
+ * \defgroup guiimpl GUI Implementation.
+ */
+/** \addtogroup guiimpl
+ *  @{
+ */
 public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 	internal FontPlatformImpl plat;
 	protected int flaggedVariantInfo;
@@ -60,3 +67,4 @@ public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 	}
 #endif
 }
+/** @} */

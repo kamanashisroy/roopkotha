@@ -23,6 +23,9 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/** \addtogroup guiimpl
+ *  @{
+ */
 public class roopkotha.gui.SimpleListView : roopkotha.gui.ListView {
 	aroop.ArrayList<Replicable> myitems;
 
@@ -48,3 +51,4 @@ public class roopkotha.gui.SimpleListView : roopkotha.gui.ListView {
 		myitems.set(aIndex, aItem);
 	}
 }
+/** @} */

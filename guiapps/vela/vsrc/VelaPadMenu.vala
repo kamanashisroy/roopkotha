@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.gui;
 using roopkotha.vela;
 
+/** \addtogroup velapp
+ *  @{
+ */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
@@ -59,3 +62,4 @@ internal class roopkotha.app.VelaPadMenu : Replicable {
 #endif
 	}
 }
+/** @} */

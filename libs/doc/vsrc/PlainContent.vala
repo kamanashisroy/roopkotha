@@ -2,6 +2,9 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/** \addtogroup doc
+ *  @{
+ */
 public class roopkotha.doc.PlainContent : roopkotha.doc.AugmentedContent {
 	txt data;
 	public PlainContent(etxt*asciiData) {
@@ -14,3 +17,4 @@ public class roopkotha.doc.PlainContent : roopkotha.doc.AugmentedContent {
 		tData.concat(data);
 	}
 }
+/** @} */

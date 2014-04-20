@@ -2,6 +2,11 @@ using aroop;
 using shotodol;
 using roopkotha;
 
+/** \ingroup vela
+ * \defgroup velapp Simple application based on vela
+ *  \addtogroup velapp
+ *  @{
+ */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
@@ -58,3 +63,4 @@ internal class roopkotha.app.VelaCommand : M100Command {
 		return 0;
 	}
 }
+/** @} */

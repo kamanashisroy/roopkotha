@@ -22,6 +22,9 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/** \addtogroup gui
+ *  @{
+ */
 public abstract class roopkotha.gui.Font : Replicable {
 	public enum Variant {
 		UNDERLINED = 1,
@@ -54,3 +57,4 @@ public abstract class roopkotha.gui.Font : Replicable {
 #endif
 }
 
+/** @} */

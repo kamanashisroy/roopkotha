@@ -2,8 +2,8 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/**
- * This is the base class for all the documents we render in roopkotha
+/** \addtogroup doc
+ *  @{
  */
 public class roopkotha.doc.PlainDocument : roopkotha.doc.RoopDocument {
 	int counter;
@@ -34,3 +34,4 @@ public class roopkotha.doc.PlainDocument : roopkotha.doc.RoopDocument {
 		} while(true);
 	}
 }
+/** @} */

@@ -4,6 +4,9 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
+/** \addtogroup vela
+ *  @{
+ */
 public delegate onubodh.RawImage roopkotha.vela.MediaLoader(etxt*src);
 public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 	/**
@@ -336,3 +339,4 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		return 0;
 	}
 }
+/** @} */

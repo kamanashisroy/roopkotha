@@ -23,6 +23,10 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
+/** \addtogroup vela
+ *  @{
+ */
+
 public enum roopkotha.vela.FormattedTextType {
 		BR,
 		IMG,
@@ -72,3 +76,4 @@ public abstract class roopkotha.vela.FormattedContent : roopkotha.doc.AugmentedC
 	public abstract void traverseCapsulesInit();
 	public abstract int traverseCapsules(VisitAugmentedContent visitCapsule);
 }
+/** @} */

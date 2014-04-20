@@ -22,6 +22,9 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/** \addtogroup gui
+ *  @{
+ */
 public abstract class roopkotha.gui.GUICore : Spindle {
 	Queue<Window> painter;
 	Graphics gfx;
@@ -104,3 +107,4 @@ static int xultb_perform_tasks(void*data, void*func_data) {
 		return 0;
 	}
 }
+/** @} */

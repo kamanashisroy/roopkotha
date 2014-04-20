@@ -4,6 +4,9 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
+/** \addtogroup vela
+ *  @{
+ */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 30]
@@ -48,3 +51,4 @@ public class roopkotha.vela.PageAppDocument : roopkotha.doc.RoopDocument {
 		} while(true);
 	}
 }
+/** @} */

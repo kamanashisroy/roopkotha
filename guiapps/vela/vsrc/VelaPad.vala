@@ -4,6 +4,9 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
+/** \addtogroup velapp
+ *  @{
+ */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
@@ -34,3 +37,4 @@ internal class roopkotha.app.VelaPad : VelaPadMenu {
 		return 0;
 	}
 }
+/** @} */

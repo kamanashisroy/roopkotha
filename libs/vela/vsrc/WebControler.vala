@@ -23,6 +23,14 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
+/**
+ * \ingroup doc
+ * \defgroup vela A browser interface on top of our gui.
+ */
+
+/** \addtogroup vela
+ *  @{
+ */
 public class roopkotha.vela.WebControler : Replicable {
 	PageView page;
 	RoopDocument?content;
@@ -337,3 +345,4 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 
 }
 
+/** @} */

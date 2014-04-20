@@ -1,6 +1,9 @@
 using aroop;
 using shotodol;
 
+/** \addtogroup padapp
+ *  @{
+ */
 public class roopkotha.app.WritePadModule : ModulePlugin {
 	WritePadCommand cmd;
 	public override int init() {
@@ -20,3 +23,4 @@ public class roopkotha.app.WritePadModule : ModulePlugin {
 		return new WritePadModule();
 	}
 }
+/** @} */

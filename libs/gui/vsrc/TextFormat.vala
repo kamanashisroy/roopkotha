@@ -2,6 +2,9 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
+/** \addtogroup gui
+ *  @{
+ */
 public class roopkotha.gui.TextFormat : Replicable {
 	public static int wrap_next(etxt*str, Font? font, int pos, int width) {
 #if true
@@ -37,3 +40,4 @@ public class roopkotha.gui.TextFormat : Replicable {
 	}
 }
 
+/** @} */

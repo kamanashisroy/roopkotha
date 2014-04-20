@@ -21,7 +21,12 @@
 using aroop;
 using shotodol;
 using roopkotha.gui;
-/*! \class xultb_graphics
+
+/** \addtogroup gui
+ *  @{
+ */
+/**
+ * \brief
  * This is responsible for drawing the total interface.
  * It is implemented in the platform.
  **/
@@ -89,3 +94,4 @@ public abstract class roopkotha.gui.Graphics : Replicable {
 	public abstract void start();
 }
 
+/** @} */

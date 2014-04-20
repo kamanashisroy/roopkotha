@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/** \addtogroup guiimpl
+ *  @{
+ */
 public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 	protected EventOwner?target;
 	protected etxt label;
@@ -334,3 +337,4 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 		ListViewItemComplex.createCheckboxFull(aLabel, aChecked, aEditable, true);
 	}
 }
+/** @} */

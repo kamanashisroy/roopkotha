@@ -23,6 +23,9 @@ using onubodh;
 using roopkotha;
 using roopkotha.vela;
 
+/** \addtogroup vela
+ *  @{
+ */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
@@ -164,3 +167,4 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 }
 
 
+/** @} */

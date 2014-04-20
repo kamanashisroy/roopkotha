@@ -1,5 +1,12 @@
 using aroop;
 
+/**
+ * \ingroup guiimpl
+ * \defgroup linuxguiimpl QT based linux GUI Implementation
+ */
+/** \addtogroup linuxguiimpl
+ *  @{
+ */
 namespace roopkotha.platform {
 	[CCode (cname="QTRoopkothaGraphics",has_copy_function=true, free_function="qt_impl_graphics_destroy", cheader_filename = "shotodol_platform_gui.h")]
 	public class GraphicsPlatformImpl {
@@ -65,3 +72,4 @@ namespace roopkotha.platform {
 }
 
 
+/** @} */

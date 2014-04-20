@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/** \addtogroup guiimpl
+ *  @{
+ */
 public class roopkotha.gui.GraphicsImpl : roopkotha.gui.Graphics {
 	internal GraphicsPlatformImpl plat;
 	public GraphicsImpl() {
@@ -49,3 +52,4 @@ public class roopkotha.gui.GraphicsImpl : roopkotha.gui.Graphics {
 	}
 }
 
+/** @} */

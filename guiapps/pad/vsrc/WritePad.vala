@@ -3,6 +3,9 @@ using shotodol;
 using roopkotha.gui;
 using roopkotha.doc;
 
+/** \addtogroup padapp
+ *  @{
+ */
 public class roopkotha.app.WritePad : WritePadMenu {
 	public WritePad() {
 		base();
@@ -29,3 +32,4 @@ public class roopkotha.app.WritePad : WritePadMenu {
 		return 0;
 	}
 }
+/** @} */

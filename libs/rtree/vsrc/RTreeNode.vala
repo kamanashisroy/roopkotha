@@ -1,8 +1,11 @@
 using aroop;
 using shotodol;
-using roopkotha;
+using roopkotha.rtree;
 
-public struct roopkotha.RTreeNode {
+/** \addtogroup rtree
+ *  @{
+ */
+public struct roopkotha.rtree.RTreeNode {
 	int count;
 	internal int level; /* 0 is leaf, others positive */
 	internal ArrayList<RTreeBranch> branch;
@@ -102,3 +105,4 @@ public struct roopkotha.RTreeNode {
 		return 0;
 	}
 }
+/** @} */

@@ -3,6 +3,10 @@ using shotodol;
 using roopkotha;
 
 /**
+ * \ingroup command 
+ * \defgroup textcommand Text based commands
+ */
+/**
  * \ingroup doc
  * \defgroup padapp Simple application based on doc module.
  */
@@ -10,6 +14,7 @@ using roopkotha;
 /** \addtogroup padapp
  *  @{
  */
+/** \ingroup textcommand */
 public class roopkotha.app.WritePadCommand : M100Command {
 	etxt prfx;
 	WritePad? wpad;

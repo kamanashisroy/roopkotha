@@ -11,6 +11,7 @@ using roopkotha;
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
+/** \ingroup textcommand */
 internal class roopkotha.app.VelaCommand : M100Command {
 	etxt prfx;
 	VelaPad? vpad;

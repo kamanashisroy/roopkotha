@@ -62,13 +62,13 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 	public DocumentView(etxt*aTitle, etxt*aDefaultCommand) {
 		base(aTitle, aDefaultCommand);
 		etxt dlg = etxt.from_static("Created DocumentView\n");
-		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "DocumentView:created");
 	}
 	public void setDocument(RoopDocument aDoc, int aSelectedIndex) {
 		doc = aDoc;
 		etxt dlg = etxt.stack(64);
-		dlg.printf("Set Document of %d lines\n", getCount());
-		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
+		dlg.printf("DocumentView:new document of %d lines\n", getCount());
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 #if false
 		searching = false;
 		continuousScrolling = true;
@@ -142,14 +142,12 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 #endif
 
 	protected override ArrayList<Replicable>*getItems() {
-		print("Showing list item 0\n");
 		core.assert(doc != null);
 		return (doc == null)?null:&doc.contents;
 	}
 
 	protected override ListViewItem getListItem(Replicable given) {
 		// get the element
-		print("Showing list item 2\n");
 		AugmentedContent elem = (AugmentedContent)given;
 		etxt data = etxt.stack(128);
 		switch(elem.cType) {
@@ -220,7 +218,7 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 		elem.getText(&data);
 		etxt dlg = etxt.stack(256);
 		dlg.printf("Plain line :%s\n", data.to_string());
-		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		// see if the label has any image
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 	}

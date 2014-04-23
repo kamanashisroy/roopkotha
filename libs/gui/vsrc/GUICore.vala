@@ -63,7 +63,7 @@ int xultb_guicore_system_init(int*argc, char *argv[]) {
 	}
 
 	public static int setDirty(roopkotha.gui.Window win) {
-		print("Someone set the window dirty\n");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:setDirty: Marking it dirty");
 		gcore.painter.enqueue(win);
 		return 0;
 	}
@@ -95,6 +95,8 @@ static int xultb_perform_tasks(void*data, void*func_data) {
 			}
 			//xultb_gui_input_reset(win);
 			win.prePaint(gfx);
+			
+			Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
 			win.paint(gfx);
 			win.postPaint(gfx);
 		} while(true);

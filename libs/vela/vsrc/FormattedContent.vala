@@ -67,7 +67,7 @@ public abstract class roopkotha.vela.FormattedContent : roopkotha.doc.AugmentedC
 		base();
 		data = new txt.memcopy_etxt(asciiData);
 		cType = AugmentedContent.ContentType.FORMATTED_CONTENT;
-		print("FormattedContent:%s\n", data.to_string());
+		//print("FormattedContent:%s\n", data.to_string());
 	}
 
 	public override void getText(etxt*tData) {

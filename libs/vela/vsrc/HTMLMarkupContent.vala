@@ -46,7 +46,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 #endif
 		map.map.buffer(asciiData.length());
 		parser.transform(&map);
-		print("FormattedContent:%s\n", asciiData.to_string());
+		//print("FormattedContent:%s\n", asciiData.to_string());
 	}
 
 	~HTMLMarkupContent() {
@@ -85,12 +85,12 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 		rxit.extract = etxt.same_same(&map.extract);
 	}
 	public override int traverseCapsules(VisitAugmentedContent visitCapsule) {
-		print("Traversing capsules ..\n");
+		//print("Traversing capsules ..\n");
 		parser.traversePreorder2(&rxit, 1, (xit) => {
 			FormattedTextCapsule cap = FormattedTextCapsule();
 			cap.textType = FormattedTextType.UNKNOWN;
 			if(xit.nextIsText) {
-				print("Traversing text capsules ..\n");
+				//print("Traversing text capsules ..\n");
 #if LOW_MEMORY
 				cap.content = etxt.stack(128);
 #else
@@ -98,11 +98,11 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 #endif
 				cap.textType = FormattedTextType.PLAIN;
 				xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &cap.content);
-				print("Text\t\t- pos:%d,clen:%d,text content:%s\n", xit.pos, xit.content.length(), cap.content.to_string());
-				print("[%s]", map.source.to_string());
+				//print("Text\t\t- pos:%d,clen:%d,text content:%s\n", xit.pos, xit.content.length(), cap.content.to_string());
+				//print("[%s]", map.source.to_string());
 				visitCapsule(&cap);
 			} else {
-				print("Traversing non-text capsules ..%s\n",xit.nextTag.to_string());
+				//print("Traversing non-text capsules ..%s\n",xit.nextTag.to_string());
 				if(xit.nextTag.equals_static_string("B")) {
 					cap.textType = FormattedTextType.B;
 				} else if(xit.nextTag.equals_static_string("BR")) {
@@ -132,7 +132,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 				etxt attrVal = etxt.EMPTY();
 				while(xit.nextAttr(&attrKey, &attrVal)) {
 					// TODO trim key and value
-					print("key:[%s],val:[%s]\n", attrKey.to_string(), attrVal.to_string());
+					//print("key:[%s],val:[%s]\n", attrKey.to_string(), attrVal.to_string());
 					if(attrKey.equals_static_string("href")) {
 						cap.hyperLink.destroy();
 						cap.hyperLink = etxt.same_same(&attrVal);
@@ -147,7 +147,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 					}
 				}
 				visitCapsule(&cap);
-				print("End of non-text capsules ..%s\n",xit.nextTag.to_string());
+				//print("End of non-text capsules ..%s\n",xit.nextTag.to_string());
 			}
 		});
 		return 0;

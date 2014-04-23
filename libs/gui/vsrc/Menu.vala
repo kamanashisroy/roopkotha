@@ -221,7 +221,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 		currentlySelectedIndex = 0;
 		return 0;
 	}
-	public bool handle_event(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
+	public bool handleEvent(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
 		if((flags & roopkotha.gui.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
 			switch(x) {
 			case roopkotha.gui.GUIInput.keyEventType.KEY_UP:
@@ -229,7 +229,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 					if(((currentlySelectedIndex - 1) >= 0))currentlySelectedIndex--;
 					return true;
 				} else {
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu is closed\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu is closed\n");
 					return false;
 				}
 				break;
@@ -238,7 +238,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 					if(!((currentlySelectedIndex + 1) >= menuOptions.count_unsafe()))currentlySelectedIndex++;
 					return true;
 				} else {
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu is closed\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu is closed\n");
 					return false;
 				}
 				break;
@@ -260,18 +260,18 @@ public abstract class roopkotha.gui.Menu : Replicable {
 						target = cmd;
 					}
 				} else {
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu is closed\n");
+					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu is closed\n");
 					return false;
 				}
 				break;
 			default:
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "This is not traversing key\n");
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "This is not traversing key\n");
 				return false;
 			}
 		}
 
 		if(target == null) {
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "No target\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "No target\n");
 			return false;
 		}
 
@@ -279,24 +279,26 @@ public abstract class roopkotha.gui.Menu : Replicable {
 		int i;
 		bool right = false, left = false;
 
-		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Menu Clicked\n");
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu Clicked\n");
 		EventOwner? firstOption = null;
 
 		if(target.is_same(rightOption)) {
 			right = true;
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Right menu\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Right menu\n");
 		} else if(menu_is_active) {
 			if(target.is_same(CANCEL)) {
 				left = true;
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Close menu\n");
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Close menu\n");
 			} else if(menuOptions != null)for (i=0;i<menuOptions.count_unsafe();i++) {
 				EventOwner cmd = menuOptions.get(i);
 				if(cmd == target) {
 					left = true;
 					i = -2; // break
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Left menu:");
-					//Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), /*"Left menu:%s\n", */cmd.getLabel().to_string());
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "\n");
+					etxt dlg = etxt.stack(128);
+					etxt label = etxt.EMPTY();
+					cmd.getLabel(&label);
+					dlg.printf("Left menu:%s", label.to_string());
+					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 				}
 				if(i == 0) {
 					firstOption = cmd;
@@ -304,10 +306,10 @@ public abstract class roopkotha.gui.Menu : Replicable {
 			}
 		} else if(target == MENU){
 			left = true;
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Open menu\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Open menu\n");
 		}
 		if(!right && !left) {
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "Not a menu event\n");
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Not a menu event\n");
 			return false;
 		}
 

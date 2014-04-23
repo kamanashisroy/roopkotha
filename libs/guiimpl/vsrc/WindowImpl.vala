@@ -23,7 +23,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	}
 	
 	public override void show() {
-		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), "WindowImpl:show\n");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "WindowImpl:show");
 		roopkotha.gui.GUICore.setDirty(this);
 		plat.show();
 	}

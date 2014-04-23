@@ -4,5 +4,6 @@ all:
 	profiler
 	writepad -t writepad.txt
 	glide
+	glide
 	profiler
 

@@ -145,7 +145,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		font.dumpAll(&talk);
 #endif
 		talk.concat_char('\n');
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 	//	text = text.replace('\n', ' ').replace('\r', ' ').trim(); /*< skip the newlines */
 		if (text.is_empty()) { /*< empty xultb_str_t* .. skip */
 			return;
@@ -187,7 +187,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		{
 				etxt talk = etxt.stack(128);
 				talk.printf("Rendering capsule: %d\n", cap.textType);
-				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 		}
 		int oldColor = g.getColor();
 		core.assert(font != null);
@@ -255,7 +255,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 				newFont.dumpAll(&talk);
 #endif
 				talk.concat_char('\n');
-				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 				if (child.textType == FormattedTextType.PLAIN) {
 					core.assert(newFont != null);
 					renderText(g, newFont, &child.content);
@@ -268,7 +268,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		{
 				etxt talk = etxt.stack(128);
 				talk.printf("End capsule: %d\n", cap.textType);
-				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 		}
 	}
 
@@ -293,7 +293,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 			minLineHeight = font.getHeight()+ListViewItem.display.PADDING;
 		}
 		lineHeight = minLineHeight;
-		print("Line height:%d\n", lineHeight);
+		//print("Line height:%d\n", lineHeight);
 		//	g.translate(x, y);
 
 		// draw the line background
@@ -308,7 +308,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 			font.dumpAll(&talk);
 #endif
 			talk.concat_char('\n');
-			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 			if (cap.textType == FormattedTextType.PLAIN) {
 				renderText(g, font, &cap.content);
 			} else {

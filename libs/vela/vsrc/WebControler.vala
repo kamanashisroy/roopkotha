@@ -34,7 +34,7 @@ using roopkotha.vela;
 public class roopkotha.vela.WebControler : Replicable {
 	PageView page;
 	RoopDocument?content;
-	WebResourceLoader loader;
+	VelaResourceLoader loader;
 	//MediaLoader ml;
 	//WebEventListener el;
 	//WebActionListener al;
@@ -48,7 +48,7 @@ public class roopkotha.vela.WebControler : Replicable {
 	txt BACK_ACTION;
 	txt VELA;
 
-	public WebControler(PageView view, WebResourceLoader rl) {
+	public WebControler(PageView view, VelaResourceLoader rl) {
 		BACK_ACTION = new txt.from_static("Back");
 		VELA = new txt.from_static("Vela");
 		page = view;
@@ -95,7 +95,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 	}
 #endif
 
-	public bool pushWrapperFull(WebResource id, bool back) {
+	public bool pushWrapperFull(VelaResource id, bool back) {
 		if (isLoadingPage) { // check if we are on action ..
 			print("We are still loading a page, we cannot perform other actions ..\n");
 			return false;
@@ -113,7 +113,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 	}
 
 	public bool pushWrapper(etxt*url, WebVariables?vars, bool back) {
-		return pushWrapperFull(new WebResource(baseUrl, url, doc, vars), back);
+		return pushWrapperFull(new VelaResource(baseUrl, url, doc, vars), back);
 	}
 
 	public void onWindowEvent(EventOwner action) {
@@ -215,7 +215,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 	}
 
 	//#define WEB_ASSERT_RETURN(x,y,z) if(!x) {SYNC_LOG(SYNC_VERB, y); return z;}
-	public void onContentReady(WebResource id, Replicable content) {
+	public void onContentReady(VelaResource id, Replicable content) {
 #if false
 		// \todo set menu command ..
 		if(id->type == XULTB_RESOURCE_IMG) {
@@ -330,10 +330,10 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 #endif
 	}
 
-	public void onResourceError(WebResource id, int code, etxt*reason) {
+	public void onResourceError(VelaResource id, int code, etxt*reason) {
 		clearFlags();
 		print("onResourceError()\n");
-		if(id.tp == WebResource.Type.DOCUMENT) {
+		if(id.tp == VelaResource.Type.DOCUMENT) {
 			// what to do ??
 		} else {
 			// images.put(url, Image.createImage("/ui/error.png"));

@@ -1,0 +1,5 @@
+
+ROOPVELA_MALLEABLE_CSOURCES=$(wildcard $(ROOPKOTHA_HOME)/libs/vela_malleable/vsrc/*.c)
+ROOPVELA_MALLEABLE_VSOURCE_BASE=$(basename $(notdir $(ROOPVELA_MALLEABLE_CSOURCES)))
+OBJECTS+=$(addprefix $(PROJECT_OBJDIR)/, $(addsuffix .o,$(ROOPVELA_MALLEABLE_VSOURCE_BASE)))
+

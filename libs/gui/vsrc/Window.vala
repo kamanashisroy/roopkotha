@@ -46,7 +46,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 	public Window(etxt*aTitle) {
 		core.assert(menu != null);
 		title = new txt.memcopy_etxt(aTitle);
-		this.init(200, 400);
+		this.init(200, 300);
 		windowActionCB = null;
 	}
 	public virtual void init(int w, int h) {
@@ -100,10 +100,10 @@ public abstract class roopkotha.gui.Window : Replicable {
 	}
 	
 	public virtual bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
-		//if(xultb_menu_handle_event(this, target, flags, key_code, x, y)) {
-		//	xultb_guicore_set_dirty(this);
-		//	return 1;
-		//}
+		if(menu.handleEvent(this, target, flags, key_code, x, y)) {
+			GUICore.setDirty(this);
+			return true;
+		}
 		return false;
 	}
 

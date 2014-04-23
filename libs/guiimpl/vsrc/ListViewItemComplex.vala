@@ -21,7 +21,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 	public ListViewItemComplex.common() {
 		ITEM_FONT = new FontImpl();
 		FONT_HEIGHT = ITEM_FONT.getHeight();
-		print("Item font is set");
+		//print("Item font is set");
 	}
 	void draw_selectionbox_icon(Graphics g, int x, int y, bool focused) {
 		// now indicate that it is checked ..
@@ -76,7 +76,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 			imgspacing = ListViewItem.display.RESOLUTION + ListViewItem.display.PADDING;
 		}
 
-		print("Painting new label %s\n", label.to_string());
+		//print("Painting new label %s\n", label.to_string());
 		core.assert(ITEM_FONT != null);
 		// Write the Label
 		labelWidth = labelHeight = start = pos = ret = lineCount = 0;
@@ -131,7 +131,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 				etxt xt = etxt.same_same(&label);
 				xt.shift(start);
 				xt.trim_to_length(pos);
-				print("Label:%s:%s\n", label.to_string(), xt.to_string());
+				//print("Label:%s:%s\n", label.to_string(), xt.to_string());
 				g.drawString(&xt
 						, x + imgspacing + ListViewItem.display.PADDING
 						,y + ret + ListViewItem.display.PADDING
@@ -246,7 +246,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 				bool changed = false;
 				etxt dlg = etxt.stack(64);
 				dlg.printf("Edit text field , key code:%d\n", key_code);
-				Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, &dlg);
 				// get current text
 				etxt xt = etxt.stack(text.length()+1);
 				xt.concat(&text);
@@ -290,7 +290,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, EventOwner?aTarget) {
 		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
-		print("Created new label %s:%s\n", label.to_string(), aLabel.to_string());
+		//print("Created new label %s:%s\n", label.to_string(), aLabel.to_string());
 		img = aImg;
 		is_editable = aChange_bg_on_focus;
 		target = aTarget;

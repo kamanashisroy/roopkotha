@@ -6,6 +6,7 @@ all:
 	velapad -i velapad.txt
 	#velapad -i stickit.txt
 	glide
+	glide
 	profiler
 
 

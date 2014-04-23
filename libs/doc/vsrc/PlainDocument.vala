@@ -16,7 +16,9 @@ public class roopkotha.doc.PlainDocument : roopkotha.doc.RoopDocument {
 	
 	public void addLine(etxt*asciiData) {
 		PlainContent c = new PlainContent(asciiData);
-		print("PlainDocument:Adding line:%s\n", asciiData.to_string());
+		etxt dlg = etxt.stack(128);
+		dlg.printf("PlainDocument:Adding line:%s\n", asciiData.to_string());
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		contents.set(counter++, c);
 	}
 

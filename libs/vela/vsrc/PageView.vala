@@ -113,18 +113,18 @@ static void do_search() {
 #endif
 
 	protected override ListViewItem getListItem(Replicable given) {
-		print("Generating formatted list item\n");
+		//print("Generating formatted list item\n");
 		AugmentedContent elem = (AugmentedContent)given;
 		if(elem.cType == AugmentedContent.ContentType.FORMATTED_CONTENT) {
 			fli.factoryBuild((FormattedContent)elem);
-			print("-- formatted item generated\n");
+			//print("-- formatted item generated\n");
 			return fli;
 		}
 		etxt data = etxt.stack(128);
 		elem.getText(&data);
 		etxt dlg = etxt.stack(256);
-		dlg.printf("Plain line :%s\n", data.to_string());
-		Watchdog.logMsgDoNotUse(core.sourceFileName(), core.sourceLineNo(), &dlg);
+		dlg.printf("PageView:Plain line :%s\n", data.to_string());
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		// see if the label has any image
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 	}

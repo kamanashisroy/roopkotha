@@ -6,4 +6,5 @@ core/base
 core/test
 -ROOPKOTHA_HOME
 libs/vela
+libs/vela_malleable
 

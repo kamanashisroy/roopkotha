@@ -6,12 +6,12 @@ using roopkotha.vela;
 /** \addtogroup vela_malleable
  *  @{
  */
-public abstract class roopkotha.vela_malleable.LocalResourceLoader : VelaResourceLoader {
+public abstract class roopkotha.vela_malleable.CompoundResourceLoader : VelaResourceLoader {
 	Hashtable<VelaResourceLoader> loaders;
-	public LocalResourceLoader() {
+	public CompoundResourceLoader() {
 		loaders = Hashtable<ValaResourceLoader>();
 	}
-	~LocalResourceLoader() {
+	~CompoundResourceLoader() {
 		loaders.destroy();
 	}
 	VelaResourceLoader? getLoader(VelaResource id) {
@@ -33,7 +33,7 @@ public abstract class roopkotha.vela_malleable.LocalResourceLoader : VelaResourc
 	}
 	public int request(VelaResource id) {
 		VelaResourceLoader loader = getLoader(id);
-		loader.load();
+		loader.request(id);
 	}
 }
 /** @} */

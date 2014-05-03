@@ -3,7 +3,7 @@ using shotodol;
 using roopkotha;
 using roopkotha.vela;
 
-/** \addtogroup vela
+/** \addtogroup velagent
  *  @{
  */
 public class roopkotha.vela.VelaResource : Replicable {
@@ -12,9 +12,29 @@ public class roopkotha.vela.VelaResource : Replicable {
 		IMAGE,
 	}
 	public Type tp {public get;private set;}
-	public VelaResource(etxt*base, etxt*aUrl, PageAppDocument referer, WebVariables?vars) {
+	public etxt baseUrl;
+	public etxt url;
+	public VelaResource(etxt*gBase, etxt*gUrl, PageAppDocument referer, WebVariables?vars) {
 		// TODO fill me
 	}
+	public void getPrefix(etxt*prefix) {
+		etxt*x = baseUrl.is_empty()?&url:&baseUrl;
+		prefix.concat(x);
+		bool valid = false;
+		int i = 0;
+		int len = prefix.length();
+		for(i = 0; i < len;i++) {
+			if(prefix.char_at(i) != ':') {
+				prefix.trim_to_length(i);
+				valid = true;
+				break;
+			}
+		}
+		if(!valid) {
+			prefix.trim_to_length(0);
+		}
+	}
+
 }
 public delegate void roopkotha.vela.ContentReadyCB(VelaResource id, Replicable content);
 public delegate void roopkotha.vela.ContentErrorCB(VelaResource id, int code, etxt*reason);

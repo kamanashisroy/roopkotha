@@ -89,12 +89,15 @@ public abstract class roopkotha.gui.Window : Replicable {
 
 	public void onAction(EventOwner owner) {
 		if(windowActionCB != null) {
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "windowActionCB()\n");
 			windowActionCB(owner);
 		}
 	}
 
 	public void setActionCB(WindowActionCB cb) {
-		if(windowActionCB != null) {
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Set window action\n");
+		if(windowActionCB == null) {
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "done\n");
 			windowActionCB = cb;
 		}
 	}

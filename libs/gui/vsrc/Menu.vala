@@ -243,6 +243,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 				}
 				break;
 			case roopkotha.gui.GUIInput.keyEventType.KEY_F1:
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu left pressed\n");
 	//			left = 1;
 				if(menu_is_active) {
 					target = CANCEL;
@@ -251,6 +252,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 				}
 				break;
 			case roopkotha.gui.GUIInput.keyEventType.KEY_F2:
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu right pressed\n");
 				target = rightOption;
 				break;
 			case roopkotha.gui.GUIInput.keyEventType.KEY_ENTER:
@@ -289,7 +291,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 			if(target.is_same(CANCEL)) {
 				left = true;
 				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Close menu\n");
-			} else if(menuOptions != null)for (i=0;i<menuOptions.count_unsafe();i++) {
+			} else if(menuOptions != null)for (i=0;i<menuOptions.count_unsafe() && i >= 0;i++) {
 				EventOwner cmd = menuOptions.get(i);
 				if(cmd == target) {
 					left = true;
@@ -318,6 +320,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 	//				}
 		if (right) {
 	//		SYNC_LOG(SYNC_VERB, "TODO: handle right command:%s\n", ((aroop.txt )target).str);
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Window action\n");
 			win.onAction(rightOption);
 			menu_is_active = false;
 		} else if (menu_is_active) {

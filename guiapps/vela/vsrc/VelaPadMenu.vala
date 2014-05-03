@@ -2,6 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 using roopkotha.vela;
+using roopkotha.velagent;
 
 /** \addtogroup velapp
  *  @{
@@ -22,7 +23,10 @@ internal class roopkotha.app.VelaPadMenu : Replicable {
 		rightOption = new EventOwner(this, &rightOptionText);
 		etxt openFileText = etxt.from_static("Open");
 		EventOwner openFile = new EventOwner(this, &openFileText);
+		etxt moreText = etxt.from_static("More");
+		EventOwner more = new EventOwner(this, &moreText);
 		leftOptions.set(0, openFile);
+		leftOptions.set(1, more);
 		guiinit();
 	}
 	void guiinit() {
@@ -34,7 +38,7 @@ internal class roopkotha.app.VelaPadMenu : Replicable {
 		/*etxt elem = etxt.from_static("Write something here..");
 		emptyDoc.addLine(&elem);*/
 		pg.setDocument(emptyDoc, 0);
-		new WebControler(pg, new CompoundResourceLoader());
+		new Velagent(pg, new CompoundResourceLoader());
 		pg.show();
 		MainTurbine.gearup(impl);
 	}

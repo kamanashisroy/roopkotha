@@ -1,0 +1,5 @@
+
+ROOPVELA_VELAGENT_CSOURCES=$(wildcard $(ROOPKOTHA_HOME)/libs/velagent/vsrc/*.c)
+ROOPVELA_VELAGENT_VSOURCE_BASE=$(basename $(notdir $(ROOPVELA_VELAGENT_CSOURCES)))
+OBJECTS+=$(addprefix $(PROJECT_OBJDIR)/, $(addsuffix .o,$(ROOPVELA_VELAGENT_VSOURCE_BASE)))
+

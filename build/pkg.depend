@@ -4,6 +4,6 @@ libs/rtree
 libs/guiimpl
 libs/doc
 libs/vela
-libs/vela_malleable
+libs/velagent
 guiapps/pad
 guiapps/vela

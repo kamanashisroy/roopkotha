@@ -214,7 +214,8 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 	public override bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		roopkotha.gui.ListView list = (roopkotha.gui.ListView )this;
 		etxt dlg = etxt.stack(128);
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "Handling menu command");
+		dlg.printf("Handling menu command for keycode %d\n and x %d ", key_code, x);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		if(base.onEvent(target, flags, key_code, x, y)) {
 			return true;
 		}

@@ -5,8 +5,7 @@ all:
 	profiler
 	velapad -i velapad.txt
 	#velapad -i stickit.txt
-	glide
-	glide
+	wa -n gui -fn vsrc/Font.c -l 100
 	profiler
 
 

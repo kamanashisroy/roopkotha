@@ -24,14 +24,14 @@ using roopkotha.doc;
 using roopkotha.vela;
 
 /**
- * \ingroup doc
- * \defgroup vela A browser interface on top of our gui.
+ * \ingroup vela
+ * \defgroup vela Action dispatcher for vela browser
  */
 
-/** \addtogroup vela
+/** \addtogroup velagent
  *  @{
  */
-public class roopkotha.vela.WebControler : Replicable {
+public class roopkotha.vela.Velagent : Replicable {
 	PageView page;
 	RoopDocument?content;
 	VelaResourceLoader loader;
@@ -48,7 +48,7 @@ public class roopkotha.vela.WebControler : Replicable {
 	txt BACK_ACTION;
 	txt VELA;
 
-	public WebControler(PageView view, VelaResourceLoader rl) {
+	public Velagent(PageView view, VelaResourceLoader rl) {
 		BACK_ACTION = new txt.from_static("Back");
 		VELA = new txt.from_static("Vela");
 		page = view;
@@ -66,7 +66,7 @@ public class roopkotha.vela.WebControler : Replicable {
 		loader.setContentErrorCallback(onResourceError);
 	}
 
-	~WebControler() {
+	~Velagent() {
 		images.destroy();
 		stack.destroy();
 	}
@@ -120,6 +120,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		etxt label = etxt.EMPTY();
 		action.getLabel(&label);
 		print("Action is %s\n", label.to_string());
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Window action\n");
 
 		// Normal mode ..
 		//if(action.equals(page.default_command)) {
@@ -197,6 +198,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 	}
 #else
 	public void onPageEvent(etxt*target) {
+		print("Page event");
 		pushWrapper(target, page.getVariables(), false);
 	}
 #endif

@@ -1,3 +1,4 @@
 static_objects.a
 plugin.so
 qtproject/.config.pro
+qtproject/.config.mk

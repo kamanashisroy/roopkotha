@@ -9,6 +9,8 @@
 #include "shotodol_gui.h"
 
 C_CAPSULE_START
+#include "shotodol_watchdog.h"
+#define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
 int qt_process_mouse_event_helper(int flags, int key_code, int x, int y);
 C_CAPSULE_END
 
@@ -135,12 +137,12 @@ protected:
             QPainter p( this );
             p.drawPixmap(0, 0, 200, 400, *page);
             //page->fill(this, 0, 0);
-            printf("Filling with pixmap\n");
+            //watchdog_log_string("Filling with pixmap\n");
         }
         //p.drawImage(0, 0, *page);
     }
     void keyPressEvent(QKeyEvent *event){
-    	printf("Key event\n");
+    	//watchdog_log_string("Key event\n");
         QString text = event->text();
         int x = 0;
         int key = 0;

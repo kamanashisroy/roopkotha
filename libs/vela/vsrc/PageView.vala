@@ -34,7 +34,7 @@ using roopkotha.vela;
 public delegate void roopkotha.vela.PageEventCB(etxt*action);
 public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(etxt*imgAddr);
 
-public class roopkotha.vela.PageView : roopkotha.doc.DocumentView {
+public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 	PageEventCB?pageEventCB;
 	GetImageCB?getImageCB;
 	FormattedListItem fli;

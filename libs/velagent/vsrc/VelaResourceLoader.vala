@@ -6,7 +6,7 @@ using roopkotha.vela;
 /** \addtogroup velagent
  *  @{
  */
-public class roopkotha.vela.VelaResource : Replicable {
+public class roopkotha.velagent.VelaResource : Replicable {
 	public enum Type {
 		DOCUMENT,
 		IMAGE,
@@ -36,9 +36,9 @@ public class roopkotha.vela.VelaResource : Replicable {
 	}
 
 }
-public delegate void roopkotha.vela.ContentReadyCB(VelaResource id, Replicable content);
-public delegate void roopkotha.vela.ContentErrorCB(VelaResource id, int code, etxt*reason);
-public abstract class roopkotha.vela.VelaResourceLoader : Replicable {
+public delegate void roopkotha.velagent.ContentReadyCB(VelaResource id, Replicable content);
+public delegate void roopkotha.velagent.ContentErrorCB(VelaResource id, int code, etxt*reason);
+public abstract class roopkotha.velagent.VelaResourceLoader : Replicable {
 	ContentReadyCB?onContentReady;
 	ContentErrorCB?onContentError;
 	public VelaResourceLoader() {

@@ -12,12 +12,15 @@ using roopkotha.velagent;
  * [-Maturity- 10]
  */
 internal class roopkotha.app.VelaPadMenu : Replicable {
+#if false
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
+#endif
 	GUICoreImpl impl;
 	PageView pg;
 	PageAppDocument emptyDoc;
 	public VelaPadMenu() {
+#if false
 		leftOptions = ArrayList<EventOwner>();
 		etxt rightOptionText = etxt.from_static("Quit");
 		rightOption = new EventOwner(this, &rightOptionText);
@@ -27,6 +30,7 @@ internal class roopkotha.app.VelaPadMenu : Replicable {
 		EventOwner more = new EventOwner(this, &moreText);
 		leftOptions.set(0, openFile);
 		leftOptions.set(1, more);
+#endif
 		guiinit();
 	}
 	void guiinit() {
@@ -39,12 +43,15 @@ internal class roopkotha.app.VelaPadMenu : Replicable {
 		emptyDoc.addLine(&elem);*/
 		pg.setDocument(emptyDoc, 0);
 		new Velagent(pg, new CompoundResourceLoader());
+		etxt menuML = etxt.from_static("<menu><x href=\"opennew\">Open</x><x href=\"close\">Close</x></menu>");
+		pg.setMenu(&menuML);
 		pg.show();
 		MainTurbine.gearup(impl);
 	}
 	protected void show(PageAppDocument pd) {
 		pg.setDocument(pd, 0);
-		pg.showFull(&leftOptions, rightOption);
+		//pg.showFull(&leftOptions, rightOption);
+		pg.show();
 	}
 }
 /** @} */

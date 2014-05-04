@@ -31,7 +31,7 @@ using roopkotha.vela;
 /** \addtogroup velagent
  *  @{
  */
-public class roopkotha.vela.Velagent : Replicable {
+public class roopkotha.velagent.Velagent : Replicable {
 	PageView page;
 	RoopDocument?content;
 	VelaResourceLoader loader;
@@ -95,13 +95,17 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 	}
 #endif
 
-	public bool pushWrapperFull(VelaResource id, bool back) {
+	public bool velaxecuteFull(VelaResource id, bool back) {
 		if (isLoadingPage) { // check if we are on action ..
-			print("We are still loading a page, we cannot perform other actions ..\n");
+			etxt dlg = etxt.stack(128);
+			dlg.printf("Busy, cannot load reasource:%s\n", id.url.to_string());
+			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 1, Watchdog.WatchdogSeverity.ALERT, 0, 0, &dlg);
 			return false;
 		}
 #if false
 		Window.pushBalloon("Loading ..", null, hashCode(), 100000000);
+#else
+		print("Loading resource ..\n");
 #endif
 
 		// web->images.clear(); -> clear ..
@@ -112,16 +116,22 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		return true;
 	}
 
-	public bool pushWrapper(etxt*url, WebVariables?vars, bool back) {
-		return pushWrapperFull(new VelaResource(baseUrl, url, doc, vars), back);
+	public bool velaxecute(etxt*url, WebVariables?vars, bool back) {
+		return velaxecuteFull(new VelaResource(baseUrl, url, doc, vars), back);
 	}
 
 	public void onWindowEvent(EventOwner action) {
 		etxt label = etxt.EMPTY();
 		action.getLabel(&label);
-		print("Action is %s\n", label.to_string());
-		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Window action\n");
 
+		etxt dbg = etxt.stack(128);
+		dbg.printf("Action is %s\n", label.to_string());
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 5, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dbg);
+
+		etxt cmd = etxt.stack(128);
+		cmd.printf("velaxecute://%s\n", label.to_string());
+		velaxecute(&cmd, null, false);
+#if false
 		// Normal mode ..
 		//if(action.equals(page.default_command)) {
 		Replicable?src = action.getSource();
@@ -132,7 +142,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 			if(content != null) {
 				content.getAction(&appAction);
 				if(!appAction.is_empty()) {
-					pushWrapper(&appAction, null, false);
+					velaxecute(&appAction, null, false);
 					return;
 				}
 			}
@@ -144,7 +154,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 			if(last) {
 	//			GUI_INPUT_LOG("It should render %s\n", last->str);
 				OPPUNREF(web->base);
-				pushWrapper(last, null, true);
+				velaxecute(last, null, true);
 				OPPUNREF(last);
 				return;
 			}
@@ -184,10 +194,11 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 				}
 			}
 			if(url) {
-				pushWrapper(url, page.getVariables(), false);
+				velaxecute(url, page.getVariables(), false);
 			}
 			break;
 		}
+#endif
 #endif
 	}
 
@@ -199,7 +210,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 #else
 	public void onPageEvent(etxt*target) {
 		print("Page event");
-		pushWrapper(target, page.getVariables(), false);
+		velaxecute(target, page.getVariables(), false);
 	}
 #endif
 

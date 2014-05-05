@@ -14,23 +14,37 @@ public class roopkotha.velagent.VelaResource : Replicable {
 	public Type tp {public get;private set;}
 	public etxt baseUrl;
 	public etxt url;
-	public VelaResource(etxt*gBase, etxt*gUrl, PageAppDocument referer, WebVariables?vars) {
-		// TODO fill me
+	PageAppDocument referer;
+	public VelaResource(etxt*gBase, etxt*gUrl, PageAppDocument gReferer) {
+		if(gBase.is_empty_magical()) {
+			baseUrl = etxt.EMPTY();
+		} else {
+			baseUrl = etxt.dup_etxt(gBase);
+		}
+		if(gUrl.is_empty_magical()) {
+			url = etxt.EMPTY();
+		} else {
+			url = etxt.dup_etxt(gUrl);
+		}
+		print("x:%s-%s\n", baseUrl.to_string(), url.to_string());
+		referer = gReferer;
 	}
 	public void getPrefix(etxt*prefix) {
-		etxt*x = baseUrl.is_empty()?&url:&baseUrl;
+		etxt*x = baseUrl.is_empty_magical()?&url:&baseUrl;
+		print("x:%s\n", x.to_string());
 		prefix.concat(x);
 		bool valid = false;
 		int i = 0;
 		int len = prefix.length();
 		for(i = 0; i < len;i++) {
-			if(prefix.char_at(i) != ':') {
+			if(prefix.char_at(i) == ':') {
 				prefix.trim_to_length(i);
+				print("Prefix:%s\n", prefix.to_string());
 				valid = true;
 				break;
 			}
 		}
-		if(!valid) {
+		if(!valid && len != 0) {
 			prefix.trim_to_length(0);
 		}
 	}

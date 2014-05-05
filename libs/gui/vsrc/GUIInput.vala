@@ -67,8 +67,10 @@ public abstract class roopkotha.gui.GUIInput : Replicable {
 		KEY_LEFT = 3,
 		KEY_RIGHT = 4,
 		KEY_ENTER = 5,
-		KEY_F1 = 6,
-		KEY_F2 = 7,
+		KEY_RETURN = 6,
+		KEY_F1 = 7,
+		KEY_F2 = 8,
+		KEY_ESCAPE = 9,
 	}
 
 	public abstract int registerScreenEvent(EventOwner?target, int x, int y, int width, int height);

@@ -122,7 +122,6 @@ public abstract class roopkotha.gui.Menu : Replicable {
 			precalculate();
 		}
 		/* Tower top position */
-		print("height:%d,menu height:%d\n", height, menuMaxHeight);
 		int menuOptionY = height - BASE_HEIGHT - menuMaxHeight - 1;
 
 		/* now we know the bounds of active menu */
@@ -225,6 +224,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 	}
 	public bool handleEvent(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
 		if((flags & roopkotha.gui.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "keyboard : ..\n");
 			switch(x) {
 			case roopkotha.gui.GUIInput.keyEventType.KEY_UP:
 				if(menu_is_active) {
@@ -258,6 +258,8 @@ public abstract class roopkotha.gui.Menu : Replicable {
 				target = rightOption;
 				break;
 			case roopkotha.gui.GUIInput.keyEventType.KEY_ENTER:
+			case roopkotha.gui.GUIInput.keyEventType.KEY_RETURN:
+				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu selected\n");
 				if(menuOptions != null && menu_is_active) {
 					EventOwner cmd = menuOptions.get(currentlySelectedIndex);
 					if(cmd != null) {
@@ -268,6 +270,9 @@ public abstract class roopkotha.gui.Menu : Replicable {
 					return false;
 				}
 				break;
+			case roopkotha.gui.GUIInput.keyEventType.KEY_ESCAPE:
+				menu_is_active = false;
+				return true;
 			default:
 				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "This is not traversing key\n");
 				return false;

@@ -8,3 +8,5 @@ core/test
 libs/vela
 libs/velagent
 
+-ONUBODH_HOME
+libs/xmlparser

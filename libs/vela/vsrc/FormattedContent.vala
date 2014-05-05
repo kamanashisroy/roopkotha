@@ -61,9 +61,10 @@ public struct roopkotha.vela.FormattedTextCapsule {
 public delegate int roopkotha.vela.VisitAugmentedContent(FormattedTextCapsule*capsule);
 
 public abstract class roopkotha.vela.FormattedContent : roopkotha.doc.AugmentedContent {
-	txt data;
+	txt?data = null;
 
 	public FormattedContent(etxt*asciiData) {
+		//memclean_raw();
 		base();
 		data = new txt.memcopy_etxt(asciiData);
 		cType = AugmentedContent.ContentType.FORMATTED_CONTENT;

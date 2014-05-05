@@ -162,11 +162,17 @@ protected:
         case Qt::Key_Enter:
             x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_ENTER;
         break;
+        case Qt::Key_Return:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_RETURN;
+        break;
         case Qt::Key_F1:
             x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_F1;
         break;
         case Qt::Key_F2:
             x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_F2;
+        break;
+        case Qt::Key_Escape:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_ESCAPE;
         break;
         }
         if(text.length()) {

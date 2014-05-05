@@ -140,10 +140,5 @@ static void do_search() {
 			getImageCB = cb;
 		}
 	}
-	
-	public WebVariables?getVariables() {
-		// TODO fill me
-		return null;
-	}
 }
 /** @} */

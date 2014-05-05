@@ -130,7 +130,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 
 		etxt cmd = etxt.stack(128);
 		cmd.printf("velaxecute://%s\n", label.to_string());
-		velaxecute(&cmd, null, false);
+		//velaxecute(&cmd, null, false);
 #if false
 		// Normal mode ..
 		//if(action.equals(page.default_command)) {

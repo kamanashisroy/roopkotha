@@ -122,6 +122,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 			precalculate();
 		}
 		/* Tower top position */
+		print("height:%d,menu height:%d\n", height, menuMaxHeight);
 		int menuOptionY = height - BASE_HEIGHT - menuMaxHeight - 1;
 
 		/* now we know the bounds of active menu */
@@ -219,6 +220,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 		menuOptions = left_option;
 		menu_is_active = false;
 		currentlySelectedIndex = 0;
+		menuMaxHeight = menuMaxWidth = -1;
 		return 0;
 	}
 	public bool handleEvent(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {

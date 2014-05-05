@@ -43,7 +43,7 @@ internal class roopkotha.app.VelaPadMenu : Replicable {
 		emptyDoc.addLine(&elem);*/
 		pg.setDocument(emptyDoc, 0);
 		new Velagent(pg, new CompoundResourceLoader());
-		etxt menuML = etxt.from_static("<menu><x href=\"opennew\">Open</x><x href=\"close\">Close</x></menu>");
+		etxt menuML = etxt.from_static("<menu><x href=\"goback\">Back</x><x href=\"aboutme\">About</x><x href=\"opennew\">Open</x><x href=\"close\">Close</x></menu>");
 		pg.setMenu(&menuML);
 		pg.show();
 		MainTurbine.gearup(impl);

@@ -46,7 +46,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 	public Window(etxt*aTitle) {
 		core.assert(menu != null);
 		title = new txt.memcopy_etxt(aTitle);
-		this.init(200, 300);
+		this.init(200, 400);
 		windowActionCB = null;
 	}
 	public virtual void init(int w, int h) {

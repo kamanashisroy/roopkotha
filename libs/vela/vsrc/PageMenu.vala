@@ -62,7 +62,7 @@ public class roopkotha.vela.PageMenu : roopkotha.doc.DocumentView {
 		print("Traversing ..\n");
 		parser.traversePreorder(&map, 100, (xit) => {
 			print("..\n");
-#if false
+#if true
 			if(!xit.nextIsText) {
 				return;
 			}

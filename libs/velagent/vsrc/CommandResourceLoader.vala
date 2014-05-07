@@ -24,17 +24,16 @@ public class roopkotha.velagent.CommandResourceLoader : VelaResourceLoader {
 	}
 	public override int request(VelaResource id) {
 		etxt prefix = etxt.stack(64);
-		id.getPrefix(&prefix);
+		id.copyPrefix(&prefix);
 		int len = prefix.length();
-		print("prefix[%d]:%s\n", len, prefix.to_string());
+		//print("prefix[%d]:%s\n", len, prefix.to_string());
 		etxt cmdTxt = etxt.same_same(&id.url);
 		cmdTxt.shift(len+3);
-		print("We should execute command %s\n", cmdTxt.to_string());
 		bout.reset();
 		velamds.act_on(&cmdTxt, bout);
-		etxt content = etxt.EMPTY();
-		bout.getAs(&content);
-		print("-%s\n", content.to_string());
+		//etxt content = etxt.EMPTY();
+		//bout.getAs(&content);
+		//print("%s\n", content.to_string());
 		return 0;
 	}
 }

@@ -19,8 +19,7 @@ internal class roopkotha.app.VelaPadAgent : Replicable {
 	}
 	protected void setupAgent(PageView pg) {
 		agent.plugPage(pg);
-		//etxt menuML = etxt.from_static("<menu><x href=\"goback\" label=\"Back\"></x><x href=\"quit\" label=\"Quit\"></x><x href=\"aboutme\" label=\"About\"></x><x href=\"opennew\" label=\"Open\"></x><x href=\"close\" label=\"Close\"></x></menu>");
-		etxt menuML = etxt.from_static("<m><x href=goback label=Back></x><x href=quit label=Quit></x><x href=aboutme label=About></x><x href=opennew label=Open></x><x href=close label=Close></x></m>");
+		etxt menuML = etxt.from_static("<x href=goback label=Back></x><x href=quit label=Quit></x><x href=aboutme label=About></x><x href=opennew label=Open></x><x href=close label=Close>a</x>");
 		agent.plugMenu(&menuML);
 	}
 

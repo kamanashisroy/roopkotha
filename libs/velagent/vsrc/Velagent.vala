@@ -126,7 +126,9 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 5, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dbg);
 
 		etxt cmd = etxt.stack(128);
-		cmd.printf("velaxecute://%s\n", paction.action.to_string());
+		cmd.printf("velaxecute://");
+		cmd.concat(&paction.action);
+		cmd.concat_char('\n');
 		velaxecute(&cmd, false);
 #if false
 		// Normal mode ..
@@ -362,10 +364,6 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		if(xit.nextIsText) {
 			return;
 		}
-			print("pos:%d,clen:%d,tag:%s\n", xit.pos, xit.content.length(), xit.nextTag.to_string());
-			etxt tcontent = etxt.stack(256);
-			xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &tcontent);
-			print("Content\t\t- pos:%d,clen:%d,content:%s\n", xit.pos, xit.content.length(), tcontent.to_string());
 		etxt key = etxt.stack(128);
 		etxt href = etxt.EMPTY();
 		href.buffer(128);
@@ -379,14 +377,12 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 			key.concat(&attrKey);
 			key.zero_terminate();
 			while(key.char_at(0) == ' ') {key.shift(1);}
-			print("key[%s]\n", key.to_string());
 			if(key.equals_string("href")) {
 				href.concat(&attrVal);
 			} else if(key.equals_string("label")) {
 				label.concat(&attrVal);
 			}
 		}
-		print("********%s:%s\n", href.to_string(), label.to_string());
 		while(href.char_at(0) == '"') {href.shift(1);}
 		while(href.char_at(href.length()-1) == '"') {href.trim_to_length(href.length()-1);}
 		href.zero_terminate();
@@ -408,7 +404,7 @@ int xultb_list_item_attr_is_positive(struct xultb_ml_node*elem, const char*respo
 		onubodh.XMLParser parser = new onubodh.XMLParser();
 		onubodh.WordMap map = onubodh.WordMap();
 		// parse the xml and show the menu
-		map.extract.buffer(menuML.length());
+		map.kernel.buffer(menuML.length());
 		map.source = etxt.dup_etxt(menuML);
 		map.map.buffer(menuML.length());
 		parser.transform(&map);

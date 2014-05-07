@@ -38,7 +38,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 		base(asciiData);
 		parser = new XMLParser();
 		map = WordMap();
-		map.extract.buffer(asciiData.length());
+		map.kernel.buffer(asciiData.length());
 #if true
 		map.source = etxt.dup_etxt(asciiData);
 #else
@@ -82,7 +82,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 	XMLIterator rxit;
 	public override void traverseCapsulesInit() {
 		rxit = XMLIterator(&map);
-		rxit.extract = etxt.same_same(&map.extract);
+		rxit.kernel = etxt.same_same(&map.kernel);
 	}
 	public override int traverseCapsules(VisitAugmentedContent visitCapsule) {
 		//print("Traversing capsules ..\n");

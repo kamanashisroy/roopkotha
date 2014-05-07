@@ -16,7 +16,7 @@ public class roopkotha.velagent.CompoundResourceLoader : VelaResourceLoader {
 	}
 	VelaResourceLoader? getLoader(VelaResource id) {
 		etxt prefix = etxt.stack(64);
-		id.getPrefix(&prefix);
+		id.copyPrefix(&prefix);
 		if(prefix.is_empty()) {
 			return null;
 		}

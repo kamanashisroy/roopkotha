@@ -49,11 +49,18 @@ internal class shotodol.FileListCommand : M100Command {
 			return 0;
 		}
 		Directory dir = Directory(path);
-		FileNode node = dir.iterator().get();
-		etxt output = etxt.stack(128);
-		output.concat(&node.fileName);
-		output.concat_char('\n');
-		pad.write(&output);
+		FileNode?node = null;
+		while((node = dir.iterator().get()) != null) {
+			etxt output = etxt.stack(512);
+			if(gui)
+				output.concat_string("<SMALL>");
+			output.concat(&node.fileName);
+			if(gui)
+				output.concat_string("</SMALL><BR></BR>");
+			else
+				output.concat_string("\n");
+			pad.write(&output);
+		}
 		bye(pad, true);
 		return 0;
 	}

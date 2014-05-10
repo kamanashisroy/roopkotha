@@ -1,5 +1,6 @@
 
 all:
+	module -load ../../../guiapps/gcommands/plugin.so
 	module -load ../../../guiapps/pad/plugin.so
 	module -load ../../../guiapps/vela/plugin.so
 	profiler

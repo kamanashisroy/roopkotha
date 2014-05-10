@@ -5,5 +5,6 @@ libs/guiimpl
 libs/doc
 libs/vela
 libs/velagent
+guiapps/gcommands
 guiapps/pad
 guiapps/vela

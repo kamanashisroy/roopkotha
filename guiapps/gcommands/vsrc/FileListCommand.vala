@@ -27,15 +27,16 @@ internal class shotodol.FileListCommand : M100Command {
 	}
 
 	public override int act_on(etxt*cmdstr, OutputStream pad) {
-		greet(pad);
+		bool gui = /*false*/true;
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		if(parseOptions(cmdstr, &vals) != 0) {
 			desc(CommandDescType.COMMAND_DESC_FULL, pad);
-			bye(pad, false);
+			if(!gui)
+				bye(pad, false);
 			return 0;
 		}
-		bool gui = false;
 		unowned txt?path = null;
+		etxt currentPath = etxt.from_static(".");
 		container<txt>? mod = vals.search(Options.GUI, match_all);
 		if(mod != null) {
 			gui = true;
@@ -44,14 +45,13 @@ internal class shotodol.FileListCommand : M100Command {
 		if(mod != null) {
 			path = mod.get();
 		}
-		if(path == null) {
-			bye(pad, false);
-			return 0;
-		}
-		Directory dir = Directory(path);
+		if(!gui)
+			greet(pad);
+		Directory dir = Directory(path == null?&currentPath:path);
 		FileNode?node = null;
+		etxt output = etxt.stack(512);
 		while((node = dir.iterator().get()) != null) {
-			etxt output = etxt.stack(512);
+			output.trim_to_length(0);
 			if(gui)
 				output.concat_string("<SMALL>");
 			output.concat(&node.fileName);
@@ -61,7 +61,8 @@ internal class shotodol.FileListCommand : M100Command {
 				output.concat_string("\n");
 			pad.write(&output);
 		}
-		bye(pad, true);
+		if(!gui)
+			bye(pad, true);
 		return 0;
 	}
 }

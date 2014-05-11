@@ -26,6 +26,7 @@ public class roopkotha.velagent.VelaResource : Replicable {
 		} else {
 			url = etxt.dup_etxt(gUrl);
 		}
+		tp = Type.DOCUMENT;
 		//print("x:%s-%s\n", baseUrl.to_string(), url.to_string());
 		referer = gReferer;
 	}
@@ -54,8 +55,8 @@ public class roopkotha.velagent.VelaResource : Replicable {
 public delegate void roopkotha.velagent.ContentReadyCB(VelaResource id, Replicable content);
 public delegate void roopkotha.velagent.ContentErrorCB(VelaResource id, int code, etxt*reason);
 public abstract class roopkotha.velagent.VelaResourceLoader : Replicable {
-	ContentReadyCB?onContentReady;
-	ContentErrorCB?onContentError;
+	protected ContentReadyCB?onContentReady;
+	protected ContentErrorCB?onContentError;
 	public VelaResourceLoader() {
 		onContentReady = null;
 	}

@@ -23,18 +23,18 @@ using onubodh;
 using roopkotha;
 using roopkotha.vela;
 
-/** \addtogroup vela
+/** \addtogroup velatml
  *  @{
  */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
+public class roopkotha.velatml.VTMLContent : roopkotha.vela.FormattedContent {
 	XMLParser parser;
 	WordMap map;
 
-	public HTMLMarkupContent(etxt*asciiData) {
+	public VTMLContent(etxt*asciiData) {
 		base(asciiData);
 		parser = new XMLParser();
 		map = WordMap();
@@ -49,7 +49,7 @@ public class roopkotha.vela.HTMLMarkupContent : FormattedContent {
 		//print("FormattedContent:%s\n", asciiData.to_string());
 	}
 
-	~HTMLMarkupContent() {
+	~VTMLContent() {
 		map.destroy();
 	}
 

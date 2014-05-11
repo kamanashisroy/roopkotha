@@ -22,6 +22,7 @@ using shotodol;
 using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
+using roopkotha.velatml;
 
 /**
  * \ingroup vela
@@ -44,7 +45,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 	bool isGoingBack;
 	txt?currentUrl;
 	txt?baseUrl;
-	PageAppDocument doc;
+	RoopDocument doc;
 	txt BACK_ACTION;
 	txt VELA;
 
@@ -198,7 +199,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 	public void onContentReady(VelaResource id, Replicable content) {
 		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 1, "Velagent:New content.. ...\n");
 		if(id.tp == VelaResource.Type.DOCUMENT) {
-			PageAppDocument pd = new PageAppDocument();
+			VTMLDocument pd = new VTMLDocument();
 			txt tcontent = (txt)content;
 			pd.spellChunk(tcontent);
 			page.setDocument(pd, 0);

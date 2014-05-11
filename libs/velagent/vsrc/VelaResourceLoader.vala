@@ -2,6 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha;
 using roopkotha.vela;
+using roopkotha.doc;
 
 /** \addtogroup velagent
  *  @{
@@ -14,8 +15,8 @@ public class roopkotha.velagent.VelaResource : Replicable {
 	public Type tp {public get;private set;}
 	public etxt baseUrl;
 	public etxt url;
-	PageAppDocument referer;
-	public VelaResource(etxt*gBase, etxt*gUrl, PageAppDocument gReferer) {
+	RoopDocument referer;
+	public VelaResource(etxt*gBase, etxt*gUrl, RoopDocument gReferer) {
 		if(gBase.is_empty_magical()) {
 			baseUrl = etxt.EMPTY();
 		} else {

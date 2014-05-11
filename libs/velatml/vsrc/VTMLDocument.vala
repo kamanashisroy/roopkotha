@@ -4,7 +4,12 @@ using roopkotha.gui;
 using roopkotha.doc;
 using roopkotha.vela;
 
-/** \addtogroup vela
+/**
+ * \ingroup vela
+ * \defgroup velatml HTML like markup content support to display application controls.
+ */
+
+/** \addtogroup velatml
  *  @{
  */
 /**
@@ -14,17 +19,17 @@ using roopkotha.vela;
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.vela.PageAppDocument : roopkotha.doc.RoopDocument {
+public class roopkotha.velatml.VTMLDocument : roopkotha.doc.RoopDocument {
 	int counter;
 	InputStream? instrm;
-	public PageAppDocument() {
+	public VTMLDocument() {
 		counter = 0;
 		instrm = null;
 		base();
 	}
 	
 	public virtual void spellChunk(etxt*asciiData) {
-		HTMLMarkupContent c = new HTMLMarkupContent(asciiData);
+		VTMLContent c = new VTMLContent(asciiData);
 		print("PlainDocument:Adding line:%s\n", asciiData.to_string());
 		contents.set(counter++, c);
 	}

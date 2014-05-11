@@ -2,6 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 using roopkotha.doc;
+using roopkotha.velatml;
 using roopkotha.vela;
 
 /** \addtogroup velapp
@@ -21,13 +22,13 @@ internal class roopkotha.app.VelaPad : VelaPadMenu {
 			FileInputStream fistm = new FileInputStream.from_file(fn);
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file: Opened file for reading ...\n");
 
-			PageAppDocument pd = new PageAppDocument();
+			VTMLDocument doc = new VTMLDocument();
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file: Reading ...\n");
 
-			pd.setInputStream(fistm);
-			pd.tryReading();
+			doc.setInputStream(fistm);
+			doc.tryReading();
 			fistm.close();
-			show(pd);
+			show(doc);
 
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file: Done.\n");
 		} catch(IOStreamError.FileInputStreamError e) {

@@ -4,6 +4,7 @@ libs/rtree
 libs/guiimpl
 libs/doc
 libs/vela
+libs/velatml
 libs/velagent
 guiapps/gcommands
 guiapps/pad

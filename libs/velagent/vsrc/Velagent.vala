@@ -220,7 +220,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		Window.pushBalloon("Error ..", null, hashCode(), 2000);
 #endif
 	}
-	public void plugPage(PageView view) {
+	public virtual void plugPage(PageView view) {
 		page = view;
 		page.setActionCB(onWindowEvent);
 		page.setPageEvent(onPageEvent);

@@ -11,10 +11,10 @@ using roopkotha.velagent;
  * You can only trust the numbers. 
  * [-Maturity- 0]
  */
-internal class roopkotha.app.VelaPadAgent : Replicable {
+internal class roopkotha.velapad.VelaPadAgent : Replicable {
 	Velagent agent;
 	public VelaPadAgent() {
-		agent = new VelaExpress();
+		agent = new VelaPadXpress();
 	}
 	protected void setupAgent(PageView pg) {
 		agent.plugPage(pg);

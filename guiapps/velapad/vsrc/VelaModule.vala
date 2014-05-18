@@ -4,7 +4,7 @@ using shotodol;
 /** \addtogroup velapp
  *  @{
  */
-public class roopkotha.app.VelaModule : ModulePlugin {
+public class roopkotha.velapad.VelaModule : ModulePlugin {
 	VelaCommand cmd;
 	public override int init() {
 		cmd = new VelaCommand();

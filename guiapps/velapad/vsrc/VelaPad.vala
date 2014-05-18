@@ -12,7 +12,7 @@ using roopkotha.vela;
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-internal class roopkotha.app.VelaPad : VelaPadMenu {
+internal class roopkotha.velapad.VelaPad : VelaPadMenu {
 	public VelaPad() {
 		base();
 	}

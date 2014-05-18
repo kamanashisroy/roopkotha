@@ -12,7 +12,7 @@ using roopkotha.velagent;
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-internal class roopkotha.app.VelaPadMenu : VelaPadAgent {
+internal class roopkotha.velapad.VelaPadMenu : VelaPadAgent {
 	GUICoreImpl impl;
 	PageView pg;
 	VTMLDocument emptyDoc;

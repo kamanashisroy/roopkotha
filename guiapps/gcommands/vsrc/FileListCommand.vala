@@ -5,7 +5,7 @@ using shotodol_platform_fileutils;
 /** \addtogroup gui_command
  *  @{
  */
-internal class shotodol.FileListCommand : M100Command {
+internal class FileListCommand : M100Command {
 	etxt prfx;
 	enum Options {
 		GUI = 1,

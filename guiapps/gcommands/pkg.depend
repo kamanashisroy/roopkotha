@@ -1,3 +1,6 @@
 core/commands
 libs/iterator
 OS_PLATFORM/platform_fileutils
+-ROOPKOTHA_HOME
+libs/velagent
+guiapps/velapad

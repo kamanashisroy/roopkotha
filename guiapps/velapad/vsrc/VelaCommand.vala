@@ -12,7 +12,7 @@ using roopkotha;
  * [-Maturity- 10]
  */
 /** \ingroup textcommand */
-internal class roopkotha.app.VelaCommand : M100Command {
+internal class roopkotha.velapad.VelaCommand : M100Command {
 	etxt prfx;
 	VelaPad? vpad;
 	enum Options {
@@ -24,7 +24,7 @@ internal class roopkotha.app.VelaCommand : M100Command {
 		etxt input = etxt.from_static("-i");
 		etxt input_help = etxt.from_static("Input file");
 		addOption(&input, M100Command.OptionType.TXT, Options.INFILE, &input_help);
-		vpad = null;
+		vpad = new VelaPad();
 	}
 
 	public override etxt*get_prefix() {
@@ -41,9 +41,6 @@ internal class roopkotha.app.VelaCommand : M100Command {
 			container<txt>? mod;
 			if((mod = vals.search(Options.INFILE, match_all)) != null) {
 				unowned txt infile = mod.get();
-				if(vpad == null) {
-					vpad = new VelaPad();
-				}
 				if(vpad.loadFile(infile) != 0) {
 					break;
 				}
@@ -54,9 +51,6 @@ internal class roopkotha.app.VelaCommand : M100Command {
 				unowned txt outfile = mod.get();
 				print("unimplemented\n");
 				break;
-			}
-			if(vpad == null) {
-				vpad = new VelaPad();
 			}
 			bye(pad, true);
 		} while(false);

@@ -16,11 +16,11 @@ public class shotodol.GUICommandModule: ModulePlugin {
 	}
 	
 	public override int init() {
-		CommandServer.server.cmds.register(flcmd);
+		roopkotha.velapad.VelaPadXpress.xCmds.register(flcmd);
 		return 0;
 	}
 	public override int deinit() {
-		CommandServer.server.cmds.unregister(flcmd);
+		roopkotha.velapad.VelaPadXpress.xCmds.unregister(flcmd);
 		base.deinit();
 		return 0;
 	}

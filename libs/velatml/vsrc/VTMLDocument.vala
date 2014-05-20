@@ -30,7 +30,7 @@ public class roopkotha.velatml.VTMLDocument : roopkotha.doc.RoopDocument {
 	
 	public virtual void spellChunk(etxt*asciiData) {
 		VTMLContent c = new VTMLContent(asciiData);
-		print("PlainDocument:Adding line:%s\n", asciiData.to_string());
+		//print("VTMLContent:Adding line:%s\n", asciiData.to_string());
 		contents.set(counter++, c);
 	}
 

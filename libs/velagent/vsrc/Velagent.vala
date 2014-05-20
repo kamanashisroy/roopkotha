@@ -105,7 +105,6 @@ public class roopkotha.velagent.Velagent : Replicable {
 		etxt cmd = etxt.stack(128);
 		cmd.printf("velaxecute://");
 		cmd.concat(&paction.action);
-		cmd.concat_char('\n');
 		velaxecute(&cmd, false);
 #if false
 		// Normal mode ..
@@ -196,12 +195,16 @@ public class roopkotha.velagent.Velagent : Replicable {
 #endif
 	}
 
+	public virtual void onContentDisplay(VelaResource id, Replicable content) {
+	}
+
 	public void onContentReady(VelaResource id, Replicable content) {
 		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 1, "Velagent:New content.. ...\n");
 		if(id.tp == VelaResource.Type.DOCUMENT) {
 			VTMLDocument pd = new VTMLDocument();
 			txt tcontent = (txt)content;
 			pd.spellChunk(tcontent);
+			onContentDisplay(id, content);
 			page.setDocument(pd, 0);
 			page.show();
 			clearFlags();
@@ -220,7 +223,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		Window.pushBalloon("Error ..", null, hashCode(), 2000);
 #endif
 	}
-	public virtual void plugPage(PageView view) {
+	public void plugPage(PageView view) {
 		page = view;
 		page.setActionCB(onWindowEvent);
 		page.setPageEvent(onPageEvent);

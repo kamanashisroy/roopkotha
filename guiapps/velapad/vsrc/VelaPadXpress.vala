@@ -24,31 +24,34 @@ public class roopkotha.velapad.VelaPadXpress : roopkotha.velagent.Velagent {
 
 	int fileDialog() {
 		txt menu = new txt.from_static("<x href=\"ls\" label=Open></x><x href=close label=Close>a</x>");
-		txt key = new txt.from_static("file dialog");
+		txt key = new txt.from_static("velaxecute://ls");
 		panelTypes.set(key, menu);
 		return 0;
 	}
 
 	int aboutDialog() {
 		txt menu = new txt.from_static("<x href=close label=Close>a</x>");
-		txt key = new txt.from_static("about dialog");
+		txt key = new txt.from_static("velaxecute://about");
 		panelTypes.set(key, menu);
 		return 0;
 	}
 
 	int mainDialog() {
-		txt menu = new txt.from_static("<x href=goback label=Back></x><x href=quit label=Quit></x><x href=aboutme label=About></x><x href=\"ls\" label=Open></x><x href=close label=Close>a</x>");
+		txt menu = new txt.from_static("<x href=goback label=Back></x><x href=quit label=Quit></x><x href=aboutme label=About></x><x href=ls label=Open></x><x href=close label=Close>a</x>");
 		txt key = new txt.from_static("main");
 		panelTypes.set(key, menu);
 		return 0;
 	}
 
-	public override void plugPage(PageView view) {
-		base.plugPage(view); //<!-- main -->
-		etxt xKey = etxt.from_static("main");
-		txt?xMenu = panelTypes.get(&xKey);
+	public override void onContentDisplay(VelaResource id, Replicable content) {
+		etxt mainKey = etxt.from_static("main");
+		txt?mainMenu = panelTypes.get(&mainKey);
+		txt?xMenu = panelTypes.get(&id.url);
+		print("Searching menu for %s[%d]\n", id.url.to_string(), id.url.length());
 		if(xMenu != null) {
 			plugMenu(xMenu);
+		} else if(mainMenu != null) {
+			plugMenu(mainMenu);
 		}
 	}
 }

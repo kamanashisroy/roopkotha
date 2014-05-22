@@ -6,15 +6,15 @@ using roopkotha.vela;
 /** \addtogroup velagent
  *  @{
  */
-public class roopkotha.velagent.CompoundResourceLoader : VelaResourceLoader {
-	HashTable<VelaResourceLoader?> loaders;
-	public CompoundResourceLoader() {
-		loaders = HashTable<VelaResourceLoader?>();
+public class roopkotha.velagent.CompoundResourceHandler : VelaResourceHandler {
+	HashTable<VelaResourceHandler?> loaders;
+	public CompoundResourceHandler() {
+		loaders = HashTable<VelaResourceHandler?>();
 	}
-	~CompoundResourceLoader() {
+	~CompoundResourceHandler() {
 		loaders.destroy();
 	}
-	VelaResourceLoader? getLoader(VelaResource id) {
+	VelaResourceHandler? getHandler(VelaResource id) {
 		etxt prefix = etxt.stack(64);
 		id.copyPrefix(&prefix);
 		if(prefix.is_empty()) {
@@ -23,7 +23,7 @@ public class roopkotha.velagent.CompoundResourceLoader : VelaResourceLoader {
 		return loaders.get(&prefix);
 	}
 	public override int request(VelaResource id) {
-		VelaResourceLoader?loader = getLoader(id);
+		VelaResourceHandler?loader = getHandler(id);
 		if(loader == null) {
 			return -1;
 		}

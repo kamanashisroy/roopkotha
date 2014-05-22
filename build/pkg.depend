@@ -6,6 +6,8 @@ libs/doc
 libs/vela
 libs/velatml
 libs/velagent
+libs/velahandler
+libs/velawidget
 guiapps/pad
 guiapps/velapad
 guiapps/gcommands

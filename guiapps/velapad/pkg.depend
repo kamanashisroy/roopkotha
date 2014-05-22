@@ -5,8 +5,7 @@ core/commands
 core/base
 core/test
 -ROOPKOTHA_HOME
-libs/vela
-libs/velagent
+libs/velawidget
 
 -ONUBODH_HOME
 libs/xmlparser

@@ -6,21 +6,21 @@ using roopkotha.vela;
 /** \addtogroup velagent;
  *  @{
  */
-public class roopkotha.velagent.CommandResourceLoader : VelaResourceLoader {
+public class roopkotha.velagent.CommandResourceHandler : VelaResourceHandler {
 	M100CommandSet velamds;
 	BufferedOutputStream bout;
-	CommandResourceLoader.common() {
+	CommandResourceHandler.common() {
 		bout = new BufferedOutputStream(1024);
 	}
-	public CommandResourceLoader() {
+	public CommandResourceHandler() {
 		velamds = new M100CommandSet();
-		CommandResourceLoader.common();
+		CommandResourceHandler.common();
 	}
-	public CommandResourceLoader.givenCommandSet(M100CommandSet cmds) {
+	public CommandResourceHandler.givenCommandSet(M100CommandSet cmds) {
 		velamds = cmds;
-		CommandResourceLoader.common();
+		CommandResourceHandler.common();
 	}
-	~CommandResourceLoader() {
+	~CommandResourceHandler() {
 	}
 	public override int request(VelaResource id) {
 		etxt prefix = etxt.stack(64);

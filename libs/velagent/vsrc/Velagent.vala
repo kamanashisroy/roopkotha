@@ -35,8 +35,8 @@ using roopkotha.velatml;
 public class roopkotha.velagent.Velagent : Replicable {
 	PageView?page;
 	RoopDocument?content;
-	VelaResourceLoader loader;
-	//MediaLoader ml;
+	VelaResourceHandler handler;
+	//MediaHandler ml;
 	//WebEventListener el;
 	//WebActionListener al;
 	ArrayList<txt>stack;
@@ -49,7 +49,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 	txt BACK_ACTION;
 	txt VELA;
 
-	public Velagent(VelaResourceLoader rl) {
+	public Velagent(VelaResourceHandler rl) {
 		BACK_ACTION = new txt.from_static("Back");
 		VELA = new txt.from_static("Vela");
 		content = null;
@@ -59,9 +59,9 @@ public class roopkotha.velagent.Velagent : Replicable {
 		isGoingBack= false;
 		baseUrl = null;
 		currentUrl = null;
-		loader = rl;
-		loader.setContentCallback(onContentReady);
-		loader.setContentErrorCallback(onResourceError);
+		handler = rl;
+		handler.setContentCallback(onContentReady);
+		handler.setContentErrorCallback(onResourceError);
 		page = null;
 	}
 
@@ -87,7 +87,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		isLoadingPage = true;
 		isGoingBack = back;
 
-		loader.request(id);
+		handler.request(id);
 		return true;
 	}
 
@@ -265,7 +265,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		if(label.is_empty()) {
 			return;
 		}
-		PageEventOwner x = new PageEventOwner(&href, &label, loader);
+		PageEventOwner x = new PageEventOwner(&href, &label, handler);
 		page.addMenu(x);
 		return;
 	}

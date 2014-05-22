@@ -55,10 +55,10 @@ public class roopkotha.velagent.VelaResource : Replicable {
 }
 public delegate void roopkotha.velagent.ContentReadyCB(VelaResource id, Replicable content);
 public delegate void roopkotha.velagent.ContentErrorCB(VelaResource id, int code, etxt*reason);
-public abstract class roopkotha.velagent.VelaResourceLoader : Replicable {
+public abstract class roopkotha.velagent.VelaResourceHandler : Replicable {
 	protected ContentReadyCB?onContentReady;
 	protected ContentErrorCB?onContentError;
-	public VelaResourceLoader() {
+	public VelaResourceHandler() {
 		onContentReady = null;
 	}
 	public abstract int request(VelaResource id);

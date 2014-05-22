@@ -1,18 +1,17 @@
 using aroop;
 using shotodol;
-using roopkotha;
-using roopkotha.vela;
+using roopkotha.velagent;
 
-/** \addtogroup velagent
+/** \addtogroup velahandler
  *  @{
  */
-public class roopkotha.velagent.CompoundResourceHandler : VelaResourceHandler {
-	HashTable<VelaResourceHandler?> loaders;
+public class roopkotha.velahandler.CompoundResourceHandler : VelaResourceHandler {
+	public HashTable<VelaResourceHandler?> handlers;
 	public CompoundResourceHandler() {
-		loaders = HashTable<VelaResourceHandler?>();
+		handlers = HashTable<VelaResourceHandler?>();
 	}
 	~CompoundResourceHandler() {
-		loaders.destroy();
+		handlers.destroy();
 	}
 	VelaResourceHandler? getHandler(VelaResource id) {
 		etxt prefix = etxt.stack(64);
@@ -20,14 +19,14 @@ public class roopkotha.velagent.CompoundResourceHandler : VelaResourceHandler {
 		if(prefix.is_empty()) {
 			return null;
 		}
-		return loaders.get(&prefix);
+		return handlers.get(&prefix);
 	}
 	public override int request(VelaResource id) {
-		VelaResourceHandler?loader = getHandler(id);
-		if(loader == null) {
+		VelaResourceHandler?handler = getHandler(id);
+		if(handler == null) {
 			return -1;
 		}
-		return loader.request(id);
+		return handler.request(id);
 	}
 }
 /** @} */

@@ -1,9 +1,5 @@
 using aroop;
-using roopkotha.gui;
-using roopkotha.doc;
-using roopkotha.vela;
 using roopkotha.velagent;
-using roopkotha.velatml;
 
 public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
 	protected HashTable<txt>veils;
@@ -17,6 +13,7 @@ public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
 	}
 
 	public void addVeil(txt name, txt menuMl) {
+		print("Adding %s menu %s\n", name.to_string(), menuMl.to_string());
 		veils.set(name, menuMl);
 	}
 

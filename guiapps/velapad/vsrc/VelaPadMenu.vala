@@ -16,7 +16,7 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 	GUICoreImpl impl;
 	PageView pg;
 	VTMLDocument emptyDoc;
-	Velagent agent;
+	velavanilla.VelaVanilla vagent;
 	public VelaPadMenu() {
 		setupGUI();
 	}
@@ -29,12 +29,12 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		/*etxt elem = etxt.from_static("Write something here..");
 		emptyDoc.addLine(&elem);*/
 		//pg.setDocument(emptyDoc, 0);
-		agent = new VelaPadXpress();
-		agent.plugPage(pg);
+		vagent = velavanilla.VelaVanillaModule.vanilla;
+		vagent.plugPage(pg);
 		etxt baseUrl = etxt.from_static("");
 		etxt url = etxt.from_static("file://empty");
 		VelaResource res = new VelaResource(&baseUrl, &url, emptyDoc);
-		agent.onContentReady(res, emptyDoc);
+		vagent.onContentReady(res, emptyDoc);
 		MainTurbine.gearup(impl);
 	}
 	protected void show(VTMLDocument doc) {

@@ -9,5 +9,6 @@ libs/velagent
 libs/velahandler
 libs/velawidget
 guiapps/pad
-guiapps/velapad
+guiapps/velavanilla
 guiapps/gcommands
+guiapps/velapad

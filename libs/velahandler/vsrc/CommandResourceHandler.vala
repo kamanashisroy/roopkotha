@@ -1,12 +1,11 @@
 using aroop;
 using shotodol;
-using roopkotha;
-using roopkotha.vela;
+using roopkotha.velagent;
 
-/** \addtogroup velagent;
+/** \addtogroup velahandler;
  *  @{
  */
-public class roopkotha.velagent.CommandResourceHandler : VelaResourceHandler {
+public class roopkotha.velahandler.CommandResourceHandler : VelaResourceHandler {
 	M100CommandSet velamds;
 	BufferedOutputStream bout;
 	CommandResourceHandler.common() {

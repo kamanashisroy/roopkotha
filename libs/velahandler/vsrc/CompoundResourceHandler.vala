@@ -6,7 +6,7 @@ using roopkotha.velagent;
  *  @{
  */
 public class roopkotha.velahandler.CompoundResourceHandler : VelaResourceHandler {
-	public HashTable<VelaResourceHandler?> handlers;
+	HashTable<VelaResourceHandler?> handlers;
 	public CompoundResourceHandler() {
 		handlers = HashTable<VelaResourceHandler?>();
 	}
@@ -20,6 +20,13 @@ public class roopkotha.velahandler.CompoundResourceHandler : VelaResourceHandler
 			return null;
 		}
 		return handlers.get(&prefix);
+	}
+	public void setHandler(txt prefix, VelaResourceHandler?hdlr) {
+		if(hdlr != null) {
+			hdlr.setContentCallback(onContentReady);
+			hdlr.setContentErrorCallback(onContentError);
+		}
+		handlers.set(prefix, hdlr);
 	}
 	public override int request(VelaResource id) {
 		VelaResourceHandler?handler = getHandler(id);

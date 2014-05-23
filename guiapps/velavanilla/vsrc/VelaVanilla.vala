@@ -11,12 +11,13 @@ public class roopkotha.velavanilla.VelaVanilla : roopkotha.velawidget.VelaVeil {
 		base(cHandler);
 		velac = new M100CommandSet();
 		velac.register(new VelaVeilCommand(this));
+		setupHandlers();
 	}
 
 	void setupHandlers() {
 		CommandResourceHandler hdlr = new CommandResourceHandler.givenCommandSet(velac);
 		txt vxecute = new txt.from_static("velaxecute://");
-		cHandler.handlers.set(vxecute, hdlr);
+		cHandler.setHandler(vxecute, hdlr);
 	}
 }
 

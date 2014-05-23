@@ -1,5 +1,7 @@
 using aroop;
 using shotodol;
+using roopkotha.velavanilla;
+using roopkotha.filecommands;
 
 /**
  * \ingroup guiapps
@@ -9,18 +11,24 @@ using shotodol;
 /** \addtogroup gui_command
  *  @{
  */
-public class shotodol.GUICommandModule: ModulePlugin {
+public class roopkotha.filecommands.GUICommandModule: ModulePlugin {
 	FileListCommand flcmd;
+	DefaultFileResourceHandler fr;
+	txt fopener;
 	public GUICommandModule() {
+		fopener = new txt.from_static("velafopen");
 		flcmd = new FileListCommand();
+		fr = new DefaultFileResourceHandler();
 	}
 	
 	public override int init() {
 		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.register(flcmd);
+		roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, fr);
 		return 0;
 	}
 	public override int deinit() {
 		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.unregister(flcmd);
+		roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, null);
 		base.deinit();
 		return 0;
 	}

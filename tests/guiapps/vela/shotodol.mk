@@ -1,7 +1,7 @@
 
 all:
 	module -load ../../../guiapps/velavanilla/plugin.so
-	module -load ../../../guiapps/gcommands/plugin.so
+	module -load ../../../guiapps/filecommands/plugin.so
 	module -load ../../../guiapps/velapad/plugin.so
 	velapad -i velapad.txt
 	wa -n gui -fn vsrc/Font.c -l 100

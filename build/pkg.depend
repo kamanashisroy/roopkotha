@@ -10,5 +10,5 @@ libs/velahandler
 libs/velawidget
 guiapps/pad
 guiapps/velavanilla
-guiapps/gcommands
+guiapps/filecommands
 guiapps/velapad

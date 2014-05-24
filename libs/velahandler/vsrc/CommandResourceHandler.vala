@@ -1,6 +1,7 @@
 using aroop;
 using shotodol;
 using roopkotha.velagent;
+using roopkotha.velatml;
 
 /** \addtogroup velahandler;
  *  @{
@@ -34,7 +35,11 @@ public class roopkotha.velahandler.CommandResourceHandler : VelaResourceHandler 
 		bout.getAs(&content);
 		print("[%s]\n", content.to_string());
 		txt ctxt = new txt.memcopy_etxt(&content); // TODO reduce this memcopy
-		onContentReady(id, ctxt);
+	
+		VTMLDocument pd = new VTMLDocument();
+		pd.spellChunk(ctxt);
+		onContentReady(id, pd);
+
 		content.destroy();
 		return 0;
 	}

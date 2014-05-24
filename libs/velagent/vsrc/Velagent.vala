@@ -201,11 +201,9 @@ public class roopkotha.velagent.Velagent : Replicable {
 	public void onContentReady(VelaResource id, Replicable content) {
 		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 1, "Velagent:New content.. ...\n");
 		if(id.tp == VelaResource.Type.DOCUMENT) {
-			VTMLDocument pd = new VTMLDocument();
-			txt tcontent = (txt)content;
-			pd.spellChunk(tcontent);
-			onContentDisplay(id, content);
-			page.setDocument(pd, 0);
+			RoopDocument rd = (RoopDocument)content;
+			onContentDisplay(id, rd);
+			page.setDocument(rd, 0);
 			page.show();
 			clearFlags();
 		}

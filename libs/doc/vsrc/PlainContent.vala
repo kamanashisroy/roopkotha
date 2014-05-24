@@ -11,7 +11,6 @@ public class roopkotha.doc.PlainContent : roopkotha.doc.AugmentedContent {
 		base();
 		data = new txt.memcopy_etxt(asciiData);
 		cType = ContentType.PLAIN_CONTENT;
-		print("PlainContent:%s\n", data.to_string());
 	}
 	public override void getText(etxt*tData) {
 		tData.concat(data);

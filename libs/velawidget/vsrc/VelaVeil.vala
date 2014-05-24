@@ -13,7 +13,6 @@ public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
 	}
 
 	public void addVeil(txt name, txt menuMl) {
-		print("Adding %s menu %s\n", name.to_string(), menuMl.to_string());
 		veils.set(name, menuMl);
 	}
 

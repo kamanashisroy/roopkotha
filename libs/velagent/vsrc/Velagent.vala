@@ -103,7 +103,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 5, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dbg);
 
 		etxt cmd = etxt.stack(128);
-		cmd.concat_string("velaxecute://");
+		//cmd.concat_string("velaxecute://");
 		cmd.concat(&paction.action);
 		velaxecute(&cmd, false);
 #if false

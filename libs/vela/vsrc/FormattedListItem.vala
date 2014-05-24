@@ -139,13 +139,13 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 
 	protected void renderText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, etxt*text) {
 		int off, ret;
+#if GUI_DEBUG
 		etxt talk = etxt.stack(128);
 		talk.printf("Rendering text:%s\n", text.to_string());
-#if GUI_DEBUG
 		font.dumpAll(&talk);
-#endif
 		talk.concat_char('\n');
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+#endif
 	//	text = text.replace('\n', ' ').replace('\r', ' ').trim(); /*< skip the newlines */
 		if (text.is_empty()) { /*< empty xultb_str_t* .. skip */
 			return;
@@ -185,9 +185,11 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 
 	protected void renderFormattedText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, FormattedTextCapsule*cap) {
 		{
+#if GUI_DEBUG
 				etxt talk = etxt.stack(128);
 				talk.printf("Rendering capsule: %d\n", cap.textType);
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+#endif
 		}
 		int oldColor = g.getColor();
 		core.assert(font != null);
@@ -249,13 +251,13 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		core.assert(newFont != null);
 		// render the inner nodes
 		content.traverseCapsules((child) => {
+#if GUI_DEBUG
 				etxt talk = etxt.stack(128);
 				talk.printf("Rendering child of [%d]-", cap.textType);
-#if GUI_DEBUG
 				newFont.dumpAll(&talk);
-#endif
 				talk.concat_char('\n');
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+#endif
 				if (child.textType == FormattedTextType.PLAIN) {
 					core.assert(newFont != null);
 					renderText(g, newFont, &child.content);
@@ -266,9 +268,11 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		});
 		g.setColor(oldColor);
 		{
+#if GUI_DEBUG
 				etxt talk = etxt.stack(128);
 				talk.printf("End capsule: %d\n", cap.textType);
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+#endif
 		}
 	}
 
@@ -302,13 +306,13 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		content.traverseCapsulesInit();
 		// draw the node recursively
 		content.traverseCapsules((cap) => {
+#if GUI_DEBUG
 			etxt talk = etxt.stack(128);
 			talk.printf("Rendering[Paint] ..");
-#if GUI_DEBUG
 			font.dumpAll(&talk);
-#endif
 			talk.concat_char('\n');
 			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
+#endif
 			if (cap.textType == FormattedTextType.PLAIN) {
 				renderText(g, font, &cap.content);
 			} else {

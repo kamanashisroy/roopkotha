@@ -125,7 +125,6 @@ public abstract class roopkotha.gui.Window : Replicable {
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleFg%);
 		g.setColor(0xFFFFFF);
 		g.setFont(TITLE_FONT);
-		print(title.to_string());
 		g.drawString(title, 0, 2
 				, width
 				//, height

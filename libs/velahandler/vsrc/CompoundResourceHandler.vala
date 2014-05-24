@@ -34,6 +34,7 @@ public class roopkotha.velahandler.CompoundResourceHandler : VelaResourceHandler
 	public override int request(VelaResource id) {
 		VelaResourceHandler?handler = getHandler(id);
 		if(handler == null) {
+			onContentError(id, 0, null);
 			return -1;
 		}
 		return handler.request(id);

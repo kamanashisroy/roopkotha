@@ -53,10 +53,10 @@ internal class FileListCommand : M100Command {
 		while((node = dir.iterator().get()) != null) {
 			output.trim_to_length(0);
 			if(gui)
-				output.concat_string("<SMALL href=\"velafopen://\">");
+				output.concat_string("<DIV><SMALL href=\"velafopen://\">");
 			output.concat(&node.fileName);
 			if(gui)
-				output.concat_string("</SMALL><BR></BR>");
+				output.concat_string("</SMALL></DIV>");
 			else
 				output.concat_string("\n");
 			pad.write(&output);

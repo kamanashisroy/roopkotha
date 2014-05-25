@@ -2,7 +2,7 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 using roopkotha.vela;
-using roopkotha.velatml;
+using roopkotha.veladivml;
 using roopkotha.velagent;
 
 /** \addtogroup velapp
@@ -15,7 +15,7 @@ using roopkotha.velagent;
 internal class roopkotha.velapad.VelaPadMenu : Replicable {
 	GUICoreImpl impl;
 	PageView pg;
-	VTMLDocument emptyDoc;
+	VelaDivDocument emptyDoc;
 	velavanilla.VelaVanilla vagent;
 	public VelaPadMenu() {
 		setupGUI();
@@ -25,7 +25,7 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		etxt velaTitle = etxt.from_static("Vela");
 		etxt aboutVela = etxt.from_static("About");
 		pg = new PageView.of_title(&velaTitle, &aboutVela);	
-		emptyDoc = new VTMLDocument();
+		emptyDoc = new VelaDivDocument();
 		/*etxt elem = etxt.from_static("Write something here..");
 		emptyDoc.addLine(&elem);*/
 		//pg.setDocument(emptyDoc, 0);
@@ -37,7 +37,7 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		vagent.onContentReady(res, emptyDoc);
 		MainTurbine.gearup(impl);
 	}
-	protected void show(VTMLDocument doc) {
+	protected void show(VelaDivDocument doc) {
 		pg.setDocument(doc, 0);
 		pg.show();
 	}

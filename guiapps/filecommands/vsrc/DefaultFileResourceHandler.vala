@@ -7,8 +7,8 @@ using roopkotha.velagent;
  */
 public class roopkotha.filecommands.DefaultFileResourceHandler : FileResourceHandler {
 	public DefaultFileResourceHandler() {
-		txt suffix = new txt.from_static(".vtml");
-		setHandler(suffix, new VTMLFileResourceHandler());
+		txt suffix = new txt.from_static(".vapp");
+		setHandler(suffix, new VelaAppFileResourceHandler());
 	}
 }
 /** @} */

@@ -6,10 +6,10 @@ using roopkotha.vela;
 
 /**
  * \ingroup vela
- * \defgroup velatml HTML like markup content support to display application controls.
+ * \defgroup velarichml HTML like markup content support to display application controls.
  */
 
-/** \addtogroup velatml
+/** \addtogroup velarichml
  *  @{
  */
 /**
@@ -19,18 +19,18 @@ using roopkotha.vela;
 /**
  * This is the base class for all the documents we render in roopkotha
  */
-public class roopkotha.velatml.VTMLDocument : roopkotha.doc.RoopDocument {
+public class roopkotha.velarichml.VelaRichDocument : roopkotha.doc.RoopDocument {
 	int counter;
 	InputStream? instrm;
-	public VTMLDocument() {
+	public VelaRichDocument() {
 		counter = 0;
 		instrm = null;
 		base();
 	}
 	
 	public virtual void spellChunk(etxt*asciiData) {
-		VTMLContent c = new VTMLContent(asciiData);
-		//print("VTMLContent:Adding line:%s\n", asciiData.to_string());
+		VelaRichContent c = new VelaRichContent(asciiData);
+		//print("VelaRichContent:Adding line:%s\n", asciiData.to_string());
 		contents.set(counter++, c);
 	}
 

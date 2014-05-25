@@ -23,18 +23,18 @@ using onubodh;
 using roopkotha;
 using roopkotha.vela;
 
-/** \addtogroup velatml
+/** \addtogroup velarichml
  *  @{
  */
 /**
  * You can only trust the numbers. 
  * [-Maturity- 10]
  */
-public class roopkotha.velatml.VTMLContent : roopkotha.vela.FormattedContent {
+public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedContent {
 	XMLParser parser;
 	WordMap map;
 
-	public VTMLContent(etxt*asciiData) {
+	public VelaRichContent(etxt*asciiData) {
 		base(asciiData);
 		parser = new XMLParser();
 		map = WordMap();
@@ -49,7 +49,7 @@ public class roopkotha.velatml.VTMLContent : roopkotha.vela.FormattedContent {
 		//print("FormattedContent:%s\n", asciiData.to_string());
 	}
 
-	~VTMLContent() {
+	~VelaRichContent() {
 		map.destroy();
 	}
 
@@ -59,25 +59,25 @@ public class roopkotha.velatml.VTMLContent : roopkotha.vela.FormattedContent {
 	}
 #endif
 
-	public override bool isFocused() {
 #if false
+	public override bool isFocused() {
 		xultb_str_t*focused = xultb_ml_get_attribute_value(elem, "focused");
 		if(focused && xultb_str_equals_static(focused, "yes")) {
 			return true;
 		}
-#endif
 		return false;
 	}
+#endif
 
-	public override bool isActive() {
 #if false
+	public override bool isActive() {
 		xultb_str_t*active = xultb_ml_get_attribute_value(elem, "active");
 		if(active && xultb_str_equals_static(active, "yes")) {
 			return true;
 		}
-#endif
 		return false;
 	}
+#endif
 
 	XMLIterator rxit;
 	public override void traverseCapsulesInit() {

@@ -1,11 +1,11 @@
 using aroop;
 using shotodol;
 using roopkotha;
-using roopkotha.velatml;
+using roopkotha.veladivml;
 using roopkotha.velagent;
 
-public class roopkotha.filecommands.VTMLFileResourceHandler : VelaResourceHandler {
-	public VTMLFileResourceHandler() {
+public class roopkotha.filecommands.VelaAppFileResourceHandler : VelaResourceHandler {
+	public VelaAppFileResourceHandler() {
 		base();
 	}
 	public override int request(VelaResource id) {
@@ -18,7 +18,7 @@ public class roopkotha.filecommands.VTMLFileResourceHandler : VelaResourceHandle
 			FileInputStream fistm = new FileInputStream.from_file(&fn);
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file: Opened file for reading ...\n");
 
-			VTMLDocument doc = new VTMLDocument();
+			VelaDivDocument doc = new VelaDivDocument();
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file: Reading ...\n");
 
 			doc.setInputStream(fistm);

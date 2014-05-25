@@ -1,2 +1,2 @@
 
-LIBRARY_NAME=shotodol_gcommands
+LIBRARY_NAME=shotodol_filecommands

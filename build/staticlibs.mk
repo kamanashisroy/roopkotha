@@ -7,7 +7,8 @@ include $(ROOPKOTHA_HOME)/libs/rtree/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/guiimpl/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/doc/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/vela/staticlibs.mk
-include $(ROOPKOTHA_HOME)/libs/velatml/staticlibs.mk
+include $(ROOPKOTHA_HOME)/libs/velarichml/staticlibs.mk
+include $(ROOPKOTHA_HOME)/libs/veladivml/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/velagent/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/velahandler/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/velawidget/staticlibs.mk

@@ -4,7 +4,8 @@ libs/rtree
 libs/guiimpl
 libs/doc
 libs/vela
-libs/velatml
+libs/velarichml
+libs/veladivml
 libs/velagent
 libs/velahandler
 libs/velawidget

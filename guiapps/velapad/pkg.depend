@@ -1,8 +1,5 @@
 OS_PLATFORM/platform_extra
 libs/iostream
-libs/turbine
-core/commands
-core/base
 core/test
 -ROOPKOTHA_HOME
 guiapps/velavanilla

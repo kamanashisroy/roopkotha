@@ -24,7 +24,7 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 	InputStream? instrm;
 	etxt rawData;
 	enum config {
-		MAX_DIV_SIZE = 512,
+		MAX_DIV_SIZE = 64,
 	}
 	public VelaDivDocument() {
 		counter = 0;

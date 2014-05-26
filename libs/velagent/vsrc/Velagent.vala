@@ -158,7 +158,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 	}
 
 	public void onPageEvent(etxt*target) {
-		print("Page event");
+		print("Page event %s\n", target.to_string());
 		velaxecute(target, false);
 	}
 

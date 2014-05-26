@@ -24,6 +24,7 @@ public class roopkotha.filecommands.GUICommandModule: ModulePlugin {
 	public override int init() {
 		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.register(flcmd);
 		roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, fr);
+		fr.setHandlers();
 		return 0;
 	}
 	public override int deinit() {

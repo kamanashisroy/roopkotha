@@ -30,6 +30,10 @@ public class roopkotha.veladivml.VelaDivContent : roopkotha.velarichml.VelaRichC
 	public override bool isActive() {
 		return !href.is_empty();
 	}
+
+	public override void getAction(etxt*data) {
+		(*data) = etxt.same_same(&href);
+	}
 }
 
 

@@ -9,11 +9,13 @@ public class roopkotha.filecommands.VelaAppFileResourceHandler : VelaResourceHan
 		base();
 	}
 	public override int request(VelaResource id) {
+		print("Loading file ..\n");
 		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file ...\n");
 		etxt prefix = etxt.stack(id.url.length());
 		id.copyPrefix(&prefix);
 		etxt fn = etxt.same_same(&id.url);
-		fn.shift(prefix.length());
+		fn.shift(prefix.length()+3);
+		print("Loading file %s\n", fn.to_string());
 		try {
 			FileInputStream fistm = new FileInputStream.from_file(&fn);
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file: Opened file for reading ...\n");

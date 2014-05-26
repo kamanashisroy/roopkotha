@@ -84,7 +84,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		return;
 	}
 
-	public virtual int getSelected_index() {
+	public virtual int getSelectedIndex() {
 		return selected_index;
 	}
 	

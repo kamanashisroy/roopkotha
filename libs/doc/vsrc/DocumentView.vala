@@ -98,6 +98,9 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 	}
 #endif
 	
+	public AugmentedContent? getSelectedContent() {
+		return doc.contents.get(getSelectedIndex());
+	}
 #if false
 	public void show() {
 		searching = false;

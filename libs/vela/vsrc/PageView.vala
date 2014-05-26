@@ -76,15 +76,38 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 	}
 
 	public void setPageEvent(PageEventCB cb) {
-		if(pageEventCB != null) {
+		if(pageEventCB == null) {
 			pageEventCB = cb;
 		}
 	}
 	
 	public void setImageLoader(GetImageCB cb) {
-		if(getImageCB != null) {
+		if(getImageCB == null) {
 			getImageCB = cb;
 		}
+	}
+
+	public override bool onItemEvent(Replicable?target, int flags, int key_code, int x, int y) {
+		if ((flags & roopkotha.gui.GUIInput.eventType.SCREEN_EVENT) == 0 && x != roopkotha.gui.GUIInput.keyEventType.KEY_ENTER && x != roopkotha.gui.GUIInput.keyEventType.KEY_RETURN) {
+			return false;
+		}
+		if(pageEventCB == null) {
+			return false;
+		}
+		etxt action = etxt.EMPTY();
+		AugmentedContent?elem = (AugmentedContent)target;
+		if(elem == null) {
+			elem = (AugmentedContent)getSelectedContent();
+			if(elem == null) {
+				return false;
+			}
+		}
+		elem.getAction(&action);
+		if(action.is_empty()) {
+			return false;
+		}
+		pageEventCB(&action);
+		return true;
 	}
 }
 /** @} */

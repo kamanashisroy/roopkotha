@@ -140,8 +140,8 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 	public int insertRect(RTreeRect2DInt *r, int atLevel, Replicable?hook)
 	{
 		int result = 0;
-		core.assert(child.level >= 0);
-		core.assert(r.xmin <= r.xmax && r.ymin <= r.ymax);
+		//core.assert(child.level >= 0);
+		//core.assert(r.xmin <= r.xmax && r.ymin <= r.ymax);
 
 		if (insertRect2(r, atLevel, hook) != 0)  /* root split */
 		{

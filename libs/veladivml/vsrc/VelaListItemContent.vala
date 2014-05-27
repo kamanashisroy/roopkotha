@@ -30,7 +30,7 @@ public class roopkotha.veladivml.VelaListItemContent : roopkotha.doc.AugmentedCo
 		return focused;
 	}
 
-	public override bool isActive() {
+	public override bool hasAction() {
 		return !href.is_empty();
 	}
 

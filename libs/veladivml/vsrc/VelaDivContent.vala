@@ -27,7 +27,7 @@ public class roopkotha.veladivml.VelaDivContent : roopkotha.velarichml.VelaRichC
 		return focused;
 	}
 
-	public override bool isActive() {
+	public override bool hasAction() {
 		return !href.is_empty();
 	}
 

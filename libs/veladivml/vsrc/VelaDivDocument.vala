@@ -63,6 +63,7 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 		percept(&rawData);
 	}
 
+	onubodh.XMLParser?parser;
 	void traverseContents(onubodh.XMLIterator*xit) {
 		if(xit.nextIsText) {
 			etxt content = etxt.stack(config.MAX_DIV_SIZE);
@@ -89,15 +90,29 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 		while(href.char_at(0) == '"') {href.shift(1);}
 		while(href.char_at(href.length()-1) == '"') {href.trim_to_length(href.length()-1);}
 		href.zero_terminate();
+		onubodh.XMLIterator pl = onubodh.XMLIterator(xit.m);
+		if(parser.peelCapsule(&pl, xit) != 0) {
+			return;
+		}
+		xit.inner = null;
 		etxt content = etxt.stack(config.MAX_DIV_SIZE);
-		xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &content);
-		VelaDivContent vrc = new VelaDivContent(&content, &href, false);
-		contents.set(counter++, vrc);
-		return;
+		pl.m.getSourceReference(pl.basePos + pl.shift, pl.basePos + pl.shift + pl.kernel.length(), &content);
+		content.zero_terminate();
+		//print("[%d,%d,%d]%s\n", pl.basePos, pl.shift, pl.kernel.length(), content.to_string());
+		//xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.kernel.length(), &content);
+		//print("[%d,%d,%d]%s\n", xit.basePos, xit.shift, xit.content.length(), content.to_string());
+		//print("[%s]\n", content.to_string());
+		if(xit.nextTag.equals_static_string("LI")) {
+			VelaListItemContent vlc = new VelaListItemContent(&content, &href, false);
+			contents.set(counter++, vlc);
+		} else {
+			VelaDivContent vrc = new VelaDivContent(&content, &href, false);
+			contents.set(counter++, vrc);
+		}
 	}
 
 	public int percept(etxt*rawContent = null) {
-		onubodh.XMLParser parser = new onubodh.XMLParser();
+		parser = new onubodh.XMLParser();
 		onubodh.WordMap map = onubodh.WordMap();
 		// parse the xml and show the menu
 		if(rawContent == null) {
@@ -112,6 +127,7 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 		parser.traversePreorder(&map, 1, traverseContents);
 		map.destroy();
 		rawData.destroy(); // XXX we are releasing the content memory ..
+		parser = null;
 		return 0;
 	}
 }

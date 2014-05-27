@@ -68,11 +68,20 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 		}
 		etxt data = etxt.stack(128);
 		elem.getText(&data);
+#if false
 		etxt dlg = etxt.stack(256);
 		dlg.printf("PageView:Plain line :%s\n", data.to_string());
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+#endif
 		// see if the label has any image
+#if false
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
+#else
+		etxt action = etxt.stack(128);
+		elem.getAction(&action);
+		EventOwner owner = new EventOwner(elem, &data);
+		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, owner);
+#endif
 	}
 
 	public void setPageEvent(PageEventCB cb) {
@@ -95,8 +104,11 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 			return false;
 		}
 		etxt action = etxt.EMPTY();
-		AugmentedContent?elem = (AugmentedContent)target;
-		if(elem == null) {
+		EventOwner owner = (EventOwner)target;
+		AugmentedContent?elem = null;
+		if(owner != null) {
+			elem = (AugmentedContent)owner.getSource();
+		} else {
 			elem = (AugmentedContent)getSelectedContent();
 			if(elem == null) {
 				return false;

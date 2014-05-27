@@ -39,7 +39,7 @@ internal class FileListCommand : M100Command {
 		FileNode?node = null;
 		etxt output = etxt.stack(512);
 		while((node = dir.iterator().get()) != null) {
-			output.printf("<div href=\"velafopen://%s\">%s</div>", node.fileName.to_string(), node.fileName.to_string());
+			output.printf("<LI href=\"velafopen://%s\">%s</LI>", node.fileName.to_string(), node.fileName.to_string());
 			pad.write(&output);
 		}
 		return 0;

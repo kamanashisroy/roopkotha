@@ -290,6 +290,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, EventOwner?aTarget) {
 		ListViewItemComplex.common();
 		label = etxt.dup_etxt(aLabel);
+		text = etxt.EMPTY();
 		//print("Created new label %s:%s\n", label.to_string(), aLabel.to_string());
 		img = aImg;
 		is_editable = aChange_bg_on_focus;

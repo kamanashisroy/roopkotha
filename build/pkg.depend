@@ -12,4 +12,5 @@ libs/velawidget
 guiapps/pad
 guiapps/velavanilla
 guiapps/filecommands
+guiapps/historycommands
 guiapps/velapad

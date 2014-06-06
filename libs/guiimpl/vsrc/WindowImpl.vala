@@ -7,35 +7,36 @@ using roopkotha.gui;
  *  @{
  */
 public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
-	WindowPlatformImpl plat;
+	int windowId;
+	etxt showTask;
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
 		TITLE_FONT = new FontImpl();
 		base(aTitle);
-		plat = WindowPlatformImpl.create();
+		windowId = 0x01; // currently we support only one window.
 		GUIInputImpl eHandler = new GUIInputImpl();
 		eHandler.reset(this);
 		gi = eHandler;
-		plat.setEventHandler(eHandler.eventCallback);
+		showTask = etxt.EMPTY();
 	}
 	
 	~WindowImpl() {
 	}
 	
 	public override void show() {
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "WindowImpl:show");
-		roopkotha.gui.GUICore.setDirty(this);
-		plat.show();
-	}
-		
-	public override void postPaint(roopkotha.gui.Graphics g) {
-		GraphicsImpl gi = (g as GraphicsImpl);
-		plat.paint_end(gi.plat);
+		if(showTask.is_empty()) {
+			showTask.buffer(34);
+			Carton c = showTask;
+			Bundler bdlr = Bundler(c, 34);
+			bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.SHOW_WINDOW);
+			bndlr.writeInt(GUICore.entries.ARG, windowId);
+			bdlr.close();
+		}
+		gcore.pushTask(&showTask);
 	}
 
 	public override roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars) {
-		// TODO use a font factory ..
-		return new FontImpl();
+		return new FontImpl.defined(face,vars);
 	}
 }
 /** @} */

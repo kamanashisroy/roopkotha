@@ -46,14 +46,9 @@ public abstract class roopkotha.gui.Font : Replicable {
 
 	public abstract Font getVariant(Font.Variant stl);
 
+	public abstract int getId();
 #if GUI_DEBUG
 	public abstract void dumpAll(etxt*buf);
-#endif
-#if false
-	struct xultb_font*xultb_font_get(int face, int style, int size);
-	int xultb_font_get_face(struct xultb_font*font);
-	int xultb_font_get_style(struct xultb_font*font);
-	int xultb_font_get_size(struct xultb_font*font);
 #endif
 }
 

@@ -8,7 +8,7 @@ libs/velarichml
 libs/veladivml
 libs/velagent
 libs/velahandler
-libs/velawidget
+libs/velaveil
 guiapps/pad
 guiapps/velavanilla
 guiapps/filecommands

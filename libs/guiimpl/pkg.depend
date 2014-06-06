@@ -1,5 +1,6 @@
 libs/propeller
 libs/watchdog
+libs/bundle
 -ONUBODH_HOME
 libs/rawimg
 -ROOPKOTHA_HOME

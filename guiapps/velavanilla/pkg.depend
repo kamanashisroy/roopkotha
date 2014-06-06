@@ -4,5 +4,5 @@ libs/turbine
 core/commands
 core/base
 -ROOPKOTHA_HOME
-libs/velawidget
+libs/velaveil
 libs/velahandler

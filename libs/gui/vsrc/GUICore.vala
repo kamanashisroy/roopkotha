@@ -29,6 +29,11 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 	Queue<Window> painter;
 	Graphics gfx;
 	static GUICore? gcore;
+	public enum entries {
+		GRAPHICS_TASK = 1,
+		WINDOW_TASK,
+		ARG,
+	}
 	public GUICore(Graphics g) {
 		painter = Queue<Window>();
 		gfx = g;
@@ -37,26 +42,6 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 	~GUICore() {
 		painter.destroy();
 	}
-#if FIXME_LATER
-static struct xultb_graphics*gr = NULL;
-static struct opp_factory tasks;
-int xultb_guicore_system_init(int*argc, char *argv[]) {
-	opp_any_obj_system_init();
-	xultb_guicore_platform_init(argc, argv);
-	xultb_str_system_init();
-	xultb_graphics_system_init();
-	xultb_font_system_init();
-	xultb_window_system_init();
-	xultb_list_item_system_init();
-	xultb_list_system_init();
-	opp_queuesystem_init();
-	xultb_gui_input_init();
-	opp_queue_init2(&painter_queue, 0);
-	opp_list_create2(&tasks, 4, 0);
-	gr = xultb_graphics_create();
-	return 0;
-}
-#endif
 
 	public static int setDirtyFull(roopkotha.gui.Window win, int x1, int y1, int x2, int y2) {
 		return gcore.setDirty(win);
@@ -67,25 +52,6 @@ int xultb_guicore_system_init(int*argc, char *argv[]) {
 		gcore.painter.enqueue(win);
 		return 0;
 	}
-
-#if FIXME_LATER
-int xultb_guicore_register_task(struct xultb_gui_task*task) {
-	opp_alloc4(&tasks, 0, 0, task);
-	return 0;
-}
-
-int xultb_guicore_unregister_task(struct xultb_gui_task*task) {
-	return opp_list_prune(&tasks, task, OPPN_ALL, 0, 0);
-}
-
-static int xultb_perform_tasks(void*data, void*func_data) {
-	struct xultb_gui_task*task = ((struct opp_list_item*)data)->obj_data;
-	int ms = *((int*)func_data);
-	SYNC_ASSERT(task);
-	task->cb_run(task, ms);
-	return 0;
-}
-#endif
 	
 	public override int step() {
 		do {
@@ -93,20 +59,18 @@ static int xultb_perform_tasks(void*data, void*func_data) {
 			if(win == null) {
 				break;
 			}
-			//xultb_gui_input_reset(win);
 			win.prePaint(gfx);
 			
 			Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
 			win.paint(gfx);
 			win.postPaint(gfx);
 		} while(true);
-#if false
-		opp_factory_do_full(&tasks, xultb_perform_tasks, &ms, OPPN_ALL, 0, 0);
-#endif
 		return 0;
 	}
 	public override int cancel() {
 		return 0;
 	}
+	public abstract void pushTask(etxt*task);
+	public abstract void popTaskAs(etxt*task);
 }
 /** @} */

@@ -11,7 +11,7 @@ include $(ROOPKOTHA_HOME)/libs/velarichml/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/veladivml/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/velagent/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/velahandler/staticlibs.mk
-include $(ROOPKOTHA_HOME)/libs/velawidget/staticlibs.mk
+include $(ROOPKOTHA_HOME)/libs/velaveil/staticlibs.mk
 include $(ONUBODH_HOME)/transform/strtrans/staticlibs.mk
 include $(ONUBODH_HOME)/libs/xmlparser/staticlibs.mk
 include $(SHOTODOL_HOME)/libs/turbine/staticlibs.mk

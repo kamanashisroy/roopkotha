@@ -23,7 +23,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		base.step();
 		plat.step();
 		return 0;
-  }
+  	}
 
 	public override int start(shotodol.Spindle?plr) { 
 		print("GUICore stepping started..\n");

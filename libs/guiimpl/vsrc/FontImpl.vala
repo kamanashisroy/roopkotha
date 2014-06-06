@@ -1,6 +1,5 @@
 using aroop;
 using shotodol;
-using roopkotha.platform;
 using roopkotha.gui;
 
 /**
@@ -11,29 +10,32 @@ using roopkotha.gui;
  *  @{
  */
 public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
-	internal FontPlatformImpl plat;
-	protected int flaggedVariantInfo;
-	public FontImpl() {
-		plat = FontPlatformImpl.create();
-		flaggedVariantInfo = Font.Variant.PLAIN;
+	uchar flaggedVariantInfo;
+	uchar flaggedFaceInfo;
+	public FontImpl.defined(uchar face, uchar vars) {
+		flaggedFaceInfo = face;
+		flaggedVariantInfo = vars;
 	}
 
 	public FontImpl.from(FontImpl src, Font.Variant stl) {
 		flaggedVariantInfo = src.flaggedVariantInfo;
-		plat = src.plat.getVariant(stl);
 		flaggedVariantInfo |= stl;
 	}
 	
 	public override int getHeight() {
-		return plat.getHeight();
+		return GUICore.getHeight(flaggedVariantInfo);
 	}
 	
 	public override int subStringWidth(etxt*str, int offset, int width) {
-		return plat.subStringWidth(str, offset, width);
+		return GUICore.subStringWidth(flaggedVariantInfo, str, offset, width);
 	}
 	
 	public override Font getVariant(Font.Variant stl) {
 		return new FontImpl.from(this, stl);
+	}
+
+	public override int getId() {
+		return ((flaggedFaceInfo << 8) | flaggedVariantInfo);
 	}
 
 	~FontImpl() {

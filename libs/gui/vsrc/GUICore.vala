@@ -28,6 +28,7 @@ using roopkotha.gui;
 public abstract class roopkotha.gui.GUICore : Spindle {
 	Queue<Window> painter;
 	static GUICore? gcore;
+	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_CORE_TASK_")]
 	public enum entries {
 		GRAPHICS_TASK = 1,
 		WINDOW_TASK,

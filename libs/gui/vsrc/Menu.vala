@@ -24,7 +24,7 @@ using roopkotha.gui;
 /** \addtogroup gui
  *  @{
  */
-public abstract class roopkotha.gui.Menu : Replicable {
+public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	public enum display {
 		PADDING = 3
 	}
@@ -177,7 +177,14 @@ public abstract class roopkotha.gui.Menu : Replicable {
 		}
 	}
 
-	internal void paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height) {
+	internal roopkotha.gui.Window?parent;
+	internal void setParent(roopkotha.gui.Window gParent) {
+		parent = gParent;
+	}
+
+	public override void paint(roopkotha.gui.Graphics g) {
+		int width = parent.width;
+		int height = parent.height;
 #if false
 		if(TOWER_FONT == null) {
 			setupFont();
@@ -373,6 +380,7 @@ public abstract class roopkotha.gui.Menu : Replicable {
 		TOWER_FONT = aTowerFont;
 		BASE_FONT = aBaseFont;
 		menuOptions = null;
+		parent = null;
 		setupFont();
 	//	SELECT = aroop.txt.alloc("Select", 6, null, 0);
 		etxt cancelText = aroop.etxt.from_static("Cancel");

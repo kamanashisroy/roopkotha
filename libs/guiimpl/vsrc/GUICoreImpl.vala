@@ -11,7 +11,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	public GUICoreImpl() {
 		print("Creating new platform application\n");
 		plat = GUICorePlatformImpl.create();
-		base(new GraphicsImpl());
+		base();
 		step();
 	}
 	
@@ -28,6 +28,16 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	public override int start(shotodol.Spindle?plr) { 
 		print("GUICore stepping started..\n");
 		return 0;
+	}
+	public override void pushTask(etxt*task) {
+		plat.pushTask(task);
+	}
+	public override void popTaskAs(etxt*task) {
+		plat.popTaskAs(task);
+	}
+	public override void pushGraphicsTask(Graphics g) {
+		GraphicsPixelMap gfx = (GraphicsPixelMap)(g);
+		//plat.pushTask(task);
 	}
 }
 /** @} */

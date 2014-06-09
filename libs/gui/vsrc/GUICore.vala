@@ -27,16 +27,14 @@ using roopkotha.gui;
  */
 public abstract class roopkotha.gui.GUICore : Spindle {
 	Queue<Window> painter;
-	Graphics gfx;
 	static GUICore? gcore;
 	public enum entries {
 		GRAPHICS_TASK = 1,
 		WINDOW_TASK,
 		ARG,
 	}
-	public GUICore(Graphics g) {
+	public GUICore() {
 		painter = Queue<Window>();
-		gfx = g;
 		gcore = this;
 	}
 	~GUICore() {
@@ -59,11 +57,14 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 			if(win == null) {
 				break;
 			}
-			win.prePaint(gfx);
+			// TODO get the panes ..
+			Graphics g = win.getGraphics();
+			win.prePaint(g);
 			
 			Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
-			win.paint(gfx);
-			win.postPaint(gfx);
+			win.paint(g);
+			//g.close();
+			gcore.pushGraphicsTask(g);
 		} while(true);
 		return 0;
 	}
@@ -71,6 +72,7 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 		return 0;
 	}
 	public abstract void pushTask(etxt*task);
+	public abstract void pushGraphicsTask(Graphics g);
 	public abstract void popTaskAs(etxt*task);
 }
 /** @} */

@@ -1,42 +1,69 @@
 using aroop;
 using shotodol;
-using roopkotha.platform;
 using roopkotha.gui;
 
 /** \addtogroup guiimpl
  *  @{
  */
+
 public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	int windowId;
-	etxt showTask;
+	GUITask?showTask;
+	GUICore?gcore;
+	ArrayList<Pane>panes;
+	enum tasks {
+		SHOW_WINDOW = 1,
+	}
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
 		TITLE_FONT = new FontImpl();
+		gcore = null;
+		gfx = null;
+		panes = ArrayList<Pane>();
 		base(aTitle);
 		windowId = 0x01; // currently we support only one window.
 		GUIInputImpl eHandler = new GUIInputImpl();
 		eHandler.reset(this);
 		gi = eHandler;
-		showTask = etxt.EMPTY();
 	}
 	
 	~WindowImpl() {
+		panes.destroy();
 	}
 	
 	public override void show() {
-		if(showTask.is_empty()) {
-			showTask.buffer(34);
-			Carton c = showTask;
-			Bundler bdlr = Bundler(c, 34);
-			bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.SHOW_WINDOW);
+		if(showTask == null) {
+			showTask = new GUITask();
+			Bundler bndlr = Bundler();
+			bndlr.setCarton(&showTask.msg, 32);
+			bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
 			bndlr.writeInt(GUICore.entries.ARG, windowId);
-			bdlr.close();
+			bndlr.close();
 		}
-		gcore.pushTask(&showTask);
+		gcore.pushTask(showTask);
 	}
 
 	public override roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars) {
 		return new FontImpl.defined(face,vars);
 	}
+
+	GraphicsPixelMap?gfx;
+	public override roopkotha.gui.Graphics getGraphics() {
+		if(gfx != null)
+			return gfx;
+		GUITask task = new GUITask();
+		gfx = new GraphicsPixelMap(&task.msg, 32);
+		return gfx;
+	}
+
+	public override int setPane(int pos, Pane pn) {
+		panes.set(pos, pn);
+		return 0;
+	}
+
+	public void plugGUICore(GUICore gGUICore) {
+		gcore = gGUICore;
+	}
+
 }
 /** @} */

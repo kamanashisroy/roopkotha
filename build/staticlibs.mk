@@ -16,4 +16,5 @@ include $(ONUBODH_HOME)/transform/strtrans/staticlibs.mk
 include $(ONUBODH_HOME)/libs/xmlparser/staticlibs.mk
 include $(SHOTODOL_HOME)/libs/turbine/staticlibs.mk
 include $(SHOTODOL_HOME)/libs/iterator/staticlibs.mk
+include $(SHOTODOL_HOME)/libs/bundle/staticlibs.mk
 include $(SHOTODOL_HOME)/$(PLATFORM)/platform_fileutils/staticlibs.mk

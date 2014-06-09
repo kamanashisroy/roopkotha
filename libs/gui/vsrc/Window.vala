@@ -31,7 +31,7 @@ using roopkotha.gui;
  */
 public delegate void roopkotha.gui.WindowActionCB(EventOwner action);
 
-public abstract class roopkotha.gui.Window : Replicable {
+public abstract class roopkotha.gui.Window : roopkotha.gui.Pane {
 	txt title;
 	public int width;
 	public int halfWidth;
@@ -65,6 +65,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 	public abstract void show();
 	public void showFull(ArrayList<EventOwner>*left_option, EventOwner right_option) {
 		menu.set(left_option, right_option);
+		menu.setParent(this);
 		this.show();
 	}
 	public bool is_showing() {
@@ -79,9 +80,9 @@ public abstract class roopkotha.gui.Window : Replicable {
 		g.start();
 	}
 
-	public virtual void paint(roopkotha.gui.Graphics g) {
+	public override void paint(roopkotha.gui.Graphics g) {
 		paint_title(g);
-		menu.paint(this, g, width, height);
+		//menu.paint(this, g, width, height);
 	}
 	
 	public virtual void postPaint(roopkotha.gui.Graphics g) {
@@ -135,6 +136,8 @@ public abstract class roopkotha.gui.Window : Replicable {
 	}
 
 	public abstract roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars);
+
+	public abstract int setPane(int pos, Pane pn);
 }
 
 /** @} */

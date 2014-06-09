@@ -23,11 +23,13 @@ public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 	}
 	
 	public override int getHeight() {
-		return GUICore.getHeight(flaggedVariantInfo);
+		//return GUICore.getHeight(flaggedVariantInfo);
+		return 10;
 	}
 	
 	public override int subStringWidth(etxt*str, int offset, int width) {
-		return GUICore.subStringWidth(flaggedVariantInfo, str, offset, width);
+		//return GUICore.subStringWidth(flaggedVariantInfo, str, offset, width);
+		return 5*str.length();
 	}
 	
 	public override Font getVariant(Font.Variant stl) {

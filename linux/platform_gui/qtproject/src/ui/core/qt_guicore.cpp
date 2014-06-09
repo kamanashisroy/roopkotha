@@ -27,6 +27,9 @@
 #include "core/decorator.h"
 #include <QtGui>
 
+C_CAPSULE_START
+#include "core/txt.h"
+C_CAPSULE_END
 #include "qt_guicore.h"
 
 C_CAPSULE_START
@@ -49,6 +52,16 @@ void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
 
 int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
   app->processEvents(0,100);
+	return 0;
+}
+
+int qt_impl_push_task(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
+	int msglen = msg->len;
+	watchdog_log_string("Platform:new message\n");
+	return 0;
+}
+
+int qt_impl_pop_task_as(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*UNUSED_VAR(msg)) {
 	return 0;
 }
 

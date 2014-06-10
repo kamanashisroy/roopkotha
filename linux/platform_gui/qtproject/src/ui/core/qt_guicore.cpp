@@ -69,23 +69,63 @@ static int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*
 	return *cur_key;
 }
 
+static int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len) {
+	SYNC_ASSERT(*cur_type == 0); // we expect numeral value 
+	int cmd = 0;
+	if(*cur_len == 1) {
+		cmd = msg->str[*offset];
+	}
+	if(*cur_len == 2) {
+		cmd = msg->str[*offset+0];
+		cmd = cmd << 8;
+		cmd |= msg->str[*offset+1];
+	}
+	if(*cur_len == 4) {
+		cmd = msg->str[*offset+0];
+		cmd = cmd << 8;
+		cmd |= msg->str[*offset+1];
+		cmd = cmd << 8;
+		cmd |= msg->str[*offset+2];
+		cmd = cmd << 8;
+		cmd |= msg->str[*offset+3];
+	}
+	return cmd;
+}
+
 static int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
+	// check the task ..
+	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
+	switch(cmd) {
+	case 1: // ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW
+		watchdog_log_string("Show window here\n");
+	break;
+			
+	}
 	return 0;
 }
 
-int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
-	app->processEvents(0,100);
+static int perform_task() {
 	aroop_txt_t*msg = NULL;
+	watchdog_log_string("Platform:see if there is any message\n");
 	while((msg = (aroop_txt_t*)opp_dequeue(&msgq))) {
+		watchdog_log_string("Platform:There is message\n");
 		int offset = 0;
 		int cur_key = 0;
 		int cur_type = 0;
 		int cur_len = 0;
 		while(msg_next(msg, &offset, &cur_key, &cur_type, &cur_len) != -1) {
+			watchdog_log_string("Platform:Parsing messag, see what we need to do\n");
 			switch(cur_key) {
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK:
 				watchdog_log_string("Platform:window task\n");
 				perform_window_task(msg, &offset, &cur_key, &cur_type, &cur_len);
+				break;
+			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
+				watchdog_log_string("Platform:graphics task\n");
+				perform_window_task(msg, &offset, &cur_key, &cur_type, &cur_len);
+				break;
+			default:
+				break;
 			}
 		}
 		aroop_object_unref(aroop_txt_t*,0,msg);
@@ -93,9 +133,19 @@ int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
 	return 0;
 }
 
+int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
+	app->processEvents(0,100);
+	perform_task();
+	return 0;
+}
+
 int qt_impl_push_task(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
-	opp_enqueue(&msgq, msg);
+	// copy to new text ..
+	aroop_txt_t*msgcp = aroop_txt_clone_etxt(msg);
+	opp_enqueue(&msgq, msgcp);
 	watchdog_log_string("Platform:new message\n");
+	perform_task();
+	aroop_object_unref(msgcp);
 	return 0;
 }
 

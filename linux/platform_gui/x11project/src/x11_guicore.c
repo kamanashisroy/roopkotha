@@ -50,7 +50,7 @@ struct x11_guicore {
 	opp_factory_t pgfx;
 	opp_queue_t msgq;
 };
-static char*argv[2] = {"yourapp", "man"};
+static char*argv[2] = {"shotodol.bin", "man"};
 static int argc = 1;
 static struct x11_guicore gcore;
 static int platform_window_init();
@@ -69,6 +69,8 @@ PlatformRoopkothaGUICore*platform_impl_guicore_create() {
 
 int platform_impl_guicore_destroy(PlatformRoopkothaGUICore*UNUSED_VAR(nothing)) {
 	platform_window_deinit();
+	//XFreeGC(gcore.disp, gc);
+	XCloseDisplay(gcore.disp);
 	return 0;
 }
 
@@ -141,7 +143,6 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 			aroop_indexed_list_set(&gcore.pwins, wid, pw);
 			char*title = "Hello";
   			XSetStandardProperties (gcore.disp, pw, title, title, None, argv, argc, &myhint);
-			watchdog_log_string("Created new window\n");
 			if(gc == NULL) {
 				gc = XCreateGC(gcore.disp, pw, 0, 0);
 				aroop_indexed_list_set(&gcore.pgfx, wid, gc);
@@ -149,6 +150,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 				XSetForeground (gcore.disp, gc, myforeground);	/* Select input devices to listen to: */
 				XSelectInput (gcore.disp, pw, ButtonPressMask | KeyPressMask | ExposureMask);	/* Actually display the window: */
 				XMapRaised (gcore.disp, pw);
+				watchdog_log_string("Created new window\n");
 			}
 		}
 		watchdog_log_string("Show window\n");

@@ -10,9 +10,9 @@ public class roopkotha.gui.GUITask : Replicable {
 	public int size;
 	public int len;
 	public Carton msg;
-	public void build() {
+	public void build(int gsize) {
 		len = 0;
-		size = 32;
+		size = gsize;
 	}
 	public void finalize(Bundler bndlr) {
 		bndlr.close();

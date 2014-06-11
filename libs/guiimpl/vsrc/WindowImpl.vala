@@ -8,17 +8,15 @@ using roopkotha.gui;
 
 public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	int windowId;
-	GUITask?showTask;
-	GUICore?gcore;
 	ArrayList<Pane>panes;
+	GraphicsPixelMap?gfx;
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
 		TITLE_FONT = new FontImpl();
-		gcore = null;
 		gfx = null;
 		panes = ArrayList<Pane>();
-		base(aTitle);
 		windowId = 0x01; // currently we support only one window.
+		base(aTitle);
 		GUIInputImpl eHandler = new GUIInputImpl();
 		eHandler.reset(this);
 		gi = eHandler;
@@ -29,29 +27,28 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	}
 	
 	public override void show() {
-		if(showTask == null) {
-			showTask = new GUITask();
-			Bundler bndlr = Bundler();
-			bndlr.setCarton(&showTask.msg, 32);
-			bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
-			bndlr.writeInt(GUICore.entries.ARG, windowId);
-			showTask.finalize(bndlr);
-		}
+		GUITask showTask = GUICoreImpl.gcore.taskFactory.alloc_full(32);
+		showTask.build(32);
+		Bundler bndlr = Bundler();
+		bndlr.setCarton(&showTask.msg, 32);
+		bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
+		bndlr.writeInt(GUICore.entries.ARG, windowId);
+		showTask.finalize(bndlr);
 		etxt task = etxt.EMPTY();
 		showTask.getTaskAs(&task);
-		gcore.pushTask(&task);
+		GUICoreImpl.gcore.pushTask(&task);
 	}
 
 	public override roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars) {
 		return new FontImpl.defined(face,vars);
 	}
 
-	GraphicsPixelMap?gfx;
 	public override roopkotha.gui.Graphics getGraphics() {
 		if(gfx != null)
 			return gfx;
-		GUITask task = new GUITask();
-		gfx = new GraphicsPixelMap(&task.msg, 32);
+		GUITask task = GUICoreImpl.gcore.taskFactory.alloc_full(512);
+		task.build(512);
+		gfx = new GraphicsPixelMap.fromTask(task);
 		return gfx;
 	}
 
@@ -60,9 +57,8 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		return 0;
 	}
 
-	public void plugGUICore(GUICore gGUICore) {
-		gcore = gGUICore;
+	public void getPaneIterator(Iterator<container<Pane>>*it, int if_set, int if_not_set) {
+		panes.iterator_hacked(it, if_set, if_not_set, 0);
 	}
-
 }
 /** @} */

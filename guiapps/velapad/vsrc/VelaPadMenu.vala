@@ -25,7 +25,6 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		etxt velaTitle = etxt.from_static("Vela");
 		etxt aboutVela = etxt.from_static("About");
 		pg = new PageView.of_title(&velaTitle, &aboutVela);	
-		pg.plugGUICore(impl);
 		emptyDoc = new VelaDivDocument();
 		/*etxt elem = etxt.from_static("Write something here..");
 		emptyDoc.addLine(&elem);*/

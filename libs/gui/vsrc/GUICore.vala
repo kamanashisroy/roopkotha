@@ -26,7 +26,7 @@ using roopkotha.gui;
  *  @{
  */
 public abstract class roopkotha.gui.GUICore : Spindle {
-	Queue<Window> painter;
+	protected Queue<Window> painter;
 	static GUICore? gcore;
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_CORE_TASK_")]
 	public enum entries {
@@ -49,24 +49,6 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 	public static int setDirty(roopkotha.gui.Window win) {
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:setDirty: Marking it dirty");
 		gcore.painter.enqueue(win);
-		return 0;
-	}
-	
-	public override int step() {
-		do {
-			Window? win = painter.dequeue();
-			if(win == null) {
-				break;
-			}
-			// TODO get the panes ..
-			Graphics g = win.getGraphics();
-			win.prePaint(g);
-			
-			Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
-			win.paint(g);
-			//g.close();
-			gcore.pushGraphicsTask(g);
-		} while(true);
 		return 0;
 	}
 	public override int cancel() {

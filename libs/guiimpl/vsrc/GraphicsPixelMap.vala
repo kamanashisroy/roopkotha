@@ -42,13 +42,20 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		FILL_TRIANGLE,
 		SET_COLOR,
 		SET_FONT,
+		START_LAYER,
 	}
 	Bundler bndlr;
 	int currentColor;
-	public GraphicsPixelMap(Carton*ctn, int size) {
+	internal GUITask?task;
+	GraphicsPixelMap.Full(Carton*ctn, int size) {
 		bndlr = Bundler();
 		bndlr.setCarton(ctn, size);
 		currentColor = 1;
+	}
+	public GraphicsPixelMap.fromTask(GUITask gTask) {
+		// allocate memory from factory
+		task = gTask;
+		GraphicsPixelMap.Full(&task.msg, task.size);
 	}
 	public override void drawImage(onubodh.RawImage img, int x, int y, int anc) {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_IMAGE);
@@ -128,7 +135,11 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, font.getId());
 	}
 	public override void start() {
-		// nothing to do ..
+		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.START_LAYER);
+		bndlr.writeInt(GUICore.entries.ARG, 1);
+	}
+	public void finalize() {
+		bndlr.close();
 	}
 }
 

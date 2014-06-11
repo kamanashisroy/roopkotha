@@ -11,10 +11,6 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	GUITask?showTask;
 	GUICore?gcore;
 	ArrayList<Pane>panes;
-	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_WINDOW_TASK_")]
-	enum tasks {
-		SHOW_WINDOW = 1,
-	}
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
 		TITLE_FONT = new FontImpl();

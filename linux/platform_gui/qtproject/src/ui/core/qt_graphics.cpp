@@ -4,9 +4,9 @@
  *  Created on: Jan 21, 2011
  *      Author: ayaskanti
  */
+
 #include "core/config.h"
 #include "core/decorator.h"
-#include "core/txt.h"
 //#include <QtCore>
 #include <QPainter>
 #include <QColor>
@@ -14,23 +14,32 @@
 #include <QPixmap>
 #include <QVariant>
 #include "qt_graphics.h"
+C_CAPSULE_START
+#include "shotodol_watchdog.h"
+#define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
+#include "aroop_core.h"
+#include "core/txt.h"
+#include "shotodol_gui.h"
+C_CAPSULE_END
+#include "qt_message.h"
+#include "qt_guicore.h"
 
 
 C_CAPSULE_START
 
-void qt_impl_draw_image(QTRoopkothaGraphics*UNUSED_VAR(g), aroop_cl_onubodh_onubodh_raw_image*UNUSED_VAR(img), int UNUSED_VAR(x), int UNUSED_VAR(y), int UNUSED_VAR(anchor)) {
+static void qt_impl_draw_image(QTRoopkothaGraphics*UNUSED_VAR(g), aroop_cl_onubodh_onubodh_raw_image*UNUSED_VAR(img), int UNUSED_VAR(x), int UNUSED_VAR(y), int UNUSED_VAR(anchor)) {
 //			qtg->painter->drawImage(x, y, img->data);
 }
 
-void qt_impl_draw_line(QTRoopkothaGraphics*qtg, int x1, int y1, int x2, int y2) {
+static void qt_impl_draw_line(QTRoopkothaGraphics*qtg, int x1, int y1, int x2, int y2) {
 	qtg->painter->drawLine(x1, y1, x2, y2);
 }
 
-void qt_impl_draw_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height) {
+static void qt_impl_draw_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height) {
     qtg->painter->drawRect(x, y, width, height);
 }
 
-void qt_impl_draw_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height, int arcWidth, int arcHeight) {
+static void qt_impl_draw_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height, int arcWidth, int arcHeight) {
     qtg->painter->drawRoundedRect(x, y, width, height, arcWidth, arcHeight,  Qt::RelativeSize);
 }
 
@@ -38,7 +47,7 @@ void qt_impl_draw_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, i
 #ifdef QT_GRAPHICS_DEBUG
 #include <stdio.h>
 #endif
-void qt_impl_draw_string(QTRoopkothaGraphics*qtg, struct aroop_txt*str, int x, int y, int width, int height, int anchor) {
+static void qt_impl_draw_string(QTRoopkothaGraphics*qtg, struct aroop_txt*str, int x, int y, int width, int height, int anchor) {
 	//GUI_LOG("Drawing string [%d]%s\n", str->len, str->str);
 	QString text(str->str);
 	int flags = 0;
@@ -69,22 +78,22 @@ void qt_impl_draw_string(QTRoopkothaGraphics*qtg, struct aroop_txt*str, int x, i
 //    qtg->painter->drawText(x, y, text);
 }
 
-void qt_impl_fill_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height) {
+static void qt_impl_fill_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height) {
     qtg->painter->fillRect(x, y, width, height, *qtg->pen);
 }
 
-void qt_impl_fill_triangle(QTRoopkothaGraphics*UNUSED_VAR(gtg)
+static void qt_impl_fill_triangle(QTRoopkothaGraphics*UNUSED_VAR(gtg)
 , int UNUSED_VAR(x1), int UNUSED_VAR(y1), int UNUSED_VAR(x2), int UNUSED_VAR(y2), int UNUSED_VAR(x3), int UNUSED_VAR(y3)) {
     // TODO fill me
     //qtg->painter->fillPath(qtg->path, NULL);
 }
 
-void qt_impl_fill_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width
+static void qt_impl_fill_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width
 		, int height, int UNUSED_VAR(arcWidth), int UNUSED_VAR(arcHeight)) {
     qtg->painter->fillRect(x, y, width, height, *qtg->pen);
 }
 
-void qt_impl_set_color(QTRoopkothaGraphics*qtg, int rgb) {
+static void qt_impl_set_color(QTRoopkothaGraphics*qtg, int rgb) {
     //SYNC_LOG_OPP(&graphics_factory);
     //opp_callback2(g, OPPN_ACTION_VIEW, NULL);
 	qtg->color = rgb;
@@ -92,11 +101,11 @@ void qt_impl_set_color(QTRoopkothaGraphics*qtg, int rgb) {
     qtg->painter->setPen(*qtg->pen);
 }
 
-int qt_impl_get_color(QTRoopkothaGraphics*qtg) {
+static int qt_impl_get_color(QTRoopkothaGraphics*qtg) {
 	return qtg->color;
 }
 
-void qt_impl_set_font(QTRoopkothaGraphics*qtg, QTRoopkothaFont*qtfont) {
+static void qt_impl_set_font(QTRoopkothaGraphics*qtg, QTRoopkothaFont*qtfont) {
     aroop_assert(qtfont);
     qtg->painter->setFont(qtfont->font);
 }
@@ -116,6 +125,17 @@ void qt_impl_graphics_destroy(QTRoopkothaGraphics*qtg) {
 	delete qtg;
 }
 
+int perform_gui_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
+	// check the task ..
+	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
+	switch(cmd) {
+	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW:
+		watchdog_log_string("Graphics command here\n");
+	break;
+			
+	}
+	return 0;
+}
 
 C_CAPSULE_END
 

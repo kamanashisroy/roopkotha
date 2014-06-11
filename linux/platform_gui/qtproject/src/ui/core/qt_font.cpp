@@ -1,7 +1,12 @@
 
 #include "core/config.h"
 #include "core/decorator.h"
+C_CAPSULE_START
 #include "core/txt.h"
+#include "opp/opp_queue.h"
+#include "shotodol_watchdog.h"
+#define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
+C_CAPSULE_END
 #include <QtGui>
 #include <QFont>
 #include <QFontMetrics>

@@ -8,7 +8,8 @@
 #ifndef QT_GRAPHICS_H_
 #define QT_GRAPHICS_H_
 
-#include "shotodol_gui.h"
+#include "core/config.h"
+#include "core/decorator.h"
 #include "qt_font.h"
 
 #ifdef __cplusplus
@@ -42,19 +43,6 @@ typedef void QTRoopkothaGraphics;
 
 C_CAPSULE_START
 
-void qt_impl_draw_image(QTRoopkothaGraphics*UNUSED_VAR(g), aroop_cl_onubodh_onubodh_raw_image*UNUSED_VAR(img), int UNUSED_VAR(x), int UNUSED_VAR(y), int UNUSED_VAR(anchor));
-void qt_impl_draw_line(QTRoopkothaGraphics*g, int x1, int y1, int x2, int y2);
-void qt_impl_draw_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height);
-void qt_impl_draw_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height, int arcWidth, int arcHeight);
-void qt_impl_draw_string(QTRoopkothaGraphics*qtg, struct aroop_txt*str, int x, int y, int width, int height, int anchor);
-void qt_impl_fill_rect(QTRoopkothaGraphics*qtg, int x, int y, int width, int height);
-void qt_impl_fill_triangle(QTRoopkothaGraphics*UNUSED_VAR(gtg)
-, int UNUSED_VAR(x1), int UNUSED_VAR(y1), int UNUSED_VAR(x2), int UNUSED_VAR(y2), int UNUSED_VAR(x3), int UNUSED_VAR(y3));
-void qt_impl_fill_round_rect(QTRoopkothaGraphics*qtg, int x, int y, int width
-		, int height, int UNUSED_VAR(arcWidth), int UNUSED_VAR(arcHeight));
-void qt_impl_set_color(QTRoopkothaGraphics*qtg, int rgb);
-int qt_impl_get_color(QTRoopkothaGraphics*qtg);
-void qt_impl_set_font(QTRoopkothaGraphics*qtg, QTRoopkothaFont*qtfont);
 void qt_impl_start(QTRoopkothaGraphics*qtg);
 QTRoopkothaGraphics*qt_impl_graphics_create();
 void qt_impl_graphics_destroy(QTRoopkothaGraphics*qtg);

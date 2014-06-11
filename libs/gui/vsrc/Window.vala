@@ -43,6 +43,11 @@ public abstract class roopkotha.gui.Window : roopkotha.gui.Pane {
 	public GUIInput gi;
 	protected Menu? menu;
 	protected Font?TITLE_FONT;
+	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_WINDOW_TASK_")]
+	public enum tasks {
+		SHOW_WINDOW = 1,
+		DESTROY,
+	}
 	public Window(etxt*aTitle) {
 		core.assert(menu != null);
 		title = new txt.memcopy_etxt(aTitle);

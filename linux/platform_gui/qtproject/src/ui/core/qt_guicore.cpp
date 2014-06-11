@@ -26,36 +26,43 @@
 #include "core/config.h"
 #include "core/decorator.h"
 #include <QtGui>
-
 C_CAPSULE_START
 #include "core/txt.h"
 #include "opp/opp_queue.h"
 #include "shotodol_gui.h"
-C_CAPSULE_END
-#include "qt_guicore.h"
-
-C_CAPSULE_START
 #include "shotodol_watchdog.h"
 #define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
+C_CAPSULE_END
+#include "qt_guicore.h"
+#include "qt_window.h"
+#include "qt_graphics.h"
+#include "qt_message.h"
 
+
+C_CAPSULE_START
 static QApplication*app;
 static opp_queue_t msgq;
+static char*argv[2] = {"yourapp", "man"};
+static int argc = 1;
 QTRoopkothaGUICore*qt_impl_guicore_create() {
-	char*argv[2] = {"yourapp", "man"};
-	int argc = 1;
 	watchdog_log_string("**************************Allocating new application**************\n");
 	app = new QApplication(argc, argv);
 	//watchdog_log_string(" argv0: %s\n", app->arguments().at(0).data());
 	app->setAttribute(Qt::AA_ImmediateWidgetCreation); // This is important, otherwise the application gets crashed when we show window or something.
 	opp_queue_init2(&msgq, 0);
 	watchdog_log_string("Initiated queue\n");
+	qt_window_init();
 	return app;
 }
 void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
+	qt_window_deinit();
 	delete app;
 }
 
-static int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
+int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
+	if(*cur_len != 0) {
+		*offset += *cur_len;
+	}
 	if(((*offset)+2) >= msg->len) {
 		return -1;
 	}
@@ -70,7 +77,7 @@ static int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*
 	return *cur_key;
 }
 
-static int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len) {
+int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len) {
 	SYNC_ASSERT(*cur_type == 0); // we expect numeral value 
 	int cmd = 0;
 	if(*cur_len == 1) {
@@ -93,17 +100,6 @@ static int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_
 	return cmd;
 }
 
-static int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
-	// check the task ..
-	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
-	switch(cmd) {
-	case 1: // ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW
-		watchdog_log_string("Show window here\n");
-	break;
-			
-	}
-	return 0;
-}
 
 static int perform_task() {
 	aroop_txt_t*msg = NULL;
@@ -123,7 +119,7 @@ static int perform_task() {
 				break;
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
 				watchdog_log_string("Platform:graphics task\n");
-				perform_window_task(msg, &offset, &cur_key, &cur_type, &cur_len);
+				perform_gui_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			default:
 				break;
@@ -147,10 +143,6 @@ int qt_impl_push_task(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
 	aroop_txt_t*msgcp = aroop_txt_clone_etxt(msg);
 	SYNC_ASSERT(msgcp != NULL);
 	opp_enqueue(&msgq, msgcp);
-	watchdog_log_string("Platform:new message\n");
-	if(OPP_QUEUE_SIZE(&msgq) > 0)watchdog_log_string("There is some message\n");
-	perform_task();
-	if(OPP_QUEUE_SIZE(&msgq) > 0)watchdog_log_string("There is still some message\n");
 	aroop_object_unref(aroop_txt_t*,0,msgcp);
 	return 0;
 }

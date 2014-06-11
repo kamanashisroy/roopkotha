@@ -3,16 +3,11 @@
 
 #include "core/config.h"
 #include "core/decorator.h"
-#include "core/txt.h"
-
-#include "qt_graphics.h"
-#include "shotodol_gui.h"
-
 C_CAPSULE_START
-#include "shotodol_watchdog.h"
-#define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
+#include "shotodol_gui.h"
 int qt_process_mouse_event_helper(int flags, int key_code, int x, int y);
 C_CAPSULE_END
+#include "qt_graphics.h"
 
 #ifdef __cplusplus
 #include <QPainter>
@@ -202,10 +197,8 @@ typedef struct {
 } qt_window_handle_event_t;
 
 int qt_impl_window_set_event_handler(QTRoopkothaWindow*UNUSED_VAR(qw), qt_window_handle_event_t handler);
-void qt_impl_window_show(QTRoopkothaWindow*qwin);
-void qt_impl_window_paint_end(QTRoopkothaWindow*qw, QTRoopkothaGraphics*qtg);
-QTRoopkothaWindow*qt_impl_window_create();
-void qt_impl_window_destroy(QTRoopkothaWindow*qw);
+int qt_window_init();
+int qt_window_deinit();
 C_CAPSULE_END
 
 #endif // QT_WINDOW_H

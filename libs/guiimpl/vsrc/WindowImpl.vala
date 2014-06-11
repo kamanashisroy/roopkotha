@@ -39,9 +39,11 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 			bndlr.setCarton(&showTask.msg, 32);
 			bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
 			bndlr.writeInt(GUICore.entries.ARG, windowId);
-			bndlr.close();
+			showTask.finalize(bndlr);
 		}
-		gcore.pushTask(showTask);
+		etxt task = etxt.EMPTY();
+		showTask.getTaskAs(&task);
+		gcore.pushTask(&task);
 	}
 
 	public override roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars) {

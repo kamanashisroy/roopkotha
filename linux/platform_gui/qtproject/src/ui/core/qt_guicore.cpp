@@ -48,6 +48,7 @@ QTRoopkothaGUICore*qt_impl_guicore_create() {
 	//watchdog_log_string(" argv0: %s\n", app->arguments().at(0).data());
 	app->setAttribute(Qt::AA_ImmediateWidgetCreation); // This is important, otherwise the application gets crashed when we show window or something.
 	opp_queue_init2(&msgq, 0);
+	watchdog_log_string("Initiated queue\n");
 	return app;
 }
 void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
@@ -106,7 +107,7 @@ static int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur
 
 static int perform_task() {
 	aroop_txt_t*msg = NULL;
-	watchdog_log_string("Platform:see if there is any message\n");
+	//watchdog_log_string("Platform:see if there is any message\n");
 	while((msg = (aroop_txt_t*)opp_dequeue(&msgq))) {
 		watchdog_log_string("Platform:There is message\n");
 		int offset = 0;
@@ -141,11 +142,16 @@ int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
 
 int qt_impl_push_task(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
 	// copy to new text ..
+	SYNC_ASSERT(msg != NULL);
+	SYNC_ASSERT(msg->len != 0);
 	aroop_txt_t*msgcp = aroop_txt_clone_etxt(msg);
+	SYNC_ASSERT(msgcp != NULL);
 	opp_enqueue(&msgq, msgcp);
 	watchdog_log_string("Platform:new message\n");
+	if(OPP_QUEUE_SIZE(&msgq) > 0)watchdog_log_string("There is some message\n");
 	perform_task();
-	aroop_object_unref(msgcp);
+	if(OPP_QUEUE_SIZE(&msgq) > 0)watchdog_log_string("There is still some message\n");
+	aroop_object_unref(aroop_txt_t*,0,msgcp);
 	return 0;
 }
 

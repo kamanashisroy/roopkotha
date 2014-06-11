@@ -44,7 +44,7 @@ static QApplication*app;
 static opp_queue_t msgq;
 static char*argv[2] = {"yourapp", "man"};
 static int argc = 1;
-QTRoopkothaGUICore*qt_impl_guicore_create() {
+PlatformRoopkothaGUICore*platform_impl_guicore_create() {
 	watchdog_log_string("**************************Allocating new application**************\n");
 	app = new QApplication(argc, argv);
 	//watchdog_log_string(" argv0: %s\n", app->arguments().at(0).data());
@@ -54,9 +54,10 @@ QTRoopkothaGUICore*qt_impl_guicore_create() {
 	qt_window_init();
 	return app;
 }
-void qt_impl_guicore_destroy(QTRoopkothaGUICore*UNUSED_VAR(ptr)) {
+int platform_impl_guicore_destroy(PlatformRoopkothaGUICore*UNUSED_VAR(ptr)) {
 	qt_window_deinit();
 	delete app;
+	return 0;
 }
 
 int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
@@ -130,13 +131,13 @@ static int perform_task() {
 	return 0;
 }
 
-int qt_impl_guicore_step(QTRoopkothaGUICore*UNUSED_VAR(nothing)) {
+int platform_impl_guicore_step(PlatformRoopkothaGUICore*UNUSED_VAR(nothing)) {
 	app->processEvents(0,100);
 	perform_task();
 	return 0;
 }
 
-int qt_impl_push_task(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
+int platform_impl_push_task(PlatformRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
 	// copy to new text ..
 	SYNC_ASSERT(msg != NULL);
 	SYNC_ASSERT(msg->len != 0);
@@ -147,7 +148,7 @@ int qt_impl_push_task(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
 	return 0;
 }
 
-int qt_impl_pop_task_as(QTRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*UNUSED_VAR(msg)) {
+int platform_impl_pop_task_as(PlatformRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*UNUSED_VAR(msg)) {
 	return 0;
 }
 

@@ -62,7 +62,7 @@ PlatformRoopkothaGUICore*platform_impl_guicore_create() {
 	opp_queue_init2(&gcore.msgq, 0);
 	watchdog_log_string("Initiated queue\n");
 	platform_window_init();
-	gcore.disp = XOpenDisplay("Fine");
+	gcore.disp = XOpenDisplay("");
 	gcore.scrn = DefaultScreen(gcore.disp);
 	return &gcore;
 }
@@ -126,7 +126,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 	GC gc = (GC)opp_indexed_list_get(&gcore.pgfx, wid);
 	switch(cmd) {
 	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW:
-		if(pw == NULL) {
+		if(pw == 0) {
 			unsigned long mybackground = WhitePixel (gcore.disp, gcore.scrn);
  			unsigned long myforeground = BlackPixel (gcore.disp, gcore.scrn);
   			XSizeHints myhint;
@@ -137,7 +137,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 			myhint.height = 300;
 			myhint.flags = PPosition | PSize;
 
-			pw = XCreateSimpleWindow(gcore.disp, DefaultRootWindow(pw), myhint.x, myhint.y, myhint.width, myhint.height, 5, myforeground, mybackground);
+			pw = XCreateSimpleWindow(gcore.disp, DefaultRootWindow(gcore.disp), myhint.x, myhint.y, myhint.width, myhint.height, 5, myforeground, mybackground);
 			aroop_indexed_list_set(&gcore.pwins, wid, pw);
 			char*title = "Hello";
   			XSetStandardProperties (gcore.disp, pw, title, title, None, argv, argc, &myhint);
@@ -207,7 +207,7 @@ static int perform_task() {
 				break;
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
 				watchdog_log_string("Platform:graphics task\n");
-				perform_gui_task(msg, &offset, &cur_key, &cur_type, &cur_len);
+				//perform_gui_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			default:
 				break;

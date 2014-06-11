@@ -3,6 +3,7 @@ CURRENTPATH=$(ROOPKOTHA_HOME)/linux/platform_gui/x11project
 
 INCLUDEPATH+=$(VALA_HOME)/aroop/core/inc
 INCLUDEPATH+=$(ROOPKOTHA_HOME)/libs/gui/include
+INCLUDEPATH+=$(ROOPKOTHA_HOME)/linux/platform_gui/include
 INCLUDEPATH+=$(ONUBODH_HOME)/libs/rawimg/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/iostream/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/propeller/include
@@ -15,5 +16,10 @@ TARGET=x11_impl.o
 all:$(TARGET)
 
 x11_impl.o:src/x11_guicore.c
-	gcc -c $(INCLUDES) src/x11_guicore.c -o $@ -lX11
+	$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
+
+clean:
+	$(RM) $(TARGET)
+
+.PHONY:clean all
 

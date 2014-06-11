@@ -1,6 +1,6 @@
 
 include ../../../build/.config.mk
-CURRENTPATH=$(ROOPKOTHA_HOME)/linux/platform_gui/build
+CURRENTPATH=$(ROOPKOTHA_HOME)/linux/platform_gui/qtbuild
 #include platform.mk
 
 ifeq ("$(PLATFORM)","win")
@@ -15,6 +15,7 @@ endif
 
 INCLUDEPATH+=$(VALA_HOME)/aroop/core/inc
 INCLUDEPATH+=$(ROOPKOTHA_HOME)/libs/gui/include
+INCLUDEPATH+=$(ROOPKOTHA_HOME)/linux/platform_gui/include
 INCLUDEPATH+=$(ONUBODH_HOME)/libs/rawimg/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/iostream/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/propeller/include

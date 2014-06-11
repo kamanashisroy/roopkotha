@@ -1,6 +1,9 @@
-#LINUX_GUI_CSOURCES=$(wildcard $(ROOPKOTHA_HOME)/platform/linux_gui/csrc/*.c)
-#LINUX_GUI_VSOURCE_BASE=$(basename $(notdir $(LINUX_GUI_CSOURCES)))
-#OBJECTS+=$(addprefix $(PROJECT_OBJDIR)/, $(addsuffix .o,$(LINUX_GUI_VSOURCE_BASE)))
-LIBS+=$(ROOPKOTHA_HOME)/linux/platform_gui/build/libqtguiproject.a
-LIBS+= -lQtGui -lQtCore -lpthread
+
+# Qt
+#LIBS+=$(ROOPKOTHA_HOME)/linux/platform_gui/qtbuild/libqtguiproject.a
+#LIBS+= -lQtGui -lQtCore -lpthread
+
+# X11
+LIBS+=$(ROOPKOTHA_HOME)/linux/platform_gui/x11project/x11_impl.o
+LIBS+= -lX11 -lpthread
 

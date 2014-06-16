@@ -84,7 +84,6 @@ static int msg_write_int(aroop_txt_t*msg, int key, int val) {
 	if((msg->size - msg->len) < 6) {
 		return -1;
 	}
-	printf("key = %d\n", key);
 	msg->str[msg->len++] = (unsigned char)key;
 	if(val >= 0xFFFF) {
 		msg->str[msg->len++] = /*(0<<6) |*/ 4; // 0 means numeral , 4 is the numeral size
@@ -93,7 +92,6 @@ static int msg_write_int(aroop_txt_t*msg, int key, int val) {
 	} else {
 		msg->str[msg->len++] = /*(0<<6) |*/ 2; // 0 means numeral , 4 is the numeral size
 	}
-	printf("len = %d\n", msg->str[msg->len-1]);
 	msg->str[msg->len++] = (unsigned char)((val & 0xFF00)>>8);
 	msg->str[msg->len++] = (unsigned char)(val & 0x00FF);
 	return 0;
@@ -342,7 +340,7 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			int anc = msg_numeric_value(msg, offset, cur_type, cur_len);
 	    		if(*win != NULL) {
 				watchdog_log_string("Rendering string\n");
-				printf("text at %d,%d\n", x, y);
+				//printf("text at %d,%d\n", x, y);
 				XDrawImageString (gcore.disp, *win,*gc, x+10, y+10, content.str, content.len);
 			}
 			break;

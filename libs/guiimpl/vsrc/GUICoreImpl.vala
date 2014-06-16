@@ -9,7 +9,7 @@ using roopkotha.gui;
 public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	GUICorePlatformImpl plat;
 	public Factory<GUITask>taskFactory;
-	public ArrayList<Window>windows;
+	internal ArrayList<Window>windows;
 	public static GUICoreImpl?gcore;
 	public GUICoreImpl() {
 		print("Creating new platform application\n");
@@ -34,17 +34,13 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			int key = bndlr.next();
 			core.assert(key == entries.ARG);
 			int wid = bndlr.getIntContent();
-			print("Window : %d .. \n", wid);
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
 			int w = bndlr.getIntContent();
-			print("Window width : %d .. \n", w);
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
 			int h = bndlr.getIntContent();
-			print("Window height : %d .. \n", h);
 			Window?win = windows.get(wid);
-			print("Resizing to %d,%d\n", w, h);
 			if(win != null)win.onResize(w,h);
 			break;
 		}
@@ -59,16 +55,13 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			if(task.is_empty())
 				break;
 
-			print("Platform Task .. %d \n", task.length());
 			Bundler bndlr = Bundler();
 			bndlr.buildFromEtxt(&task);
 			int key = 0;
 			try {
 				while((key = bndlr.next()) >= 0) {
-					print("Jobs to do .. \n");
 					switch(key) {
 						case entries.WINDOW_TASK:
-							print("Window Jobs to do .. \n");
 							performWindowTask(&bndlr);
 						break;
 					}

@@ -61,6 +61,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		showTask.finalize(&bndlr);
 		etxt task = etxt.EMPTY();
 		showTask.getTaskAs(&task);
+		GUICoreImpl.gcore.windows.set(windowId, this);
 		GUICoreImpl.gcore.pushTask(&task);
 		setDirty();
 	}

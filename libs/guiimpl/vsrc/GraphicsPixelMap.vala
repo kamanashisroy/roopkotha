@@ -34,8 +34,10 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 	int currentColor;
 	internal GUITask?task;
 	bool finalized;
-	GraphicsPixelMap.Full(Carton*ctn, int size) {
+	int size;
+	GraphicsPixelMap.Full(Carton*ctn, int gSize) {
 		bndlr = Bundler();
+		size = gSize;
 		bndlr.buildFromCarton(ctn, size);
 		currentColor = 1;
 		finalized = false;
@@ -124,6 +126,8 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, font.getId());
 	}
 	public override void start(Window parent, int layer) {
+		finalized = false;
+		bndlr.size = size;
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.START_LAYER);
 		WindowImpl w = (WindowImpl)parent;
 		bndlr.writeInt(GUICore.entries.ARG, w.windowId);

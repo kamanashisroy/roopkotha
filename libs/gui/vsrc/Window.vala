@@ -49,19 +49,21 @@ public abstract class roopkotha.gui.Window : Replicable {
 	}
 	public Window() {
 		core.assert(menu != null);
-		//onResize(200, 400);
+		onResize(200, 400);
 		windowActionCB = null;
 		setPane(20, menu);
 	}
 	public virtual int onResize(int w, int h) {
 		/** The width of the list */
-		this.width = w;
-		this.halfWidth = w>>1;
+		width = w;
+		halfWidth = w>>1;
+		height = h;
 
 		/** The height of the list */
 		/** Menu start position by pixel along Y-axis */
 		this.height = h;
 		this.menuY = h - menu.getBaseHeight();
+		menu.onResize(w,h);
 		return 0;
 	}
 	public abstract void show();

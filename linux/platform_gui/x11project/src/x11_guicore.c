@@ -46,6 +46,7 @@ struct x11_guicore {
 	Display*disp;
   	int scrn;
 	opp_factory_t pwins;
+	opp_factory_t layers;
 	opp_factory_t pgfx;
 	opp_queue_t msgq;
 };
@@ -147,7 +148,7 @@ int msg_binary_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aro
 int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len, Window*win, GC*gc) {
 	// check the task ..
 	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
-	printf("msglen:%d, offset %d, key length %d\n", msg->len, *offset, *cur_len);
+	//printf("msglen:%d, offset %d, key length %d\n", msg->len, *offset, *cur_len);
 	switch(cmd) {
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_IMAGE:
 		{
@@ -319,6 +320,7 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			int anc = msg_numeric_value(msg, offset, cur_type, cur_len);
 	    		if(*win != NULL) {
 				watchdog_log_string("Rendering string\n");
+				printf("text at %d,%d\n", x, y);
 				XDrawImageString (gcore.disp, *win,*gc, x+10, y+10, content.str, content.len);
 			}
 			break;
@@ -353,7 +355,14 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			GC wgc = (GC)opp_indexed_list_get(&gcore.pgfx, wid);
 			*win = pw;
 			*gc = wgc;
-			// TODO save the layer
+			// save the layer
+			aroop_txt_t*oldTasks = opp_indexed_list_get(&gcore.layers, layer);
+			if(oldTasks != msg) {
+				opp_indexed_list_set(&gcore.layers, layer, msg);
+			}
+			if(oldTasks) {
+				aroop_object_unref(aroop_txt_t*,0,oldTasks);
+			}
 			break;
 		}
 	}
@@ -424,6 +433,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 static int platform_window_init() {
 	OPP_INDEXED_LIST_CREATE2(&gcore.pwins, 2, OPPL_POINTER_NOREF);
 	OPP_INDEXED_LIST_CREATE2(&gcore.pgfx, 2, OPPL_POINTER_NOREF);
+	OPP_INDEXED_LIST_CREATE2(&gcore.layers, 2, 0);
 	return 0;
 }
 
@@ -431,14 +441,63 @@ static int platform_window_deinit() {
 	// TODO destroy all the windows
 	opp_factory_destroy(&gcore.pwins);
 	opp_factory_destroy(&gcore.pgfx);
+	opp_factory_destroy(&gcore.layers);
 	return 0;
 }
 
-static int perform_x11_pending_task() {
-	if(XPending(gcore.disp) > 0) {
-  		XEvent myevent;
-      		XNextEvent (gcore.disp, &myevent);
+static int repaint_x11() {
+	int i = 0;
+	for(i = 0; i < 24; i++) {
+		aroop_txt_t*msg = opp_indexed_list_get(&gcore.layers, i);
+		if(!msg)continue;
+		Window pw = 0;
+		GC gc = 0;
+		int offset = 0;
+		int cur_key = 0;
+		int cur_type = 0;
+		int cur_len = 0;
+		while(msg_next(msg, &offset, &cur_key, &cur_type, &cur_len) != -1) {
+			switch(cur_key) {
+			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
+				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &pw, &gc);
+				break;
+			default:
+				break;
+			}
+		}
+		aroop_object_unref(aroop_txt_t*,0,msg);
 	}
+	return 0;
+}
+
+static int perform_x11_task() {
+	if(XPending(gcore.disp) == 0)
+		return 0;
+  	XEvent myevent;
+      	XNextEvent (gcore.disp, &myevent);
+	switch (myevent.type)
+	{
+		case Expose:		/* Repaint window on expose */
+			if (myevent.xexpose.count == 0)
+				repaint_x11();
+		break;
+		case MappingNotify:	/* Process keyboard mapping changes: */
+			XRefreshKeyboardMapping (&myevent);
+		break;
+#if 0
+		case ButtonPress:	/* Process mouse click - output Hi! at mouse: */
+		  XDrawImageString (myevent.xbutton.display, myevent.xbutton.window,
+				    mygc, myevent.xbutton.x, myevent.xbutton.y, hi,
+				    strlen (hi));
+		  break;
+		case KeyPress:		/* Process key press - quit on q: */
+		  i = XLookupString (&myevent, text, 10, &mykey, 0);
+		  if (i == 1 && text[0] == 'q')
+		    done = 1;
+		  break;
+#endif
+	}
+	return 0;
 }
 
 static int perform_task() {
@@ -464,40 +523,12 @@ static int perform_task() {
 		}
 		aroop_object_unref(aroop_txt_t*,0,msg);
 	}
-	perform_x11_pending_task();
+	perform_x11_task();
 	return 0;
 }
 
 int platform_impl_guicore_step(PlatformRoopkothaGUICore*UNUSED_VAR(nothing)) {
 	perform_task();
-#if 0
-	while (done == 0) {
-		XNextEvent (mydisplay, &myevent);
-		switch (myevent.type)
-		{
-			case Expose:		/* Repaint window on expose */
-			  if (myevent.xexpose.count == 0)
-			    XDrawImageString (myevent.xexpose.display, myevent.xexpose.window,
-					      mygc, 50, 50, hello, strlen (hello));
-			  break;
-			case MappingNotify:	/* Process keyboard mapping changes: */
-			  XRefreshKeyboardMapping (&myevent);
-			  break;
-			case ButtonPress:	/* Process mouse click - output Hi! at mouse: */
-
-			  XDrawImageString (myevent.xbutton.display, myevent.xbutton.window,
-					    mygc, myevent.xbutton.x, myevent.xbutton.y, hi,
-					    strlen (hi));
-			  break;
-			case KeyPress:		/* Process key press - quit on q: */
-			  i = XLookupString (&myevent, text, 10, &mykey, 0);
-			  if (i == 1 && text[0] == 'q')
-			    done = 1;
-			  break;
-			}
-		}
-	}
-#endif
 	return 0;
 }
 

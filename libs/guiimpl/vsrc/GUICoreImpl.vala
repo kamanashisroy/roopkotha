@@ -34,14 +34,18 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			int key = bndlr.next();
 			core.assert(key == entries.ARG);
 			int wid = bndlr.getIntContent();
+			print("Window : %d .. \n", wid);
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
 			int w = bndlr.getIntContent();
+			print("Window width : %d .. \n", w);
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
 			int h = bndlr.getIntContent();
-			Window win = windows.get(wid);
-			win.onResize(w,h);
+			print("Window height : %d .. \n", h);
+			Window?win = windows.get(wid);
+			print("Resizing to %d,%d\n", w, h);
+			if(win != null)win.onResize(w,h);
 			break;
 		}
 		}
@@ -49,26 +53,32 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	}
 
 	public int performTasks() {
-		etxt task = etxt.stack(512);
-		popTaskAs(&task);
-		if(task.is_empty())
-			return 0;
+		do {
+			etxt task = etxt.EMPTY();
+			popTaskAs(&task);
+			if(task.is_empty())
+				break;
 
-		Bundler bndlr = Bundler();
-		int key = 0;
-		try {
-			while((key = bndlr.next()) >= 0) {
-				switch(key) {
-					case entries.WINDOW_TASK:
-						performWindowTask(&bndlr);
-					break;
+			print("Platform Task .. %d \n", task.length());
+			Bundler bndlr = Bundler();
+			bndlr.buildFromEtxt(&task);
+			int key = 0;
+			try {
+				while((key = bndlr.next()) >= 0) {
+					print("Jobs to do .. \n");
+					switch(key) {
+						case entries.WINDOW_TASK:
+							print("Window Jobs to do .. \n");
+							performWindowTask(&bndlr);
+						break;
+					}
 				}
+			} catch(BundlerError e) {
+				etxt dlg = etxt.stack(128);
+				dlg.printf("Faulty task packet from platform");
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.ERROR, 0, 0, &dlg);
 			}
-		} catch(BundlerError e) {
-			etxt dlg = etxt.stack(128);
-			dlg.printf("Faulty task packet from platform");
-			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.ERROR, 0, 0, &dlg);
-		}
+		} while(true);
 		return 0;
 	}
 	

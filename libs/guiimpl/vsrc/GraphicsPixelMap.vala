@@ -36,7 +36,7 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 	bool finalized;
 	GraphicsPixelMap.Full(Carton*ctn, int size) {
 		bndlr = Bundler();
-		bndlr.setCarton(ctn, size);
+		bndlr.buildFromCarton(ctn, size);
 		currentColor = 1;
 		finalized = false;
 	}

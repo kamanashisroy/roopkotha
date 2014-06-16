@@ -55,7 +55,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		GUITask showTask = GUICoreImpl.gcore.taskFactory.alloc_full(32);
 		showTask.build(32);
 		Bundler bndlr = Bundler();
-		bndlr.setCarton(&showTask.msg, 32);
+		bndlr.buildFromCarton(&showTask.msg, 32);
 		bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
 		bndlr.writeInt(GUICore.entries.ARG, windowId);
 		showTask.finalize(&bndlr);

@@ -44,7 +44,6 @@
 C_CAPSULE_START
 struct x11_guicore {
 	Display*disp;
-	GC gc;
   	int scrn;
 	opp_factory_t pwins;
 	opp_factory_t pgfx;
@@ -145,7 +144,7 @@ int msg_binary_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aro
 }
 
 
-int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
+int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len, Window*win, GC*gc) {
 	// check the task ..
 	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
 	printf("msglen:%d, offset %d, key length %d\n", msg->len, *offset, *cur_len);
@@ -181,7 +180,9 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int y2 = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO draw line
+	    		if(*win != NULL) {
+				XDrawLine (gcore.disp, *win,*gc, x1, y1, x2, y2);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_RECT:
@@ -198,7 +199,9 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO draw rect
+	    		if(*win != NULL) {
+				XDrawRectangle (gcore.disp, *win,*gc, x, y, width, height);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_ROUND_RECT:
@@ -221,7 +224,9 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int arcHeight = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO draw round rect
+	    		if(*win != NULL) {
+				XDrawRectangle (gcore.disp, *win,*gc, x, y, width, height);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_RECT:
@@ -238,7 +243,9 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO fill rect
+	    		if(*win != NULL) {
+				XFillRectangle (gcore.disp, *win,*gc, x, y, width, height);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_ROUND_RECT:
@@ -261,7 +268,9 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int arcHeight = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO fill round rect
+	    		if(*win != NULL) {
+				XFillRectangle (gcore.disp, *win,*gc, x, y, width, height);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_TRIANGLE:
@@ -308,7 +317,10 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int anc = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO draw string
+	    		if(*win != NULL) {
+				watchdog_log_string("Rendering string\n");
+				XDrawImageString (gcore.disp, *win,*gc, x+10, y+10, content.str, content.len);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_COLOR: // TODO abolish this task
@@ -316,7 +328,9 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int rgb = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO set color
+	    		if(*win != NULL) {
+				//XSetForeground (gcore.disp, *gc, rgb);
+			}
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_FONT: // TODO abolish this task
@@ -331,7 +345,14 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int wid = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			int layer = msg_numeric_value(msg, offset, cur_type, cur_len);
+			Window pw = (Window)opp_indexed_list_get(&gcore.pwins, wid);
+			GC wgc = (GC)opp_indexed_list_get(&gcore.pgfx, wid);
+			*win = pw;
+			*gc = wgc;
 			// TODO save the layer
 			break;
 		}
@@ -374,6 +395,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 				XSelectInput (gcore.disp, pw, ButtonPressMask | KeyPressMask | ExposureMask);	/* Actually display the window: */
 				XMapRaised (gcore.disp, pw);
 				watchdog_log_string("Created new X11 window\n");
+  				//XEvent myevent;XNextEvent (gcore.disp, &myevent); // this will render the window in effect
 			}
 		}
 		watchdog_log_string("Show window\n");
@@ -412,11 +434,17 @@ static int platform_window_deinit() {
 	return 0;
 }
 
-
+static int perform_x11_pending_task() {
+	if(XPending(gcore.disp) > 0) {
+  		XEvent myevent;
+      		XNextEvent (gcore.disp, &myevent);
+	}
+}
 
 static int perform_task() {
 	aroop_txt_t*msg = NULL;
-	//watchdog_log_string("Platform:see if there is any message\n");
+	Window pw = 0;
+	GC gc = 0;
 	while((msg = (aroop_txt_t*)opp_dequeue(&gcore.msgq))) {
 		int offset = 0;
 		int cur_key = 0;
@@ -428,7 +456,7 @@ static int perform_task() {
 				perform_window_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
-				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len);
+				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &pw, &gc);
 				break;
 			default:
 				break;
@@ -436,6 +464,7 @@ static int perform_task() {
 		}
 		aroop_object_unref(aroop_txt_t*,0,msg);
 	}
+	perform_x11_pending_task();
 	return 0;
 }
 

@@ -7,7 +7,7 @@ using roopkotha.gui;
  */
 
 public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
-	int windowId;
+	internal int windowId;
 	ArrayList<Pane>panes;
 	GraphicsPixelMap?gfx;
 	TitleImpl titlePane;
@@ -18,7 +18,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		panes = ArrayList<Pane>();
 		windowId = 0x01; // currently we support only one window.
 		base();
-		titlePane = new TitleImpl(aTitle, PADDING);
+		titlePane = new TitleImpl(this, aTitle, PADDING);
 		setPane(19, titlePane);
 		GUIInputImpl eHandler = new GUIInputImpl();
 		eHandler.reset(this);

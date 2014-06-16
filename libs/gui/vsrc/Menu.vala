@@ -177,7 +177,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		}
 	}
 
-	internal roopkotha.gui.Window?parent;
+	internal unowned roopkotha.gui.Window?parent;
 	internal void setParent(roopkotha.gui.Window gParent) {
 		parent = gParent;
 	}
@@ -185,6 +185,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	public override void paint(roopkotha.gui.Graphics g) {
 		int width = parent.width;
 		int height = parent.height;
+		g.start(parent, 20);
 #if false
 		if(TOWER_FONT == null) {
 			setupFont();

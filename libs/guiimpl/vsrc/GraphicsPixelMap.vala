@@ -123,9 +123,11 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.SET_FONT);
 		bndlr.writeInt(GUICore.entries.ARG, font.getId());
 	}
-	public override void start() {
+	public override void start(Window parent, int layer) {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.START_LAYER);
-		bndlr.writeInt(GUICore.entries.ARG, 1);
+		WindowImpl w = (WindowImpl)parent;
+		bndlr.writeInt(GUICore.entries.ARG, w.windowId);
+		bndlr.writeInt(GUICore.entries.ARG, layer);
 	}
 	public void finalize() {
 		if(finalized) return;

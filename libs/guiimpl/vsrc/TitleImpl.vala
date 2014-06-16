@@ -13,7 +13,8 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 	public int PADDING;
 	GraphicsPixelMap?gfx;
 	protected Font?TITLE_FONT;
-	public TitleImpl(etxt*aTitle, int gPadding) {
+	unowned Window parent; // avoid circular reference
+	public TitleImpl(Window gParent, etxt*aTitle, int gPadding) {
 		title = new txt.memcopy_etxt(aTitle);
 		TITLE_FONT = new FontImpl();
 		gfx = null;
@@ -21,6 +22,7 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 		height = 10;
 		PADDING = gPadding;
 		dirty = true;
+		parent = gParent;
 	}
 
 	public int setTitle(aroop.txt gTitle) {
@@ -36,6 +38,7 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 	}
 
 	public override void paint(roopkotha.gui.Graphics g) {
+		g.start(parent, 10);
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);

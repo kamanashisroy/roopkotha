@@ -105,7 +105,7 @@ public abstract class roopkotha.gui.Graphics : Replicable {
 	void setStrokeStyle(int stl);
 	void translate(int x, int y);
 #endif
-	public abstract void start();
+	public abstract void start(Window parent, int layer);
 }
 
 /** @} */

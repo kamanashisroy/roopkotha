@@ -49,6 +49,31 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	int BASE_HEIGHT;
 	int currentlySelectedIndex = 0;
 
+	public Menu(Font aTowerFont, Font aBaseFont) {
+	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
+		//memclean_raw();
+		TOWER_FONT = aTowerFont;
+		BASE_FONT = aBaseFont;
+		menuOptions = null;
+		parent = null;
+		setupFont();
+	//	SELECT = aroop.txt.alloc("Select", 6, null, 0);
+		etxt cancelText = aroop.etxt.from_static("Cancel");
+		CANCEL = new EventOwner.from_etxt(&cancelText);
+		etxt menuText = aroop.etxt.from_static("Menu");
+		MENU = new EventOwner.from_etxt(&menuText);
+		etxt filterText = aroop.etxt.from_static("Filter");
+		FILLER = new EventOwner.from_etxt(&filterText);
+		rightOption = FILLER;
+		dirty = true;
+	}
+
+	public override int onResize(int w, int h) {
+		dirty = true;
+		// TODO fill me
+		return 0;
+	}
+
 	void draw_base(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height, EventOwner? left, EventOwner? right) {
 		/* draw the background of the menu */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgBase%);
@@ -376,24 +401,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			TOWER_MENU_ITEM_HEIGHT = TOWER_FONT_HEIGHT + 2*roopkotha.gui.Menu.display.PADDING;
 			BASE_HEIGHT = BASE_FONT_HEIGHT + 2*roopkotha.gui.Menu.display.PADDING;
 	}
-	public Menu(Font aTowerFont, Font aBaseFont) {
-	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
-		//memclean_raw();
-		TOWER_FONT = aTowerFont;
-		BASE_FONT = aBaseFont;
-		menuOptions = null;
-		parent = null;
-		setupFont();
-	//	SELECT = aroop.txt.alloc("Select", 6, null, 0);
-		etxt cancelText = aroop.etxt.from_static("Cancel");
-		CANCEL = new EventOwner.from_etxt(&cancelText);
-		etxt menuText = aroop.etxt.from_static("Menu");
-		MENU = new EventOwner.from_etxt(&menuText);
-		etxt filterText = aroop.etxt.from_static("Filter");
-		FILLER = new EventOwner.from_etxt(&filterText);
-		rightOption = FILLER;
-		dirty = true;
-	}
+
 }
 /** @} */
 

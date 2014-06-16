@@ -96,20 +96,18 @@ int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len
 int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len) {
 	SYNC_ASSERT(*cur_type == 0); // we expect numeral value 
 	int cmd = 0;
-	if(*cur_len == 1) {
+	if(*cur_len >= 1) {
 		cmd = msg->str[*offset];
 	}
-	if(*cur_len == 2) {
-		cmd = msg->str[*offset+0];
+	if(*cur_len >= 2) {
 		cmd = cmd << 8;
 		cmd |= msg->str[*offset+1];
 	}
-	if(*cur_len == 4) {
-		cmd = msg->str[*offset+0];
-		cmd = cmd << 8;
-		cmd |= msg->str[*offset+1];
+	if(*cur_len >= 3) {
 		cmd = cmd << 8;
 		cmd |= msg->str[*offset+2];
+	}
+	if(*cur_len == 4) {
 		cmd = cmd << 8;
 		cmd |= msg->str[*offset+3];
 	}

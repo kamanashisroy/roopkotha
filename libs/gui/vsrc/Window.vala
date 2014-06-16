@@ -45,13 +45,15 @@ public abstract class roopkotha.gui.Window : Replicable {
 	public enum tasks {
 		SHOW_WINDOW = 1,
 		DESTROY,
+		RESIZE,
 	}
 	public Window() {
 		core.assert(menu != null);
-		this.init(200, 400);
+		//onResize(200, 400);
 		windowActionCB = null;
+		setPane(20, menu);
 	}
-	public virtual void init(int w, int h) {
+	public virtual int onResize(int w, int h) {
 		/** The width of the list */
 		this.width = w;
 		this.halfWidth = w>>1;
@@ -60,8 +62,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 		/** Menu start position by pixel along Y-axis */
 		this.height = h;
 		this.menuY = h - menu.getBaseHeight();
-		//this.menuY = h - 0;
-		setPane(20, menu);
+		return 0;
 	}
 	public abstract void show();
 	public void showFull(ArrayList<EventOwner>*left_option, EventOwner right_option) {

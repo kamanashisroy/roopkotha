@@ -30,10 +30,11 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 		return 0;
 	}
 
-	public int setSize(int gWidth, int gHeight) {
+	public override int onResize(int gWidth, int gHeight) {
 		width = gWidth;
 		height = gHeight;
 		panelTop = TITLE_FONT.getHeight() + PADDING*2;
+		dirty = true;
 		return 0;
 	}
 

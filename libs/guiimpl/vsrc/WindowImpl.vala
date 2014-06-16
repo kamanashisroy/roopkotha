@@ -12,26 +12,43 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	GraphicsPixelMap?gfx;
 	TitleImpl titlePane;
 	protected int panelTop;
+	bool dirty;
 	public WindowImpl(etxt*aTitle) {
 		menu = new MenuImpl();
 		gfx = null;
 		panes = ArrayList<Pane>();
 		windowId = 0x01; // currently we support only one window.
-		base();
 		titlePane = new TitleImpl(this, aTitle, PADDING);
+		base();
 		setPane(19, titlePane);
 		GUIInputImpl eHandler = new GUIInputImpl();
 		eHandler.reset(this);
 		gi = eHandler;
 		panelTop = 0;
+		dirty = false;
 	}
 	
 	~WindowImpl() {
 		panes.destroy();
 	}
 	
+	public override int onResize(int w, int h) {
+		base.onResize(w, h);
+		titlePane.onResize(w, h);
+		setDirty();
+		return 0;
+	}
+
 	public override void setTitle(aroop.txt title) {
 		titlePane.setTitle(title);
+	}
+
+	public void setDirty() {
+		if(dirty) {
+			return;
+		}
+		GUICoreImpl.gcore.setDirty(this);
+		dirty = true;
 	}
 
 	public override void show() {
@@ -45,7 +62,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		etxt task = etxt.EMPTY();
 		showTask.getTaskAs(&task);
 		GUICoreImpl.gcore.pushTask(&task);
-		GUICoreImpl.gcore.setDirty(this);
+		setDirty();
 	}
 
 	public override roopkotha.gui.Font getFont(roopkotha.gui.Font.Face face, roopkotha.gui.Font.Variant vars) {
@@ -70,6 +87,24 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 
 	public void getPaneIterator(Iterator<container<Pane>>*it, int if_set, int if_not_set) {
 		panes.iterator_hacked(it, if_set, if_not_set, 0);
+	}
+
+	public int process() {
+		dirty = false;
+		Iterator<container<Pane>>it = Iterator<container<Pane>>.EMPTY();
+		getPaneIterator(&it, Replica_flags.ALL, 0);
+		while(it.next()) {
+			Pane pn = it.get().get();
+			Graphics g = pn.getGraphics();
+			// TODO check if the pane has changed
+			if(pn.isDirty()) {
+				pn.paint(g);
+			}
+			Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
+			GUICoreImpl.gcore.pushGraphicsTask(g);
+		}
+		it.destroy();
+		return 0;
 	}
 }
 /** @} */

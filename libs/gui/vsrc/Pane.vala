@@ -13,6 +13,7 @@ public abstract class roopkotha.gui.Pane : Replicable {
 	public bool isDirty() {
 		return dirty;
 	}
+	public abstract int onResize(int w, int h);
 	public abstract void paint(roopkotha.gui.Graphics g);
 	public abstract roopkotha.gui.Graphics getGraphics();
 }

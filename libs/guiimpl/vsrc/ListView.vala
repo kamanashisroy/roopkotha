@@ -173,7 +173,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		}
 	}
 
-	public override void paint(roopkotha.gui.Graphics g) {
+	public void paint(roopkotha.gui.Graphics g) {
 		etxt dlg = etxt.stack(64);
 		dlg.printf("Drawing list...\n");
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
@@ -190,7 +190,6 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 					x, y + roopkotha.gui.ListView.display.RESOLUTION);
 		}
 //#if FIXME_LATER
-		base.paint(g);
 //#endif
 		aroop.txt hint = this.get_hint();
 		if (hint != null && !menu.isActive() && this.selected_index != -1 && this.getCount()

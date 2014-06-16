@@ -52,6 +52,7 @@ struct x11_guicore {
 };
 static char*argv[2] = {"shotodol.bin", "man"};
 static int argc = 1;
+char*default_title = "Hello";
 static struct x11_guicore gcore;
 static int platform_window_init();
 static int platform_window_deinit();
@@ -115,12 +116,235 @@ int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len) {
 	return cmd;
 }
 
+int msg_string_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aroop_txt_t*output) {
+	SYNC_ASSERT(*cur_type == 1); // we expect string value
+	int cmd = 0;
+	if(*cur_len > 0) {
+		output->str = msg->str+*offset;
+	} else {
+		output->str = NULL;
+	}
+	output->len = *cur_len;
+	output->size = *cur_len;
+	output->proto = NULL;
+	return 0;
+}
+
+int msg_binary_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aroop_txt_t*output) {
+	SYNC_ASSERT(*cur_type == 1); // we expect string value
+	int cmd = 0;
+	if(*cur_len > 0) {
+		output->str = msg->str+*offset;
+	} else {
+		output->str = NULL;
+	}
+	output->len = *cur_len;
+	output->size = *cur_len;
+	output->proto = NULL;
+	return 0;
+}
+
+
+int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
+	// check the task ..
+	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
+	printf("msglen:%d, offset %d, key length %d\n", msg->len, *offset, *cur_len);
+	switch(cmd) {
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_IMAGE:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			aroop_txt_t img_data;
+			msg_binary_value(msg, offset, cur_type, cur_len, &img_data);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int anc = msg_numeric_value(msg, offset, cur_type, cur_len);
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_LINE:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x1 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y1 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x2 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y2 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO draw line
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_RECT:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int width = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO draw rect
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_ROUND_RECT:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int width = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int arcWidth = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int arcHeight = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO draw round rect
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_RECT:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int width = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO fill rect
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_ROUND_RECT:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int width = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int arcWidth = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int arcHeight = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO fill round rect
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_TRIANGLE:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x1 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y1 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x2 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y2 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x3 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y3 = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO draw line
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_STRING:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			aroop_txt_t content;
+			msg_string_value(msg, offset, cur_type, cur_len, &content);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int x = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int y = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int width = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int height = msg_numeric_value(msg, offset, cur_type, cur_len);
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int anc = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO draw string
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_COLOR: // TODO abolish this task
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int rgb = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO set color
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_FONT: // TODO abolish this task
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int fontid = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO set font
+			break;
+		}
+	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_START_LAYER:
+		{
+			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
+			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
+			int layer = msg_numeric_value(msg, offset, cur_type, cur_len);
+			// TODO save the layer
+			break;
+		}
+	}
+	return 0;
+}
+
 int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
 	// check the task ..
 	static int ready = 0;
 	ready++;
 	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
-	printf("msglen:%d, offset %d, key length %d\n", msg->len, *offset, *cur_len);
+	//printf("msglen:%d, offset %d, key length %d\n", msg->len, *offset, *cur_len);
 	SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 	SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 	int wid = msg_numeric_value(msg, offset, cur_type, cur_len);
@@ -141,8 +365,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 
 			pw = XCreateSimpleWindow(gcore.disp, DefaultRootWindow(gcore.disp), myhint.x, myhint.y, myhint.width, myhint.height, 5, myforeground, mybackground);
 			aroop_indexed_list_set(&gcore.pwins, wid, pw);
-			char*title = "Hello";
-  			XSetStandardProperties (gcore.disp, pw, title, title, None, argv, argc, &myhint);
+  			XSetStandardProperties (gcore.disp, pw, default_title, default_title, None, argv, argc, &myhint);
 			if(gc == NULL) {
 				gc = XCreateGC(gcore.disp, pw, 0, 0);
 				aroop_indexed_list_set(&gcore.pgfx, wid, gc);
@@ -150,7 +373,7 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 				XSetForeground (gcore.disp, gc, myforeground);	/* Select input devices to listen to: */
 				XSelectInput (gcore.disp, pw, ButtonPressMask | KeyPressMask | ExposureMask);	/* Actually display the window: */
 				XMapRaised (gcore.disp, pw);
-				watchdog_log_string("Created new window\n");
+				watchdog_log_string("Created new X11 window\n");
 			}
 		}
 		watchdog_log_string("Show window\n");
@@ -195,21 +418,17 @@ static int perform_task() {
 	aroop_txt_t*msg = NULL;
 	//watchdog_log_string("Platform:see if there is any message\n");
 	while((msg = (aroop_txt_t*)opp_dequeue(&gcore.msgq))) {
-		watchdog_log_string("Platform:There is message\n");
 		int offset = 0;
 		int cur_key = 0;
 		int cur_type = 0;
 		int cur_len = 0;
 		while(msg_next(msg, &offset, &cur_key, &cur_type, &cur_len) != -1) {
-			watchdog_log_string("Platform:Parsing messag, see what we need to do\n");
 			switch(cur_key) {
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK:
-				watchdog_log_string("Platform:window task\n");
 				perform_window_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
-				watchdog_log_string("Platform:graphics task\n");
-				//perform_gui_task(msg, &offset, &cur_key, &cur_type, &cur_len);
+				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			default:
 				break;

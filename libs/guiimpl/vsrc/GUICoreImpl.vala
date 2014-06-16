@@ -16,7 +16,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		taskFactory = Factory<GUITask>.for_type(64);
 		base();
 		gcore = this;
-		step();
+		//step();
 	}
 	
 	~GUICoreImpl() {
@@ -37,7 +37,9 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 				Pane pn = it.get().get();
 				Graphics g = pn.getGraphics();
 				// TODO check if the pane has changed
-				pn.paint(g);
+				if(pn.isDirty()) {
+					pn.paint(g);
+				}
 				Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
 				gcore.pushGraphicsTask(g);
 			}
@@ -63,7 +65,9 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		gfx.finalize();
 		etxt task = etxt.EMPTY();
 		gfx.task.getTaskAs(&task);
-		plat.pushTask(&task);
+		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "Graphics task size", task.length());
+		if(task.length() > 0)
+			plat.pushTask(&task);
 	}
 }
 /** @} */

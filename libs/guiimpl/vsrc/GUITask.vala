@@ -12,9 +12,10 @@ public class roopkotha.gui.GUITask : Replicable {
 	public Carton msg;
 	public void build(int gsize) {
 		len = 0;
+		// TODO get size automatically, not from parameter ..
 		size = gsize;
 	}
-	public void finalize(Bundler bndlr) {
+	public void finalize(Bundler*bndlr) {
 		bndlr.close();
 		len = bndlr.size;
 	}

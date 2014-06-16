@@ -31,6 +31,20 @@ using roopkotha.gui;
  * It is implemented in the platform.
  **/
 public abstract class roopkotha.gui.Graphics : Replicable {
+	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GRAPHICS_TASKS_")]
+	public enum tasks {
+		DRAW_IMAGE = 1,
+		DRAW_STRING,
+		DRAW_LINE,
+		DRAW_RECT,
+		DRAW_ROUND_RECT,
+		FILL_RECT,
+		FILL_ROUND_RECT,
+		FILL_TRIANGLE,
+		SET_COLOR,
+		SET_FONT,
+		START_LAYER,
+	}
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_")]
 	public enum anchor {
 		TOP = 1,

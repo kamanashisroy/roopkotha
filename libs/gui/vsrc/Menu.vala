@@ -204,6 +204,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 				draw_base(parent, g, width, height, null, rightOption);
 			}
 		}
+		dirty = false;
 		return;
 	}
 	internal int getBaseHeight() {
@@ -376,7 +377,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	}
 	public Menu(Font aTowerFont, Font aBaseFont) {
 	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
-		memclean_raw();
+		//memclean_raw();
 		TOWER_FONT = aTowerFont;
 		BASE_FONT = aBaseFont;
 		menuOptions = null;
@@ -390,6 +391,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		etxt filterText = aroop.etxt.from_static("Filter");
 		FILLER = new EventOwner.from_etxt(&filterText);
 		rightOption = FILLER;
+		dirty = true;
 	}
 }
 /** @} */

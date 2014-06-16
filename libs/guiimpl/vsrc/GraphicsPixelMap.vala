@@ -30,31 +30,20 @@ using roopkotha.gui;
  * This is responsible for drawing the image in commands, so that it can be drawn/redrawn or backed up for use.
  **/
 public class roopkotha.gui.GraphicsPixelMap : Graphics {
-	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GRAPHICS_TASKS_")]
-	public enum tasks {
-		DRAW_IMAGE = 1,
-		DRAW_STRING,
-		DRAW_LINE,
-		DRAW_RECT,
-		DRAW_ROUND_RECT,
-		FILL_RECT,
-		FILL_ROUND_RECT,
-		FILL_TRIANGLE,
-		SET_COLOR,
-		SET_FONT,
-		START_LAYER,
-	}
 	Bundler bndlr;
 	int currentColor;
 	internal GUITask?task;
+	bool finalized;
 	GraphicsPixelMap.Full(Carton*ctn, int size) {
 		bndlr = Bundler();
 		bndlr.setCarton(ctn, size);
 		currentColor = 1;
+		finalized = false;
 	}
 	public GraphicsPixelMap.fromTask(GUITask gTask) {
 		// allocate memory from factory
 		task = gTask;
+		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "task.size", task.size);
 		GraphicsPixelMap.Full(&task.msg, task.size);
 	}
 	public override void drawImage(onubodh.RawImage img, int x, int y, int anc) {
@@ -139,7 +128,9 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, 1);
 	}
 	public void finalize() {
-		bndlr.close();
+		if(finalized) return;
+		task.finalize(&bndlr);
+		finalized = true;
 	}
 }
 

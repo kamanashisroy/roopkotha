@@ -44,6 +44,22 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			if(win != null)win.onResize(w,h);
 			break;
 		}
+		case Window.tasks.KEY_PRESS:
+		{
+			// get the arguments ..
+			int key = bndlr.next();
+			core.assert(key == entries.ARG);
+			int wid = bndlr.getIntContent();
+			key = bndlr.next();
+			core.assert(key == entries.ARG);
+			int keycode = bndlr.getIntContent();
+			key = bndlr.next();
+			core.assert(key == entries.ARG);
+			int shiftcode = bndlr.getIntContent();
+			Window?win = windows.get(wid);
+			if(win != null)win.onEvent(null, GUIInput.eventType.KEYBOARD_EVENT, keycode, shiftcode, 0);
+			break;
+		}
 		}
 		return 0;
 	}

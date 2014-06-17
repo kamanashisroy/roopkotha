@@ -46,6 +46,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 		SHOW_WINDOW = 1,
 		DESTROY,
 		RESIZE,
+		KEY_PRESS,
 	}
 	public Window() {
 		core.assert(menu != null);

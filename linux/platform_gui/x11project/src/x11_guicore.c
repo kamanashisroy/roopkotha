@@ -403,8 +403,10 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 	switch(cmd) {
 	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW:
 		if(pw == 0) {
-			unsigned long mybackground = WhitePixel (gcore.disp, gcore.scrn);
- 			unsigned long myforeground = BlackPixel (gcore.disp, gcore.scrn);
+			//unsigned long mybackground = WhitePixel (gcore.disp, gcore.scrn);
+ 			//unsigned long myforeground = BlackPixel (gcore.disp, gcore.scrn);
+			unsigned long mybackground = BlackPixel (gcore.disp, gcore.scrn);
+ 			unsigned long myforeground = WhitePixel (gcore.disp, gcore.scrn);
   			XSizeHints myhint;
 			/* Suggest where to position the window: */
 			myhint.x = 200;
@@ -490,6 +492,57 @@ static int repaint_x11() {
 	return 0;
 }
 
+static int key_event_map(KeySym key) {
+	int x = 0;
+	switch(key) {
+        case XK_Up:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_UP;
+        break;
+        case XK_Down:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_DOWN;
+        break;
+        case XK_Right:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_RIGHT;
+        break;
+        case XK_Left:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_LEFT;
+        break;
+        case XK_Linefeed:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_ENTER;
+        break;
+        case XK_Return:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_RETURN;
+        break;
+        case XK_F1:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_F1;
+        break;
+        case XK_F2:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_F2;
+        break;
+        case XK_Escape:
+            x = ENUM_ROOPKOTHA_ACTION_INPUT_KEY_KEY_ESCAPE;
+        break;
+	default:
+	break;
+        }
+	return x;
+}
+
+static int msg_enqueue(int key, int type, int argc, ...) {
+	aroop_txt_t*msg = aroop_txt_new(NULL, 64, NULL, 0);
+	msg->len = 0;
+	msg_write_int(msg, key, type);
+	va_list a_list;
+    	va_start( a_list, argc );
+	int i = 0;
+	for (i = 0; i < argc; i++ ) {
+        	int x = va_arg ( a_list, int ); 
+		msg_write_int(msg, ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG, x);
+	}
+	va_end (a_list);
+	opp_enqueue(&gcore.outgoing, msg);
+}
+
 static int perform_x11_task() {
 	if(XPending(gcore.disp) == 0)
 		return 0;
@@ -506,15 +559,9 @@ static int perform_x11_task() {
 		break;
 		case ResizeRequest:
 		{
-			aroop_txt_t*msg = aroop_txt_new(NULL, 64, NULL, 0);
-			msg->len = 0;
 			XResizeRequestEvent ev = myevent.xresizerequest;
-			msg_write_int(msg, ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_RESIZE);
 			// TODO set the correct window id
-			msg_write_int(msg, ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG, 1); // window id is 1
-			msg_write_int(msg, ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG, ev.width);
-			msg_write_int(msg, ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG, ev.height);
-			opp_enqueue(&gcore.outgoing, msg);
+			msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_RESIZE, 3, 1, ev.width, ev.height);
 		}
 		break;
 #if 0
@@ -523,12 +570,24 @@ static int perform_x11_task() {
 				    mygc, myevent.xbutton.x, myevent.xbutton.y, hi,
 				    strlen (hi));
 		  break;
-		case KeyPress:		/* Process key press - quit on q: */
-		  i = XLookupString (&myevent, text, 10, &mykey, 0);
-		  if (i == 1 && text[0] == 'q')
-		    done = 1;
-		  break;
 #endif
+		case KeyPress:		/* Process key press - quit on q: */
+		{
+			char text[10];
+			KeySym skey = 0;
+			XComposeStatus compose;
+		  	int nChar = XLookupString (&myevent, text, 10, &skey, &compose);
+			int i;
+			int code = key_event_map(skey);
+			if(code) {
+				// TODO set the correct window id
+				msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_KEY_PRESS, 3, 1, 0, code);
+			} else {
+				for(i = 0; i < nChar; i++) 
+					msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_KEY_PRESS, 3, 1, text[i], code);
+			}
+		}
+		break;
 	}
 	return 0;
 }

@@ -43,7 +43,7 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);
-		g.fillRect(0, 0, this.width, this.panelTop);
+		g.fillRect(0, 0, width, panelTop);
 		// #ifdef net.ayaslive.miniim.ui.core.window.titleShadow
 		// draw shadow
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleShadow%);

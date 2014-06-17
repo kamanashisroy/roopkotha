@@ -88,6 +88,7 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, anc);
 	}
 	public override void fillRect(int x, int y, int width, int height) {
+		core.assert(width >= 0);
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.FILL_RECT);
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);

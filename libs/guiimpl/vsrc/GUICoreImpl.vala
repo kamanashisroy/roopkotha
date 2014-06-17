@@ -26,22 +26,22 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	}
 
 	public int performWindowTask(Bundler*bndlr) {
-		int cmd = bndlr.getIntContent();
+		aroop_uword32 cmd = bndlr.getIntContent();
 		switch(cmd) {
 		case Window.tasks.RESIZE:
 		{
 			// get the arguments ..
 			int key = bndlr.next();
 			core.assert(key == entries.ARG);
-			int wid = bndlr.getIntContent();
+			aroop_uword32 wid = bndlr.getIntContent();
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
-			int w = bndlr.getIntContent();
+			aroop_uword32 w = bndlr.getIntContent();
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
-			int h = bndlr.getIntContent();
-			Window?win = windows.get(wid);
-			if(win != null)win.onResize(w,h);
+			aroop_uword32 h = bndlr.getIntContent();
+			Window?win = windows.get((int)wid);
+			if(win != null)win.onResize((int)w,(int)h);
 			break;
 		}
 		case Window.tasks.KEY_PRESS:
@@ -49,15 +49,15 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			// get the arguments ..
 			int key = bndlr.next();
 			core.assert(key == entries.ARG);
-			int wid = bndlr.getIntContent();
+			aroop_uword32 wid = bndlr.getIntContent();
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
-			int keycode = bndlr.getIntContent();
+			aroop_uword32 keycode = bndlr.getIntContent();
 			key = bndlr.next();
 			core.assert(key == entries.ARG);
-			int shiftcode = bndlr.getIntContent();
-			Window?win = windows.get(wid);
-			if(win != null)win.onEvent(null, GUIInput.eventType.KEYBOARD_EVENT, keycode, shiftcode, 0);
+			aroop_uword32 shiftcode = bndlr.getIntContent();
+			Window?win = windows.get((int)wid);
+			if(win != null)win.onEvent(null, GUIInput.eventType.KEYBOARD_EVENT, (int)keycode, (int)shiftcode, 0);
 			break;
 		}
 		}

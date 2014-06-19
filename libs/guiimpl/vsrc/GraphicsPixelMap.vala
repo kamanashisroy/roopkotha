@@ -118,6 +118,7 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		return currentColor;
 	}
 	public override void setColor(int rgb) {
+		if(currentColor == rgb) return ; // optimize
 		currentColor = rgb;
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.SET_COLOR);
 		bndlr.writeInt(GUICore.entries.ARG, rgb);

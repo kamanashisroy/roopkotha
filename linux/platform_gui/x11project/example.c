@@ -45,6 +45,7 @@ main (argc, argv)
   XSetForeground (mydisplay, mygc, myforeground);	/* Select input devices to listen to: */
   XSelectInput (mydisplay, mywindow, ButtonPressMask | KeyPressMask | ExposureMask);	/* Actually display the window: */
   XMapRaised (mydisplay, mywindow);
+  XSetFunction( mydisplay, mygc, GXcopy );
 
 /* Main Event Loop: This is the core of any X program: */ done = 0;
   while (done == 0)
@@ -61,7 +62,27 @@ main (argc, argv)
 	  XRefreshKeyboardMapping (&myevent);
 	  break;
 	case ButtonPress:	/* Process mouse click - output Hi! at mouse: */
-
+	{
+		Colormap colormap;
+		colormap = DefaultColormap(myevent.xbutton.display, myscreen);
+		int rgb = 0x0099CC;
+		XColor rgbc;
+#define RGBC rgbc
+		RGBC.red = ((rgb & 0xFF0000)>>16) & 0xFF;
+		RGBC.green = ((rgb & 0xFF00)>>8) & 0xFF;
+		RGBC.blue = rgb & 0xFF;
+		//XAllocNamedColor(myevent.xbutton.display, colormap, "red", &RGBC, &RGBC);
+		XParseColor (myevent.xbutton.display, colormap, "#FF0000", &RGBC);
+		XAllocColor(myevent.xbutton.display, colormap, &RGBC);
+		//XParseColor (myevent.xbutton.display, colormap, "rgb:FF/FF/FF", &RGBC);
+		XSetForeground(myevent.xbutton.display, mygc, RGBC.pixel);
+		XDrawRectangle(myevent.xbutton.display, myevent.xbutton.window, mygc
+			, myevent.xbutton.x
+			, myevent.xbutton.y
+			, 10
+			, 10
+		);
+	}
 	  XDrawImageString (myevent.xbutton.display, myevent.xbutton.window,
 			    mygc, myevent.xbutton.x, myevent.xbutton.y, hi,
 			    strlen (hi));

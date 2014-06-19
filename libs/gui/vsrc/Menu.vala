@@ -76,21 +76,17 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 
 	void draw_base(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height, EventOwner? left, EventOwner? right) {
 		/* draw the background of the menu */
-		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgBase%);
-		g.setColor(0x006699);
+		g.setColor(parent.style.getColor(StyleTarget.MENU_BG_BASE));
 		g.fillRect(0, height - BASE_HEIGHT, width, BASE_HEIGHT);
 
-		// #ifdef net.ayaslive.miniim.ui.core.menu.baseShadow
-		// draw shadow
-		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.baseShadow%);
-		g.setColor(0x006699);
-		g.drawLine(0, height - BASE_HEIGHT, width, height - BASE_HEIGHT);
-		// #endif
+		if(!parent.style.testFlag(StyleApproach.LIGHT)) {
+			g.setColor(parent.style.getColor(StyleTarget.MENU_BASE_SHADOW));
+			g.drawLine(0, height - BASE_HEIGHT, width, height - BASE_HEIGHT);
+		}
 
 		/* draw left and right menu options */
 		g.setFont(BASE_FONT);
-		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.fgBase%);
-		g.setColor(0xFFFFFF);
+		g.setColor(parent.style.getColor(StyleTarget.MENU_FG_BASE));
 
 		if(left != null) {
 			etxt label = etxt.EMPTY();
@@ -152,12 +148,10 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		/* now we know the bounds of active menu */
 
 		/* draw active menu's background */
-		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bg%);
-		g.setColor(0xFFFFFF);
+		g.setColor(parent.style.getColor(StyleTarget.MENU_BG));
 		g.fillRect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
 		/* draw border of the menu */
-		// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.borderTower%); // gray
-		g.setColor(0xCCCCCC); // gray
+		g.setColor(parent.style.getColor(StyleTarget.MENU_TOWER_BORDER));
 		g.drawRect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
 
 		/* draw menu options (from up to bottom) */
@@ -170,15 +164,12 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			cmd.getLabel(&label);
 			//opp_at_ncode(cmd, menuOptions, i,
 			if (j != selectedOptionIndex) { /* draw unselected menu option */
-				// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.fg%);
-				g.setColor(0x000000);
+				g.setColor(parent.style.getColor(StyleTarget.MENU_FG));
 			} else { /* draw selected menu option */
 				/* draw a background */
-				// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.bgHover%);
-				g.setColor(0x0099CC);
+				g.setColor(parent.style.getColor(StyleTarget.MENU_BG_HOVER));
 				g.fillRect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
-				// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.borderHover%);
-				g.setColor(0x006699);
+				g.setColor(parent.style.getColor(StyleTarget.MENU_BORDER_HOVER));
 				g.drawRect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
 				/**
 				 * The simplest way to separate selected menu option is by
@@ -186,8 +177,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 				 * painted as underlined text or with different background
 				 * color.
 				 */
-				// #expand g.setColor(%net.ayaslive.miniim.ui.core.menu.fgHover%);
-				g.setColor(0xFFFFFF);
+				g.setColor(parent.style.getColor(StyleTarget.MENU_FG_HOVER));
 			}
 
 			parent.gi.registerScreenEvent(cmd, 0, menuOptionY

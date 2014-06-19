@@ -45,6 +45,7 @@ C_CAPSULE_START
 struct x11_guicore {
 	Display*disp;
   	int scrn;
+	//XColor rgbc;
 	opp_factory_t pwins;
 	opp_factory_t layers;
 	opp_factory_t pgfx;
@@ -80,127 +81,7 @@ int platform_impl_guicore_destroy(PlatformRoopkothaGUICore*UNUSED_VAR(nothing)) 
 }
 
 #include "msg_parser.c"
-
-int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len, Window*win, GC*gc) {
-	// check the task ..
-	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
-	switch(cmd) {
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_IMAGE:
-		{
-			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
-			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
-			aroop_txt_t img_data;
-			msg_binary_value(msg, offset, cur_type, cur_len, &img_data);
-			unsigned int x,y,anc;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 3, &x, &y, &anc);
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_LINE:
-		{
-			unsigned int x1,x2,y1,y2;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 4, &x1, &y1, &x2, &y2);
-	    		if(*win != NULL) {
-				XDrawLine (gcore.disp, *win,*gc, x1, y1, x2, y2);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_RECT:
-		{
-			unsigned int x,y,width,height;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 4, &x, &y, &width, &height);
-	    		if(*win != NULL) {
-				XDrawRectangle (gcore.disp, *win,*gc, x, y, width, height);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_ROUND_RECT:
-		{
-			int x,y,width,height,arcWidth,arcHeight;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 6, &x, &y, &width, &height, &arcWidth, &arcHeight);
-	    		if(*win != NULL) {
-				XDrawRectangle (gcore.disp, *win,*gc, x, y, width, height);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_RECT:
-		{
-			unsigned int x,y,width,height;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 4, &x, &y, &width, &height);
-	    		if(*win != NULL) {
-				XFillRectangle (gcore.disp, *win,*gc, x, y, width, height);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_ROUND_RECT:
-		{
-			int x,y,width,height,arcWidth,arcHeight;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 6, &x, &y, &width, &height, &arcWidth, &arcHeight);
-	    		if(*win != NULL) {
-				XFillRectangle (gcore.disp, *win,*gc, x, y, width, height);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_FILL_TRIANGLE:
-		{
-			int x1,y1,x2,y2,x3,y3;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 6, &x1, &y1, &x2, &y2, &x3, &y3);
-			// TODO draw line
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_STRING:
-		{
-			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
-			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
-			aroop_txt_t content;
-			msg_string_value(msg, offset, cur_type, cur_len, &content);
-			int x,y,width,height,anc;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 5, &x, &y, &width, &height, &anc);
-	    		if(*win != NULL) {
-				//watchdog_log_string("Rendering string\n");
-				XDrawImageString (gcore.disp, *win,*gc, x+10, y+10, content.str, content.len);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_COLOR: // TODO abolish this task
-		{
-			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
-			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
-			int rgb = msg_numeric_value(msg, offset, cur_type, cur_len);
-	    		if(*win != NULL) {
-				//XSetForeground (gcore.disp, *gc, rgb);
-			}
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_FONT: // TODO abolish this task
-		{
-			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
-			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
-			int fontid = msg_numeric_value(msg, offset, cur_type, cur_len);
-			// TODO set font
-			break;
-		}
-	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_START_LAYER:
-		{
-			int wid,layer;
-			msg_scan(msg, offset, cur_key, cur_type, cur_len, 2, &wid, &layer);
-			Window pw = (Window)opp_indexed_list_get(&gcore.pwins, wid);
-			GC wgc = (GC)opp_indexed_list_get(&gcore.pgfx, wid);
-			*win = pw;
-			*gc = wgc;
-			// save the layer
-			aroop_txt_t*oldTasks = opp_indexed_list_get(&gcore.layers, layer);
-			if(oldTasks != msg) {
-				opp_indexed_list_set(&gcore.layers, layer, msg);
-			}
-			if(oldTasks) {
-				aroop_object_unref(aroop_txt_t*,0,oldTasks);
-			}
-			break;
-		}
-	}
-	return 0;
-}
-
+#include "x11_graphics.c"
 int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
 	// check the task ..
 	static int ready = 0;
@@ -214,10 +95,10 @@ int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, 
 	switch(cmd) {
 	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW:
 		if(pw == 0) {
-			//unsigned long mybackground = WhitePixel (gcore.disp, gcore.scrn);
- 			//unsigned long myforeground = BlackPixel (gcore.disp, gcore.scrn);
-			unsigned long mybackground = BlackPixel (gcore.disp, gcore.scrn);
- 			unsigned long myforeground = WhitePixel (gcore.disp, gcore.scrn);
+			unsigned long mybackground = WhitePixel (gcore.disp, gcore.scrn);
+ 			unsigned long myforeground = BlackPixel (gcore.disp, gcore.scrn);
+			//unsigned long mybackground = BlackPixel (gcore.disp, gcore.scrn);
+ 			//unsigned long myforeground = WhitePixel (gcore.disp, gcore.scrn);
   			XSizeHints myhint;
 			/* Suggest where to position the window: */
 			myhint.x = 200;
@@ -387,7 +268,7 @@ static int perform_x11_task() {
 			char text[10];
 			KeySym skey = 0;
 			XComposeStatus compose;
-		  	int nChar = XLookupString (&myevent, text, 10, &skey, &compose);
+		  	int nChar = XLookupString (&myevent.xkey, text, 10, &skey, &compose);
 			int i;
 			int code = key_event_map(skey);
 			if(code) {

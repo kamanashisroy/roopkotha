@@ -40,6 +40,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 	public int PADDING;
 	WindowActionCB?windowActionCB;
 	public GUIInput gi;
+	public Style style;
 	protected Menu? menu;
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_WINDOW_TASK_")]
 	public enum tasks {
@@ -53,6 +54,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 		onResize(200, 400);
 		windowActionCB = null;
 		setPane(20, menu);
+		style = Style();
 	}
 	public virtual int onResize(int w, int h) {
 		/** The width of the list */

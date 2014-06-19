@@ -247,6 +247,13 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		return 0;
 	}
 	public bool handleEvent(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
+		if(handleEventHelper(win, target, flags, key_code, x, y)) {
+			dirty = true;
+			return true;
+		}
+		return false;
+	}
+	public bool handleEventHelper(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
 		if((flags & roopkotha.gui.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "keyboard : ..\n");
 			switch(x) {

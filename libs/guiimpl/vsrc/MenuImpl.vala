@@ -14,8 +14,8 @@ public class roopkotha.gui.MenuImpl: Menu {
 	public override roopkotha.gui.Graphics getGraphics() {
 		if(gfx != null)
 			return gfx;
-		GUITask task = GUICoreImpl.gcore.taskFactory.alloc_full(256);
-		task.build(256);
+		GUITask task = GUICoreImpl.gcore.taskFactory.alloc_full(1024);
+		task.build(1024);
 		gfx = new GraphicsPixelMap.fromTask(task);
 		return gfx;
 	}

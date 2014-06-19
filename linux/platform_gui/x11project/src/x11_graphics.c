@@ -1,8 +1,8 @@
 
-#define IS_VALID_WIN(x) (*x != 0)
-int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len, Window*win, GC*gc) {
+static int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len, x11_window_t**gwin) {
 	// check the task ..
 	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
+	x11_window_t*win = *gwin;
 	switch(cmd) {
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_DRAW_IMAGE:
 		{
@@ -18,8 +18,8 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			unsigned int x1,x2,y1,y2;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 4, &x1, &y1, &x2, &y2);
-	    		if(IS_VALID_WIN(win)) {
-				XDrawLine (gcore.disp, *win,*gc, x1, y1, x2, y2);
+	    		if(win) {
+				XDrawLine (gcore.disp, win->w, win->gc, x1, y1, x2, y2);
 			}
 			break;
 		}
@@ -27,8 +27,8 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			unsigned int x,y,width,height;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 4, &x, &y, &width, &height);
-	    		if(IS_VALID_WIN(win)) {
-				XDrawRectangle (gcore.disp, *win,*gc, x, y, width, height);
+	    		if(win) {
+				XDrawRectangle (gcore.disp, win->w, win->gc, x, y, width, height);
 			}
 			break;
 		}
@@ -36,8 +36,8 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			int x,y,width,height,arcWidth,arcHeight;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 6, &x, &y, &width, &height, &arcWidth, &arcHeight);
-	    		if(IS_VALID_WIN(win)) {
-				XDrawRectangle (gcore.disp, *win,*gc, x, y, width, height);
+	    		if(win) {
+				XDrawRectangle (gcore.disp, win->w,win->gc, x, y, width, height);
 			}
 			break;
 		}
@@ -45,8 +45,8 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			unsigned int x,y,width,height;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 4, &x, &y, &width, &height);
-	    		if(IS_VALID_WIN(win)) {
-				XFillRectangle (gcore.disp, *win,*gc, x, y, width, height);
+	    		if(win) {
+				XFillRectangle (gcore.disp, win->w,win->gc, x, y, width, height);
 			}
 			break;
 		}
@@ -54,8 +54,8 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			int x,y,width,height,arcWidth,arcHeight;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 6, &x, &y, &width, &height, &arcWidth, &arcHeight);
-	    		if(IS_VALID_WIN(win)) {
-				XFillRectangle (gcore.disp, *win,*gc, x, y, width, height);
+	    		if(win) {
+				XFillRectangle (gcore.disp, win->w,win->gc, x, y, width, height);
 			}
 			break;
 		}
@@ -74,7 +74,7 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			msg_string_value(msg, offset, cur_type, cur_len, &content);
 			int x,y,width,height,anc;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 5, &x, &y, &width, &height, &anc);
-	    		if(!IS_VALID_WIN(win)) {
+	    		if(!win) {
 				break;
 			}
 			int xpos = x;
@@ -85,7 +85,7 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			if(anc & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_BOTTOM) {
 				ypos = y+height;
 			}
-			XDrawString (gcore.disp, *win,*gc, xpos, ypos, content.str, content.len);
+			XDrawString (gcore.disp, win->w,win->gc, xpos, ypos, content.str, content.len);
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_COLOR: // TODO abolish this task
@@ -93,7 +93,7 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
 			SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
 			unsigned int rgb = msg_numeric_value(msg, offset, cur_type, cur_len);
-	    		if(!IS_VALID_WIN(win)) {
+	    		if(!win) {
 				break;
 			}
 			Colormap colormap;
@@ -109,7 +109,7 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 			XParseColor (gcore.disp, colormap, spec, &RGBC);
 			XAllocColor(gcore.disp, colormap, &RGBC);
 			// TODO free color !
-			XSetForeground (gcore.disp, *gc, RGBC.pixel);
+			XSetForeground (gcore.disp, win->gc, RGBC.pixel);
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_FONT: // TODO abolish this task
@@ -124,10 +124,8 @@ int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type
 		{
 			int wid,layer;
 			msg_scan(msg, offset, cur_key, cur_type, cur_len, 2, &wid, &layer);
-			Window pw = (Window)opp_indexed_list_get(&gcore.pwins, wid);
-			GC wgc = (GC)opp_indexed_list_get(&gcore.pgfx, wid);
-			*win = pw;
-			*gc = wgc;
+			win = get_window(wid);
+			*gwin = win;
 			// save the layer
 			aroop_txt_t*oldTasks = opp_indexed_list_get(&gcore.layers, layer);
 			if(oldTasks != msg) {

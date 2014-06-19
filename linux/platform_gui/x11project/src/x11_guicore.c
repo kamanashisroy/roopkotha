@@ -56,10 +56,7 @@ struct x11_guicore {
 };
 static char*argv[2] = {"shotodol.bin", "man"};
 static int argc = 1;
-char*default_title = "Hello";
 static struct x11_guicore gcore;
-static int platform_window_init();
-static int platform_window_deinit();
 
 PlatformRoopkothaGUICore*platform_impl_guicore_create() {
 	memset(&gcore, 0, sizeof(gcore));
@@ -90,8 +87,7 @@ static int repaint_x11() {
 	for(i = 0; i < 24; i++) {
 		aroop_txt_t*msg = opp_indexed_list_get(&gcore.layers, i);
 		if(!msg)continue;
-		Window pw = 0;
-		GC gc = 0;
+		x11_window_t*win = NULL;
 		int offset = 0;
 		int cur_key = 0;
 		int cur_type = 0;
@@ -99,13 +95,15 @@ static int repaint_x11() {
 		while(msg_next(msg, &offset, &cur_key, &cur_type, &cur_len) != -1) {
 			switch(cur_key) {
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
-				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &pw, &gc);
+				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &win);
 				break;
 			default:
 				break;
 			}
 		}
 		aroop_object_unref(aroop_txt_t*,0,msg);
+		if(win)
+			OPPUNREF(win);
 	}
 	return 0;
 }
@@ -210,8 +208,7 @@ static int perform_x11_task() {
 
 static int perform_task() {
 	aroop_txt_t*msg = NULL;
-	Window pw = 0;
-	GC gc = 0;
+	x11_window_t*win = NULL;
 	while((msg = (aroop_txt_t*)opp_dequeue(&gcore.incoming))) {
 		int offset = 0;
 		int cur_key = 0;
@@ -223,7 +220,7 @@ static int perform_task() {
 				perform_window_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
-				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &pw, &gc);
+				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &win);
 				break;
 			default:
 				break;

@@ -51,6 +51,8 @@ struct x11_guicore {
 	opp_factory_t pgfx;
 	opp_queue_t incoming;
 	opp_queue_t outgoing;
+	int width;
+	int height;
 };
 static char*argv[2] = {"shotodol.bin", "man"};
 static int argc = 1;
@@ -82,85 +84,7 @@ int platform_impl_guicore_destroy(PlatformRoopkothaGUICore*UNUSED_VAR(nothing)) 
 
 #include "msg_parser.c"
 #include "x11_graphics.c"
-int perform_window_task(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*cur_len) {
-	// check the task ..
-	static int ready = 0;
-	ready++;
-	int cmd = msg_numeric_value(msg, offset, cur_type, cur_len);
-	SYNC_ASSERT(msg_next(msg, offset, cur_key, cur_type, cur_len) != -1);
-	SYNC_ASSERT(*cur_key == ENUM_ROOPKOTHA_GUI_CORE_TASK_ARG);
-	int wid = msg_numeric_value(msg, offset, cur_type, cur_len);
-	Window pw = (Window)opp_indexed_list_get(&gcore.pwins, wid);
-	GC gc = (GC)opp_indexed_list_get(&gcore.pgfx, wid);
-	switch(cmd) {
-	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_SHOW_WINDOW:
-		if(pw == 0) {
-			unsigned long mybackground = WhitePixel (gcore.disp, gcore.scrn);
- 			unsigned long myforeground = BlackPixel (gcore.disp, gcore.scrn);
-			//unsigned long mybackground = BlackPixel (gcore.disp, gcore.scrn);
- 			//unsigned long myforeground = WhitePixel (gcore.disp, gcore.scrn);
-  			XSizeHints myhint;
-			/* Suggest where to position the window: */
-			myhint.x = 200;
-			myhint.y = 200;
-			myhint.width = 300;
-			myhint.height = 300;
-			myhint.flags = PPosition | PSize;
-
-			pw = XCreateSimpleWindow(gcore.disp, DefaultRootWindow(gcore.disp), myhint.x, myhint.y, myhint.width, myhint.height, 5, myforeground, mybackground);
-			aroop_indexed_list_set(&gcore.pwins, wid, pw);
-  			XSetStandardProperties (gcore.disp, pw, default_title, default_title, None, argv, argc, &myhint);
-			if(gc == NULL) {
-				gc = XCreateGC(gcore.disp, pw, 0, 0);
-				aroop_indexed_list_set(&gcore.pgfx, wid, gc);
-				XSetBackground (gcore.disp, gc, mybackground);
-				XSetForeground (gcore.disp, gc, myforeground);	/* Select input devices to listen to: */
-				XSelectInput (gcore.disp, pw, ResizeRedirectMask | ButtonPressMask | KeyPressMask | ExposureMask);	/* Actually display the window: */
-				// display window
-				XMapRaised (gcore.disp, pw);
-				//XMapWindow(gcore.disp, pw);
-				watchdog_log_string("Created new X11 window\n");
-  				//XEvent myevent;XNextEvent (gcore.disp, &myevent); // this will render the window in effect
-			}
-		}
-		watchdog_log_string("Show window\n");
-		break;
-	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_DESTROY:
-		aroop_indexed_list_set(&gcore.pgfx, wid, NULL);
-		if(gc != NULL) {
-			// TODO destroy graphics
-		}
-		aroop_indexed_list_set(&gcore.pwins, wid, NULL);
-		if(pw != NULL) {
-			// TODO destroy window
-		}
-	break;
-#if 0
-	case ENUM_ROOPKOTHA_GUI_WINDOW_TASK_PAINT_COMPLETE:
-		qw->setPage(qtg->page);
-		qtg->painter->end();
-		qw->repaint();
-	break;
-#endif
-	}
-	return 0;
-}
-
-static int platform_window_init() {
-	OPP_INDEXED_LIST_CREATE2(&gcore.pwins, 2, OPPL_POINTER_NOREF);
-	OPP_INDEXED_LIST_CREATE2(&gcore.pgfx, 2, OPPL_POINTER_NOREF);
-	OPP_INDEXED_LIST_CREATE2(&gcore.layers, 2, 0);
-	return 0;
-}
-
-static int platform_window_deinit() {
-	// TODO destroy all the windows
-	opp_factory_destroy(&gcore.pwins);
-	opp_factory_destroy(&gcore.pgfx);
-	opp_factory_destroy(&gcore.layers);
-	return 0;
-}
-
+#include "x11_window.c"
 static int repaint_x11() {
 	int i = 0;
 	for(i = 0; i < 24; i++) {
@@ -222,15 +146,6 @@ static int key_event_map(KeySym key) {
 	return x;
 }
 
-/*
-static int set_clip(Window w, int x, int y, int width, int height) {
-	//XResizeWindow(gcore.disp, ev.window, ev.width, ev.height);
-	GC wgc = (GC)opp_indexed_list_get(&gcore.pgfx, 1);
-	Region r = XCreateRegion();
-	XSetRegion(gcore.disp, wgc, r);
-	XDestroyRegion(r);
-}*/
-
 static int perform_x11_task() {
 	if(XPending(gcore.disp) == 0)
 		return 0;
@@ -247,6 +162,16 @@ static int perform_x11_task() {
 		case MappingNotify:	/* Process keyboard mapping changes: */
 			XRefreshKeyboardMapping (&myevent.xmapping);
 		break;
+		case ConfigureNotify:
+		{
+			XConfigureEvent ev = myevent.xconfigure;
+			if(ev.width != gcore.width || ev.height != gcore.height) {
+				msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_RESIZE
+					, 3, 1, ev.width, ev.height);
+			}
+		}
+		break;
+#if 0
 		case ResizeRequest:		/* Resize */
 		{
 			XResizeRequestEvent ev = myevent.xresizerequest;
@@ -256,7 +181,6 @@ static int perform_x11_task() {
 			repaint_x11();
 		}
 		break;
-#if 0
 		case ButtonPress:	/* Process mouse click - output Hi! at mouse: */
 		  XDrawImageString (myevent.xbutton.display, myevent.xbutton.window,
 				    mygc, myevent.xbutton.x, myevent.xbutton.y, hi,

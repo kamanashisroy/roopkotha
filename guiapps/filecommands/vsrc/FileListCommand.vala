@@ -5,7 +5,7 @@ using shotodol_platform_fileutils;
 /** \addtogroup gui_command
  *  @{
  */
-internal class FileListCommand : M100Command {
+internal class FileListCommand : M100QuietCommand {
 	etxt prfx;
 	enum Options {
 		PATH = 1,
@@ -22,11 +22,10 @@ internal class FileListCommand : M100Command {
 		return &prfx;
 	}
 
-	public override int act_on(etxt*cmdstr, OutputStream pad) {
+	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		if(parseOptions(cmdstr, &vals) != 0) {
-			desc(CommandDescType.COMMAND_DESC_FULL, pad);
-			return 0;
+			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
 		}
 		unowned txt?path = null;
 		etxt currentPath = etxt.from_static(".");

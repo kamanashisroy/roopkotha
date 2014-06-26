@@ -4,7 +4,7 @@ using shotodol;
 /** \addtogroup history_command
  *  @{
  */
-internal class HistoryCommand : M100Command {
+internal class HistoryCommand : M100QuietCommand {
 	etxt prfx;
 	enum Options {
 		BACKTO = 1,
@@ -21,11 +21,10 @@ internal class HistoryCommand : M100Command {
 		return &prfx;
 	}
 
-	public override int act_on(etxt*cmdstr, OutputStream pad) {
+	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		if(parseOptions(cmdstr, &vals) != 0) {
-			desc(CommandDescType.COMMAND_DESC_FULL, pad);
-			return 0;
+			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
 		}
 		int back = 1;
 		container<txt>? mod = null;

@@ -189,8 +189,6 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 			g.fillTriangle(x + roopkotha.gui.ListView.display.RESOLUTION / 2, y, x + roopkotha.gui.ListView.display.RESOLUTION, y + roopkotha.gui.ListView.display.RESOLUTION,
 					x, y + roopkotha.gui.ListView.display.RESOLUTION);
 		}
-//#if FIXME_LATER
-//#endif
 		aroop.txt hint = this.get_hint();
 		if (hint != null && !menu.isActive() && this.selected_index != -1 && this.getCount()
 				!= 0) {

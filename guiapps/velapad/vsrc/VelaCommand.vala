@@ -32,29 +32,22 @@ internal class roopkotha.velapad.VelaCommand : M100Command {
 		return &prfx;
 	}
 
-	public override int act_on(etxt*cmdstr, OutputStream pad) {
-		greet(pad);
+	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
 		int ecode = 0;
 		SearchableSet<txt> vals = SearchableSet<txt>();
 		parseOptions(cmdstr, &vals);
-		do {
-			container<txt>? mod;
-			if((mod = vals.search(Options.INFILE, match_all)) != null) {
-				unowned txt infile = mod.get();
-				if(vpad.loadFile(infile) != 0) {
-					break;
-				}
-				bye(pad, true);
-				return 0;
+		container<txt>? mod;
+		if((mod = vals.search(Options.INFILE, match_all)) != null) {
+			unowned txt infile = mod.get();
+			if(vpad.loadFile(infile) != 0) {
+				throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Could not open file");
 			}
-			if((mod = vals.search(Options.OUTFILE, match_all)) != null) {
-				unowned txt outfile = mod.get();
-				print("unimplemented\n");
-				break;
-			}
-			bye(pad, true);
-		} while(false);
-		bye(pad, false);
+			return 0;
+		}
+		if((mod = vals.search(Options.OUTFILE, match_all)) != null) {
+			unowned txt outfile = mod.get();
+			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Unimplemented");
+		}
 		return 0;
 	}
 }

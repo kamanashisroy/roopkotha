@@ -55,7 +55,7 @@ public class roopkotha.velavanilla.VelaVanillaScripted : roopkotha.velavanilla.V
 			//dlg.printf("command:%s\n", cmd.to_string());
 			//shotodol.Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(),10,0,0,0,&dlg);
 			// execute command
-			velac.act_on(cmd, stdo);
+			velac.act_on(cmd, stdo, script);
 		}
 	}
 

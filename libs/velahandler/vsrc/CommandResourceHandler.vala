@@ -30,7 +30,7 @@ public class roopkotha.velahandler.CommandResourceHandler : VelaResourceHandler 
 		etxt cmdTxt = etxt.same_same(&id.url);
 		cmdTxt.shift(len+3);
 		bout.reset();
-		velamds.act_on(&cmdTxt, bout);
+		velamds.act_on(&cmdTxt, bout, null);
 		etxt content = etxt.EMPTY();
 		bout.getAs(&content);
 		print("[%s]\n", content.to_string());

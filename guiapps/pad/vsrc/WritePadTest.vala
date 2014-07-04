@@ -11,7 +11,7 @@ internal class roopkotha.app.WritePadTest : UnitTest {
     tname = etxt.from_static("WritePad Test");
   }
   public override aroop_hash getHash() {
-    return tname.get_hash();
+    return tname.getStringHash();
   }
   public override void getName(etxt*name) {
     name.dup_etxt(&tname);

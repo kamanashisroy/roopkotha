@@ -21,9 +21,7 @@ internal class roopkotha.velapad.VelaCommand : M100Command {
 	}
 	public VelaCommand() {
 		base();
-		etxt input = etxt.from_static("-i");
-		etxt input_help = etxt.from_static("Input file");
-		addOption(&input, M100Command.OptionType.TXT, Options.INFILE, &input_help);
+		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file");
 		vpad = new VelaPad();
 	}
 
@@ -33,19 +31,19 @@ internal class roopkotha.velapad.VelaCommand : M100Command {
 	}
 
 	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
-		int ecode = 0;
-		SearchableSet<txt> vals = SearchableSet<txt>();
-		parseOptions(cmdstr, &vals);
-		container<txt>? mod;
-		if((mod = vals.search(Options.INFILE, match_all)) != null) {
-			unowned txt infile = mod.get();
+		ArrayList<txt> vals = ArrayList<txt>();
+		if(parseOptions(cmdstr, &vals) != 0) {
+			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
+		}
+		txt?infile = vals[Options.INFILE];
+		if(infile != null) {
 			if(vpad.loadFile(infile) != 0) {
 				throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Could not open file");
 			}
 			return 0;
 		}
-		if((mod = vals.search(Options.OUTFILE, match_all)) != null) {
-			unowned txt outfile = mod.get();
+		txt?outfile = vals[Options.OUTFILE];
+		if(outfile != null) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Unimplemented");
 		}
 		return 0;

@@ -24,12 +24,8 @@ public class roopkotha.app.WritePadCommand : M100Command {
 	}
 	public WritePadCommand() {
 		base();
-		etxt input = etxt.from_static("-i");
-		etxt input_help = etxt.from_static("Input file");
-		etxt output = etxt.from_static("-o");
-		etxt output_help = etxt.from_static("Output file");
-		addOption(&input, M100Command.OptionType.TXT, Options.INFILE, &input_help);
-		addOption(&output, M100Command.OptionType.TXT, Options.OUTFILE, &output_help); 
+		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file.");
+		addOptionString("-o", M100Command.OptionType.TXT, Options.OUTFILE, "Output file."); 
 		wpad = null;
 	}
 
@@ -39,12 +35,12 @@ public class roopkotha.app.WritePadCommand : M100Command {
 	}
 
 	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
-		int ecode = 0;
-		SearchableSet<txt> vals = SearchableSet<txt>();
-		parseOptions(cmdstr, &vals);
-		container<txt>? mod;
-		if((mod = vals.search(Options.INFILE, match_all)) != null) {
-			unowned txt infile = mod.get();
+		ArrayList<txt> vals = ArrayList<txt>();
+		if(parseOptions(cmdstr, &vals) != 0) {
+			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
+		}
+		txt?infile = vals[Options.INFILE];
+		if(infile != null) {
 			if(wpad == null) {
 				wpad = new WritePad();
 			}
@@ -53,8 +49,8 @@ public class roopkotha.app.WritePadCommand : M100Command {
 			}
 			return 0;
 		}
-		if((mod = vals.search(Options.OUTFILE, match_all)) != null) {
-			unowned txt outfile = mod.get();
+		txt?outfile = vals[Options.OUTFILE];
+		if(outfile != null) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Unimplemented");
 		}
 		if(wpad == null) {

@@ -12,9 +12,7 @@ internal class FileListCommand : M100QuietCommand {
 	}
 	public FileListCommand() {
 		base();
-		etxt path = etxt.from_static("-p");
-		etxt path_help = etxt.from_static("Path");
-		addOption(&path, M100Command.OptionType.TXT, Options.PATH, &path_help);
+		addOptionString("-p", M100Command.OptionType.TXT, Options.PATH, "Path");
 	}
 	
 	public override etxt*get_prefix() {
@@ -23,17 +21,12 @@ internal class FileListCommand : M100QuietCommand {
 	}
 
 	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
-		SearchableSet<txt> vals = SearchableSet<txt>();
+		ArrayList<txt> vals = ArrayList<txt>();
 		if(parseOptions(cmdstr, &vals) != 0) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
 		}
-		unowned txt?path = null;
+		txt?path = vals[Options.PATH];
 		etxt currentPath = etxt.from_static(".");
-		container<txt>? mod = null;
-		mod = vals.search(Options.PATH, match_all);
-		if(mod != null) {
-			path = mod.get();
-		}
 		Directory dir = Directory(path == null?&currentPath:path);
 		FileNode?node = null;
 		etxt output = etxt.stack(512);

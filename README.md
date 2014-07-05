@@ -1,6 +1,7 @@
-roopkotha
+Roopkotha
 =========
-This is gui library and a text editor.
+
+This is gui library and a text editor. This library is built upon shotodol development environment. It consists of modules that enables document rendering and basic gui rendering in different platforms.
 
 Dependencies
 ============
@@ -67,7 +68,7 @@ Now, after you have the _Makefile_ in the roopkotha directory you are ready to b
 ```
 You need to build platform specific implementation first. You can either build _x11_ based implementation or you can build _Qt_ based implementation.
 
-## Building with Qt.
+### Building with Qt.
 
 Suppose we want to build it with Qt, then the following commands may build the _platform_ library,
 
@@ -80,7 +81,7 @@ Suppose we want to build it with Qt, then the following commands may build the _
 ```
 <a href="linux/platform_gui/qtproject/README.md">More on Qt based gui</a>
 
-## Building with x11
+### Building with x11
 
 In order to build x11 you need to go to x11 project directory and _make_.
 

@@ -60,31 +60,36 @@ enable GUI debug ?(y/n) > n
 How to build platform\_gui
 ======================
 
-Now, after you have the Makefile in the roopkotha directory you are ready to build. You need to build platform
-first. You can either build x11 or you can build qt.
+Now, after you have the _Makefile_ in the roopkotha directory you are ready to build.
+```
+ a/roopkotha$ ls
+	Makefile
+```
+You need to build platform specific implementation first. You can either build _x11_ based implementation or you can build _Qt_ based implementation.
 
-## Building with qt.
+## Building with Qt.
 
-Suppose we want to build it with qt, then the following code may build the platform library,
+Suppose we want to build it with Qt, then the following commands may build the _platform_ library,
 
 ```
- a/roopkotha$cd linux/platform\_gui/build
- a/roopkotha/linux/platform\_gui/build$make -f Makefile.build
- a/roopkotha/linux/platform\_gui/build$make
- a/roopkotha/linux/platform\_gui/build$make staticlib
- a/roopkotha/linux/platform\_gui/build$cd ../../../
+ a/roopkotha$ cd linux/platform\_gui/build
+ a/roopkotha/linux/platform\_gui/build$ make -f Makefile.build
+ a/roopkotha/linux/platform\_gui/build$ make
+ a/roopkotha/linux/platform\_gui/build$ make staticlib
+ a/roopkotha/linux/platform\_gui/build$ cd ../../../
 ```
+<a href="linux/platform_gui/qtproject/README.md">More on Qt based gui</a>
 
 ## Building with x11
 
-In order to build x11 you need to go to x11 project directory and make.
+In order to build x11 you need to go to x11 project directory and _make_.
 
 ```
- a/roopkotha$cd linux/platform\_gui/x11project
- a/roopkotha/linux/platform\_gui/x11project$make
- a/roopkotha/linux/platform\_gui/x11project$ls
+ a/roopkotha$ cd linux/platform\_gui/x11project
+ a/roopkotha/linux/platform\_gui/x11project$ make
+ a/roopkotha/linux/platform\_gui/x11project$ ls
 	x11_impl.o
- a/roopkotha/linux/platform\_gui/x11project$cd ../../../
+ a/roopkotha/linux/platform\_gui/x11project$ cd ../../../
 ```
 <a href="linux/platform_gui/x11project/README.md">More on x11 based gui</a>
 
@@ -95,11 +100,11 @@ Now you can easily build roopkotha like,
 
 ```
  a/roopkotha$ make
- a/roopkotha$ls
+ a/roopkotha$ ls
 	shotodol.bin
 ```
 
-The above command will create shotodol.bin as an executable binary. It reads the shotodol.mk for loading required
+The above command will create shotodol.bin as an executable binary. It reads the _shotodol.ske_ (_shake_ script file) for loading required
 plugins. 
 
 Running example
@@ -108,23 +113,34 @@ Running example
 Now go to tests/guiapps/vela and put make command and see if it works .
 
 ```
+ a/roopkotha$ cd tests/guiapps/vela
  a/roopkotha/tests/guiapps/vela$ make
 ```
 
 Understanding the architecture
 ==============================
 
-TODO show the diagram from my handwritten file.
+TODO:show the diagram from my handwritten file.
 
 You may want to know the architecture of shotodol to understand it better.
 
+## Building doxygen documentation
+
+You can also get the source code documentation in html/other document formats. You need _doxygen_ installed. And you can just _make_ the document and
+see the output in docs/doxygen/ (or more in specifically docs/doxygen/html/).
+```
+ a/roopkotha$ make document 
+ a/roopkotha$ ls docs/doxygen/html/ 
+ a/roopkotha$ firefox docs/doxygen/html/
+```
+
+Historic versions
+=================
+
+ - QtBasedV0
+
+
 
 Enjoy !
-
-
-
-
-
-
 
 

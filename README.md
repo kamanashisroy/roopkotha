@@ -1,12 +1,12 @@
 Roopkotha
 =========
 
-This is gui library and a text editor. This library is built upon shotodol development environment. It consists of modules that enables document rendering and basic gui rendering in different platforms.
+This is gui library and a text editor. This library is built upon shotodol development environment. It consists of modules that enable document rendering and basic gui rendering in different platforms.
 
 Dependencies
 ============
 
-You need to get the following prject sources,
+You need to get the following project sources,
 
 - [aroop](https://github.com/kamanashisroy/aroop)
 - [shotodol](https://github.com/kamanashisroy/shotodol)
@@ -24,7 +24,7 @@ or if you want to see the history.
 You need to create a project directory for all the associated projects. Then you need to decompress the projects in this
 directory.
 
-Suppose you are in 'a' directory. Then you need to uncompress aroop,shotodol,onubodh,roopkotha in a directory.
+Suppose you are in 'a' directory. Then you need to decompress aroop,shotodol,onubodh,roopkotha in a directory.
 If you are in linux, then putting 'ls' command in shell looks like this,
 
 ```
@@ -33,7 +33,7 @@ If you are in linux, then putting 'ls' command in shell looks like this,
 ```
 
 
-How to confgure
+How to configure
 ===============
 
 Now you need to build the projects sequentially. Please see the readme in aroop, shotodol and onubodh to build them.
@@ -45,7 +45,7 @@ filesystems module in lua then it would be easy. You need to execute the configu
  a/roopkotha$ lua configure.lua
 ```
 
-And you shall get the output like the following,
+And you will get the output like the following,
 
 This is the configure script built for shotodol
 ```
@@ -70,7 +70,7 @@ You need to build platform specific implementation first. You can either build _
 
 ### Building with Qt.
 
-Suppose we want to build it with Qt, then the following commands may build the _platform_ library,
+Suppose we want to build it with Qt, then the following commands should build the _platform_ library,
 
 ```
  a/roopkotha$ cd linux/platform\_gui/build

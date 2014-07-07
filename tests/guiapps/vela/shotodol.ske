@@ -1,5 +1,5 @@
 
-all:
+onLoad:
 	module -load ../../../guiapps/velavanilla/plugin.so
 	module -load ../../../guiapps/filecommands/plugin.so
 	module -load ../../../guiapps/historycommands/plugin.so

@@ -17,14 +17,11 @@ You need to get the following project sources,
 Getting the projects
 ====================
 
-You need to get compressed(tar.gz/zip) distribution from the servers(for example, github.com/kamanashisroy/) .
-Otherwise you can use git to [clone](http://git-scm.com/docs/git-clone) the [repositories](http://en.wikipedia.org/wiki/Repository_%28version_control%29), which is important if you want to change and develop the code or if you want to see the history.
+You need to get compressed(tar.gz/zip) distribution from the servers(for example, github.com/kamanashisroy/). Otherwise you can use git to [clone](http://git-scm.com/docs/git-clone) the [repositories](http://en.wikipedia.org/wiki/Repository_%28version_control%29), which is important if you want to change and develop the code or if you want to see the history.
 
-You need to create a project directory for all the associated projects. Then you need to decompress the projects in this
-directory.
+You need to create a project directory for all the associated projects. Then you need to decompress the projects in this directory.
 
-Suppose you are in _'a'_ directory. Then you need to decompress _aroop_,_shotodol_,_onubodh_,_roopkotha_ in _'a'_ directory.
-If you are in linux, then putting _'ls'_ command in shell looks like this,
+Suppose you are in _'a'_ directory. Then you need to decompress _aroop_,_shotodol_,_onubodh_,_roopkotha_ in _'a'_ directory. If you are in linux, then putting _'ls'_ command in shell looks like this,
 
 ```
  a$ ls 
@@ -37,8 +34,7 @@ How to configure
 
 Now you need to build the projects sequentially. Please see the readme in aroop, shotodol and onubodh to build them.
 
-To build roopkotha, you need to configure and generate the makefiles. To do that you need lua. And if you have 
-filesystems module in lua then it would be easy. You need to execute the configure.lua script, like the following,
+To build roopkotha, you need to configure and generate the makefiles. To do that you need [lua](http://www.lua.org/). And if you have filesystems module in lua then it would be easy. You need to execute the configure.lua script, like the following,
 
 ```
  a/roopkotha$ lua configure.lua
@@ -46,7 +42,6 @@ filesystems module in lua then it would be easy. You need to execute the configu
 
 And you will get the output like the following,
 
-This is the configure script built for shotodol
 ```
 Project path /a/roopkotha > 
 Aroop path /a/aroop > 
@@ -126,8 +121,7 @@ You may want to know the architecture of shotodol to understand it better.
 
 ## Building doxygen documentation
 
-You can also get the source code documentation in html/other document formats. You need _doxygen_ installed. And you can just _make_ the document and
-see the output in docs/doxygen/ (or more specifically in docs/doxygen/html/).
+You can also get the source code documentation in html/other document formats. You need _doxygen_ installed. And you can just _make_ the document and see the output in docs/doxygen/ (or more specifically in docs/doxygen/html/).
 ```
  a/roopkotha$ make document 
  a/roopkotha$ ls docs/doxygen/html/ 
@@ -141,6 +135,12 @@ Historic versions are the specific [_commits_](http://git-scm.com/docs/git-commi
 
  - QtBasedV0
 
+
+Similar projects
+================
+
+- [scintilla](http://www.scintilla.org/)
+- [jedit](http://www.jedit.org/)
 
 
 Enjoy !

@@ -11,25 +11,21 @@ using roopkotha.filecommands;
 /** \addtogroup gui_command
  *  @{
  */
-public class roopkotha.filecommands.GUICommandModule: ModulePlugin {
-	FileListCommand flcmd;
-	DefaultFileResourceHandler fr;
-	txt fopener;
+public class roopkotha.filecommands.GUICommandModule: DynamicModule {
 	public GUICommandModule() {
-		fopener = new txt.from_static("velafopen");
-		flcmd = new FileListCommand();
-		fr = new DefaultFileResourceHandler();
+		name = etxt.from_static("filecommand");
 	}
 	
 	public override int init() {
-		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.register(flcmd);
-		roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, fr);
-		fr.setHandlers();
+		txt command = new txt.from_static("velacommand");
+		Plugin.register(command, new M100Extension(new FileListCommand(), this));
+		txt fopener = new txt.from_static("velafopen");
+		Plugin.register(command, new AnyInterfaceExtension(new DefaultFileResourceHandler(), this));
+		//roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, fr);
+		//fr.setHandlers();
 		return 0;
 	}
 	public override int deinit() {
-		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.unregister(flcmd);
-		roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, null);
 		base.deinit();
 		return 0;
 	}

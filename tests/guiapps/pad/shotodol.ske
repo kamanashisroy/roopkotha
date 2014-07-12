@@ -1,6 +1,7 @@
 
 onLoad:
-	module -load ../../../guiapps/pad/plugin.so
+	module -load ../../../guiapps/pad/dynalib.so
+	rehash
 	profiler
 	writepad -t writepad.txt
 	glide

@@ -133,14 +133,19 @@ Historic versions
 
 Historic versions are the specific [_commits_](http://git-scm.com/docs/git-commit) [_tagged_](http://git-scm.com/docs/git-tag) to be addressed by name. They may be used for releasing software or to address a specific [_feature_](http://en.wikipedia.org/wiki/Feature_%28software_design%29). 
 
- - QtBasedV0
+- [QtBasedV0](2842669c29e2d075e2a82c2ee5ae2f8850ef5298)
 
+Tasks
+======
+
+[Tasks](TASKS.md)
 
 Similar projects
 ================
 
 - [scintilla](http://www.scintilla.org/)
 - [jedit](http://www.jedit.org/)
+- [Lazarus](http://www.lazarus.freepascal.org/)
 
 
 Enjoy !

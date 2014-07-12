@@ -4,16 +4,17 @@ using shotodol;
 /** \addtogroup velapp
  *  @{
  */
-public class roopkotha.velapad.VelaModule : ModulePlugin {
-	VelaCommand cmd;
+public class roopkotha.velapad.VelaModule : DynamicModule {
+	VelaModule() {
+		name = etxt.from_static("vela");
+	}
 	public override int init() {
-		cmd = new VelaCommand();
-		CommandServer.server.cmds.register(cmd);
+		txt command = new txt.from_static("command");
+		Plugin.register(command, new M100Extension(new VelaCommand(), this));
 		return 0;
 	}
 
 	public override int deinit() {
-		CommandServer.server.cmds.unregister(cmd);
 		base.deinit();
 		return 0;
 	}

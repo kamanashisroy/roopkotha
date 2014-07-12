@@ -10,18 +10,17 @@ using roopkotha.velavanilla;
 /** \addtogroup history_command
  *  @{
  */
-public class roopkotha.historycommands.HistoryCommandModule: ModulePlugin {
-	HistoryCommand hc;
+public class roopkotha.historycommands.HistoryCommandModule: DynamicModule {
 	public HistoryCommandModule() {
-		hc = new HistoryCommand();
+		name = etxt.from_static("historycommand");
 	}
 	
 	public override int init() {
-		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.register(hc);
+		txt command = new txt.from_static("velacommand");
+		Plugin.register(command, new M100Extension(new HistoryCommand(), this));
 		return 0;
 	}
 	public override int deinit() {
-		roopkotha.velavanilla.VelaVanillaModule.vanilla.velac.unregister(hc);
 		base.deinit();
 		return 0;
 	}

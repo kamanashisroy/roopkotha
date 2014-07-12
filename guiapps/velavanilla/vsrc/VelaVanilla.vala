@@ -10,7 +10,7 @@ public class roopkotha.velavanilla.VelaVanilla : roopkotha.velawidget.VelaVeil {
 		cHandler = new CompoundResourceHandler();
 		base(cHandler);
 		velac = new M100CommandSet();
-		velac.register(new VelaVeilCommand(this));
+		//velac.register(new VelaVeilCommand(this));
 		setupHandlers();
 	}
 

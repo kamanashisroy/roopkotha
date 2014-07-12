@@ -19,7 +19,7 @@ internal class roopkotha.velavanilla.VelaVeilCommand : M100Command {
 		return &prfx;
 	}
 
-	public override int act_on(etxt*cmdstr, OutputStream pad) throws M100CommandError.ActionFailed {
+	public override int act_on(etxt*cmdstr, OutputStream pad, M100CommandSet cmds) throws M100CommandError.ActionFailed {
 		etxt inp = etxt.stack_from_etxt(cmdstr);
 		etxt token = etxt.EMPTY();
 		LineAlign.next_token(&inp, &token); // second token

@@ -1,9 +1,10 @@
 
 onLoad:
-	module -load ../../../guiapps/velavanilla/plugin.so
-	module -load ../../../guiapps/filecommands/plugin.so
-	module -load ../../../guiapps/historycommands/plugin.so
-	module -load ../../../guiapps/velapad/plugin.so
+	module -load ../../../guiapps/velavanilla/dynalib.so
+	module -load ../../../guiapps/filecommands/dynalib.so
+	module -load ../../../guiapps/historycommands/dynalib.so
+	module -load ../../../guiapps/velapad/dynalib.so
+	rehash
 	velapad -i velapad.txt
 	wa -n gui -fn vsrc/Font.c -l 100
 	wa -n velagent -fn vsrc/CommandResourceLoader.c -l 100

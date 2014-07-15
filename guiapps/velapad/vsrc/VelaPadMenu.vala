@@ -13,7 +13,7 @@ using roopkotha.velagent;
  * [-Maturity- 10]
  */
 internal class roopkotha.velapad.VelaPadMenu : Replicable {
-	GUICoreImpl impl;
+	internal GUICoreImpl impl;
 	PageView pg;
 	VelaDivDocument emptyDoc;
 	velavanilla.VelaVanilla vagent;
@@ -35,7 +35,6 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		etxt url = etxt.from_static("file://empty");
 		VelaResource res = new VelaResource(&baseUrl, &url, emptyDoc);
 		vagent.onContentReady(res, emptyDoc);
-		MainTurbine.gearup(impl);
 	}
 	protected void show(VelaDivDocument doc) {
 		pg.setDocument(doc, 0);

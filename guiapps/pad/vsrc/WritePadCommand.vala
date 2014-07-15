@@ -18,12 +18,14 @@ using roopkotha;
 public class roopkotha.app.WritePadCommand : M100Command {
 	etxt prfx;
 	WritePad? wpad;
+	unowned Module mod;
 	enum Options {
 		INFILE = 1,
 		OUTFILE,
 	}
-	public WritePadCommand() {
+	public WritePadCommand(Module src) {
 		base();
+		mod = src;
 		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file.");
 		addOptionString("-o", M100Command.OptionType.TXT, Options.OUTFILE, "Output file."); 
 		wpad = null;
@@ -55,6 +57,8 @@ public class roopkotha.app.WritePadCommand : M100Command {
 		}
 		if(wpad == null) {
 			wpad = new WritePad();
+			txt entry = new txt.from_static("MainTurbine");
+			Plugin.register(entry, new AnyInterfaceExtension(wpad.impl, mod));
 		}
 		return 0;
 	}

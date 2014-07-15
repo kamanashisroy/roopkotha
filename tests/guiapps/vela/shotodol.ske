@@ -1,5 +1,6 @@
 
 onLoad:
+	rehash
 	module -load ../../../guiapps/velavanilla/dynalib.so
 	module -load ../../../guiapps/filecommands/dynalib.so
 	module -load ../../../guiapps/historycommands/dynalib.so

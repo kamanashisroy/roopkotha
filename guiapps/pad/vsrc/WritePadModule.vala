@@ -10,7 +10,7 @@ public class roopkotha.app.WritePadModule : DynamicModule {
 	}
 	public override int init() {
 		txt command = new txt.from_static("command");
-		Plugin.register(command, new M100Extension(new WritePadCommand(), this));
+		Plugin.register(command, new M100Extension(new WritePadCommand(this), this));
 		return 0;
 	}
 

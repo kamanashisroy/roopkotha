@@ -9,7 +9,7 @@ using roopkotha.doc;
 public class roopkotha.app.WritePadMenu : Replicable {
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
-	GUICoreImpl impl;
+	internal GUICoreImpl impl;
 	DocumentView lv;
 	PlainDocument emptyDoc;
 	public WritePadMenu() {
@@ -31,7 +31,6 @@ public class roopkotha.app.WritePadMenu : Replicable {
 		emptyDoc.addLine(&elem);
 		lv.setDocument(emptyDoc, 0);
 		lv.show();
-		MainTurbine.gearup(impl);
 	}
 	protected void show(PlainDocument pd) {
 		lv.setDocument(pd, 0);

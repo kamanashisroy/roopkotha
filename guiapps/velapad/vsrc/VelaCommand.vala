@@ -19,10 +19,12 @@ internal class roopkotha.velapad.VelaCommand : M100Command {
 		INFILE = 1,
 		OUTFILE,
 	}
-	public VelaCommand() {
+	public VelaCommand(Module src) {
 		base();
 		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file");
 		vpad = new VelaPad();
+		txt entry = new txt.from_static("MainTurbine");
+		Plugin.register(entry, new AnyInterfaceExtension(vpad.impl, src));
 	}
 
 	public override etxt*get_prefix() {

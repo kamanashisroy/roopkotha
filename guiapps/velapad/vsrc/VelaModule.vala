@@ -10,7 +10,7 @@ public class roopkotha.velapad.VelaModule : DynamicModule {
 	}
 	public override int init() {
 		txt command = new txt.from_static("command");
-		Plugin.register(command, new M100Extension(new VelaCommand(), this));
+		Plugin.register(command, new M100Extension(new VelaCommand(this), this));
 		return 0;
 	}
 

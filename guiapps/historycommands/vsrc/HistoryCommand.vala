@@ -30,7 +30,9 @@ internal class HistoryCommand : M100QuietCommand {
 			back = arg.to_int();
 		}
 		if(back == 99) {
-			MainTurbine.quit();
+			txt quitEntry = new txt.from_static("onQuit");
+			etxt output = etxt.EMPTY();
+			Plugin.swarm(quitEntry, null, &output);
 		} 
 		etxt output = etxt.stack(512);
 		output.printf("We do not know how to go back yet");

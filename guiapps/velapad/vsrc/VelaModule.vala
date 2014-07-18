@@ -6,11 +6,13 @@ using shotodol;
  */
 public class roopkotha.velapad.VelaModule : DynamicModule {
 	VelaModule() {
-		name = etxt.from_static("vela");
+		extring nm = extring.set_static_string("vela");
+		extring ver = extring.set_static_string("0.0.0");
+		base(&nm,&ver);
 	}
 	public override int init() {
-		txt command = new txt.from_static("command");
-		Plugin.register(command, new M100Extension(new VelaCommand(this), this));
+		extring command = extring.set_static_string("command");
+		Plugin.register(&command, new M100Extension(new VelaCommand(this), this));
 		return 0;
 	}
 

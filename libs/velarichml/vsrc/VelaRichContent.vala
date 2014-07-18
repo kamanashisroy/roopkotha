@@ -34,16 +34,12 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 	XMLParser parser;
 	WordMap map;
 
-	public VelaRichContent(etxt*asciiData) {
+	public VelaRichContent(extring*asciiData) {
 		base(asciiData);
 		parser = new XMLParser();
 		map = WordMap();
 		map.kernel.buffer(asciiData.length());
-#if true
-		map.source = etxt.dup_etxt(asciiData);
-#else
-		map.source = etxt.same_same(asciiData);
-#endif
+		map.source = extring.copy_on_demand(asciiData);
 		map.map.buffer(asciiData.length());
 		parser.transform(&map);
 		//print("FormattedContent:%s\n", asciiData.to_string());
@@ -54,7 +50,7 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 	}
 
 #if false
-	public override void getText(etxt*tData) {
+	public override void getText(extring*tData) {
 		tData.concat(data);
 	}
 #endif
@@ -82,7 +78,7 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 	XMLIterator rxit;
 	public override void traverseCapsulesInit() {
 		rxit = XMLIterator(&map);
-		rxit.kernel = etxt.same_same(&map.kernel);
+		rxit.kernel = extring.copy_shallow(&map.kernel);
 	}
 	public override int traverseCapsules(VisitAugmentedContent visitCapsule) {
 		//print("Traversing capsules ..\n");
@@ -92,12 +88,12 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 			if(xit.nextIsText) {
 				//print("Traversing text capsules ..\n");
 #if LOW_MEMORY
-				cap.content = etxt.stack(128);
+				cap.content = extring.stack(128);
 #else
-				cap.content = etxt.stack(1024);
+				cap.content = extring.stack(1024);
 #endif
 				cap.textType = FormattedTextType.PLAIN;
-				xit.m.getSourceReference(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &cap.content);
+				xit.m.getSourceReferenceAs(xit.basePos + xit.shift, xit.basePos + xit.shift + xit.content.length(), &cap.content);
 				//print("Text\t\t- pos:%d,clen:%d,text content:%s\n", xit.pos, xit.content.length(), cap.content.to_string());
 				//print("[%s]", map.source.to_string());
 				visitCapsule(&cap);
@@ -128,14 +124,14 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 				} else {
 					cap.textType = FormattedTextType.UNKNOWN;
 				}
-				etxt attrKey = etxt.EMPTY();
-				etxt attrVal = etxt.EMPTY();
+				extring attrKey = extring();
+				extring attrVal = extring();
 				while(xit.nextAttr(&attrKey, &attrVal)) {
 					// TODO trim key and value
 					//print("key:[%s],val:[%s]\n", attrKey.to_string(), attrVal.to_string());
 					if(attrKey.equals_static_string("href")) {
 						cap.hyperLink.destroy();
-						cap.hyperLink = etxt.same_same(&attrVal);
+						cap.hyperLink = extring.copy_shallow(&attrVal);
 					} else if(attrKey.equals_static_string("f")) {
 						if(attrVal.equals_static_string("true"))	{
 							cap.isFocused = true;
@@ -154,7 +150,7 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 	}
 
 #if false
-	int update(etxt*xt) {
+	int update(extring*xt) {
 		struct xultb_ml_node*node = item->target;
 		SYNC_ASSERT(node);
 		xultb_str_t*new_text = OPPREF(text);

@@ -12,12 +12,14 @@ using roopkotha.velavanilla;
  */
 public class roopkotha.historycommands.HistoryCommandModule: DynamicModule {
 	public HistoryCommandModule() {
-		name = etxt.from_static("historycommand");
+		extring nm = extring.set_static_string("historycommand");
+		extring ver = extring.set_static_string("0.0.0");
+		base(&nm,&ver);
 	}
 	
 	public override int init() {
-		txt command = new txt.from_static("velacommand");
-		Plugin.register(command, new M100Extension(new HistoryCommand(), this));
+		extring command = extring.set_static_string("velacommand");
+		Plugin.register(&command, new M100Extension(new HistoryCommand(), this));
 		return 0;
 	}
 	public override int deinit() {

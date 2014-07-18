@@ -13,14 +13,16 @@ using roopkotha.filecommands;
  */
 public class roopkotha.filecommands.GUICommandModule: DynamicModule {
 	public GUICommandModule() {
-		name = etxt.from_static("filecommand");
+		extring nm = extring.set_static_string("filecommand");
+		extring ver = extring.set_static_string("0.0.0");
+		base(&nm,&ver);
 	}
 	
 	public override int init() {
-		txt command = new txt.from_static("velacommand");
-		Plugin.register(command, new M100Extension(new FileListCommand(), this));
-		txt fopener = new txt.from_static("velafopen");
-		Plugin.register(command, new AnyInterfaceExtension(new DefaultFileResourceHandler(), this));
+		extring entry = extring.set_static_string("velacommand");
+		Plugin.register(&entry, new M100Extension(new FileListCommand(), this));
+		entry.rebuild_and_set_static_string("velafopen");
+		Plugin.register(&entry, new AnyInterfaceExtension(new DefaultFileResourceHandler(), this));
 		//roopkotha.velavanilla.VelaVanillaModule.vanilla.cHandler.setHandler(fopener, fr);
 		//fr.setHandlers();
 		return 0;

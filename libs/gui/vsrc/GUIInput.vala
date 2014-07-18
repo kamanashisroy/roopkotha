@@ -27,25 +27,25 @@ using roopkotha.gui;
  */
 public class roopkotha.gui.EventOwner : Replicable {
 	Replicable?source;
-	etxt label;
-	public EventOwner.from_etxt(etxt*target) {
+	extring label;
+	public EventOwner.from_extring(extring*target) {
 		source = null;
 		if(target != null) {
-			label = etxt.same_same(target);
+			label = extring.copy_shallow(target);
 		} else {
-			label = etxt.EMPTY();
+			label = extring();
 		}
 	}
-	public EventOwner(Replicable target, etxt*displayText) {
+	public EventOwner(Replicable target, extring*displayText) {
 		source = target;
 		if(displayText != null) {
-			label = etxt.same_same(displayText);
+			label = extring.copy_shallow(displayText);
 		} else {
-			label = etxt.EMPTY();
+			label = extring();
 		}
 	}
-	public void getLabel(etxt*otxt) {
-		*otxt = etxt.same_same(&label);
+	public void getLabelAs(extring*x) {
+		x.rebuild_and_copy_shallow(&label);
 	}
 	public Replicable getSource() {
 		return source;

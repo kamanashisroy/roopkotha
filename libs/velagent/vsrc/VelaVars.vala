@@ -11,9 +11,9 @@ using aroop;
  *  @{
  */
 public class roopkotha.vela.WebVariables : Replicable {
-	HashTable<txt> tbl;
+	HashTable<xtring> tbl;
 	public WebVariables() {
-		tbl = HashTable<txt>(4);
+		tbl = HashTable<xtring>(4);
 	}
 	~WebVariables() {
 		tbl.destroy();

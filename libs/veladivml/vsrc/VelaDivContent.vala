@@ -13,14 +13,14 @@ using roopkotha.vela;
  */
 public class roopkotha.veladivml.VelaDivContent : roopkotha.velarichml.VelaRichContent {
 	bool focused;
-	etxt href;
-	public VelaDivContent(etxt*asciiData, etxt*gHref, bool gFocused) {
+	extring href;
+	public VelaDivContent(extring*asciiData, extring*gHref, bool gFocused) {
 		base(asciiData);
 		focused = gFocused;
 		if(gHref != null)
-			href = etxt.dup_etxt(gHref);
+			href = extring.copy_on_demand(gHref);
 		else
-			href = etxt.EMPTY();
+			href = extring();
 	}
 
 	public override bool isFocused() {
@@ -31,8 +31,8 @@ public class roopkotha.veladivml.VelaDivContent : roopkotha.velarichml.VelaRichC
 		return !href.is_empty();
 	}
 
-	public override void getAction(etxt*data) {
-		(*data) = etxt.same_same(&href);
+	public override void getActionAs(extring*data) {
+		data.rebuild_and_copy_shallow(&href);
 	}
 }
 

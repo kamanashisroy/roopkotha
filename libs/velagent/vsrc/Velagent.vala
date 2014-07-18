@@ -19,21 +19,21 @@ public class roopkotha.velagent.Velagent : Replicable {
 	//MediaHandler ml;
 	//WebEventListener el;
 	//WebActionListener al;
-	ArrayList<txt>stack;
+	ArrayList<xtring>stack;
 	ArrayList<onubodh.RawImage> images;
 	bool isLoadingPage;
 	bool isGoingBack;
-	txt?currentUrl;
-	txt?baseUrl;
+	xtring?currentUrl;
+	xtring?baseUrl;
 	RoopDocument doc;
-	txt BACK_ACTION;
-	txt VELA;
+	xtring BACK_ACTION;
+	xtring VELA;
 
 	public Velagent(VelaResourceHandler rl) {
-		BACK_ACTION = new txt.from_static("Back");
-		VELA = new txt.from_static("Vela");
+		BACK_ACTION = new xtring.set_static_string("Back");
+		VELA = new xtring.set_static_string("Vela");
 		content = null;
-		stack = ArrayList<txt>(4);
+		stack = ArrayList<xtring>(4);
 		images = ArrayList<onubodh.RawImage>(4);
 		isLoadingPage = false;
 		isGoingBack= false;
@@ -52,7 +52,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 
 	public bool velaxecuteFull(VelaResource id, bool back) {
 		if (isLoadingPage) { // check if we are on action ..
-			etxt dlg = etxt.stack(128);
+			extring dlg = extring.stack(128);
 			dlg.printf("Busy, cannot load reasource:%s\n", id.url.to_string());
 			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 1, Watchdog.WatchdogSeverity.ALERT, 0, 0, &dlg);
 			return false;
@@ -71,18 +71,18 @@ public class roopkotha.velagent.Velagent : Replicable {
 		return true;
 	}
 
-	public bool velaxecute(etxt*url, bool back) {
+	public bool velaxecute(extring*url, bool back) {
 		return velaxecuteFull(new VelaResource(null, url, doc), back);
 	}
 
 	public void onWindowEvent(EventOwner action) {
 		PageEventOwner paction = (PageEventOwner)action;
 
-		etxt dbg = etxt.stack(128);
+		extring dbg = extring.stack(128);
 		dbg.printf("Action is %s\n", paction.action.to_string());
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 5, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dbg);
 
-		etxt cmd = etxt.stack(128);
+		extring cmd = extring.stack(128);
 		//cmd.concat_string("velaxecute://");
 		cmd.concat(&paction.action);
 		velaxecute(&cmd, false);
@@ -93,7 +93,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		if(src == page) {
 			// GUI_INPUT_LOG("item action !\n");
 			AugmentedContent?content = (AugmentedContent)page.getSelected();
-			etxt appAction = etxt.EMPTY();
+			extring appAction = extring();
 			if(content != null) {
 				content.getAction(&appAction);
 				if(!appAction.is_empty()) {
@@ -157,12 +157,12 @@ public class roopkotha.velagent.Velagent : Replicable {
 #endif
 	}
 
-	public void onPageEvent(etxt*target) {
+	public void onPageEvent(extring*target) {
 		print("Page event %s\n", target.to_string());
 		velaxecute(target, false);
 	}
 
-	onubodh.RawImage?getImage(etxt*imgAddr) {
+	onubodh.RawImage?getImage(extring*imgAddr) {
 		// TODO fill me
 		return null;
 	}
@@ -189,7 +189,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		}
 	}
 
-	public void onResourceError(VelaResource id, int code, etxt*reason) {
+	public void onResourceError(VelaResource id, int code, extring*reason) {
 		clearFlags();
 		print("onResourceError()\n");
 		if(id.tp == VelaResource.Type.DOCUMENT) {
@@ -211,13 +211,13 @@ public class roopkotha.velagent.Velagent : Replicable {
 		if(xit.nextIsText) {
 			return;
 		}
-		etxt key = etxt.stack(128);
-		etxt href = etxt.EMPTY();
+		extring key = extring.stack(128);
+		extring href = extring();
 		href.buffer(128);
-		etxt label = etxt.EMPTY();
+		extring label = extring();
 		label.buffer(32);
-		etxt attrKey = etxt.EMPTY();
-		etxt attrVal = etxt.EMPTY();
+		extring attrKey = extring();
+		extring attrVal = extring();
 		while(xit.nextAttr(&attrKey, &attrVal)) {
 			// trim ..
 			key.trim_to_length(0);
@@ -247,12 +247,12 @@ public class roopkotha.velagent.Velagent : Replicable {
 		page.addMenu(x);
 		return;
 	}
-	public int plugMenu(etxt*menuML) {
+	public int plugMenu(extring*menuML) {
 		onubodh.XMLParser parser = new onubodh.XMLParser();
 		onubodh.WordMap map = onubodh.WordMap();
 		// parse the xml and show the menu
 		map.kernel.buffer(menuML.length());
-		map.source = etxt.dup_etxt(menuML);
+		map.source = extring.copy_on_demand(menuML);
 		map.map.buffer(menuML.length());
 		parser.transform(&map);
 

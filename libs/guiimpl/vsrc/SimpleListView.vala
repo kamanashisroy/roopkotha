@@ -29,7 +29,7 @@ using roopkotha.gui;
 public class roopkotha.gui.SimpleListView : roopkotha.gui.ListView {
 	aroop.ArrayList<Replicable> myitems;
 
-	public SimpleListView(etxt*aTitle, etxt*aDefaultCommand) {
+	public SimpleListView(extring*aTitle, extring*aDefaultCommand) {
 		base(aTitle, aDefaultCommand);
 		myitems = ArrayList<Replicable>();
 	}

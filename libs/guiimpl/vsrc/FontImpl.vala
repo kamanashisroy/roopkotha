@@ -27,7 +27,7 @@ public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 		return 10;
 	}
 	
-	public override int subStringWidth(etxt*str, int offset, int width) {
+	public override int subStringWidth(extring*str, int offset, int width) {
 		//return GUICore.subStringWidth(flaggedVariantInfo, str, offset, width);
 		return 5*str.length();
 	}
@@ -44,7 +44,7 @@ public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 	}
 
 #if GUI_DEBUG
-	public override void dumpAll(etxt*buf) {
+	public override void dumpAll(extring*buf) {
 		buf.concat_string("Font(");
 		if((flaggedVariantInfo & Font.Variant.UNDERLINED) != 0) {
 			buf.concat_string(" Underlined ");

@@ -19,8 +19,8 @@ public class roopkotha.gui.GUITask : Replicable {
 		bndlr.close();
 		len = bndlr.size;
 	}
-	public void getTaskAs(etxt*task) {
-		*task = etxt.given_length((string)msg.data, len, this);
+	public void getTaskAs(extring*task) {
+		task.rebuild_and_set_content((string)msg.data, len, this);
 	}
 }
 

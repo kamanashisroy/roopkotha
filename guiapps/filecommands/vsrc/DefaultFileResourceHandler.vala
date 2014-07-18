@@ -10,7 +10,7 @@ public class roopkotha.filecommands.DefaultFileResourceHandler : FileResourceHan
 	}
 
 	public void setHandlers() {
-		txt suffix = new txt.from_static(".vapp");
+		xtring suffix = new xtring.set_static_string(".vapp");
 		setHandler(suffix, new VelaAppFileResourceHandler());
 	}
 }

@@ -42,13 +42,13 @@ public abstract class roopkotha.gui.Font : Replicable {
 	}
 	public abstract int getHeight();
 
-	public abstract int subStringWidth(etxt*str, int offset, int width);
+	public abstract int subStringWidth(extring*str, int offset, int width);
 
 	public abstract Font getVariant(Font.Variant stl);
 
 	public abstract int getId();
 #if GUI_DEBUG
-	public abstract void dumpAll(etxt*buf);
+	public abstract void dumpAll(extring*buf);
 #endif
 }
 

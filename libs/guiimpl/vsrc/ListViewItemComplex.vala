@@ -8,8 +8,8 @@ using roopkotha.gui;
  */
 public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 	protected EventOwner?target;
-	protected etxt label;
-	protected etxt text;
+	protected extring label;
+	protected extring text;
 	protected bool checked;
 	protected bool is_editable;
 	protected bool is_radio;
@@ -127,8 +127,8 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 							, x + imgspacing + ListViewItem.display.PADDING + ITEM_FONT.subStringWidth(&label, start, pos)
 							, y + ret + ListViewItem.display.PADDING + FONT_HEIGHT);
 				}
-				//etxt xt = etxt.same_same(&text);
-				etxt xt = etxt.same_same(&label);
+				//extring xt = extring.same_same(&text);
+				extring xt = extring.copy_shallow(&label);
 				xt.shift(start);
 				xt.trim_to_length(pos);
 				//print("Label:%s:%s\n", label.to_string(), xt.to_string());
@@ -164,7 +164,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 					start = pos = 0;
 					while ((pos = TextFormat.wrap_next(&text, ITEM_FONT, start, width
 							- ListViewItem.display.DPADDING)) != -1 && lineCount < 3) {
-						etxt xt = etxt.same_same(&text);
+						extring xt = extring.copy_shallow(&text);
 						xt.shift(start);
 						xt.trim_to_length(pos);
 						g.drawString(&xt, x + ListViewItem.display.PADDING, y
@@ -187,7 +187,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 				pos = TextFormat.wrap_next(&text, ITEM_FONT, 0, width - labelWidth
 						- ListViewItem.display.DPADDING - imgWidth - ListViewItem.display.DPADDING);
 				if (pos != -1) {
-					etxt xt = etxt.same_same(&text);
+					extring xt = extring.copy_shallow(&text);
 					xt.trim_to_length(pos);
 					g.drawString(&xt, x + labelWidth + ListViewItem.display.PADDING,
 							y + ListViewItem.display.PADDING, 1000, width, Graphics.anchor.TOP | Graphics.anchor.LEFT);
@@ -244,11 +244,11 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 				  break;
 				}
 				bool changed = false;
-				etxt dlg = etxt.stack(64);
+				extring dlg = extring.stack(64);
 				dlg.printf("Edit text field , key code:%d\n", key_code);
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, &dlg);
 				// get current text
-				etxt xt = etxt.stack(text.length()+1);
+				extring xt = extring.stack(text.length()+1);
 				xt.concat(&text);
 				// handle special editing commands ..
 				if((key_code == 0x7f) || (key_code == 8)) { // backspace
@@ -274,7 +274,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 		}
 		return false;
 	}
-	public override int update(etxt*xt) {
+	public override int update(extring*xt) {
 		core.assert("It should be defined in the applet which is being edited" == null);
 		return 0;
 	}
@@ -282,15 +282,15 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 		return ((key_code >= 0x20) && (key_code <= 0x7E));
 	}
 	
-	public ListViewItemComplex.createLabel(etxt*aLabel, onubodh.RawImage*aImg) {
+	public ListViewItemComplex.createLabel(extring*aLabel, onubodh.RawImage*aImg) {
 		ListViewItemComplex.createLabelFull(aLabel, aImg, true, false, null);
 	}
 
-	public ListViewItemComplex.createLabelFull(etxt*aLabel, onubodh.RawImage*aImg
+	public ListViewItemComplex.createLabelFull(extring*aLabel, onubodh.RawImage*aImg
 			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, EventOwner?aTarget) {
 		ListViewItemComplex.common();
-		label = etxt.dup_etxt(aLabel);
-		text = etxt.EMPTY();
+		label = extring.copy_on_demand(aLabel);
+		text = extring();
 		//print("Created new label %s:%s\n", label.to_string(), aLabel.to_string());
 		img = aImg;
 		is_editable = aChange_bg_on_focus;
@@ -299,30 +299,30 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 		truncate_text_to_fit_width = aTruncate_text_to_fit_width;
 	}
 
-	public ListViewItemComplex.createSelectionBox(etxt*aLabel, etxt*aText, bool aEditable) {
+	public ListViewItemComplex.createSelectionBox(extring*aLabel, extring*aText, bool aEditable) {
 		ListViewItemComplex.common();
-		label = etxt.dup_etxt(aLabel);
-		text = etxt.dup_etxt(aText);
+		label = extring.copy_on_demand(aLabel);
+		text = extring.copy_on_demand(aText);
 		is_editable = aEditable;
 		type = ListViewItem.itemtype.SELECTION;
 	}
 
-	public ListViewItemComplex.createTextInputFull(etxt*aLabel, etxt*aText, bool aWrapped, bool aEditable) {
+	public ListViewItemComplex.createTextInputFull(extring*aLabel, extring*aText, bool aWrapped, bool aEditable) {
 		ListViewItemComplex.common();
-		label = etxt.dup_etxt(aLabel);
-		text = etxt.dup_etxt(aText);
+		label = extring.copy_on_demand(aLabel);
+		text = extring.copy_on_demand(aText);
 		wrapped = aWrapped;
 		is_editable = aEditable;
 		type = ListViewItem.itemtype.TEXT_INPUT;
 	}
 
-	public ListViewItemComplex.createTextInput(etxt*aLabel, etxt*aText) {
+	public ListViewItemComplex.createTextInput(extring*aLabel, extring*aText) {
 		ListViewItemComplex.createTextInputFull(aLabel, aText, false, true);
 	}
 
-	public ListViewItemComplex.createCheckboxFull(etxt*aLabel, bool aChecked, bool aEditable, bool aIsRadio) {
+	public ListViewItemComplex.createCheckboxFull(extring*aLabel, bool aChecked, bool aEditable, bool aIsRadio) {
 		ListViewItemComplex.common();
-		label = etxt.dup_etxt(aLabel);
+		label = extring.copy_on_demand(aLabel);
 		checked = aChecked;
 		is_editable = aEditable;
 		type = ListViewItem.itemtype.CHECKBOX;
@@ -330,11 +330,11 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 		is_radio = aIsRadio;
 	}
 
-	public ListViewItemComplex.createCheckbox(etxt*aLabel, bool aChecked, bool aEditable) {
+	public ListViewItemComplex.createCheckbox(extring*aLabel, bool aChecked, bool aEditable) {
 		ListViewItemComplex.createCheckboxFull(aLabel, aChecked, aEditable, false);
 	}
 
-	public ListViewItemComplex.createRadioButton(etxt*aLabel, bool aChecked, bool aEditable) {
+	public ListViewItemComplex.createRadioButton(extring*aLabel, bool aChecked, bool aEditable) {
 		ListViewItemComplex.createCheckboxFull(aLabel, aChecked, aEditable, true);
 	}
 }

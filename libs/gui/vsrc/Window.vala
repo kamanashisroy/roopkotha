@@ -79,7 +79,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 		//XULTB_CORE_UNIMPLEMENTED();
 		return true;
 	}
-	public abstract void setTitle(aroop.txt title);
+	public abstract void setTitle(aroop.xtring title);
 	
 	public void onAction(EventOwner owner) {
 		if(windowActionCB != null) {

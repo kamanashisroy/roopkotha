@@ -16,7 +16,6 @@ using roopkotha;
  */
 /** \ingroup textcommand */
 public class roopkotha.app.WritePadCommand : M100Command {
-	etxt prfx;
 	WritePad? wpad;
 	unowned Module mod;
 	enum Options {
@@ -24,24 +23,21 @@ public class roopkotha.app.WritePadCommand : M100Command {
 		OUTFILE,
 	}
 	public WritePadCommand(Module src) {
-		base();
+		extring prefix = extring.set_static_string("writepad");
+		base(&prefix);
 		mod = src;
 		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file.");
 		addOptionString("-o", M100Command.OptionType.TXT, Options.OUTFILE, "Output file."); 
 		wpad = null;
 	}
 
-	public override etxt*get_prefix() {
-		prfx = etxt.from_static("writepad");
-		return &prfx;
-	}
 
-	public override int act_on(etxt*cmdstr, OutputStream pad, M100CommandSet cmds) throws M100CommandError.ActionFailed {
-		ArrayList<txt> vals = ArrayList<txt>();
+	public override int act_on(extring*cmdstr, OutputStream pad, M100CommandSet cmds) throws M100CommandError.ActionFailed {
+		ArrayList<xtring> vals = ArrayList<xtring>();
 		if(parseOptions(cmdstr, &vals) != 0) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
 		}
-		txt?infile = vals[Options.INFILE];
+		xtring?infile = vals[Options.INFILE];
 		if(infile != null) {
 			if(wpad == null) {
 				wpad = new WritePad();
@@ -51,13 +47,13 @@ public class roopkotha.app.WritePadCommand : M100Command {
 			}
 			return 0;
 		}
-		txt?outfile = vals[Options.OUTFILE];
+		xtring?outfile = vals[Options.OUTFILE];
 		if(outfile != null) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Unimplemented");
 		}
 		if(wpad == null) {
 			wpad = new WritePad();
-			txt entry = new txt.from_static("MainTurbine");
+			xtring entry = new xtring.set_static_string("MainTurbine");
 			Plugin.register(entry, new AnyInterfaceExtension(wpad.impl, mod));
 		}
 		return 0;

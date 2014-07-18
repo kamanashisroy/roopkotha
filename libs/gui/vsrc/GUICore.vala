@@ -54,8 +54,8 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 	public override int cancel() {
 		return 0;
 	}
-	public abstract void pushTask(etxt*task);
+	public abstract void pushTask(extring*task);
 	public abstract void pushGraphicsTask(Graphics g);
-	public abstract void popTaskAs(etxt*task);
+	public abstract void popTaskAs(extring*task);
 }
 /** @} */

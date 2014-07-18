@@ -66,13 +66,13 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 
 	public int performTasks() {
 		do {
-			etxt task = etxt.EMPTY();
+			extring task = extring();
 			popTaskAs(&task);
 			if(task.is_empty())
 				break;
 
 			Bundler bndlr = Bundler();
-			bndlr.buildFromEtxt(&task);
+			bndlr.buildFromEXtring(&task);
 			int key = 0;
 			try {
 				while((key = bndlr.next()) >= 0) {
@@ -83,7 +83,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 					}
 				}
 			} catch(BundlerError e) {
-				etxt dlg = etxt.stack(128);
+				extring dlg = extring.stack(128);
 				dlg.printf("Faulty task packet from platform");
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.ERROR, 0, 0, &dlg);
 			}
@@ -109,16 +109,16 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		print("GUICore stepping started..\n");
 		return 0;
 	}
-	public override void pushTask(etxt*task) {
+	public override void pushTask(extring*task) {
 		plat.pushTask(task);
 	}
-	public override void popTaskAs(etxt*task) {
+	public override void popTaskAs(extring*task) {
 		plat.popTaskAs(task);
 	}
 	public override void pushGraphicsTask(Graphics g) {
 		GraphicsPixelMap gfx = (GraphicsPixelMap)(g);
 		gfx.finalize();
-		etxt task = etxt.EMPTY();
+		extring task = extring();
 		gfx.task.getTaskAs(&task);
 		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "Graphics task size", task.length());
 		if(task.length() > 0)

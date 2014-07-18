@@ -58,7 +58,7 @@ public abstract class roopkotha.gui.Graphics : Replicable {
 	void copyArea(int x_src, int y_src, int width, int height, int x_dest, int y_dest, int anc);
 	void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
 	void drawChar(char character, int x, int y, int anc);
-	void drawChars(aroop.txt data, int offset, int length, int x, int y, int anc);
+	void drawChars(aroop.xtring data, int offset, int length, int x, int y, int anc);
 #endif
 	public abstract void drawImage(onubodh.RawImage img, int x, int y, int anc);
 	public abstract void drawLine(int x1, int y1, int x2, int y2);
@@ -68,7 +68,7 @@ public abstract class roopkotha.gui.Graphics : Replicable {
 	void drawRGB(int *rgbData, int offset, int scanlength, int x, int y, int width, int height, boolean processAlpha);
 #endif
 	public abstract void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight);
-	public abstract void drawString(etxt*str, int x, int y, int width, int height, int anc);
+	public abstract void drawString(extring*str, int x, int y, int width, int height, int anc);
 #if 0
 	void drawSubstring(String str, int offset, int len, int x, int y, int anc);
 	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);

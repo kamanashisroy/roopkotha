@@ -13,38 +13,33 @@ using roopkotha;
  */
 /** \ingroup textcommand */
 internal class roopkotha.velapad.VelaCommand : M100Command {
-	etxt prfx;
 	VelaPad? vpad;
 	enum Options {
 		INFILE = 1,
 		OUTFILE,
 	}
 	public VelaCommand(Module src) {
-		base();
+		extring prefix = extring.set_static_string("velalynx");
+		base(&prefix);
 		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file");
 		vpad = new VelaPad();
-		txt entry = new txt.from_static("MainTurbine");
-		Plugin.register(entry, new AnyInterfaceExtension(vpad.impl, src));
+		extring entry = extring.set_static_string("MainTurbine");
+		Plugin.register(&entry, new AnyInterfaceExtension(vpad.impl, src));
 	}
 
-	public override etxt*get_prefix() {
-		prfx = etxt.from_static("velalynx");
-		return &prfx;
-	}
-
-	public override int act_on(etxt*cmdstr, OutputStream pad, M100CommandSet cmds) throws M100CommandError.ActionFailed {
-		ArrayList<txt> vals = ArrayList<txt>();
+	public override int act_on(extring*cmdstr, OutputStream pad, M100CommandSet cmds) throws M100CommandError.ActionFailed {
+		ArrayList<xtring> vals = ArrayList<xtring>();
 		if(parseOptions(cmdstr, &vals) != 0) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Invalid argument");
 		}
-		txt?infile = vals[Options.INFILE];
+		xtring?infile = vals[Options.INFILE];
 		if(infile != null) {
 			if(vpad.loadFile(infile) != 0) {
 				throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Could not open file");
 			}
 			return 0;
 		}
-		txt?outfile = vals[Options.OUTFILE];
+		xtring?outfile = vals[Options.OUTFILE];
 		if(outfile != null) {
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Unimplemented");
 		}

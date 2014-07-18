@@ -36,7 +36,7 @@ public class roopkotha.vela.PageMenu : roopkotha.doc.DocumentView {
 	EventOwner?rightOption;
 	ArrayList<EventOwner?> leftOptions;
 	int count;
-	public PageMenu(etxt*gTitle, etxt*gAbout) {
+	public PageMenu(extring*gTitle, extring*gAbout) {
 		base(gTitle, gAbout);
 		count = 0;
 		rightOption = null;

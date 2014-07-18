@@ -24,7 +24,7 @@ public class roopkotha.gui.GUIInputImpl : GUIInput {
 	public override int registerScreenEvent(EventOwner?target, int x, int y, int width, int height) {
 		RTreeRect2DInt rect = RTreeRect2DInt.boundary(x,y,x+width,y+height); // XXX will it work from stack ? or do we need memory allocation ?
 		rtr.insertRect(&rect, 0, target);
-		etxt dlg = etxt.stack(128);
+		extring dlg = extring.stack(128);
 		dlg.printf("Adding rect:(%d,%d,%d,%d)\n", x, y, x+width, y+height);
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 100, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		return 0;
@@ -46,7 +46,7 @@ public class roopkotha.gui.GUIInputImpl : GUIInput {
 	}
 
 	public int eventCallback(int flags, int key_code, int x, int y) {
-		etxt dlg = etxt.stack(64);
+		extring dlg = extring.stack(64);
 		dlg.printf("keycode:%d, x:%d, y:%d", key_code, x, y);
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 100, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		if(win == null) {

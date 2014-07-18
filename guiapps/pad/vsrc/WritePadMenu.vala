@@ -14,20 +14,20 @@ public class roopkotha.app.WritePadMenu : Replicable {
 	PlainDocument emptyDoc;
 	public WritePadMenu() {
 		leftOptions = ArrayList<EventOwner>();
-		etxt rightOptionText = etxt.from_static("Quit");
+		extring rightOptionText = extring.set_static_string("Quit");
 		rightOption = new EventOwner(this, &rightOptionText);
-		etxt openFileText = etxt.from_static("Open");
+		extring openFileText = extring.set_static_string("Open");
 		EventOwner openFile = new EventOwner(this, &openFileText);
 		leftOptions.set(0, openFile);
 		guiinit();
 	}
 	void guiinit() {
 		impl = new GUICoreImpl();
-		etxt title = etxt.from_static("Roopkotha");
-		etxt dc = etxt.from_static("quit");
+		extring title = extring.set_static_string("Roopkotha");
+		extring dc = extring.set_static_string("quit");
 		lv = new DocumentView(&title, &dc);	
 		emptyDoc = new PlainDocument();
-		etxt elem = etxt.from_static("Write something here..");
+		extring elem = extring.set_static_string("Write something here..");
 		emptyDoc.addLine(&elem);
 		lv.setDocument(emptyDoc, 0);
 		lv.show();

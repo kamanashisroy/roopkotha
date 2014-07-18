@@ -29,7 +29,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		PADDING = 3
 	}
 	bool menu_is_active = false;
-	//static aroop.txt SELECT;
+	//static aroop.xtring SELECT;
 	EventOwner MENU;
 	EventOwner CANCEL;
 	EventOwner?rightOption; /* < will be displayed when menu is inactive */
@@ -57,13 +57,13 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		menuOptions = null;
 		parent = null;
 		setupFont();
-	//	SELECT = aroop.txt.alloc("Select", 6, null, 0);
-		etxt cancelText = aroop.etxt.from_static("Cancel");
-		CANCEL = new EventOwner.from_etxt(&cancelText);
-		etxt menuText = aroop.etxt.from_static("Menu");
-		MENU = new EventOwner.from_etxt(&menuText);
-		etxt filterText = aroop.etxt.from_static("Filter");
-		FILLER = new EventOwner.from_etxt(&filterText);
+	//	SELECT = aroop.xtring.alloc("Select", 6, null, 0);
+		extring cancelText = aroop.extring.set_static_string("Cancel");
+		CANCEL = new EventOwner.from_extring(&cancelText);
+		extring menuText = aroop.extring.set_static_string("Menu");
+		MENU = new EventOwner.from_extring(&menuText);
+		extring filterText = aroop.extring.set_static_string("Filter");
+		FILLER = new EventOwner.from_extring(&filterText);
 		rightOption = FILLER;
 		dirty = true;
 	}
@@ -89,8 +89,8 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		g.setColor(parent.style.getColor(StyleTarget.MENU_FG_BASE));
 
 		if(left != null) {
-			etxt label = etxt.EMPTY();
-			left.getLabel(&label);
+			extring label = extring();
+			left.getLabelAs(&label);
 			if(!label.is_empty_magical()) {
 				parent.gi.registerScreenEvent(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(&label, 0, label.length()), height);
 				g.drawString(&label, roopkotha.gui.Menu.display.PADDING, 0, width, height - roopkotha.gui.Menu.display.PADDING, roopkotha.gui.Graphics.anchor.LEFT
@@ -99,8 +99,8 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			}
 		}
 		if(right != null) {
-			etxt label = etxt.EMPTY();
-			right.getLabel(&label);
+			extring label = extring();
+			right.getLabelAs(&label);
 			if(!label.is_empty_magical()) {
 				parent.gi.registerScreenEvent(right, width - BASE_FONT.subStringWidth(&label, 0, label.length()), height - BASE_HEIGHT, width, height);
 				g.drawString(&label, roopkotha.gui.Menu.display.PADDING, 0, width - roopkotha.gui.Menu.display.PADDING, height - roopkotha.gui.Menu.display.PADDING,
@@ -115,8 +115,8 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		/* we'll simply check each option and find the maximal width */
 		for (i = 0; (menuOptions != null)  && i < menuOptions.count_unsafe(); i++) {
 			EventOwner cmd = menuOptions.get(i);
-			etxt label = etxt.EMPTY();
-			cmd.getLabel(&label);
+			extring label = extring();
+			cmd.getLabelAs(&label);
 
 			currentWidth = TOWER_FONT.subStringWidth(&label, 0, label.length());
 			if (currentWidth > menuMaxWidth) {
@@ -160,8 +160,8 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		int i = 0, j = 0;
 		for (;menuOptions != null && i < menuOptions.count_unsafe();i++) {
 			EventOwner cmd = menuOptions.get(i);
-			etxt label = etxt.EMPTY();
-			cmd.getLabel(&label);
+			extring label = extring();
+			cmd.getLabelAs(&label);
 			//opp_at_ncode(cmd, menuOptions, i,
 			if (j != selectedOptionIndex) { /* draw unselected menu option */
 				g.setColor(parent.style.getColor(StyleTarget.MENU_FG));
@@ -334,9 +334,9 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 				if(cmd == target) {
 					left = true;
 					i = -2; // break
-					etxt dlg = etxt.stack(128);
-					etxt label = etxt.EMPTY();
-					cmd.getLabel(&label);
+					extring dlg = extring.stack(128);
+					extring label = extring();
+					cmd.getLabelAs(&label);
 					dlg.printf("Left menu:%s", label.to_string());
 					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 				}
@@ -357,7 +357,6 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	//					selectedOption = menuOptions[i];
 	//				}
 		if (right) {
-	//		SYNC_LOG(SYNC_VERB, "TODO: handle right command:%s\n", ((aroop.txt )target).str);
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Window action\n");
 			win.onAction(rightOption);
 			menu_is_active = false;
@@ -365,7 +364,6 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			if(target.is_same(CANCEL as Replicable)) {
 				menu_is_active = false;
 			} else {
-	//			SYNC_LOG(SYNC_VERB, "TODO: handle left command:%s\n", ((aroop.txt )target).str);
 				win.onAction(target);
 				menu_is_active = false;
 			}
@@ -376,7 +374,6 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 				return false;
 			}
 			if(menuOptions.count_unsafe() == 1) {
-	//				SYNC_LOG(SYNC_VERB, "TODO: handle first left command:%s\n", ((aroop.txt )target).str);
 				/* this is direct action */
 				win.onAction(firstOption);
 			} else {

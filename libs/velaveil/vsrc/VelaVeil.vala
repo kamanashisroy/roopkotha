@@ -2,22 +2,22 @@ using aroop;
 using roopkotha.velagent;
 
 public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
-	protected HashTable<txt>veils;
+	protected HashTable<xtring>veils;
 	VelaResourceHandler handler;
 	public VelaVeil(VelaResourceHandler handler) {
 		base(handler);
-		veils = HashTable<txt>();
+		veils = HashTable<xtring>();
 	}
 
 	~VelaVeil() {
 	}
 
-	public void addVeil(txt name, txt menuMl) {
+	public void addVeil(xtring name, xtring menuMl) {
 		veils.set(name, menuMl);
 	}
 
-	int changeVeil(etxt*nm) {
-		txt?xMenu = veils.get(nm);
+	int changeVeil(extring*nm) {
+		xtring?xMenu = veils.get(nm);
 		if(xMenu == null) {
 			return -1;
 		}
@@ -27,7 +27,7 @@ public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
 
 	public override void onContentDisplay(VelaResource id, Replicable content) {
 		if(changeVeil(&id.url) != 0) {
-			etxt default = etxt.from_static("default");
+			extring default = extring.set_static_string("default");
 			changeVeil(&default);
 		}
 	}

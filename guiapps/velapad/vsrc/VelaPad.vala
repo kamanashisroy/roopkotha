@@ -16,7 +16,7 @@ internal class roopkotha.velapad.VelaPad : VelaPadMenu {
 	public VelaPad() {
 		base();
 	}
-	public int loadFile(etxt*fn) {
+	public int loadFile(extring*fn) {
 		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "VelaPadCommand:Open file ...\n");
 		try {
 			FileInputStream fistm = new FileInputStream.from_file(fn);

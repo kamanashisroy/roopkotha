@@ -16,7 +16,7 @@ public class roopkotha.velavanilla.VelaVanilla : roopkotha.velawidget.VelaVeil {
 
 	void setupHandlers() {
 		CommandResourceHandler hdlr = new CommandResourceHandler.givenCommandSet(velac);
-		txt vxecute = new txt.from_static("velaxecute");
+		xtring vxecute = new xtring.set_static_string("velaxecute");
 		cHandler.setHandler(vxecute, hdlr);
 	}
 }

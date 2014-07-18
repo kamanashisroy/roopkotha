@@ -6,11 +6,13 @@ using shotodol;
  */
 public class roopkotha.app.WritePadModule : DynamicModule {
 	public WritePadModule() {
-		name = etxt.from_static("writepad");
+		extring nm = extring.set_static_string("writepad");
+		extring ver = extring.set_static_string("0.0.0");
+		base(&nm,&ver);
 	}
 	public override int init() {
-		txt command = new txt.from_static("command");
-		Plugin.register(command, new M100Extension(new WritePadCommand(this), this));
+		extring command = extring.set_static_string("command");
+		Plugin.register(&command, new M100Extension(new WritePadCommand(this), this));
 		return 0;
 	}
 

@@ -78,7 +78,7 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, arcWidth);
 		bndlr.writeInt(GUICore.entries.ARG, arcHeight);
 	}
-	public override void drawString(etxt*str, int x, int y, int width, int height, int anc) {
+	public override void drawString(extring*str, int x, int y, int width, int height, int anc) {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_STRING);
 		bndlr.writeETxt(GUICore.entries.ARG, str);
 		bndlr.writeInt(GUICore.entries.ARG, x);

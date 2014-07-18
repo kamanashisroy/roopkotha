@@ -47,7 +47,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		RESOLUTION = 8,
 	}
 	
-	public ListView(etxt*aTitle, etxt*aDefaultCommand) {
+	public ListView(extring*aTitle, extring*aDefaultCommand) {
 		base(aTitle);
 		defaultCommand = new EventOwner(this, aDefaultCommand);
 		vpos = 0;
@@ -66,7 +66,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		return getItems().count_unsafe();
 	}
 	
-	public aroop.txt? get_hint() {
+	public aroop.xtring? get_hint() {
 		return null;
 	}
 
@@ -120,7 +120,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		aroop.ArrayList<Replicable>*items = this.getItems();
 		int posY = this.panelTop + this.topMargin;
 
-		etxt dlg = etxt.stack(64);
+		extring dlg = extring.stack(64);
 		dlg.printf("Iterating items\n");
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		// sanity check
@@ -174,7 +174,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 	}
 
 	public void paint(roopkotha.gui.Graphics g) {
-		etxt dlg = etxt.stack(64);
+		extring dlg = extring.stack(64);
 		dlg.printf("Drawing list...\n");
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		/* Draw the ListView Items */
@@ -189,7 +189,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 			g.fillTriangle(x + roopkotha.gui.ListView.display.RESOLUTION / 2, y, x + roopkotha.gui.ListView.display.RESOLUTION, y + roopkotha.gui.ListView.display.RESOLUTION,
 					x, y + roopkotha.gui.ListView.display.RESOLUTION);
 		}
-		aroop.txt hint = this.get_hint();
+		aroop.xtring hint = this.get_hint();
 		if (hint != null && !menu.isActive() && this.selected_index != -1 && this.getCount()
 				!= 0) {
 			// #ifndef net.ayaslive.miniim.ui.core.list.draw_menu_at_last
@@ -210,7 +210,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 
 	public override bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		roopkotha.gui.ListView list = (roopkotha.gui.ListView )this;
-		etxt dlg = etxt.stack(128);
+		extring dlg = extring.stack(128);
 		dlg.printf("Handling menu command for keycode %d\n and x %d ", key_code, x);
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		if(base.onEvent(target, flags, key_code, x, y)) {

@@ -23,22 +23,22 @@ public class roopkotha.velahandler.CommandResourceHandler : VelaResourceHandler 
 	~CommandResourceHandler() {
 	}
 	public override int request(VelaResource id) {
-		etxt prefix = etxt.stack(64);
+		extring prefix = extring.stack(64);
 		id.copyPrefix(&prefix);
 		int len = prefix.length();
 		print("prefix[%d]:%s\n", len, prefix.to_string());
-		etxt cmdTxt = etxt.same_same(&id.url);
+		extring cmdTxt = extring.copy_shallow(&id.url);
 		cmdTxt.shift(len+3);
 		bout.reset();
 		velamds.act_on(&cmdTxt, bout, null);
-		etxt content = etxt.EMPTY();
+		extring content = extring();
 		bout.getAs(&content);
 		print("[%s]\n", content.to_string());
-		txt ctxt = new txt.memcopy_etxt(&content); // TODO reduce this memcopy
+		xtring cxtring = new xtring.copy_on_demand(&content); // TODO reduce this memcopy
 	
 		VelaDivDocument pd = new VelaDivDocument();
-		//pd.spellChunk(ctxt);
-		pd.percept(ctxt);
+		//pd.spellChunk(cxtring);
+		pd.percept(cxtring);
 		onContentReady(id, pd);
 
 		content.destroy();

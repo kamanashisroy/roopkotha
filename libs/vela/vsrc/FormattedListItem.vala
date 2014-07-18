@@ -7,7 +7,7 @@ using roopkotha.vela;
 /** \addtogroup vela
  *  @{
  */
-public delegate onubodh.RawImage roopkotha.vela.MediaLoader(etxt*src);
+public delegate onubodh.RawImage roopkotha.vela.MediaLoader(extring*src);
 public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 	/**
 	 * y-coordinate position of the image
@@ -137,10 +137,10 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 	#endif
 	}
 
-	protected void renderText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, etxt*text) {
+	protected void renderText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, extring*text) {
 		int off, ret;
 #if GUI_DEBUG
-		etxt talk = etxt.stack(128);
+		extring talk = extring.stack(128);
 		talk.printf("Rendering text:%s\n", text.to_string());
 		font.dumpAll(&talk);
 		talk.concat_char('\n');
@@ -155,11 +155,11 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 
 		off = 0;
 		while ((ret = TextFormat.wrap_next(text, font, off, width - xPos)) != -1) {
-			//etxt subtext;
+			//extring subtext;
 			// draw the texts ..
 			if (ret > off) {
 				// draw the line of text
-				etxt xt = etxt.same_same(text);
+				extring xt = extring.copy_shallow(text);
 				xt.shift(off);
 				xt.trim_to_length(ret);
 				//print(">> ... * Drawing text(%d,%d):%s\n", xPos, yPos, xt.to_string());
@@ -186,7 +186,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 	protected void renderFormattedText(roopkotha.gui.Graphics g, roopkotha.gui.Font font, FormattedTextCapsule*cap) {
 		{
 #if GUI_DEBUG
-				etxt talk = etxt.stack(128);
+				extring talk = extring.stack(128);
 				talk.printf("Rendering capsule: %d\n", cap.textType);
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 #endif
@@ -220,7 +220,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		} else if (cap.textType ==  FormattedTextType.A) {
 
 			//xultb_str_t* link = xultb_ml_get_attribute_value(elem, "href");
-			etxt link = etxt.same_same(&cap.hyperLink);
+			extring link = extring.copy_shallow(&cap.hyperLink);
 
 			// draw the anchor
 			if (link.is_empty()/* || !OPP_FACTORY_USE_COUNT(&elem->children)*/) {
@@ -252,7 +252,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		// render the inner nodes
 		content.traverseCapsules((child) => {
 #if GUI_DEBUG
-				etxt talk = etxt.stack(128);
+				extring talk = extring.stack(128);
 				talk.printf("Rendering child of [%d]-", cap.textType);
 				newFont.dumpAll(&talk);
 				talk.concat_char('\n');
@@ -269,7 +269,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		g.setColor(oldColor);
 		{
 #if GUI_DEBUG
-				etxt talk = etxt.stack(128);
+				extring talk = extring.stack(128);
 				talk.printf("End capsule: %d\n", cap.textType);
 				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &talk);
 #endif
@@ -307,7 +307,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		// draw the node recursively
 		content.traverseCapsules((cap) => {
 #if GUI_DEBUG
-			etxt talk = etxt.stack(128);
+			extring talk = extring.stack(128);
 			talk.printf("Rendering[Paint] ..");
 			font.dumpAll(&talk);
 			talk.concat_char('\n');
@@ -338,7 +338,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		return false;
 	}
 
-	public override int update(etxt*xt) {
+	public override int update(extring*xt) {
 		// TODO fill me 
 		return 0;
 	}

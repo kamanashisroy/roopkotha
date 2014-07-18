@@ -22,17 +22,17 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 	}
 	void setupGUI() {
 		impl = new GUICoreImpl();
-		etxt velaTitle = etxt.from_static("Vela");
-		etxt aboutVela = etxt.from_static("About");
+		extring velaTitle = extring.set_static_string("Vela");
+		extring aboutVela = extring.set_static_string("About");
 		pg = new PageView.of_title(&velaTitle, &aboutVela);	
 		emptyDoc = new VelaDivDocument();
-		/*etxt elem = etxt.from_static("Write something here..");
+		/*extring elem = extring.set_static_string("Write something here..");
 		emptyDoc.addLine(&elem);*/
 		//pg.setDocument(emptyDoc, 0);
 		vagent = velavanilla.VelaVanillaModule.vanilla;
 		vagent.plugPage(pg);
-		etxt baseUrl = etxt.from_static("");
-		etxt url = etxt.from_static("file://empty");
+		extring baseUrl = extring.set_static_string("");
+		extring url = extring.set_static_string("file://empty");
 		VelaResource res = new VelaResource(&baseUrl, &url, emptyDoc);
 		vagent.onContentReady(res, emptyDoc);
 	}

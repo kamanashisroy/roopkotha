@@ -46,14 +46,14 @@ public enum roopkotha.vela.FormattedTextType {
 public struct roopkotha.vela.FormattedTextCapsule {
 	
 	public roopkotha.vela.FormattedTextType textType;
-	public etxt content;
-	public etxt hyperLink;
+	public extring content;
+	public extring hyperLink;
 	public bool isFocused;
 	public bool isActive;
 	public FormattedTextCapsule() {
 		textType = FormattedTextType.PLAIN;
-		content = etxt.EMPTY();
-		hyperLink = etxt.EMPTY();
+		content = extring();
+		hyperLink = extring();
 		isFocused = false;
 	}
 }
@@ -61,18 +61,18 @@ public struct roopkotha.vela.FormattedTextCapsule {
 public delegate int roopkotha.vela.VisitAugmentedContent(FormattedTextCapsule*capsule);
 
 public abstract class roopkotha.vela.FormattedContent : roopkotha.doc.AugmentedContent {
-	txt?data = null;
+	extring data;
 
-	public FormattedContent(etxt*asciiData) {
+	public FormattedContent(extring*asciiData) {
 		//memclean_raw();
 		base();
-		data = new txt.memcopy_etxt(asciiData);
+		data = extring.copy_on_demand(asciiData);
 		cType = AugmentedContent.ContentType.FORMATTED_CONTENT;
 		//print("FormattedContent:%s\n", data.to_string());
 	}
 
-	public override void getText(etxt*tData) {
-		tData.concat(data);
+	public override void getTextAs(extring*tData) {
+		tData.copy_shallow(&data);
 	}
 	public abstract void traverseCapsulesInit();
 	public abstract int traverseCapsules(VisitAugmentedContent visitCapsule);

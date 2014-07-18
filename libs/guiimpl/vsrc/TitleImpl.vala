@@ -6,7 +6,7 @@ using roopkotha.gui;
  *  @{
  */
 public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
-	txt title;
+	xtring title;
 	int width;
 	int height;
 	int panelTop;
@@ -14,8 +14,8 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 	GraphicsPixelMap?gfx;
 	protected Font?TITLE_FONT;
 	unowned Window parent; // avoid circular reference
-	public TitleImpl(Window gParent, etxt*aTitle, int gPadding) {
-		title = new txt.memcopy_etxt(aTitle);
+	public TitleImpl(Window gParent, extring*aTitle, int gPadding) {
+		title = new xtring.copy_on_demand(aTitle);
 		TITLE_FONT = new FontImpl();
 		gfx = null;
 		width = 10;
@@ -25,7 +25,7 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 		parent = gParent;
 	}
 
-	public int setTitle(aroop.txt gTitle) {
+	public int setTitle(aroop.xtring gTitle) {
 		title = gTitle;
 		return 0;
 	}

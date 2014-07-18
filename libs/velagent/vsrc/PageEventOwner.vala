@@ -9,13 +9,13 @@ using roopkotha.vela;
  *  @{
  */
 public class roopkotha.velagent.PageEventOwner : roopkotha.gui.EventOwner {
-	public etxt action;
-	public PageEventOwner(etxt*gAction,etxt*displayText, Replicable?src) {
+	public extring action;
+	public PageEventOwner(extring*gAction,extring*displayText, Replicable?src) {
 		base(src, displayText);
 		if(gAction == null) {
-			action = etxt.EMPTY();
+			action = extring();
 		} else {
-			action = etxt.dup_etxt(gAction);
+			action = extring.copy_on_demand(gAction);
 		}
 	}
 }

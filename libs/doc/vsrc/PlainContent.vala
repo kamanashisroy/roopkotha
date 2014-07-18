@@ -6,14 +6,14 @@ using roopkotha.gui;
  *  @{
  */
 public class roopkotha.doc.PlainContent : roopkotha.doc.AugmentedContent {
-	txt data;
-	public PlainContent(etxt*asciiData) {
+	extring data;
+	public PlainContent(extring*asciiData) {
 		base();
-		data = new txt.memcopy_etxt(asciiData);
+		data = extring.copy_on_demand(asciiData);
 		cType = ContentType.PLAIN_CONTENT;
 	}
-	public override void getText(etxt*tData) {
-		tData.concat(data);
+	public override void getTextAs(extring*tData) {
+		tData.rebuild_and_copy_shallow(&data);
 	}
 }
 /** @} */

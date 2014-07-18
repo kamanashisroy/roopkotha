@@ -16,10 +16,10 @@ public class roopkotha.filecommands.FileResourceHandler : VelaResourceHandler {
 	VelaResourceHandler? getHandler(VelaResource id) {
 		int len = id.url.length();
 		int i = 0;
-		etxt fileext = etxt.EMPTY();
+		extring fileext = extring();
 		for(i = len; i > 0; i--) {
 			if(id.url.char_at(i) == '.') {
-				fileext = etxt.same_same(&id.url);
+				fileext = extring.copy_shallow(&id.url);
 				fileext.shift(i);
 			}
 		}
@@ -29,7 +29,7 @@ public class roopkotha.filecommands.FileResourceHandler : VelaResourceHandler {
 		}
 		return handlers.get(&fileext);
 	}
-	public void setHandler(txt fileext, VelaResourceHandler hdlr) {
+	public void setHandler(xtring fileext, VelaResourceHandler hdlr) {
 		hdlr.setContentCallback(onContentReady);
 		hdlr.setContentErrorCallback(onContentError);
 		handlers.set(fileext, hdlr);

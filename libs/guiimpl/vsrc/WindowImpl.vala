@@ -13,7 +13,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 	TitleImpl titlePane;
 	protected int panelTop;
 	bool dirty;
-	public WindowImpl(etxt*aTitle) {
+	public WindowImpl(extring*aTitle) {
 		menu = new MenuImpl();
 		gfx = null;
 		panes = ArrayList<Pane>();
@@ -39,7 +39,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		return 0;
 	}
 
-	public override void setTitle(aroop.txt title) {
+	public override void setTitle(aroop.xtring title) {
 		titlePane.setTitle(title);
 	}
 
@@ -59,7 +59,7 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
 		bndlr.writeInt(GUICore.entries.ARG, windowId);
 		showTask.finalize(&bndlr);
-		etxt task = etxt.EMPTY();
+		extring task = extring();
 		showTask.getTaskAs(&task);
 		GUICoreImpl.gcore.windows.set(windowId, this);
 		GUICoreImpl.gcore.pushTask(&task);

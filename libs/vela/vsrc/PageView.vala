@@ -31,23 +31,23 @@ using roopkotha.vela;
  * You can only trust the numbers. 
  * [-Maturity- 20]
  */
-public delegate void roopkotha.vela.PageEventCB(etxt*action);
-public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(etxt*imgAddr);
+public delegate void roopkotha.vela.PageEventCB(extring*action);
+public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(extring*imgAddr);
 
 public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 	PageEventCB?pageEventCB;
 	GetImageCB?getImageCB;
 	FormattedListItem fli;
-	etxt velaTitle;
-	etxt aboutVela;
+	extring velaTitle;
+	extring aboutVela;
 	public PageView() {
-		velaTitle = etxt.from_static("Vela");
-		aboutVela = etxt.from_static("About");
+		velaTitle = extring.set_static_string("Vela");
+		aboutVela = extring.set_static_string("About");
 		base(&velaTitle, &aboutVela);
 		initPage();
 	}
 
-	public PageView.of_title(etxt*ttl,etxt*abt) {
+	public PageView.of_title(extring*ttl,extring*abt) {
 		base(ttl, abt);
 		initPage();
 	}
@@ -66,10 +66,10 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 			//print("-- formatted item generated\n");
 			return fli;
 		}
-		etxt data = etxt.stack(128);
-		elem.getText(&data);
+		extring data = extring();
+		elem.getTextAs(&data);
 #if false
-		etxt dlg = etxt.stack(256);
+		extring dlg = extring.stack(256);
 		dlg.printf("PageView:Plain line :%s\n", data.to_string());
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 #endif
@@ -77,8 +77,8 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 #if false
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
 #else
-		etxt action = etxt.stack(128);
-		elem.getAction(&action);
+		extring action = extring();
+		elem.getActionAs(&action);
 		EventOwner owner = new EventOwner(elem, &data);
 		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, owner);
 #endif
@@ -103,7 +103,7 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 		if(pageEventCB == null) {
 			return false;
 		}
-		etxt action = etxt.EMPTY();
+		extring action = extring();
 		EventOwner owner = (EventOwner)target;
 		AugmentedContent?elem = null;
 		if(owner != null) {
@@ -114,7 +114,7 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 				return false;
 			}
 		}
-		elem.getAction(&action);
+		elem.getActionAs(&action);
 		if(action.is_empty()) {
 			return false;
 		}

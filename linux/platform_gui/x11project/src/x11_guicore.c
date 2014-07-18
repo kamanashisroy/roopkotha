@@ -241,7 +241,7 @@ int platform_impl_push_task(PlatformRoopkothaGUICore*UNUSED_VAR(nothing), aroop_
 	// copy to new text ..
 	SYNC_ASSERT(msg != NULL);
 	SYNC_ASSERT(msg->len != 0);
-	aroop_txt_t*msgcp = aroop_txt_clone_etxt(msg);
+	aroop_txt_t*msgcp = aroop_txt_new_copy_on_demand(msg,0);
 	SYNC_ASSERT(msgcp != NULL);
 	opp_enqueue(&gcore.incoming, msgcp);
 	aroop_object_unref(aroop_txt_t*,0,msgcp);

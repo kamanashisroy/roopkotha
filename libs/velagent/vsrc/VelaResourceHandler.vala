@@ -13,26 +13,26 @@ public class roopkotha.velagent.VelaResource : Replicable {
 		IMAGE,
 	}
 	public Type tp {public get;private set;}
-	public etxt baseUrl;
-	public etxt url;
+	public extring baseUrl;
+	public extring url;
 	RoopDocument referer;
-	public VelaResource(etxt*gBase, etxt*gUrl, RoopDocument gReferer) {
+	public VelaResource(extring*gBase, extring*gUrl, RoopDocument gReferer) {
 		if(gBase.is_empty_magical()) {
-			baseUrl = etxt.EMPTY();
+			baseUrl = extring();
 		} else {
-			baseUrl = etxt.dup_etxt(gBase);
+			baseUrl = extring.copy_on_demand(gBase);
 		}
 		if(gUrl.is_empty_magical()) {
-			url = etxt.EMPTY();
+			url = extring();
 		} else {
-			url = etxt.dup_etxt(gUrl);
+			url = extring.copy_on_demand(gUrl);
 		}
 		tp = Type.DOCUMENT;
 		//print("x:%s-%s\n", baseUrl.to_string(), url.to_string());
 		referer = gReferer;
 	}
-	public void copyPrefix(etxt*prefix) {
-		//etxt*x = baseUrl.is_empty_magical()?&url:&baseUrl;
+	public void copyPrefix(extring*prefix) {
+		//extring*x = baseUrl.is_empty_magical()?&url:&baseUrl;
 		//print("x:%s\n", x.to_string());
 		prefix.concat(&baseUrl);
 		prefix.concat(&url);
@@ -54,7 +54,7 @@ public class roopkotha.velagent.VelaResource : Replicable {
 
 }
 public delegate void roopkotha.velagent.ContentReadyCB(VelaResource id, Replicable content);
-public delegate void roopkotha.velagent.ContentErrorCB(VelaResource id, int code, etxt*reason);
+public delegate void roopkotha.velagent.ContentErrorCB(VelaResource id, int code, extring*reason);
 public abstract class roopkotha.velagent.VelaResourceHandler : Replicable {
 	protected ContentReadyCB?onContentReady;
 	protected ContentErrorCB?onContentError;

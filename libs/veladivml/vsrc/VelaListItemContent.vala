@@ -6,25 +6,25 @@ using roopkotha.gui;
  *  @{
  */
 public class roopkotha.veladivml.VelaListItemContent : roopkotha.doc.AugmentedContent {
-	txt data;
+	extring data;
 	bool focused;
-	etxt href;
-	public VelaListItemContent(etxt*asciiData, etxt*gHref, bool gFocused) {
+	extring href;
+	public VelaListItemContent(extring*asciiData, extring*gHref, bool gFocused) {
 		base();
 		if(asciiData.is_empty_magical()) {
-			data = new txt.from_static("");
+			data = extring.set_static_string("");
 		} else {
-			data = new txt.memcopy_etxt(asciiData);
+			data = extring.copy_on_demand(asciiData);
 		}
 		cType = ContentType.PLAIN_CONTENT;
 		focused = gFocused;
 		if(gHref != null)
-			href = etxt.dup_etxt(gHref);
+			href = extring.copy_on_demand(gHref);
 		else
-			href = etxt.EMPTY();
+			href = extring();
 	}
-	public override void getText(etxt*tData) {
-		tData.concat(data);
+	public override void getTextAs(extring*tData) {
+		tData.rebuild_and_copy_shallow(&data);
 	}
 	public override bool isFocused() {
 		return focused;
@@ -34,9 +34,8 @@ public class roopkotha.veladivml.VelaListItemContent : roopkotha.doc.AugmentedCo
 		return !href.is_empty();
 	}
 
-	public override void getAction(etxt*adata) {
-		adata.destroy();
-		(*adata) = etxt.same_same(&href);
+	public override void getActionAs(extring*adata) {
+		adata.rebuild_and_copy_shallow(&href);
 	}
 }
 /** @} */

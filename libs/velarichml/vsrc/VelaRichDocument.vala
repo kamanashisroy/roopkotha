@@ -28,7 +28,7 @@ public class roopkotha.velarichml.VelaRichDocument : roopkotha.doc.RoopDocument 
 		base();
 	}
 	
-	public virtual void spellChunk(etxt*asciiData) {
+	public virtual void spellChunk(extring*asciiData) {
 		VelaRichContent c = new VelaRichContent(asciiData);
 		//print("VelaRichContent:Adding line:%s\n", asciiData.to_string());
 		contents.set(counter++, c);
@@ -41,9 +41,9 @@ public class roopkotha.velarichml.VelaRichDocument : roopkotha.doc.RoopDocument 
 	public void tryReading() {
 		do {
 #if LOW_MEMORY
-			etxt data = etxt.stack(1024);
+			extring data = extring.stack(1024);
 #else
-			etxt data = etxt.stack(1<<12);
+			extring data = extring.stack(1<<12);
 #endif
 			core.assert(instrm != null);
 			try {

@@ -6,19 +6,13 @@ using roopkotha;
  *  @{
  */
 internal class roopkotha.app.WritePadTest : UnitTest {
-  etxt tname;
   public WritePadTest() {
-    tname = etxt.from_static("WritePad Test");
-  }
-  public override aroop_hash getHash() {
-    return tname.getStringHash();
-  }
-  public override void getName(etxt*name) {
-    name.dup_etxt(&tname);
+	extring tname = extring.set_static_string("WritePad Test");
+	base(&tname);
   }
   public override int test() throws UnitTestError {
-    print("WritePadTest:~~~~TODO fill me\n");
-    return 0;
+	print("WritePadTest:~~~~TODO fill me\n");
+	return 0;
   }
 #if false
 	//Turbine gtb;
@@ -29,13 +23,13 @@ internal class roopkotha.app.WritePadTest : UnitTest {
 		//gtb.gearup(impl);
 		//xultb_guicore_system_init(&argc, argv);
 
-		etxt title = etxt.from_static("Test");
-		etxt dc = etxt.from_static("quit");
+		extring title = extring.set_static_string("Test");
+		extring dc = extring.set_static_string("quit");
 
 		SimpleListView slv = new SimpleListView(&title, &dc);	
 
 		Watchdog.logString("WritePadCommand:test_ui:adding list item\n");
-		etxt elem = etxt.from_static("good");
+		extring elem = extring.set_static_string("good");
 		ListViewItemComplex item = new ListViewItemComplex.createLabel(&elem, null);
 		slv.setListViewItem(0, item);
 
@@ -47,7 +41,7 @@ internal class roopkotha.app.WritePadTest : UnitTest {
 	}
 	void test_doc() {
 		PlainDocument testDoc = new PlainDocument();
-		etxt elem = etxt.from_static("good");
+		extring elem = extring.set_static_string("good");
 		testDoc.addLine(&elem);
 		show(testDoc);
 	}

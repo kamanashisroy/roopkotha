@@ -59,14 +59,14 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 	};
 #endif	
 	RoopDocument? doc;
-	public DocumentView(etxt*aTitle, etxt*aDefaultCommand) {
+	public DocumentView(extring*aTitle, extring*aDefaultCommand) {
 		base(aTitle, aDefaultCommand);
-		etxt dlg = etxt.from_static("Created DocumentView\n");
+		extring dlg = extring.set_static_string("Created DocumentView\n");
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "DocumentView:created");
 	}
 	public void setDocument(RoopDocument aDoc, int aSelectedIndex) {
 		doc = aDoc;
-		etxt dlg = etxt.stack(64);
+		extring dlg = extring.stack(64);
 		dlg.printf("DocumentView:new document of %d lines\n", getCount());
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 #if false
@@ -108,7 +108,7 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 	}
 #endif
 	
-	public void setRightOption(etxt*rightOption) {
+	public void setRightOption(extring*rightOption) {
 #if false
 		this.rightOption = rightOption;
 		// \xxx no locking :(
@@ -118,7 +118,7 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 #endif
 	}
 	
-	public void setLeftOption(int pos, etxt*command) {
+	public void setLeftOption(int pos, extring*command) {
 #if false
 		// \xxx no locking :(
 		if(isShowing()) {
@@ -152,13 +152,13 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 	protected override ListViewItem getListItem(Replicable given) {
 		// get the element
 		AugmentedContent elem = (AugmentedContent)given;
-		etxt data = etxt.stack(128);
+		extring data = extring();
 		switch(elem.cType) {
 			case AugmentedContent.ContentType.TEXT_INPUT_CONTENT:
 			{
-				elem.getText(&data);
-				etxt label = etxt.EMPTY();
-				elem.getLabel(&label);
+				elem.getTextAs(&data);
+				extring label = extring();
+				elem.getLabelAs(&label);
 				
 				return new ListViewItemComplex.createTextInputFull(&label, &data, elem.canBeWrapped(), true);
 			}
@@ -167,7 +167,7 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 			{
 #if false
 				// get selected index
-				etxt buffer = etxt.EMPTY();
+				extring buffer = extring();
 				boolean first = true;
 				final int count = elem.getChildCount();
 				for(int i=0; i<count; i++) {
@@ -196,15 +196,15 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 				break;
 			case AugmentedContent.ContentType.RADIO_CONTENT:
 			{
-				etxt label = etxt.EMPTY();
-				elem.getLabel(&label);
+				extring label = extring();
+				elem.getLabelAs(&label);
 				return new ListViewItemComplex.createRadioButton(&label, elem.isChecked(), true);
 			}
 				break;
 			case AugmentedContent.ContentType.CHECKBOX_CONTENT:
 			{
-				etxt label = etxt.EMPTY();
-				elem.getLabel(&label);
+				extring label = extring();
+				elem.getLabelAs(&label);
 				return new ListViewItemComplex.createCheckbox(&label, elem.isChecked(), true);
 			}
 				break;
@@ -218,8 +218,8 @@ public class roopkotha.doc.DocumentView : roopkotha.gui.ListView {
 			default:
 				break;
 		}
-		elem.getText(&data);
-		etxt dlg = etxt.stack(256);
+		elem.getTextAs(&data);
+		extring dlg = extring.stack(256);
 		dlg.printf("Plain line :%s\n", data.to_string());
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 		// see if the label has any image

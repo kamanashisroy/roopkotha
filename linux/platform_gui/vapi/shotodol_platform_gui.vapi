@@ -15,9 +15,9 @@ namespace roopkotha.platform {
 		[CCode (cname="platform_impl_guicore_step")]
 		public int step();
 		[CCode (cname="platform_impl_push_task")]
-		public void pushTask(etxt*task);
+		public void pushTask(extring*task);
 		[CCode (cname="platform_impl_pop_task_as")]
-		public void popTaskAs(etxt*task);
+		public void popTaskAs(extring*task);
 	}
 }
 

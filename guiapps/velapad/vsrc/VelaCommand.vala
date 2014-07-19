@@ -23,7 +23,7 @@ internal class roopkotha.velapad.VelaCommand : M100Command {
 		base(&prefix);
 		addOptionString("-i", M100Command.OptionType.TXT, Options.INFILE, "Input file");
 		vpad = new VelaPad();
-		extring entry = extring.set_static_string("MainTurbine");
+		extring entry = extring.set_static_string("MainSpindle");
 		Plugin.register(&entry, new AnyInterfaceExtension(vpad.impl, src));
 	}
 

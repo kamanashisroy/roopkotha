@@ -53,8 +53,8 @@ public class roopkotha.app.WritePadCommand : M100Command {
 		}
 		if(wpad == null) {
 			wpad = new WritePad();
-			xtring entry = new xtring.set_static_string("MainTurbine");
-			Plugin.register(entry, new AnyInterfaceExtension(wpad.impl, mod));
+			extring entry = extring.set_static_string("MainSpindle");
+			Plugin.register(&entry, new AnyInterfaceExtension(wpad.impl, mod));
 		}
 		return 0;
 	}

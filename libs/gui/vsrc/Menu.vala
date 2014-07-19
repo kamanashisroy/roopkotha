@@ -198,6 +198,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	}
 
 	public override void paint(roopkotha.gui.Graphics g) {
+		if(parent == null)return;
 		int width = parent.width;
 		int height = parent.height;
 		g.start(parent, 20);

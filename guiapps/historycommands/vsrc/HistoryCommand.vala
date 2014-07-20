@@ -22,7 +22,7 @@ internal class HistoryCommand : M100QuietCommand {
 		int back = 1;
 		xtring? arg = vals[Options.BACKTO];
 		if(arg != null) {
-			back = arg.ecast().to_int();
+			back = arg.fly().to_int();
 		}
 		if(back == 99) {
 			extring quitEntry = extring.set_static_string("onQuit");

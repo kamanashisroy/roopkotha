@@ -32,10 +32,10 @@ public struct roopkotha.rtree.RTreeNode {
 		bool first_time=true;
 		*cvr = RTreeRect2DInt();
 
-		Iterator<container<RTreeBranch>> it = Iterator<container<RTreeBranch>>.EMPTY();
+		Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
 		branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 		while(it.next()) {
-			container<RTreeBranch> can = it.get();
+			AroopPointer<RTreeBranch> can = it.get();
 			RTreeBranch b = can.get();
 			if (first_time) {
 				cvr.copyFrom(&b.rect);
@@ -63,10 +63,10 @@ public struct roopkotha.rtree.RTreeNode {
 		increase = 0;
 
 
-		Iterator<container<RTreeBranch>> it = Iterator<container<RTreeBranch>>.EMPTY();
+		Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
 		branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 		while(it.next()) {
-			container<RTreeBranch> can = it.get();
+			AroopPointer<RTreeBranch> can = it.get();
 			RTreeBranch b = can.get();
 			area = b.rect.sphericalVolume();
 			tmp_rect.copyFrom(r);

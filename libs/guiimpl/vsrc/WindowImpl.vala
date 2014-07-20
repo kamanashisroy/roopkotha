@@ -86,13 +86,13 @@ public class roopkotha.gui.WindowImpl : roopkotha.gui.Window {
 		return 0;
 	}
 
-	public void getPaneIterator(Iterator<container<Pane>>*it, int if_set, int if_not_set) {
+	public void getPaneIterator(Iterator<AroopPointer<Pane>>*it, int if_set, int if_not_set) {
 		panes.iterator_hacked(it, if_set, if_not_set, 0);
 	}
 
 	public int process() {
 		dirty = false;
-		Iterator<container<Pane>>it = Iterator<container<Pane>>.EMPTY();
+		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>.EMPTY();
 		getPaneIterator(&it, Replica_flags.ALL, 0);
 		while(it.next()) {
 			Pane pn = it.get().get();

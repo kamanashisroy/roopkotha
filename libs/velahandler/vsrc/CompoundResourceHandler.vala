@@ -6,9 +6,9 @@ using roopkotha.velagent;
  *  @{
  */
 public class roopkotha.velahandler.CompoundResourceHandler : VelaResourceHandler {
-	HashTable<VelaResourceHandler?> handlers;
+	HashTable<xtring,VelaResourceHandler?> handlers;
 	public CompoundResourceHandler() {
-		handlers = HashTable<VelaResourceHandler?>();
+		handlers = HashTable<xtring,VelaResourceHandler?>(xtring.hCb,xtring.eCb);
 	}
 	~CompoundResourceHandler() {
 		handlers.destroy();
@@ -22,7 +22,7 @@ public class roopkotha.velahandler.CompoundResourceHandler : VelaResourceHandler
 			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 1, Watchdog.WatchdogSeverity.ALERT, 0, 0, &dlg);
 			return null;
 		}
-		return handlers.get(&prefix);
+		return handlers.getProperty(&prefix);
 	}
 	public void setHandler(xtring prefix, VelaResourceHandler?hdlr) {
 		if(hdlr != null) {

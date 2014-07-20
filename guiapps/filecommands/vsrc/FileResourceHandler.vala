@@ -6,9 +6,9 @@ using roopkotha.velagent;
  *  @{
  */
 public class roopkotha.filecommands.FileResourceHandler : VelaResourceHandler {
-	HashTable<VelaResourceHandler?> handlers;
+	HashTable<xtring,VelaResourceHandler?> handlers;
 	public FileResourceHandler() {
-		handlers = HashTable<VelaResourceHandler?>();
+		handlers = HashTable<xtring,VelaResourceHandler?>(xtring.hCb,xtring.eCb);
 	}
 	~FileResourceHandler() {
 		handlers.destroy();
@@ -27,7 +27,7 @@ public class roopkotha.filecommands.FileResourceHandler : VelaResourceHandler {
 			// TODO use plain opener
 			return null;
 		}
-		return handlers.get(&fileext);
+		return handlers.getProperty(&fileext);
 	}
 	public void setHandler(xtring fileext, VelaResourceHandler hdlr) {
 		hdlr.setContentCallback(onContentReady);

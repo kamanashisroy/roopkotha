@@ -2,11 +2,11 @@ using aroop;
 using roopkotha.velagent;
 
 public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
-	protected HashTable<xtring>veils;
+	protected HashTable<xtring,xtring>veils;
 	VelaResourceHandler handler;
 	public VelaVeil(VelaResourceHandler handler) {
 		base(handler);
-		veils = HashTable<xtring>();
+		veils = HashTable<xtring,xtring>(xtring.hCb,xtring.eCb);
 	}
 
 	~VelaVeil() {
@@ -17,7 +17,7 @@ public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
 	}
 
 	int changeVeil(extring*nm) {
-		xtring?xMenu = veils.get(nm);
+		xtring?xMenu = veils.getProperty(nm);
 		if(xMenu == null) {
 			return -1;
 		}

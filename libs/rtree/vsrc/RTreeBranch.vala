@@ -51,10 +51,10 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 
 		if (child.level > 0) /* this is an internal node in the tree */
 		{
-			Iterator<container<RTreeBranch>> it = Iterator<container<RTreeBranch>>.EMPTY();
+			Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
 			child.branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 			while(it.next()) {
-				container<RTreeBranch> can = it.get();
+				AroopPointer<RTreeBranch> can = it.get();
 				RTreeBranch b = can.get();
 				if(b.rect.overlaps(r)) {
 					hitCount += b.search(r, shcb);
@@ -64,10 +64,10 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 		}
 		else /* this is a leaf node */
 		{
-			Iterator<container<RTreeBranch>> it = Iterator<container<RTreeBranch>>.EMPTY();
+			Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
 			child.branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 			while(it.next()) {
-				container<RTreeBranch> can = it.get();
+				AroopPointer<RTreeBranch> can = it.get();
 				RTreeBranch b = can.get();
 				if(b.rect.overlaps(r)) {
 					hitCount ++;

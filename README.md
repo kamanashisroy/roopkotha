@@ -119,7 +119,13 @@ TODO:show the diagram from my handwritten file.
 
 You may want to know the architecture of shotodol to understand it better.
 
-## Building doxygen documentation
+### Modules
+
+- [GUI Core](libs/gui/README.md)
+- GUI Modules are [command pattern](http://en.wikipedia.org/wiki/Command_Pattern) execution of events.
+	- History Command 
+
+### Building doxygen documentation
 
 You can also get the source code documentation in html/other document formats. You need _doxygen_ installed. And you can just _make_ the document and see the output in docs/doxygen/ (or more specifically in docs/doxygen/html/).
 ```

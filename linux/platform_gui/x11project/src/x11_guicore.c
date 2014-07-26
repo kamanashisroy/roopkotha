@@ -23,15 +23,15 @@
  *  Created on: Jun 11, 2014
  *      Author: ayaskanti
  */
-#include "core/config.h"
-#include "core/decorator.h"
+#include "aroop/core/config.h"
+#include "aroop/core/decorator.h"
 
 #include <X11/Xlib.h> 
 #include <X11/Xutil.h>
-#include "aroop_core.h"
-#include "opp/opp_factory.h"
-#include "core/txt.h"
-#include "opp/opp_queue.h"
+#include "aroop/aroop_core.h"
+#include "aroop/opp/opp_factory.h"
+#include "aroop/core/txt.h"
+#include "aroop/opp/opp_queue.h"
 #include "shotodol_gui.h"
 #include "shotodol_watchdog.h"
 #define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)

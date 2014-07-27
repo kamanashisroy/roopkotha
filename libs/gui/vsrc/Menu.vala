@@ -48,14 +48,15 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 
 	int BASE_HEIGHT;
 	int currentlySelectedIndex = 0;
+	unowned roopkotha.gui.Window?parent;
 
-	public Menu(Font aTowerFont, Font aBaseFont) {
+	public Menu(Window win, Font aTowerFont, Font aBaseFont) {
+		parent = win;
 	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
 		//memclean_raw();
 		TOWER_FONT = aTowerFont;
 		BASE_FONT = aBaseFont;
 		menuOptions = null;
-		parent = null;
 		setupFont();
 	//	SELECT = aroop.xtring.alloc("Select", 6, null, 0);
 		extring cancelText = aroop.extring.set_static_string("Cancel");
@@ -192,13 +193,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		}
 	}
 
-	internal unowned roopkotha.gui.Window?parent;
-	internal void setParent(roopkotha.gui.Window gParent) {
-		parent = gParent;
-	}
-
 	public override void paint(roopkotha.gui.Graphics g) {
-		if(parent == null)return;
 		int width = parent.width;
 		int height = parent.height;
 		g.start(parent, 20);

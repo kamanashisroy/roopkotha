@@ -5,11 +5,11 @@ using roopkotha.gui;
  *  @{
  */
 public class roopkotha.gui.MenuPane: Menu {
-	public MenuPane() {
-		base(new BasicFont(), new BasicFont());
+	GraphicsTask?gfx;
+	public MenuPane(Window win) {
+		base(win, new BasicFont(), new BasicFont());
 		gfx = null;
 	}
-	GraphicsTask?gfx;
 	public override roopkotha.gui.Graphics getGraphics() {
 		if(gfx != null)
 			return gfx;

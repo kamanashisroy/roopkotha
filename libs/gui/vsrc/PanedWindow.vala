@@ -7,18 +7,15 @@ using roopkotha.gui;
  */
 
 public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
-	internal int windowId;
 	ArrayList<Pane>panes;
 	TitlePane titlePane;
 	protected int panelTop;
 	bool dirty;
 	public PanedWindow(extring*aTitle) {
-		menu = new MenuPane();
 		gi = GUICoreModule.gcore.createInputHandler(this);
 		panes = ArrayList<Pane>();
-		windowId = 0x01; // currently we support only one window.
 		titlePane = new TitlePane(this, aTitle, PADDING);
-		base();
+		base(new MenuPane(this));
 		setPane(19, titlePane);
 		panelTop = 0;
 		dirty = false;
@@ -52,7 +49,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		Bundler bndlr = Bundler();
 		bndlr.buildFromCarton(&showTask.msg, 32);
 		bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
-		bndlr.writeInt(GUICore.entries.ARG, windowId);
+		bndlr.writeInt(GUICore.entries.ARG, get_token());
 		showTask.finalize(&bndlr);
 		extring task = extring();
 		showTask.getTaskAs(&task);
@@ -91,7 +88,6 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		while(it.next()) {
 			Pane pn = it.get().get();
 			Graphics g = pn.getGraphics();
-			// TODO check if the pane has changed
 			if(pn.isDirty()) {
 				pn.paint(g);
 			}

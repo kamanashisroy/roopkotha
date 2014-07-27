@@ -49,8 +49,8 @@ public abstract class roopkotha.gui.Window : Hashable {
 		RESIZE,
 		KEY_PRESS,
 	}
-	public Window() {
-		core.assert(menu != null);
+	public Window(Menu wmenu) {
+		menu = wmenu;
 		onResize(200, 400);
 		windowActionCB = null;
 		setPane(20, menu);
@@ -72,7 +72,6 @@ public abstract class roopkotha.gui.Window : Hashable {
 	public abstract void show();
 	public void showFull(ArrayList<EventOwner>*left_option, EventOwner right_option) {
 		menu.set(left_option, right_option);
-		menu.setParent(this);
 		this.show();
 	}
 	public bool isShowing() {

@@ -5,7 +5,7 @@ using roopkotha.gui;
 /** \addtogroup gui
  *  @{
  */
-public abstract class roopkotha.gui.Pane : Replicable {
+public abstract class roopkotha.gui.Pane : Hashable {
 	protected bool dirty;
 	public Pane() {
 		dirty = false;

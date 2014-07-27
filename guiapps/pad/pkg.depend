@@ -5,6 +5,5 @@ core/commands
 core/base
 core/test
 -ROOPKOTHA_HOME
-libs/guiimpl
 libs/doc
 

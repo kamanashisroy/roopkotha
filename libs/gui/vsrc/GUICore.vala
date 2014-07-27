@@ -27,7 +27,7 @@ using roopkotha.gui;
  */
 public abstract class roopkotha.gui.GUICore : Spindle {
 	protected Queue<Window> painter;
-	static GUICore? gcore;
+	GUIInput gin;
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_CORE_TASK_")]
 	public enum entries {
 		GRAPHICS_TASK = 1,
@@ -36,24 +36,25 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 	}
 	public GUICore() {
 		painter = Queue<Window>();
-		gcore = this;
 	}
 	~GUICore() {
 		painter.destroy();
 	}
 
-	public static int setDirtyFull(roopkotha.gui.Window win, int x1, int y1, int x2, int y2) {
-		return gcore.setDirty(win);
+	public int setDirtyFull(roopkotha.gui.Window win, int x1, int y1, int x2, int y2) {
+		return setDirty(win);
 	}
 
-	public static int setDirty(roopkotha.gui.Window win) {
+	public int setDirty(roopkotha.gui.Window win) {
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:setDirty: Marking it dirty");
-		gcore.painter.enqueue(win);
+		painter.enqueue(win);
 		return 0;
 	}
 	public override int cancel() {
 		return 0;
 	}
+	public abstract GUITask createTask(uint16 sz);
+	public abstract GUIInput createInputHandler(Window win);
 	public abstract void pushTask(extring*task);
 	public abstract void pushGraphicsTask(Graphics g);
 	public abstract void popTaskAs(extring*task);

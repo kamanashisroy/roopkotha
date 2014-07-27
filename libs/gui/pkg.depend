@@ -1,4 +1,6 @@
 libs/propeller
 libs/watchdog
+libs/plugin
+libs/bundle
 -ONUBODH_HOME
 libs/rawimg

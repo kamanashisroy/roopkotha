@@ -1,9 +1,5 @@
-libs/propeller
 libs/watchdog
-libs/bundle
 -ONUBODH_HOME
 libs/rawimg
 -ROOPKOTHA_HOME
 libs/gui
-libs/rtree
-OS_PLATFORM/platform_gui

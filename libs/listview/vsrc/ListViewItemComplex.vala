@@ -1,9 +1,8 @@
 using aroop;
 using shotodol;
-using roopkotha.platform;
 using roopkotha.gui;
 
-/** \addtogroup guiimpl
+/** \addtogroup gui
  *  @{
  */
 public class roopkotha.gui.ListViewItemComplex : ListViewItem {
@@ -19,7 +18,7 @@ public class roopkotha.gui.ListViewItemComplex : ListViewItem {
 	public roopkotha.gui.Font? ITEM_FONT;
 	public int FONT_HEIGHT;
 	public ListViewItemComplex.common() {
-		ITEM_FONT = new FontImpl();
+		ITEM_FONT = new BasicFont();
 		FONT_HEIGHT = ITEM_FONT.getHeight();
 		//print("Item font is set");
 	}

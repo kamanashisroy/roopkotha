@@ -2,21 +2,21 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/** \addtogroup guiimpl
+/** \addtogroup gui
  *  @{
  */
-public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
+public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 	xtring title;
 	int width;
 	int height;
 	int panelTop;
 	public int PADDING;
-	GraphicsPixelMap?gfx;
+	GraphicsTask?gfx;
 	protected Font?TITLE_FONT;
 	unowned Window parent; // avoid circular reference
-	public TitleImpl(Window gParent, extring*aTitle, int gPadding) {
+	public TitlePane(Window gParent, extring*aTitle, int gPadding) {
 		title = new xtring.copy_on_demand(aTitle);
-		TITLE_FONT = new FontImpl();
+		TITLE_FONT = new BasicFont();
 		gfx = null;
 		width = 10;
 		height = 10;
@@ -67,9 +67,8 @@ public class roopkotha.gui.TitleImpl : roopkotha.gui.Pane {
 	public override roopkotha.gui.Graphics getGraphics() {
 		if(gfx != null)
 			return gfx;
-		GUITask task = GUICoreImpl.gcore.taskFactory.alloc_full(128);
-		task.build(128);
-		gfx = new GraphicsPixelMap.fromTask(task);
+		GUITask task = GUICoreModule.gcore.createTask(128);
+		gfx = new GraphicsTask.fromTask(task);
 		return gfx;
 	}
 }

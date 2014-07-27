@@ -2,22 +2,18 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/**
- * \ingroup gui
- * \defgroup guiimpl GUI Implementation.
- */
-/** \addtogroup guiimpl
+/** \addtogroup gui
  *  @{
  */
-public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
+public class roopkotha.gui.BasicFont : roopkotha.gui.Font {
 	uchar flaggedVariantInfo;
 	uchar flaggedFaceInfo;
-	public FontImpl.defined(uchar face, uchar vars) {
+	public BasicFont.defined(uchar face, uchar vars) {
 		flaggedFaceInfo = face;
 		flaggedVariantInfo = vars;
 	}
 
-	public FontImpl.from(FontImpl src, Font.Variant stl) {
+	public BasicFont.from(BasicFont src, Font.Variant stl) {
 		flaggedVariantInfo = src.flaggedVariantInfo;
 		flaggedVariantInfo |= stl;
 	}
@@ -33,14 +29,14 @@ public class roopkotha.gui.FontImpl : roopkotha.gui.Font {
 	}
 	
 	public override Font getVariant(Font.Variant stl) {
-		return new FontImpl.from(this, stl);
+		return new BasicFont.from(this, stl);
 	}
 
 	public override int getId() {
 		return ((flaggedFaceInfo << 8) | flaggedVariantInfo);
 	}
 
-	~FontImpl() {
+	~BasicFont() {
 	}
 
 #if GUI_DEBUG

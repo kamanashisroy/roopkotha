@@ -31,7 +31,7 @@ using roopkotha.gui;
  */
 public delegate void roopkotha.gui.WindowActionCB(EventOwner action);
 
-public abstract class roopkotha.gui.Window : Replicable {
+public abstract class roopkotha.gui.Window : Hashable {
 	public int width;
 	public int halfWidth;
 	public int height;
@@ -98,7 +98,7 @@ public abstract class roopkotha.gui.Window : Replicable {
 	
 	public virtual bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		if(menu.handleEvent(this, target, flags, key_code, x, y)) {
-			GUICore.setDirty(this);
+			GUICoreModule.gcore.setDirty(this);
 			return true;
 		}
 		return false;

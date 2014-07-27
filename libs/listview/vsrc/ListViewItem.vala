@@ -20,10 +20,9 @@
  
 using aroop;
 using shotodol;
-using roopkotha.platform;
 using roopkotha.gui;
 
-/** \addtogroup guiimpl
+/** \addtogroup gui
  *  @{
  */
 /*!

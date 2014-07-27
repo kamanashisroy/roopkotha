@@ -1,7 +1,7 @@
 libs/gui
+libs/listview
 OS_PLATFORM/platform_gui
 libs/rtree
-libs/guiimpl
 libs/doc
 libs/vela
 libs/velarichml
@@ -9,6 +9,7 @@ libs/veladivml
 libs/velagent
 libs/velahandler
 libs/velaveil
+guicore/guiimpl
 guiapps/pad
 guiapps/velavanilla
 guiapps/filecommands

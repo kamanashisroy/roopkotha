@@ -3,6 +3,10 @@ using shotodol;
 using roopkotha.platform;
 using roopkotha.gui;
 
+/**
+ * \ingroup gui
+ * \defgroup guiimpl GUI Implementation.
+ */
 /** \addtogroup guiimpl
  *  @{
  */
@@ -10,19 +14,29 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	GUICorePlatformImpl plat;
 	public Factory<GUITask>taskFactory;
 	internal ArrayList<Window>windows;
-	public static GUICoreImpl?gcore;
 	public GUICoreImpl() {
 		print("Creating new platform application\n");
 		plat = GUICorePlatformImpl.create();
 		taskFactory = Factory<GUITask>.for_type(64);
 		windows = ArrayList<Window>();
 		base();
-		gcore = this;
-		//step();
 	}
 	
 	~GUICoreImpl() {
 		taskFactory.destroy();
+	}
+
+	public override GUITask createTask(uint16 sz) {
+		GUITask task = taskFactory.alloc_full(sz);
+		task.build(sz);
+		return task;
+	}
+
+	public override GUIInput createInputHandler(Window win) {
+		GUIInputImpl x = new GUIInputImpl();
+		x.reset(win);
+		windows.set(win.get_token(), win);
+		return x;
 	}
 
 	public int performWindowTask(Bundler*bndlr) {
@@ -31,6 +45,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		case Window.tasks.RESIZE:
 		{
 			// get the arguments ..
+			try {
 			int key = bndlr.next();
 			core.assert(key == entries.ARG);
 			aroop_uword32 wid = bndlr.getIntContent();
@@ -42,11 +57,13 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			aroop_uword32 h = bndlr.getIntContent();
 			Window?win = windows.get((int)wid);
 			if(win != null)win.onResize((int)w,(int)h);
+			} catch(BundlerError excp) {}
 			break;
 		}
 		case Window.tasks.KEY_PRESS:
 		{
 			// get the arguments ..
+			try {
 			int key = bndlr.next();
 			core.assert(key == entries.ARG);
 			aroop_uword32 wid = bndlr.getIntContent();
@@ -58,6 +75,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			aroop_uword32 shiftcode = bndlr.getIntContent();
 			Window?win = windows.get((int)wid);
 			if(win != null)win.onEvent(null, GUIInput.eventType.KEYBOARD_EVENT, (int)keycode, (int)shiftcode, 0);
+			} catch(BundlerError excp) {}
 			break;
 		}
 		}
@@ -95,7 +113,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		plat.step();
 		performTasks();
 		do {
-			WindowImpl? win = (WindowImpl)painter.dequeue();
+			PanedWindow? win = (PanedWindow)painter.dequeue(); // XXX this is a bug in the design, we take Window as argument but we cast them to PanedWindow indiscriminately 
 			if(win == null) {
 				break;
 			}
@@ -116,7 +134,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		plat.popTaskAs(task);
 	}
 	public override void pushGraphicsTask(Graphics g) {
-		GraphicsPixelMap gfx = (GraphicsPixelMap)(g);
+		GraphicsTask gfx = (GraphicsTask)(g);
 		gfx.finalize();
 		extring task = extring();
 		gfx.task.getTaskAs(&task);

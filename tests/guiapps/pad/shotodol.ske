@@ -1,5 +1,6 @@
 
 onLoad:
+	module -load ../../../guicore/guiimpl/dynalib.so
 	module -load ../../../guiapps/pad/dynalib.so
 	rehash
 	profiler

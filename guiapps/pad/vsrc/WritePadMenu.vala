@@ -9,7 +9,6 @@ using roopkotha.doc;
 public class roopkotha.app.WritePadMenu : Replicable {
 	ArrayList<EventOwner> leftOptions;
 	EventOwner rightOption;
-	internal GUICoreImpl impl;
 	DocumentView lv;
 	PlainDocument emptyDoc;
 	public WritePadMenu() {
@@ -22,7 +21,6 @@ public class roopkotha.app.WritePadMenu : Replicable {
 		guiinit();
 	}
 	void guiinit() {
-		impl = new GUICoreImpl();
 		extring title = extring.set_static_string("Roopkotha");
 		extring dc = extring.set_static_string("quit");
 		lv = new DocumentView(&title, &dc);	

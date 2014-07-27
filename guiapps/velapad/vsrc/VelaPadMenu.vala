@@ -13,7 +13,6 @@ using roopkotha.velagent;
  * [-Maturity- 10]
  */
 internal class roopkotha.velapad.VelaPadMenu : Replicable {
-	internal GUICoreImpl impl;
 	PageView pg;
 	VelaDivDocument emptyDoc;
 	velavanilla.VelaVanilla vagent;
@@ -21,7 +20,6 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		setupGUI();
 	}
 	void setupGUI() {
-		impl = new GUICoreImpl();
 		extring velaTitle = extring.set_static_string("Vela");
 		extring aboutVela = extring.set_static_string("About");
 		pg = new PageView.of_title(&velaTitle, &aboutVela);	

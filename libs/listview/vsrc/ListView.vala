@@ -20,13 +20,12 @@
 
 using aroop;
 using shotodol;
-using roopkotha.platform;
 using roopkotha.gui;
 
-/** \addtogroup guiimpl
+/** \addtogroup gui
  *  @{
  */
-public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
+public abstract class roopkotha.gui.ListView : roopkotha.gui.PanedWindow {
  
 	roopkotha.gui.Font item_font;
 	bool continuous_scrolling;
@@ -52,7 +51,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 		defaultCommand = new EventOwner(this, aDefaultCommand);
 		vpos = 0;
 		continuous_scrolling = true;
-		item_font = new FontImpl();
+		item_font = new BasicFont();
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, "Created ListView");
 	}
 	
@@ -232,7 +231,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 					dlg.printf("let us make it selected: %d\n", i);
 					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 					this.selected_index = i;
-					roopkotha.gui.GUICore.setDirty(this); // may be we should refresh partial
+					roopkotha.gui.GUICoreModule.gcore.setDirty(this); // may be we should refresh partial
 					i = -2;
 				}
 			}
@@ -249,7 +248,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 				}
 			}
 			if(consumed) {
-				roopkotha.gui.GUICore.setDirty(this); // TODO tell it to refresh only a portion ..
+				roopkotha.gui.GUICoreModule.gcore.setDirty(this); // TODO tell it to refresh only a portion ..
 				return true;
 			}
 			key_code = (x != 0)?x:key_code; // handle arrow keys ..
@@ -271,7 +270,7 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 #endif
 			}
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.gui.GUICore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN, this.panelTop
+			roopkotha.gui.GUICoreModule.gcore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN, this.panelTop
 					, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN, this.menuY);
 		} else if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_DOWN) {
 			this.selected_index++;
@@ -284,13 +283,13 @@ public abstract class roopkotha.gui.ListView : roopkotha.gui.WindowImpl {
 				}
 			}
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.gui.GUICore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN
+			roopkotha.gui.GUICoreModule.gcore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN
 					, this.panelTop, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN, this.menuY);
 		} else if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_ENTER) {
 			onAction(defaultCommand/*target*/); // should not it be target !
 #if false
 			/*----------------------------------------------- repaint only the list and menu */
-			roopkotha.gui.GUICore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN
+			roopkotha.gui.GUICoreModule.gcore.setDirtyFull(this, roopkotha.gui.ListView.display.HMARGIN
 						, this.panelTop, this.width - roopkotha.gui.ListView.display.HMARGIN - roopkotha.gui.ListView.display.HMARGIN, this.menuY);
 #endif
 		}

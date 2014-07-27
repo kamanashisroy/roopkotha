@@ -22,54 +22,61 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/** \addtogroup guiimpl
+/** \addtogroup gui
  *  @{
  */
 /**
  * \brief
  * This is responsible for drawing the image in commands, so that it can be drawn/redrawn or backed up for use.
  **/
-public class roopkotha.gui.GraphicsPixelMap : Graphics {
+public class roopkotha.gui.GraphicsTask : Graphics {
 	Bundler bndlr;
 	int currentColor;
-	internal GUITask?task;
+	public GUITask?task;
 	bool finalized;
 	int size;
-	GraphicsPixelMap.Full(Carton*ctn, int gSize) {
+	GraphicsTask.Full(Carton*ctn, int gSize) {
 		bndlr = Bundler();
 		size = gSize;
 		bndlr.buildFromCarton(ctn, size);
 		currentColor = 1;
 		finalized = false;
 	}
-	public GraphicsPixelMap.fromTask(GUITask gTask) {
+	public GraphicsTask.fromTask(GUITask gTask) {
 		// allocate memory from factory
 		task = gTask;
 		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "task.size", task.size);
-		GraphicsPixelMap.Full(&task.msg, task.size);
+		GraphicsTask.Full(&task.msg, task.size);
 	}
 	public override void drawImage(onubodh.RawImage img, int x, int y, int anc) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_IMAGE);
 		bndlr.writeBin(GUICore.entries.ARG, img.rawData, img.width*img.height*((img.type == onubodh.RawImage.RawImageType.PGM)?1:3));
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
 		bndlr.writeInt(GUICore.entries.ARG, anc);
+		} catch(BundlerError exp) {}
 	}
 	public override void drawLine(int x1, int y1, int x2, int y2) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_LINE);
 		bndlr.writeInt(GUICore.entries.ARG, x1);
 		bndlr.writeInt(GUICore.entries.ARG, y1);
 		bndlr.writeInt(GUICore.entries.ARG, x2);
 		bndlr.writeInt(GUICore.entries.ARG, y2);
+		} catch(BundlerError exp) {}
 	}
 	public override void drawRect(int x, int y, int width, int height) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_RECT);
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
 		bndlr.writeInt(GUICore.entries.ARG, width);
 		bndlr.writeInt(GUICore.entries.ARG, height);
+		} catch(BundlerError exp) {}
 	}
 	public override void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_ROUND_RECT);
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
@@ -77,8 +84,10 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, height);
 		bndlr.writeInt(GUICore.entries.ARG, arcWidth);
 		bndlr.writeInt(GUICore.entries.ARG, arcHeight);
+		} catch(BundlerError exp) {}
 	}
 	public override void drawString(extring*str, int x, int y, int width, int height, int anc) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_STRING);
 		bndlr.writeETxt(GUICore.entries.ARG, str);
 		bndlr.writeInt(GUICore.entries.ARG, x);
@@ -86,16 +95,20 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, width);
 		bndlr.writeInt(GUICore.entries.ARG, height);
 		bndlr.writeInt(GUICore.entries.ARG, anc);
+		} catch(BundlerError exp) {}
 	}
 	public override void fillRect(int x, int y, int width, int height) {
+		try {
 		core.assert(width >= 0);
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.FILL_RECT);
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
 		bndlr.writeInt(GUICore.entries.ARG, width);
 		bndlr.writeInt(GUICore.entries.ARG, height);
+		} catch(BundlerError exp) {}
 	}
 	public override void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.FILL_ROUND_RECT);
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
@@ -103,9 +116,11 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, height);
 		bndlr.writeInt(GUICore.entries.ARG, arcWidth);
 		bndlr.writeInt(GUICore.entries.ARG, arcHeight);
+		} catch(BundlerError exp) {}
 	}
 		
 	public override void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.FILL_TRIANGLE);
 		bndlr.writeInt(GUICore.entries.ARG, x1);
 		bndlr.writeInt(GUICore.entries.ARG, y1);
@@ -113,6 +128,7 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 		bndlr.writeInt(GUICore.entries.ARG, y2);
 		bndlr.writeInt(GUICore.entries.ARG, x3);
 		bndlr.writeInt(GUICore.entries.ARG, y3);
+		} catch(BundlerError exp) {}
 	}
 	public override int  getColor() {
 		return currentColor;
@@ -120,20 +136,26 @@ public class roopkotha.gui.GraphicsPixelMap : Graphics {
 	public override void setColor(int rgb) {
 		if(currentColor == rgb) return ; // optimize
 		currentColor = rgb;
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.SET_COLOR);
 		bndlr.writeInt(GUICore.entries.ARG, rgb);
+		} catch(BundlerError exp) {}
 	}
 	public override void setFont(roopkotha.gui.Font font) {
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.SET_FONT);
 		bndlr.writeInt(GUICore.entries.ARG, font.getId());
+		} catch(BundlerError exp) {}
 	}
 	public override void start(Window parent, int layer) {
 		finalized = false;
 		bndlr.size = size;
+		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.START_LAYER);
-		WindowImpl w = (WindowImpl)parent;
-		bndlr.writeInt(GUICore.entries.ARG, w.windowId);
+		//WindowImpl w = (WindowImpl)parent;
+		bndlr.writeInt(GUICore.entries.ARG, parent.get_token());
 		bndlr.writeInt(GUICore.entries.ARG, layer);
+		} catch(BundlerError exp) {}
 	}
 	public void finalize() {
 		if(finalized) return;

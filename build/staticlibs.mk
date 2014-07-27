@@ -3,8 +3,8 @@ PROJECT_OBJDIR=$(ROOPKOTHA_HOME)/build/.objects/
 #LIBS+=-lm
 include $(ROOPKOTHA_HOME)/$(PLATFORM)/platform_gui/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/gui/staticlibs.mk
+include $(ROOPKOTHA_HOME)/libs/listview/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/rtree/staticlibs.mk
-include $(ROOPKOTHA_HOME)/libs/guiimpl/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/doc/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/vela/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/velarichml/staticlibs.mk

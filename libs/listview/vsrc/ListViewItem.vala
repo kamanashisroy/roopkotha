@@ -28,7 +28,7 @@ using roopkotha.gui;
 /*!
  * This is rendered in \ref ListView.
  * */
-public abstract class roopkotha.gui.ListViewItem : Replicable {
+public abstract class roopkotha.listview.ListViewItem : Replicable {
 	public enum itemtype {
 		LABEL,
 		SELECTION,

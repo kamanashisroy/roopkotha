@@ -22,18 +22,18 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/** \addtogroup guiimpl
+/** \addtogroup listview
  *  @{
  */
-public class roopkotha.gui.SimpleListView : roopkotha.gui.ListView {
+public class roopkotha.listview.SimpleListPaneModel : roopkotha.listview.ListContentModel {
 	aroop.ArrayList<Replicable> myitems;
 
-	public SimpleListView(extring*aTitle, extring*aDefaultCommand) {
-		base(aTitle, aDefaultCommand);
+	public SimpleListPaneModel() {
+		base();
 		myitems = ArrayList<Replicable>();
 	}
 	
-	~SimpleListView() {
+	~SimpleListPaneModel() {
 		myitems.destroy();
 	}
 	
@@ -41,8 +41,8 @@ public class roopkotha.gui.SimpleListView : roopkotha.gui.ListView {
 		return &myitems;
 	}
 	
-	protected override roopkotha.gui.ListViewItem getListItem(Replicable data) {
-		return (roopkotha.gui.ListViewItem)data;
+	protected override roopkotha.listview.ListViewItem getListItem(Replicable data) {
+		return (roopkotha.listview.ListViewItem)data;
 	}
 	
 	public void setListViewItem(int aIndex, ListViewItem aItem) {

@@ -5,7 +5,7 @@ using roopkotha.gui;
 /** \addtogroup gui
  *  @{
  */
-public class roopkotha.gui.ListViewItemComplex : ListViewItem {
+public class roopkotha.listview.ListViewItemComplex : ListViewItem {
 	protected EventOwner?target;
 	protected extring label;
 	protected extring text;

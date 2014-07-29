@@ -69,10 +69,9 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		dirty = true;
 	}
 
-	public override int onResize(int w, int h) {
+	public override void onResize(int t, int l, int w, int h) {
 		dirty = true;
 		// TODO fill me
-		return 0;
 	}
 
 	void draw_base(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height, EventOwner? left, EventOwner? right) {

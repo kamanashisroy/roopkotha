@@ -27,7 +27,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 	
 	public override int onResize(int w, int h) {
 		base.onResize(w, h);
-		titlePane.onResize(w, h);
+		titlePane.onResize(0, 0, w, h);
 		setDirty();
 		return 0;
 	}

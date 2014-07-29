@@ -30,12 +30,11 @@ public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 		return 0;
 	}
 
-	public override int onResize(int gWidth, int gHeight) {
+	public override void onResize(int l, int t, int gWidth, int gHeight) {
 		width = gWidth;
 		height = gHeight;
 		panelTop = TITLE_FONT.getHeight() + PADDING*2;
 		dirty = true;
-		return 0;
 	}
 
 	public override void paint(roopkotha.gui.Graphics g) {

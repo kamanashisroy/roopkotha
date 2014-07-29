@@ -35,7 +35,7 @@ public abstract class roopkotha.gui.Window : Hashable {
 	public int width;
 	public int halfWidth;
 	public int height;
-	public int menuY;
+	//public int menuY;
 	//public int panelTop;
 	public int PADDING;
 	WindowActionCB?windowActionCB;
@@ -65,8 +65,8 @@ public abstract class roopkotha.gui.Window : Hashable {
 		/** The height of the list */
 		/** Menu start position by pixel along Y-axis */
 		this.height = h;
-		this.menuY = h - menu.getBaseHeight();
-		menu.onResize(w,h);
+		//this.menuY = h - menu.getBaseHeight();
+		menu.onResize(0,0,w,h);
 		return 0;
 	}
 	public abstract void show();

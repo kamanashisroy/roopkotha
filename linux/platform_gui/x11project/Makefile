@@ -8,6 +8,8 @@ INCLUDEPATH+=$(ONUBODH_HOME)/libs/rawimg/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/iostream/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/propeller/include
 INCLUDEPATH+=$(SHOTODOL_HOME)/libs/watchdog/include
+INCLUDEPATH+=$(SHOTODOL_HOME)/libs/bundle/include
+INCLUDEPATH+=$(SHOTODOL_HOME)/libs/module/include
 INCLUDEPATH+=inc
 INCLUDES=$(addprefix -I,$(INCLUDEPATH))
 

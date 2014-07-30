@@ -36,6 +36,7 @@ public abstract class roopkotha.gui.listview.ListView : roopkotha.gui.PanedWindo
 		defaultCommand = new EventOwner(this, aDefaultCommand);
 		lpane = new ListPane(model, gi);
 		content = model;
+		setPane(Window.layer.CONTENT_PANE, lpane);
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, "Created ListView");
 	}
 	

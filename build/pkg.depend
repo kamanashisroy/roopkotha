@@ -1,6 +1,7 @@
 libs/gui
 libs/listview
 OS_PLATFORM/platform_gui
+OS_PLATFORM/platform_gui/x11project
 libs/rtree
 libs/doc
 libs/vela

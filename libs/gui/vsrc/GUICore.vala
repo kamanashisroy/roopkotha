@@ -54,7 +54,7 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 		return 0;
 	}
 	public abstract GUITask createTask(uint16 sz);
-	public abstract GUIInput createInputHandler(Window win);
+	public abstract GUIInput createInputHandler(Window win, int token);
 	public abstract void pushTask(extring*task);
 	public abstract void pushGraphicsTask(Graphics g);
 	public abstract void popTaskAs(extring*task);

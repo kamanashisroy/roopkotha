@@ -35,12 +35,11 @@ public abstract class roopkotha.gui.Window : Hashable {
 	public int width;
 	public int halfWidth;
 	public int height;
-	//public int menuY;
-	//public int panelTop;
 	WindowActionCB?windowActionCB;
 	public GUIInput gi;
 	public Style style;
 	protected InteractiveMenu menu;
+	protected extring wPath;
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_WINDOW_TASK_")]
 	public enum tasks {
 		SHOW_WINDOW = 1,
@@ -51,14 +50,16 @@ public abstract class roopkotha.gui.Window : Hashable {
 	public enum layer {
 		TITLE_BAR = 19,
 		MENU_BAR = 20,
-		CONTENT_BAR = 5,
+		CONTENT_PANE = 500,
 	}
 	public Window(extring*givenPath) {
-		menu = new InteractiveMenu(&style,gi,givenPath);
-		onResize(200, 400);
 		windowActionCB = null;
-		setPane(layer.MENU_BAR, menu);
 		style = Style();
+		wPath = extring.copy_on_demand(givenPath);
+		gi = GUICoreModule.gcore.createInputHandler(this, (int)wPath.getStringHash());
+		menu = new InteractiveMenu(&style,gi,&wPath);
+		setPane(layer.MENU_BAR, menu);
+		onResize(200, 400);
 	}
 	public virtual int onResize(int w, int h) {
 		/** The width of the list */
@@ -69,7 +70,7 @@ public abstract class roopkotha.gui.Window : Hashable {
 		/** The height of the list */
 		/** Menu start position by pixel along Y-axis */
 		this.height = h;
-		//this.menuY = h - menu.getBaseHeight();
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 3, "resize event()\n");
 		return 0;
 	}
 	public abstract void show();
@@ -77,6 +78,11 @@ public abstract class roopkotha.gui.Window : Hashable {
 		menu.set(left_option, right_option);
 		this.show();
 	}
+
+	public int getWindowToken() { // this is used from guicore to identify it in other(platform) realm
+		return (int)wPath.getStringHash();
+	}
+
 	public bool isShowing() {
 		//XULTB_CORE_UNIMPLEMENTED();
 		return true;

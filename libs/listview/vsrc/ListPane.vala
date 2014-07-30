@@ -47,6 +47,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 		width = w;
 		height = h;
 		PADDING = gPadding;
+		dirty = true;
 	}
 	
 	public void setDirty() {

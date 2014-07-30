@@ -1,0 +1,8 @@
+
+libs/bundle
+libs/iostream
+-ONUBODH_HOME
+libs/rawimg
+-ROOPKOTHA_HOME
+libs/gui
+OS_PLATFORM/platform_gui

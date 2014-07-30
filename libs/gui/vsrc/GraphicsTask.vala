@@ -153,7 +153,7 @@ public class roopkotha.gui.GraphicsTask : Graphics {
 		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.START_LAYER);
 		//WindowImpl w = (WindowImpl)parent;
-		bndlr.writeInt(GUICore.entries.ARG, parent.get_token());
+		bndlr.writeInt(GUICore.entries.ARG, parent.getWindowToken());
 		bndlr.writeInt(GUICore.entries.ARG, layer);
 		} catch(BundlerError exp) {}
 	}

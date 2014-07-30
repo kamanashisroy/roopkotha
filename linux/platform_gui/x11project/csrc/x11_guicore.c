@@ -30,7 +30,7 @@
 #include <X11/Xutil.h>
 #include "aroop/aroop_core.h"
 #include "aroop/opp/opp_factory.h"
-#include "aroop/core/txt.h"
+#include "aroop/core/xtring.h"
 #include "aroop/opp/opp_queue.h"
 #include "shotodol_gui.h"
 #include "shotodol_watchdog.h"
@@ -53,6 +53,7 @@ struct x11_guicore {
 	opp_queue_t outgoing;
 	int width;
 	int height;
+	int wid;
 };
 static char*argv[2] = {"shotodol.bin", "man"};
 static int argc = 1;
@@ -165,7 +166,7 @@ static int perform_x11_task() {
 			XConfigureEvent ev = myevent.xconfigure;
 			if(ev.width != gcore.width || ev.height != gcore.height) {
 				msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_RESIZE
-					, 3, 1, ev.width, ev.height);
+					, 3, gcore.wid, ev.width, ev.height);
 			}
 		}
 		break;
@@ -194,11 +195,10 @@ static int perform_x11_task() {
 			int i;
 			int code = key_event_map(skey);
 			if(code) {
-				// TODO set the correct window id
-				msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_KEY_PRESS, 3, 1, 0, code);
+				msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_KEY_PRESS, 3, gcore.wid, 0, code);
 			} else {
 				for(i = 0; i < nChar; i++) 
-					msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_KEY_PRESS, 3, 1, text[i], code);
+					msg_enqueue(ENUM_ROOPKOTHA_GUI_CORE_TASK_WINDOW_TASK, ENUM_ROOPKOTHA_GUI_WINDOW_TASK_KEY_PRESS, 3, gcore.wid, text[i], code);
 			}
 		}
 		break;

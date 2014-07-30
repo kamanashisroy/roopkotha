@@ -29,6 +29,7 @@ static x11_window_t*create_window(Display*disp, Window root, int wid) {
 	// display window
 	XMapRaised (disp, win->w);
 	//XMapWindow(disp, win->w);
+	gcore.wid = wid;
 	watchdog_log_string("Created new X11 window\n");
 	return win;
 }

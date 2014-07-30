@@ -11,16 +11,12 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 	TitlePane titlePane;
 	bool dirty;
 	int PADDING;
-	enum layerFlags {
-		CONTENT_FLAG = 1<<1,
-	}
 	public PanedWindow(extring*aTitle, extring*path) {
-		gi = GUICoreModule.gcore.createInputHandler(this);
+		dirty = false;
 		panes = ArrayList<Pane>();
-		titlePane = new TitlePane(this, aTitle);
+		titlePane = new TitlePane(aTitle);
 		base(path);
 		setPane(Window.layer.TITLE_BAR, titlePane);
-		dirty = false;
 		PADDING = 3;
 	}
 	
@@ -32,13 +28,20 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		base.onResize(w, h);
 		menu.onResize(0,0,w,h,PADDING);
 		titlePane.onResize(0, 0, w, h, PADDING);
-		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>.EMPTY();
-		getPaneIterator(&it, layerFlags.CONTENT_FLAG, 0);
+		print("Resizing to %d,%d\n", w, h);
 		int contentTop = titlePane.getVerticalSpanBottom();
 		int contentBottom = menu.getVerticalSpanTop();
+		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>.EMPTY();
+		getPaneIterator(&it, Replica_flags.ALL, 0);
 		while(it.next()) {
 			unowned AroopPointer<Pane> ptr = it.get_unowned();
+			int layer = (int)ptr.get_hash();
+			print("Layer:%d\n",layer);
+			if(layer < Window.layer.CONTENT_PANE) {
+				continue;
+			}
 			unowned Pane pn = ptr.get();
+			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 3, "resize content()\n");
 			pn.onResize( 0, contentTop, w, h - contentTop - contentBottom, PADDING);
 		}
 		setDirty();
@@ -47,6 +50,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 
 	public override void setTitle(aroop.xtring title) {
 		titlePane.setTitle(title);
+		setDirty();
 	}
 
 	public void setDirty() {
@@ -62,7 +66,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		Bundler bndlr = Bundler();
 		bndlr.buildFromCarton(&showTask.msg, 32);
 		bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);
-		bndlr.writeInt(GUICore.entries.ARG, get_token());
+		bndlr.writeInt(GUICore.entries.ARG, getWindowToken());
 		showTask.finalize(&bndlr);
 		extring task = extring();
 		showTask.getTaskAs(&task);
@@ -86,10 +90,6 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 #endif
 
 	public override int setPane(int pos, Pane pn) {
-		if(pos >= Window.layer.CONTENT_BAR && pos <= (Window.layer.CONTENT_BAR + 10)) {
-			// TODO in the aroop documentation, describe this hack
-			panes.addPointer(pn, pos, layerFlags.CONTENT_FLAG);
-		} else
 		panes.set(pos, pn);
 		return 0;
 	}
@@ -105,13 +105,13 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		while(it.next()) {
 			unowned AroopPointer<Pane> ptr = it.get_unowned();
 			unowned Pane pn = ptr.get();
-			Graphics g = pn.getGraphics();
 			if(pn.isDirty()) {
+				Graphics g = pn.getGraphics();
 				g.start(this, (int)ptr.get_hash());
 				pn.paint(g);
+				GUICoreModule.gcore.pushGraphicsTask(g);
+				Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
 			}
-			Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
-			GUICoreModule.gcore.pushGraphicsTask(g);
 		}
 		it.destroy();
 		return 0;

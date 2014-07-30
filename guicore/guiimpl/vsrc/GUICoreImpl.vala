@@ -32,10 +32,10 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		return task;
 	}
 
-	public override GUIInput createInputHandler(Window win) {
+	public override GUIInput createInputHandler(Window win, int token) {
 		GUIInputImpl x = new GUIInputImpl();
 		x.reset(win);
-		windows.set(win.get_token(), win);
+		windows.set(token, win);
 		return x;
 	}
 

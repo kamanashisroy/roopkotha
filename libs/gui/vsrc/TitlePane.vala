@@ -13,8 +13,7 @@ public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 	public int PADDING;
 	GraphicsTask?gfx;
 	protected Font?TITLE_FONT;
-	unowned Window parent; // avoid circular reference
-	public TitlePane(Window gParent, extring*aTitle) {
+	public TitlePane(extring*aTitle) {
 		title = new xtring.copy_on_demand(aTitle);
 		TITLE_FONT = new BasicFont();
 		gfx = null;
@@ -22,7 +21,6 @@ public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 		height = 10;
 		PADDING = 1;
 		dirty = true;
-		parent = gParent;
 	}
 
 	public int setTitle(aroop.xtring gTitle) {

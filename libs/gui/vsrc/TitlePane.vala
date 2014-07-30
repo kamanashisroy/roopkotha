@@ -14,13 +14,13 @@ public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 	GraphicsTask?gfx;
 	protected Font?TITLE_FONT;
 	unowned Window parent; // avoid circular reference
-	public TitlePane(Window gParent, extring*aTitle, int gPadding) {
+	public TitlePane(Window gParent, extring*aTitle) {
 		title = new xtring.copy_on_demand(aTitle);
 		TITLE_FONT = new BasicFont();
 		gfx = null;
 		width = 10;
 		height = 10;
-		PADDING = gPadding;
+		PADDING = 1;
 		dirty = true;
 		parent = gParent;
 	}
@@ -30,15 +30,19 @@ public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 		return 0;
 	}
 
-	public override void onResize(int l, int t, int gWidth, int gHeight) {
+	public override void onResize(int l, int t, int gWidth, int gHeight, int gPadding) {
 		width = gWidth;
 		height = gHeight;
+		PADDING = gPadding;
 		panelTop = TITLE_FONT.getHeight() + PADDING*2;
 		dirty = true;
 	}
 
+	public int getVerticalSpanBottom() {
+		return panelTop;
+	}
+
 	public override void paint(roopkotha.gui.Graphics g) {
-		g.start(parent, 10);
 		/* Cleanup Background */
 		// #expand g.setColor(%net.ayaslive.miniim.ui.core.window.titleBg%);
 		g.setColor(0x006699);

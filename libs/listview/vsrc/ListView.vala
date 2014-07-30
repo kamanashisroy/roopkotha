@@ -25,17 +25,16 @@ using roopkotha.gui;
 /** \addtogroup listview
  *  @{
  */
-public abstract class roopkotha.listview.ListView : roopkotha.gui.PanedWindow {
+public abstract class roopkotha.gui.listview.ListView : roopkotha.gui.PanedWindow {
  
 	EventOwner? defaultCommand;
 	ListPane lpane;
-	ListContentModel content;
+	protected ListContentModel content;
 	
-	public ListView(extring*aTitle, extring*aDefaultCommand, ListContentModel model) {
-		base(aTitle);
+	public ListView(extring*aTitle, extring*aPath, extring*aDefaultCommand, ListContentModel model) {
+		base(aTitle,aPath);
 		defaultCommand = new EventOwner(this, aDefaultCommand);
-		item_font = new BasicFont();
-		lpane = new ListPane(model);
+		lpane = new ListPane(model, gi);
 		content = model;
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, "Created ListView");
 	}
@@ -88,7 +87,7 @@ public abstract class roopkotha.listview.ListView : roopkotha.gui.PanedWindow {
 			// if it is keyboard event then perform keyboard tasks
 			Replicable? obj = getSelected();
 			if(obj != null) {
-				roopkotha.listview.ListViewItem? item = content.getListItem(obj);
+				ListViewItem? item = content.getListItem(obj);
 				if(item != null) {
 					consumed = item.doEdit(flags, key_code, x, y);
 				}
@@ -101,33 +100,12 @@ public abstract class roopkotha.listview.ListView : roopkotha.gui.PanedWindow {
 		}
 		/* else traverse the list items and work for menu */
 		if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_UP) {
-			content.selectedIndex--;
-			if (content.selectedIndex < 0) {
-				if (this.continuous_scrolling) {
-					content.selectedIndex = content.getCount() - 1;
-				} else {
-					content.selectedIndex = 0; /* stay within limits */
-				}
-			}
-			if (this.vpos > content.selectedIndex) {
-				this.vpos--;
-#if false
-				mark(this.vpos);
-#endif
-			}
+			lpane.scroll(true);
 			/*----------------------------------------------- repaint only the list and menu */
 			lpane.setDirty(); // TODO menu.setDirty();
 			roopkotha.gui.GUICoreModule.gcore.setDirty(this);
 		} else if (key_code == roopkotha.gui.GUIInput.keyEventType.KEY_DOWN) {
-			content.selectedIndex++;
-			int count = content.getCount();
-			if (count != -1 && content.selectedIndex >= count) {
-				if (this.continuous_scrolling) {
-					content.selectedIndex = 0;
-				} else {
-					content.selectedIndex = count - 1;
-				}
-			}
+			lpane.scroll(false);
 			/*----------------------------------------------- repaint only the list and menu */
 			lpane.setDirty(); // TODO menu.setDirty();
 			roopkotha.gui.GUICoreModule.gcore.setDirty(this);
@@ -140,6 +118,14 @@ public abstract class roopkotha.listview.ListView : roopkotha.gui.PanedWindow {
 #endif
 		}
 		return true;
+	}
+
+	// TODO register this hook extension in gui/window/menu/hint
+	int hintHook(extring*pagePath, extring*hint) {
+		if(content.selectedIndex != -1 && content.getCount() != 0) {
+			content.getHintAs(hint);
+		}
+		return 0;
 	}
 }
 /** @} */

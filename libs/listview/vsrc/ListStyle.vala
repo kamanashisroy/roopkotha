@@ -5,11 +5,11 @@ using roopkotha.gui;
 /** \addtogroup listview
  *  @{
  */
-public enum roopkotha.listview.ListStyleTarget {
+public enum roopkotha.gui.listview.ListStyleTarget {
 	LIST_INDICATOR,
 	LIST_BG,
 }
-public struct roopkotha.listview.ListStyle {
+public struct roopkotha.gui.listview.ListStyle {
 
 	int colormap[4];
 	int flag;

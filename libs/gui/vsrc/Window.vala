@@ -37,11 +37,10 @@ public abstract class roopkotha.gui.Window : Hashable {
 	public int height;
 	//public int menuY;
 	//public int panelTop;
-	public int PADDING;
 	WindowActionCB?windowActionCB;
 	public GUIInput gi;
 	public Style style;
-	protected Menu? menu;
+	protected InteractiveMenu menu;
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_WINDOW_TASK_")]
 	public enum tasks {
 		SHOW_WINDOW = 1,
@@ -49,11 +48,16 @@ public abstract class roopkotha.gui.Window : Hashable {
 		RESIZE,
 		KEY_PRESS,
 	}
-	public Window(Menu wmenu) {
-		menu = wmenu;
+	public enum layer {
+		TITLE_BAR = 19,
+		MENU_BAR = 20,
+		CONTENT_BAR = 5,
+	}
+	public Window(extring*givenPath) {
+		menu = new InteractiveMenu(&style,gi,givenPath);
 		onResize(200, 400);
 		windowActionCB = null;
-		setPane(20, menu);
+		setPane(layer.MENU_BAR, menu);
 		style = Style();
 	}
 	public virtual int onResize(int w, int h) {
@@ -66,7 +70,6 @@ public abstract class roopkotha.gui.Window : Hashable {
 		/** Menu start position by pixel along Y-axis */
 		this.height = h;
 		//this.menuY = h - menu.getBaseHeight();
-		menu.onResize(0,0,w,h);
 		return 0;
 	}
 	public abstract void show();

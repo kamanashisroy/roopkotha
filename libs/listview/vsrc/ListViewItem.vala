@@ -22,13 +22,13 @@ using aroop;
 using shotodol;
 using roopkotha.gui;
 
-/** \addtogroup gui
+/** \addtogroup listview
  *  @{
  */
 /*!
  * This is rendered in \ref ListView.
  * */
-public abstract class roopkotha.listview.ListViewItem : Replicable {
+public abstract class roopkotha.gui.listview.ListViewItem : Replicable {
 	public enum itemtype {
 		LABEL,
 		SELECTION,
@@ -44,7 +44,7 @@ public abstract class roopkotha.listview.ListViewItem : Replicable {
 	}
 	public bool focused;
 	protected itemtype type; // enum sometype
-	public abstract int paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int x, int y, int width, bool selected);
+	public abstract int paint(GUIInput input, roopkotha.gui.Graphics g, int x, int y, int width, bool selected);
 	public abstract bool doEdit(int flags, int key_code, int x, int y);
 	public abstract int update(extring*xt);
 }

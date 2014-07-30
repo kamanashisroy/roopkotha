@@ -28,13 +28,12 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	public enum display {
 		PADDING = 3
 	}
-	bool menu_is_active = false;
-	//static aroop.xtring SELECT;
-	EventOwner MENU;
-	EventOwner CANCEL;
-	EventOwner?rightOption; /* < will be displayed when menu is inactive */
-	EventOwner FILLER;
-	ArrayList<EventOwner>*menuOptions;
+	protected bool active = false;
+	protected EventOwner MENU;
+	protected EventOwner CANCEL;
+	protected EventOwner?rightOption; /* < will be displayed when menu is inactive */
+	protected EventOwner FILLER;
+	protected ArrayList<EventOwner>*menuOptions;
 
 	int menuMaxWidth = -1;
 	int menuMaxHeight = -1;
@@ -47,15 +46,24 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	protected roopkotha.gui.Font BASE_FONT;
 
 	int BASE_HEIGHT;
-	int currentlySelectedIndex = 0;
-	unowned roopkotha.gui.Window?parent;
+	protected int selected = 0;
+	protected int width = 0;
+	protected int height = 0;
+	GraphicsTask?gfx;
+	Style*style;
+	GUIInput input;
+	extring path;
 
-	public Menu(Window win, Font aTowerFont, Font aBaseFont) {
-		parent = win;
+	public Menu(Style*givenStyle, GUIInput givenInput, extring*givenPath) {
+		width = 0;
+		height = 0;
+		style = givenStyle;
+		input = givenInput;
+		path = extring.copy_on_demand(givenPath);
 	//	SYNC_ASSERT(opp_indexed_list_create2(menuOptions, 16) == 0);
 		//memclean_raw();
-		TOWER_FONT = aTowerFont;
-		BASE_FONT = aBaseFont;
+		TOWER_FONT = new BasicFont();
+		BASE_FONT = new BasicFont();
 		menuOptions = null;
 		setupFont();
 	//	SELECT = aroop.xtring.alloc("Select", 6, null, 0);
@@ -67,32 +75,36 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		FILLER = new EventOwner.from_extring(&filterText);
 		rightOption = FILLER;
 		dirty = true;
+		gfx = null;
 	}
 
-	public override void onResize(int t, int l, int w, int h) {
-		dirty = true;
-		// TODO fill me
+	public override roopkotha.gui.Graphics getGraphics() {
+		if(gfx != null)
+			return gfx;
+		GUITask task = GUICoreModule.gcore.createTask(1024);
+		gfx = new GraphicsTask.fromTask(task);
+		return gfx;
 	}
 
-	void draw_base(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height, EventOwner? left, EventOwner? right) {
+	void drawBase(roopkotha.gui.Graphics g, EventOwner? left, EventOwner? right) {
 		/* draw the background of the menu */
-		g.setColor(parent.style.getColor(StyleTarget.MENU_BG_BASE));
+		g.setColor(style.getColor(StyleTarget.MENU_BG_BASE));
 		g.fillRect(0, height - BASE_HEIGHT, width, BASE_HEIGHT);
 
-		if(!parent.style.testFlag(StyleApproach.LIGHT)) {
-			g.setColor(parent.style.getColor(StyleTarget.MENU_BASE_SHADOW));
+		if(!style.testFlag(StyleApproach.LIGHT)) {
+			g.setColor(style.getColor(StyleTarget.MENU_BASE_SHADOW));
 			g.drawLine(0, height - BASE_HEIGHT, width, height - BASE_HEIGHT);
 		}
 
 		/* draw left and right menu options */
 		g.setFont(BASE_FONT);
-		g.setColor(parent.style.getColor(StyleTarget.MENU_FG_BASE));
+		g.setColor(style.getColor(StyleTarget.MENU_FG_BASE));
 
 		if(left != null) {
 			extring label = extring();
 			left.getLabelAs(&label);
 			if(!label.is_empty_magical()) {
-				parent.gi.registerScreenEvent(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(&label, 0, label.length()), height);
+				input.registerScreenEvent(left, 0, height - BASE_HEIGHT, BASE_FONT.subStringWidth(&label, 0, label.length()), height);
 				g.drawString(&label, roopkotha.gui.Menu.display.PADDING, 0, width, height - roopkotha.gui.Menu.display.PADDING, roopkotha.gui.Graphics.anchor.LEFT
 						| roopkotha.gui.Graphics.anchor.BOTTOM);
 //		SYNC_LOG(SYNC_VERB, "left option:%s\n", left.str);
@@ -102,7 +114,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			extring label = extring();
 			right.getLabelAs(&label);
 			if(!label.is_empty_magical()) {
-				parent.gi.registerScreenEvent(right, width - BASE_FONT.subStringWidth(&label, 0, label.length()), height - BASE_HEIGHT, width, height);
+				input.registerScreenEvent(right, width - BASE_FONT.subStringWidth(&label, 0, label.length()), height - BASE_HEIGHT, width, height);
 				g.drawString(&label, roopkotha.gui.Menu.display.PADDING, 0, width - roopkotha.gui.Menu.display.PADDING, height - roopkotha.gui.Menu.display.PADDING,
 						roopkotha.gui.Graphics.anchor.RIGHT | roopkotha.gui.Graphics.anchor.BOTTOM);
 			}
@@ -130,7 +142,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		menuMaxWidth += 2 * roopkotha.gui.Menu.display.PADDING; /* roopkotha.gui.Menu.display.PADDING from left and right */
 	}
 
-	void draw_tower(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int width, int height,
+	void drawTower(roopkotha.gui.Graphics g,
 				int selectedOptionIndex) {
 
 		/* draw menu options */
@@ -148,10 +160,10 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		/* now we know the bounds of active menu */
 
 		/* draw active menu's background */
-		g.setColor(parent.style.getColor(StyleTarget.MENU_BG));
+		g.setColor(style.getColor(StyleTarget.MENU_BG));
 		g.fillRect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
 		/* draw border of the menu */
-		g.setColor(parent.style.getColor(StyleTarget.MENU_TOWER_BORDER));
+		g.setColor(style.getColor(StyleTarget.MENU_TOWER_BORDER));
 		g.drawRect(0/* x */, menuOptionY/* y */, menuMaxWidth, menuMaxHeight);
 
 		/* draw menu options (from up to bottom) */
@@ -164,12 +176,12 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			cmd.getLabelAs(&label);
 			//opp_at_ncode(cmd, menuOptions, i,
 			if (j != selectedOptionIndex) { /* draw unselected menu option */
-				g.setColor(parent.style.getColor(StyleTarget.MENU_FG));
+				g.setColor(style.getColor(StyleTarget.MENU_FG));
 			} else { /* draw selected menu option */
 				/* draw a background */
-				g.setColor(parent.style.getColor(StyleTarget.MENU_BG_HOVER));
+				g.setColor(style.getColor(StyleTarget.MENU_BG_HOVER));
 				g.fillRect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
-				g.setColor(parent.style.getColor(StyleTarget.MENU_BORDER_HOVER));
+				g.setColor(style.getColor(StyleTarget.MENU_BORDER_HOVER));
 				g.drawRect(0, menuOptionY, menuMaxWidth, TOWER_MENU_ITEM_HEIGHT);
 				/**
 				 * The simplest way to separate selected menu option is by
@@ -177,10 +189,10 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 				 * painted as underlined text or with different background
 				 * color.
 				 */
-				g.setColor(parent.style.getColor(StyleTarget.MENU_FG_HOVER));
+				g.setColor(style.getColor(StyleTarget.MENU_FG_HOVER));
 			}
 
-			parent.gi.registerScreenEvent(cmd, 0, menuOptionY
+			input.registerScreenEvent(cmd, 0, menuOptionY
 					, TOWER_FONT.subStringWidth(&label, 0, label.length())
 					, menuOptionY + roopkotha.gui.Menu.display.PADDING*2 + TOWER_FONT_HEIGHT);
 			menuOptionY += roopkotha.gui.Menu.display.PADDING;
@@ -192,42 +204,53 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 		}
 	}
 
+	void drawHint(roopkotha.gui.Graphics g) {
+		extring hint = extring();
+		extring hintex = extring.set_static_string("gui/window/menu/hint");
+		Plugin.swarm(&hintex, &path, &hint);
+		if (!hint.is_empty() && !isActive()) {
+			g.setColor(style.getColor(StyleTarget.MENU_BG));
+			g.setFont(BASE_FONT);
+			g.drawString(&hint
+					, 0
+					, 0
+					, width
+					, height - roopkotha.gui.Menu.display.PADDING
+					, roopkotha.gui.Graphics.anchor.HCENTER|roopkotha.gui.Graphics.anchor.BOTTOM);
+			/* TODO show "<>"(90 degree rotated) icon to indicate that we can traverse through the list  */
+		}
+	}
+
 	public override void paint(roopkotha.gui.Graphics g) {
-		int width = parent.width;
-		int height = parent.height;
-		g.start(parent, 20);
 #if false
 		if(TOWER_FONT == null) {
 			setupFont();
 		}
 #endif
-		if(menu_is_active) {
-			draw_base(parent, g, width, height, CANCEL, rightOption);
-			draw_tower(parent, g, width, height, currentlySelectedIndex);
+		if(active) {
+			drawBase(g, CANCEL, rightOption);
+			drawTower(g, selected);
 		} else {
 			EventOwner?cmd;
 			if(menuOptions != null && menuOptions.count_unsafe() == 1) {
 				cmd = menuOptions.get(0);
-				draw_base(parent, g, width, height, cmd, rightOption);
+				drawBase(g, cmd, rightOption);
 			} else if(menuOptions != null && menuOptions.count_unsafe() > 1){
-				draw_base(parent, g, width, height, MENU, rightOption);
+				drawBase(g, MENU, rightOption);
 			} else {
-				draw_base(parent, g, width, height, null, rightOption);
+				drawBase(g, null, rightOption);
 			}
+			drawHint(g);
 		}
 		dirty = false;
 		return;
 	}
-	internal int getBaseHeight() {
+	internal int getVerticalSpanTop() {
 		//core.assert("This is unimplemented" == null);
 		return BASE_HEIGHT;
 	}
-	public roopkotha.gui.Font? getBaseFont() {
-		core.assert("This is unimplemented" == null);
-		return null;
-	}
 	public bool isActive() {
-		return menu_is_active;
+		return active;
 	}
 	internal int set(ArrayList<EventOwner>*left_option, EventOwner? right_option) {
 		if(right_option != null) {
@@ -236,147 +259,10 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 			rightOption = FILLER;
 		}
 		menuOptions = left_option;
-		menu_is_active = false;
-		currentlySelectedIndex = 0;
+		active = false;
+		selected = 0;
 		menuMaxHeight = menuMaxWidth = -1;
 		return 0;
-	}
-	public bool handleEvent(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
-		if(handleEventHelper(win, target, flags, key_code, x, y)) {
-			dirty = true;
-			return true;
-		}
-		return false;
-	}
-	public bool handleEventHelper(roopkotha.gui.Window win, EventOwner?target, int flags, int key_code, int x, int y) {
-		if((flags & roopkotha.gui.GUIInput.eventType.KEYBOARD_EVENT) != 0) {
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "keyboard : ..\n");
-			switch(x) {
-			case roopkotha.gui.GUIInput.keyEventType.KEY_UP:
-				if(menu_is_active) {
-					if(((currentlySelectedIndex - 1) >= 0))currentlySelectedIndex--;
-					return true;
-				} else {
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu is closed\n");
-					return false;
-				}
-				break;
-			case roopkotha.gui.GUIInput.keyEventType.KEY_DOWN:
-				if(menu_is_active) {
-					if(!((currentlySelectedIndex + 1) >= menuOptions.count_unsafe()))currentlySelectedIndex++;
-					return true;
-				} else {
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu is closed\n");
-					return false;
-				}
-				break;
-			case roopkotha.gui.GUIInput.keyEventType.KEY_F1:
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu left pressed\n");
-	//			left = 1;
-				if(menu_is_active) {
-					target = CANCEL;
-				} else {
-					target = MENU;
-				}
-				break;
-			case roopkotha.gui.GUIInput.keyEventType.KEY_F2:
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu right pressed\n");
-				target = rightOption;
-				break;
-			case roopkotha.gui.GUIInput.keyEventType.KEY_ENTER:
-			case roopkotha.gui.GUIInput.keyEventType.KEY_RETURN:
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu selected\n");
-				if(menuOptions != null && menu_is_active) {
-					EventOwner cmd = menuOptions.get(currentlySelectedIndex);
-					if(cmd != null) {
-						target = cmd;
-					}
-				} else {
-					Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu is closed\n");
-					return false;
-				}
-				break;
-			case roopkotha.gui.GUIInput.keyEventType.KEY_ESCAPE:
-				menu_is_active = false;
-				return true;
-			default:
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "This is not traversing key\n");
-				return false;
-			}
-		}
-
-		if(target == null) {
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "No target\n");
-			return false;
-		}
-
-
-		int i;
-		bool right = false, left = false;
-
-		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Menu Clicked\n");
-		EventOwner? firstOption = null;
-
-		if(target.is_same(rightOption)) {
-			right = true;
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Right menu\n");
-		} else if(menu_is_active) {
-			if(target.is_same(CANCEL)) {
-				left = true;
-				Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Close menu\n");
-			} else if(menuOptions != null)for (i=0;i<menuOptions.count_unsafe() && i >= 0;i++) {
-				EventOwner cmd = menuOptions.get(i);
-				if(cmd == target) {
-					left = true;
-					i = -2; // break
-					extring dlg = extring.stack(128);
-					extring label = extring();
-					cmd.getLabelAs(&label);
-					dlg.printf("Left menu:%s", label.to_string());
-					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
-				}
-				if(i == 0) {
-					firstOption = cmd;
-				}
-			}
-		} else if(target == MENU){
-			left = true;
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Open menu\n");
-		}
-		if(!right && !left) {
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Not a menu event\n");
-			return false;
-		}
-
-	//				if(length == currentlySelectedIndex) {
-	//					selectedOption = menuOptions[i];
-	//				}
-		if (right) {
-			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 10, "Window action\n");
-			win.onAction(rightOption);
-			menu_is_active = false;
-		} else if (menu_is_active) {
-			if(target.is_same(CANCEL as Replicable)) {
-				menu_is_active = false;
-			} else {
-				win.onAction(target);
-				menu_is_active = false;
-			}
-		} else {
-			/* check if the "Options" or "Exit" buttons were pressed */
-			if(menuOptions == null) {
-				/* This is not menu action */
-				return false;
-			}
-			if(menuOptions.count_unsafe() == 1) {
-				/* this is direct action */
-				win.onAction(firstOption);
-			} else {
-				currentlySelectedIndex = 0;
-				menu_is_active = true;
-			}
-		}
-		return true; /* menu action has done something, so the action is digested */
 	}
 	void setupFont() {
 #if false

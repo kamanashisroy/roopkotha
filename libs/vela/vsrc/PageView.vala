@@ -21,6 +21,7 @@
 using aroop;
 using shotodol;
 using roopkotha.gui;
+using roopkotha.gui.listview;
 using roopkotha.doc;
 using roopkotha.vela;
 
@@ -37,51 +38,19 @@ public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(extring*imgAddr);
 public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 	PageEventCB?pageEventCB;
 	GetImageCB?getImageCB;
-	FormattedListItem fli;
-	extring velaTitle;
-	extring aboutVela;
-	public PageView() {
-		velaTitle = extring.set_static_string("Vela");
-		aboutVela = extring.set_static_string("About");
-		base(&velaTitle, &aboutVela);
-		initPage();
-	}
-
-	public PageView.of_title(extring*ttl,extring*abt) {
-		base(ttl, abt);
+	
+	public PageView(extring*title, extring*path, extring*defCmd, PageContentModel?pcm = null) {
+		base(title, path, defCmd, pcm == null?new PageContentModel():pcm);
 		initPage();
 	}
 
 	void initPage() {
 		pageEventCB = null;
 		getImageCB = null;
-		fli = new FormattedListItem();
 	}
 
-	protected override ListViewItem getListItem(Replicable given) {
-		//print("Generating formatted list item\n");
-		AugmentedContent elem = (AugmentedContent)given;
-		if(elem.cType == AugmentedContent.ContentType.FORMATTED_CONTENT) {
-			fli.factoryBuild((FormattedContent)elem);
-			//print("-- formatted item generated\n");
-			return fli;
-		}
-		extring data = extring();
-		elem.getTextAs(&data);
-#if false
-		extring dlg = extring.stack(256);
-		dlg.printf("PageView:Plain line :%s\n", data.to_string());
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
-#endif
-		// see if the label has any image
-#if false
-		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, null);
-#else
-		extring action = extring();
-		elem.getActionAs(&action);
-		EventOwner owner = new EventOwner(elem, &data);
-		return new ListViewItemComplex.createLabelFull(&data, elem.getImage(), elem.hasAction(), false, owner);
-#endif
+	public void setDocument(RoopDocument rd, int selectedIndex) {
+		((PageContentModel)content).setDocument(rd, selectedIndex);
 	}
 
 	public void setPageEvent(PageEventCB cb) {
@@ -109,7 +78,7 @@ public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
 		if(owner != null) {
 			elem = (AugmentedContent)owner.getSource();
 		} else {
-			elem = (AugmentedContent)getSelectedContent();
+			elem = (AugmentedContent)getSelected();
 			if(elem == null) {
 				return false;
 			}

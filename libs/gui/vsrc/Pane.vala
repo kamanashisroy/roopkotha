@@ -13,7 +13,7 @@ public abstract class roopkotha.gui.Pane : Hashable {
 	public bool isDirty() {
 		return dirty;
 	}
-	public abstract void onResize(int left, int top, int w, int h);
+	public abstract void onResize(int left, int top, int w, int h, int padding);
 	public abstract void paint(roopkotha.gui.Graphics g);
 	public abstract roopkotha.gui.Graphics getGraphics();
 }

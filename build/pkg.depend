@@ -10,7 +10,6 @@ libs/velagent
 libs/velahandler
 libs/velaveil
 guicore/guiimpl
-guiapps/pad
 guiapps/velavanilla
 guiapps/filecommands
 guiapps/historycommands

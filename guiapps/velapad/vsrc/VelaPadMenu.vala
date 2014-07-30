@@ -21,8 +21,9 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 	}
 	void setupGUI() {
 		extring velaTitle = extring.set_static_string("Vela");
+		extring path = extring.set_static_string("vela/example");
 		extring aboutVela = extring.set_static_string("About");
-		pg = new PageView.of_title(&velaTitle, &aboutVela);	
+		pg = new PageView(&velaTitle, &path, &aboutVela);	
 		emptyDoc = new VelaDivDocument();
 		/*extring elem = extring.set_static_string("Write something here..");
 		emptyDoc.addLine(&elem);*/

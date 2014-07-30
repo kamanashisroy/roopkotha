@@ -21,6 +21,7 @@
 using aroop;
 using shotodol;
 using roopkotha.gui;
+using roopkotha.gui.listview;
 using roopkotha.doc;
 using roopkotha.vela;
 
@@ -32,12 +33,12 @@ using roopkotha.vela;
  * [-Maturity- 0]
  */
 
-public class roopkotha.vela.PageMenu : roopkotha.doc.DocumentView {
+public class roopkotha.vela.PageMenu : ListView {
 	EventOwner?rightOption;
 	ArrayList<EventOwner?> leftOptions;
 	int count;
-	public PageMenu(extring*gTitle, extring*gAbout) {
-		base(gTitle, gAbout);
+	public PageMenu(extring*gTitle, extring*gPath, extring*gDefCmd, PageContentModel pcm) {
+		base(gTitle, gPath, gDefCmd, pcm);
 		count = 0;
 		rightOption = null;
 		leftOptions = ArrayList<EventOwner>();

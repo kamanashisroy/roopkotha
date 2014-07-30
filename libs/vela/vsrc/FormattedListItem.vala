@@ -1,6 +1,7 @@
 using aroop;
 using shotodol;
 using roopkotha.gui;
+using roopkotha.gui.listview;
 using roopkotha.doc;
 using roopkotha.vela;
 
@@ -8,7 +9,7 @@ using roopkotha.vela;
  *  @{
  */
 public delegate onubodh.RawImage roopkotha.vela.MediaLoader(extring*src);
-public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
+public class roopkotha.vela.FormattedListItem : ListViewItem {
 	/**
 	 * y-coordinate position of the image
 	 */
@@ -282,7 +283,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 	}
 #endif
 
-	public override int paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int x, int y, int aWidth, bool aSelected) {
+	public override int paint(GUIInput input, roopkotha.gui.Graphics g, int x, int y, int aWidth, bool aSelected) {
 		transX = x;
 		transY = y;
 		xPos = transX;
@@ -291,7 +292,7 @@ public class roopkotha.vela.FormattedListItem : roopkotha.gui.ListViewItem {
 		selected = aSelected;
 		// #expand g->set_color(%net.ayaslive.miniim.ui.core.markup.fg%);
 		g.setColor(0x006699);
-		roopkotha.gui.Font font = parent.getFont(roopkotha.gui.Font.Face.DEFAULT, roopkotha.gui.Font.Variant.PLAIN | roopkotha.gui.Font.Variant.SMALL);
+		roopkotha.gui.Font font = new BasicFont.defined(roopkotha.gui.Font.Face.DEFAULT, roopkotha.gui.Font.Variant.PLAIN | roopkotha.gui.Font.Variant.SMALL);
 		core.assert(font != null);
 		if(minLineHeight == -1) {
 			minLineHeight = font.getHeight()+ListViewItem.display.PADDING;

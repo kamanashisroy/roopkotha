@@ -1,27 +1,23 @@
 using aroop;
 using shotodol;
 using roopkotha.gui;
-using roopkotha.listview;
+using roopkotha.gui.listview;
 
 /** \addtogroup listview
  *  @{
  */
-public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
+public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
  
 	roopkotha.gui.Font item_font;
 	bool continuous_scrolling;
 
 	int vpos; /* Index of the showing Item */
 
-	int leftMargin;
-	int topMargin;
-	int rightMargin;
-	int bottomMargin;
-	int RESOLUTION;
 	int left;
 	int top;
 	int width;
 	int height;
+	int PADDING;
 
 	public enum display {
 		HMARGIN = 3,
@@ -32,29 +28,62 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 	ListContentModel content;
 	ListStyle style;
 	GraphicsTask?gfx;
+	GUIInput input;
 	
-	public ListPane(ListContentModel givenContent) {
+	public ListPane(ListContentModel givenContent, GUIInput givenInput) {
 		vpos = 0;
 		continuous_scrolling = true;
 		item_font = new BasicFont();
 		content = givenContent;
 		style = ListStyle();
 		gfx = null;
+		PADDING = 0;
+		input = givenInput;
 	}
 
-	public override void onResize(int l, int t, int w, int h) {
+	public override void onResize(int l, int t, int w, int h, int gPadding) {
 		left = l;
 		top = t;
 		width = w;
 		height = h;
+		PADDING = gPadding;
 	}
 	
 	public void setDirty() {
 		dirty = true;
 	}
 
+	public void scroll(bool up) {
+		if(up) {
+			content.selectedIndex--;
+			if (content.selectedIndex < 0) {
+				if (continuous_scrolling) {
+					content.selectedIndex = content.getCount() - 1;
+				} else {
+					content.selectedIndex = 0; /* stay within limits */
+				}
+			}
+			if (vpos > content.selectedIndex) {
+				vpos--;
+#if false
+				mark(this.vpos);
+#endif
+			}
+		} else {
+			content.selectedIndex++;
+			int count = content.getCount();
+			if (count != -1 && content.selectedIndex >= count) {
+				if (this.continuous_scrolling) {
+					content.selectedIndex = 0;
+				} else {
+					content.selectedIndex = count - 1;
+				}
+			}
+		}
+	}
+
 	int showItem(roopkotha.gui.Graphics g, Replicable data, int y, bool selected) {
-		roopkotha.listview.ListViewItem? li = null;
+		ListViewItem? li = null;
 #if false
 		if(obj instanceof ListItem) {
 		  li = (ListItem)obj;
@@ -68,9 +97,9 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 		if(li == null)
 		  return 0;
 		li.focused = selected;
-		int ret = li.paint(this, g, this.leftMargin + ListPane.display.HMARGIN
+		int ret = li.paint(input, g, left + ListPane.display.HMARGIN
 				, y + ListPane.display.VMARGIN
-				, width - ListPane.display.HMARGIN - ListPane.display.HMARGIN - 1 - this.leftMargin - this.rightMargin
+				, width - ListPane.display.HMARGIN - ListPane.display.HMARGIN - 1 - left - ListPane.display.HMARGIN
 				, selected) + ListPane.display.VMARGIN + ListPane.display.VMARGIN;
 		li = null;
 		return ret;
@@ -79,7 +108,7 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 	void showItems(roopkotha.gui.Graphics g) {
 		int i = -1;
 		aroop.ArrayList<Replicable>*items = content.getItems();
-		int posY = this.panelTop + this.topMargin;
+		int posY = top + display.HMARGIN;
 
 		extring dlg = extring.stack(64);
 		dlg.printf("Iterating items\n");
@@ -90,7 +119,7 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 		}
 		// clear
 		g.setColor(style.getColor(ListStyleTarget.LIST_BG));
-		g.fillRect(this.leftMargin, this.panelTop, width, this.menuY - this.panelTop);
+		g.fillRect(left, top, width, height);
 
 		g.setFont(this.item_font);
 
@@ -110,7 +139,7 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 			dlg.printf("Showing item\n");
 			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
 			posY += this.showItem(g, obj, posY, i == content.selectedIndex);
-			if (posY > (this.menuY - this.bottomMargin)) {
+			if (posY > (top + height - display.VMARGIN)) {
 				if (content.selectedIndex >= i && this.vpos < content.selectedIndex) {
 					this.vpos++;
 					/* try to draw again */
@@ -121,8 +150,8 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 				// So there are more elements left ..
 				// draw an arrow
 				g.setColor(style.getColor(ListStyleTarget.LIST_INDICATOR));
-				int x = width - 3 * ListPane.display.HMARGIN - ListPane.display.RESOLUTION - this.rightMargin;
-				int y = this.menuY - this.bottomMargin - this.PADDING - 2 * ListPane.display.RESOLUTION;
+				int x = width - 3 * ListPane.display.HMARGIN - ListPane.display.RESOLUTION - ListPane.display.HMARGIN;
+				int y = top + height - display.VMARGIN - this.PADDING - 2 * ListPane.display.RESOLUTION;
 				g.fillTriangle(x + ListPane.display.RESOLUTION / 2, y + ListPane.display.RESOLUTION, x + ListPane.display.RESOLUTION,
 						y, x, y);
 				dlg.printf("No more place to draw\n");
@@ -142,23 +171,10 @@ public class roopkotha.listview.ListPane : roopkotha.gui.Pane {
 			// So there are elements that can be scrolled back ..
 			// draw an arrow
 			g.setColor(style.getColor(ListStyleTarget.LIST_INDICATOR));
-			int x = width - 3 * ListPane.display.HMARGIN - ListPane.display.RESOLUTION - this.rightMargin;
-			int y = this.panelTop + this.topMargin + this.PADDING + ListPane.display.RESOLUTION;
+			int x = width - 3 * ListPane.display.HMARGIN - ListPane.display.RESOLUTION - ListPane.display.HMARGIN;
+			int y = top + display.VMARGIN + this.PADDING + ListPane.display.RESOLUTION;
 			g.fillTriangle(x + ListPane.display.RESOLUTION / 2, y, x + ListPane.display.RESOLUTION, y + ListPane.display.RESOLUTION,
 					x, y + ListPane.display.RESOLUTION);
-		}
-		aroop.xtring hint = content.getHint();
-		if (hint != null && !menu.isActive() && content.selectedIndex != -1 && content.getCount()
-				!= 0) {
-			g.setColor(style.getColor(ListStyleTarget.LIST_BG));
-			g.setFont(menu.getBaseFont());
-			g.drawString(hint
-					, 0
-					, 0
-					, width
-					, height - roopkotha.gui.Menu.display.PADDING
-					, roopkotha.gui.Graphics.anchor.HCENTER|roopkotha.gui.Graphics.anchor.BOTTOM);
-			/* TODO show "<>"(90 degree rotated) icon to indicate that we can traverse through the list  */
 		}
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "All done");
 	}

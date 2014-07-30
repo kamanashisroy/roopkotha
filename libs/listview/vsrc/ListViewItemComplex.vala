@@ -5,7 +5,7 @@ using roopkotha.gui;
 /** \addtogroup gui
  *  @{
  */
-public class roopkotha.listview.ListViewItemComplex : ListViewItem {
+public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 	protected EventOwner?target;
 	protected extring label;
 	protected extring text;
@@ -65,7 +65,7 @@ public class roopkotha.listview.ListViewItemComplex : ListViewItem {
 		}
 	}
 
-	public override int paint(roopkotha.gui.Window parent, roopkotha.gui.Graphics g, int x, int y, int width, bool selected) {
+	public override int paint(GUIInput input, roopkotha.gui.Graphics g, int x, int y, int width, bool selected) {
 		int start, pos, ret, labelWidth, labelHeight, lineCount;
 		int imgspacing = 0;
 		if (img != null) {
@@ -121,7 +121,7 @@ public class roopkotha.listview.ListViewItemComplex : ListViewItem {
 					g.setColor(0xFFFFFF);
 				}
 				if (is_editable && target != null && type == ListViewItem.itemtype.LABEL) {
-					parent.gi.registerScreenEvent(target, x + imgspacing + ListViewItem.display.PADDING
+					input.registerScreenEvent(target, x + imgspacing + ListViewItem.display.PADDING
 							, y + ret + ListViewItem.display.PADDING
 							, x + imgspacing + ListViewItem.display.PADDING + ITEM_FONT.subStringWidth(&label, start, pos)
 							, y + ret + ListViewItem.display.PADDING + FONT_HEIGHT);
@@ -215,7 +215,7 @@ public class roopkotha.listview.ListViewItemComplex : ListViewItem {
 		g.setColor(focused ? (is_editable ? 0x006699 : 0x999999) : 0xCCCCCC);
 
 		if(is_editable && target != null) {
-			parent.gi.registerScreenEvent(target, x + labelWidth, y + ListViewItem.display.PADDING, width,
+			input.registerScreenEvent(target, x + labelWidth, y + ListViewItem.display.PADDING, width,
 					y + ret - ListViewItem.display.PADDING);
 		}
 		/* draw a square */

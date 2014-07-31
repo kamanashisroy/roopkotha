@@ -8,9 +8,9 @@ Roadmap
 - [ ] Is it possible to use scintilla library based module here ?
 - [x] Make the gui implementations plug-in in flexible way.
 - [ ] Load multiple gui implementations(x11,qt,wxwindow,ncurses or other) at a time.
-- [ ] Write all gui commands in _guicommands_ space. Rehash and execute them from command handler.
+- [x] Write all gui commands in _vela/command_ space. Rehash and execute them from command handler.
 - [ ] Write all the resource handlers in _guiresource_ space.
-- [ ] Write all the file handlers in _filehandler_ space.
+- [x] Write all the file handlers in _vela/file/handler_ space.
 - [ ] Write all the document types in _doctype_ space.
 - [ ] Write markdown rendering support.
 - [ ] Study scintilla for scrolling.

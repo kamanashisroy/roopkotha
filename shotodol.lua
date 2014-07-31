@@ -1,0 +1,10 @@
+
+function rehash() 
+	OutputStream.write("Rehashing lua modules\n")
+	return "velaveil"
+end
+
+function exten_velaveil(x) 
+	local msg = "default <x href=\"velaxecute://ls\" label=Open></x><x href=\"velaxecute://history -b 99 \" label=Quit></x><x href=\"velafopen://about.vapp\" label=About></x>\n"
+	return(msg)
+end

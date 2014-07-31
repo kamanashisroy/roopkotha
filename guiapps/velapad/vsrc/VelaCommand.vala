@@ -39,6 +39,7 @@ internal class roopkotha.velapad.VelaCommand : M100Command {
 		}
 		xtring?outfile = vals[Options.OUTFILE];
 		if(outfile != null) {
+			// TODO dump content
 			throw new M100CommandError.ActionFailed.INVALID_ARGUMENT("Unimplemented");
 		}
 		return 0;

@@ -3,13 +3,13 @@ using roopkotha.velagent;
 
 public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.VelaRebound {
 	protected HashTable<xtring,xtring>veils;
-	VelaResourceHandler handler;
 	public VelaVeil(VelaResourceHandler handler) {
-		base(handler);
 		veils = HashTable<xtring,xtring>(xtring.hCb,xtring.eCb);
+		base(handler);
 	}
 
 	~VelaVeil() {
+		veils.destroy();
 	}
 
 	public void addVeil(xtring name, xtring menuMl) {

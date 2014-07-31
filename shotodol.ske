@@ -1,6 +1,9 @@
 
 onLoad:
 	module -load guicore/guiimpl/dynalib.so
-	module -load guiapps/pad/dynalib.so
+	module -load guiapps/velavanilla/dynalib.so
+	module -load guiapps/filecommands/dynalib.so
+	module -load guiapps/historycommands/dynalib.so
+	module -load guiapps/velapad/dynalib.so
 	rehash
-	writepad
+	velapad -i velapp/welcome.txt

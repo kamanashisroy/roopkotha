@@ -35,11 +35,11 @@ using roopkotha.vela;
 public delegate void roopkotha.vela.PageEventCB(extring*action);
 public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(extring*imgAddr);
 
-public class roopkotha.vela.PageView : roopkotha.vela.PageMenu {
+public class roopkotha.vela.PageWindow : roopkotha.vela.PageMenuLoader {
 	PageEventCB?pageEventCB;
 	GetImageCB?getImageCB;
 	
-	public PageView(extring*title, extring*path, extring*defCmd, PageContentModel?pcm = null) {
+	public PageWindow(extring*title, extring*path, extring*defCmd, PageContentModel?pcm = null) {
 		base(title, path, defCmd, pcm == null?new PageContentModel():pcm);
 		initPage();
 	}

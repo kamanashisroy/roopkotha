@@ -86,14 +86,14 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 	int showItem(roopkotha.gui.Graphics g, Replicable data, int y, bool selected) {
 		ListViewItem? li = null;
 #if false
-		if(obj instanceof ListItem) {
-		  li = (ListItem)obj;
+		if(obj instanceof ListViewItem) {
+		  li = (ListViewItem)obj;
 		} else {
-		  li = content.getListItem(obj);
+		  li = content.getListViewItem(obj);
 		}
 #else
 		//print("Showing list item 1\n");
-		li = content.getListItem(data);
+		li = content.getListViewItem(data);
 #endif
 		if(li == null)
 		  return 0;
@@ -178,6 +178,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 					x, y + ListPane.display.RESOLUTION);
 		}
 		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "All done");
+		dirty = false;
 	}
 
 	public override roopkotha.gui.Graphics getGraphics() {

@@ -42,7 +42,7 @@ public class roopkotha.gui.listview.SimpleListPaneModel : ListContentModel {
 		return &myitems;
 	}
 	
-	protected override ListViewItem getListItem(Replicable data) {
+	protected override ListViewItem getListViewItem(Replicable data) {
 		return (ListViewItem)data;
 	}
 	

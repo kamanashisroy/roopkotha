@@ -12,7 +12,7 @@ public abstract class roopkotha.gui.listview.ListContentModel : Replicable {
 		selectedIndex = 0;
 	}
 	public abstract aroop.ArrayList<Replicable>*getItems();
-	public abstract ListViewItem getListItem(Replicable data);
+	public abstract ListViewItem getListViewItem(Replicable data);
 
  	public virtual int getCount() {
 		return getItems().count_unsafe();

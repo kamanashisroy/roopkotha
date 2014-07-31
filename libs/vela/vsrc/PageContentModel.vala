@@ -34,13 +34,13 @@ using roopkotha.vela;
  */
 
 public class roopkotha.vela.PageContentModel : DocumentContentModel {
-	FormattedListItem fli;
+	FormattedListViewItem fli;
 	public PageContentModel() {
 		base();
-		fli = new FormattedListItem();
+		fli = new FormattedListViewItem();
 	}
 
-	protected override ListViewItem getListItem(Replicable given) {
+	protected override ListViewItem getListViewItem(Replicable given) {
 		//print("Generating formatted list item\n");
 		AugmentedContent elem = (AugmentedContent)given;
 		if(elem.cType == AugmentedContent.ContentType.FORMATTED_CONTENT) {

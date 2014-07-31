@@ -9,7 +9,7 @@ using roopkotha.vela;
  *  @{
  */
 public delegate onubodh.RawImage roopkotha.vela.MediaLoader(extring*src);
-public class roopkotha.vela.FormattedListItem : ListViewItem {
+public class roopkotha.vela.FormattedListViewItem : ListViewItem {
 	/**
 	 * y-coordinate position of the image
 	 */
@@ -26,7 +26,7 @@ public class roopkotha.vela.FormattedListItem : ListViewItem {
 
 	int minLineHeight = -1;// = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN,Font.SIZE_SMALL).getHeight()+display.PADDING;
 
-	public FormattedListItem() {
+	public FormattedListViewItem() {
 		//memclean_raw();
 	}
 

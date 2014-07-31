@@ -5,11 +5,11 @@ OS_PLATFORM/platform_gui/x11project
 libs/rtree
 libs/doc
 libs/vela
-libs/velarichml
-libs/veladivml
-libs/velagent
-libs/velahandler
-libs/velaveil
+libs/vela/velarichml
+libs/vela/veladivml
+libs/vela/velagent
+libs/vela/velahandler
+libs/vela/velaveil
 guicore/guiimpl
 guiapps/velavanilla
 guiapps/filecommands

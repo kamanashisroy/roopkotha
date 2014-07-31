@@ -1,5 +1,5 @@
 
-ROOPVELA_VELAWIDGET_CSOURCES=$(wildcard $(ROOPKOTHA_HOME)/libs/velaveil/vsrc/*.c)
+ROOPVELA_VELAWIDGET_CSOURCES=$(wildcard $(ROOPKOTHA_HOME)/libs/vela/velaveil/vsrc/*.c)
 ROOPVELA_VELAWIDGET_VSOURCE_BASE=$(basename $(notdir $(ROOPVELA_VELAWIDGET_CSOURCES)))
 OBJECTS+=$(addprefix $(PROJECT_OBJDIR)/, $(addsuffix .o,$(ROOPVELA_VELAWIDGET_VSOURCE_BASE)))
 

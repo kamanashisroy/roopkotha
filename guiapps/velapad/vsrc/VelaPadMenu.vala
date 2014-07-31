@@ -13,7 +13,7 @@ using roopkotha.velagent;
  * [-Maturity- 10]
  */
 internal class roopkotha.velapad.VelaPadMenu : Replicable {
-	PageView pg;
+	PageWindow pg;
 	VelaDivDocument emptyDoc;
 	velavanilla.VelaVanilla vagent;
 	public VelaPadMenu() {
@@ -23,7 +23,7 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		extring velaTitle = extring.set_static_string("Vela");
 		extring path = extring.set_static_string("vela/example");
 		extring aboutVela = extring.set_static_string("About");
-		pg = new PageView(&velaTitle, &path, &aboutVela);	
+		pg = new PageWindow(&velaTitle, &path, &aboutVela);	
 		emptyDoc = new VelaDivDocument();
 		/*extring elem = extring.set_static_string("Write something here..");
 		emptyDoc.addLine(&elem);*/

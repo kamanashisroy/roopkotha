@@ -33,18 +33,18 @@ using roopkotha.vela;
  * [-Maturity- 0]
  */
 
-public class roopkotha.vela.PageMenu : ListView {
+public class roopkotha.vela.PageMenuLoader : ListWindow {
 	EventOwner?rightOption;
 	ArrayList<EventOwner?> leftOptions;
 	int count;
-	public PageMenu(extring*gTitle, extring*gPath, extring*gDefCmd, PageContentModel pcm) {
+	public PageMenuLoader(extring*gTitle, extring*gPath, extring*gDefCmd, PageContentModel pcm) {
 		base(gTitle, gPath, gDefCmd, pcm);
 		count = 0;
 		rightOption = null;
 		leftOptions = ArrayList<EventOwner>();
 	}
 
-	~PageMenu() {
+	~PageMenuLoader() {
 		leftOptions.destroy();
 	}
 

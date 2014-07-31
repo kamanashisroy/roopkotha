@@ -1,7 +1,7 @@
 using aroop;
 using roopkotha.velagent;
 
-public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.Velagent {
+public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.VelaRebound {
 	protected HashTable<xtring,xtring>veils;
 	VelaResourceHandler handler;
 	public VelaVeil(VelaResourceHandler handler) {

@@ -25,19 +25,19 @@ using roopkotha.gui;
 /** \addtogroup listview
  *  @{
  */
-public abstract class roopkotha.gui.listview.ListView : roopkotha.gui.PanedWindow {
+public abstract class roopkotha.gui.listview.ListWindow : roopkotha.gui.PanedWindow {
  
 	EventOwner? defaultCommand;
 	ListPane lpane;
 	protected ListContentModel content;
 	
-	public ListView(extring*aTitle, extring*aPath, extring*aDefaultCommand, ListContentModel model) {
+	public ListWindow(extring*aTitle, extring*aPath, extring*aDefaultCommand, ListContentModel model) {
 		base(aTitle,aPath);
 		defaultCommand = new EventOwner(this, aDefaultCommand);
 		lpane = new ListPane(model, gi);
 		content = model;
 		setPane(Window.layer.CONTENT_PANE, lpane);
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, "Created ListView");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, "Created ListWindow");
 	}
 	
 	public Replicable? getSelected() {
@@ -88,7 +88,7 @@ public abstract class roopkotha.gui.listview.ListView : roopkotha.gui.PanedWindo
 			// if it is keyboard event then perform keyboard tasks
 			Replicable? obj = getSelected();
 			if(obj != null) {
-				ListViewItem? item = content.getListItem(obj);
+				ListViewItem? item = content.getListViewItem(obj);
 				if(item != null) {
 					consumed = item.doEdit(flags, key_code, x, y);
 				}

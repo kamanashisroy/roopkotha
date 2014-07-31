@@ -64,7 +64,7 @@ public class roopkotha.doc.DocumentContentModel : ListContentModel {
 		return (doc == null)?null:&doc.contents;
 	}
 
-	protected override ListViewItem getListItem(Replicable given) {
+	protected override ListViewItem getListViewItem(Replicable given) {
 		// get the element
 		AugmentedContent elem = (AugmentedContent)given;
 		extring data = extring();

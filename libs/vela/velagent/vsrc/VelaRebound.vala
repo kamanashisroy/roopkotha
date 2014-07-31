@@ -12,8 +12,8 @@ using roopkotha.vela;
 /** \addtogroup velagent
  *  @{
  */
-public class roopkotha.velagent.Velagent : Replicable {
-	PageView?page;
+public class roopkotha.velagent.VelaRebound : Replicable {
+	PageWindow?page;
 	RoopDocument?content;
 	VelaResourceHandler handler;
 	//MediaHandler ml;
@@ -29,7 +29,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 	xtring BACK_ACTION;
 	xtring VELA;
 
-	public Velagent(VelaResourceHandler rl) {
+	public VelaRebound(VelaResourceHandler rl) {
 		BACK_ACTION = new xtring.set_static_string("Back");
 		VELA = new xtring.set_static_string("Vela");
 		content = null;
@@ -45,7 +45,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		page = null;
 	}
 
-	~Velagent() {
+	~VelaRebound() {
 		images.destroy();
 		stack.destroy();
 	}
@@ -179,7 +179,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 	}
 
 	public void onContentReady(VelaResource id, Replicable content) {
-		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 1, "Velagent:New content.. ...\n");
+		Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 1, "VelaRebound:New content.. ...\n");
 		if(id.tp == VelaResource.Type.DOCUMENT) {
 			RoopDocument rd = (RoopDocument)content;
 			onContentDisplay(id, rd);
@@ -201,7 +201,7 @@ public class roopkotha.velagent.Velagent : Replicable {
 		Window.pushBalloon("Error ..", null, hashCode(), 2000);
 #endif
 	}
-	public void plugPage(PageView view) {
+	public void plugPage(PageWindow view) {
 		page = view;
 		page.setActionCB(onWindowEvent);
 		page.setPageEvent(onPageEvent);

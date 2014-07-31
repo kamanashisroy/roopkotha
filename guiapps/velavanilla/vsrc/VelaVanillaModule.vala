@@ -15,6 +15,16 @@ public class roopkotha.velavanilla.VelaVanillaModule : DynamicModule {
 		vanilla = new VelaVanillaScripted();
 		extring command = extring.set_static_string("velacommand");
 		Plugin.register(&command, new M100Extension(new VelaVeilCommand(vanilla), this));
+		extring rehash = extring.set_static_string("rehash");
+		Plugin.register(&rehash, new HookExtension(rehashHook, this));
+		rehashHook(null, null);
+		return 0;
+	}
+
+	int rehashHook(extring*msg, extring*output) {
+		extring command = extring.set_static_string("velacommand");
+		Extension?root = Plugin.get(&command);
+		vanilla.velac.rehash(root);
 		return 0;
 	}
 

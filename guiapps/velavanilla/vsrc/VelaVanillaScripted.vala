@@ -8,7 +8,7 @@ public class roopkotha.velavanilla.VelaVanillaScripted : roopkotha.velavanilla.V
 	public VelaVanillaScripted() {
 		base();
 		script = null;
-		extring rls = extring.set_static_string("./velavanilla.mk");
+		extring rls = extring.set_static_string("velapp/velavanilla.mk");
 		loadRules(&rls);
 		stdo = new shotodol.StandardOutputStream();
 		loadall();

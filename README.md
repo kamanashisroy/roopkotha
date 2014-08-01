@@ -115,12 +115,13 @@ Now go to tests/guiapps/vela and put make command and see if it works .
 Understanding the architecture
 ==============================
 
-This project consists of modules and plugins. You may want to know the architecture of shotodol to understand it better.
+The primary design goal is **seperation of concern**.This project consists of modules and plugins. You may want to know the architecture of shotodol to understand it better.
 
 ### Modules
 
 - [GUI Core](libs/gui/README.md)
 - [List View](libs/listview/README.md)
+- [Vela](libs/vela/README.md)
 - GUI Modules are [command pattern](http://en.wikipedia.org/wiki/Command_Pattern) execution of events.
 	- History Command 
 

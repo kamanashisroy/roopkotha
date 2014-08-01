@@ -25,7 +25,7 @@ public class roopkotha.velavanilla.VelaVanillaModule : DynamicModule {
 		extring command = extring.set_static_string("vela/command");
 		Extension?root = Plugin.get(&command);
 		vanilla.velac.rehash(root);
-		extring veil = extring.set_static_string("velaveil");
+		extring veil = extring.set_static_string("vela/veil");
 		extring outml = extring();
 		Plugin.swarm(&veil, &veil, &outml);
 		extring content = extring.stack_copy_deep(&outml);

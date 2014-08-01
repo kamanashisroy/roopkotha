@@ -1,0 +1,79 @@
+digraph Vela {
+	subgraph cluster0 {
+		label="Vela";
+		rankdir=LR;
+		style=filled;
+		color=silver;
+		pageMenu [label="<pw>PageWindow|<pml>PageMenuLoader|<pcm>PageContentModel",shape=record];
+		formattedContent [label="<fc>FormattedContent|<flvi>FormatedListViewItem",shape=record];
+	}
+
+	subgraph cluster1 {
+		label="Velagent";
+		style=filled;
+		color=seagreen;
+		node [shape=box]
+		velaRebound [label="VelaRebound",shape=diamond];
+		velaResource [label="VelaResource|VelaVars|<vrh>VelaResourceHandler",shape=record];
+	}
+
+	subgraph cluster2 {
+		label="Vela Rich ML";
+		style=filled;
+		color=mintcream;
+		node [shape=box]
+		velaRich [label="<vrc>VelaRichContent|<vrd>VelaRichDocument",shape=record];
+	}
+	subgraph cluster3 {
+		label="Vela Div ML";
+		style=filled;
+		color=mintcream;
+		node [shape=box]
+		velaDiv [label="<vdc>VelaDivContent|<vdd>VelaDivDocument",shape=record];
+	}
+	subgraph cluster4 {
+		label="Vela Veil";
+		style=filled;
+		color=mintcream;
+		node [shape=box]
+		velaVeil [label="VelaVeil"];
+	}
+	subgraph cluster5 {
+		label="Vela Vanilla";
+		style=filled;
+		color="#f3e5ab";
+		node [shape=box]
+		velaVanillaModule [label="velaVanillaModule|{<velac>vela/command|<velav>vela/veil}",shape=record];
+	}
+	subgraph cluster6 {
+		label="Document";
+		rankdir=LR;
+		style=filled;
+		color=gray;
+		roopDocument [label="<rd>RoopDocument|<ac>AugmentedContent|<dcm>DocumentContentModel",shape=record];
+	}
+	subgraph cluster7 {
+		label="gui";
+		rankdir=LR;
+		style=filled;
+		color=gray;
+		gui [label="<win>Window|<menu>Menu|<pn>Pane",shape=record];
+	}
+	subgraph cluster8 {
+		label="List View";
+		rankdir=LR;
+		style=filled;
+		color=gray;
+		listview [label="<lwin>ListWindow|<lpane>ListPane|<lvi>ListViewItem|<lcm>ListContentModel",shape=record];
+	}
+	velaDiv:vdc -> velaRich:vrc -> formattedContent:fc -> roopDocument:ac;
+	velaDiv:vdd -> velaRich:vrd -> roopDocument:rd;
+	formattedContent:flvi -> listview:lvi;
+	pageMenu:pcm -> roopDocument:dcm -> listview:lcm;
+	velaVeil -> pageMenu:pml;
+	velaVanillaModule:velav -> velaVeil;
+	pageMenu:pml -> velaRebound -> velaResource:vrh -> velaVanillaModule:velac;
+	pageMenu:pw -> listview:lwin -> gui:win;
+	listview:lpane -> gui:pn;
+
+}

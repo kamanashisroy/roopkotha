@@ -28,7 +28,6 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		base.onResize(w, h);
 		menu.onResize(0,0,w,h,PADDING);
 		titlePane.onResize(0, 0, w, h, PADDING);
-		print("Resizing to %d,%d\n", w, h);
 		int contentTop = titlePane.getVerticalSpanBottom();
 		int contentBottom = menu.getVerticalSpanTop();
 		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>.EMPTY();
@@ -36,7 +35,6 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		while(it.next()) {
 			unowned AroopPointer<Pane> ptr = it.get_unowned();
 			int layer = (int)ptr.get_hash();
-			print("Layer:%d\n",layer);
 			if(layer < Window.layer.CONTENT_PANE) {
 				continue;
 			}

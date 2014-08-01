@@ -66,12 +66,19 @@ digraph Vela {
 		color=gray;
 		listview [label="<lwin>ListWindow|<lpane>ListPane|<lvi>ListViewItem|<lcm>ListContentModel",shape=record];
 	}
+	subgraph cluster9 {
+		label="shotodol.lua";
+		rankdir=LR;
+		style=filled;
+		color=gray;
+		luaHooks [label="<vv>vela/veil",shape=record];
+	}
 	velaDiv:vdc -> velaRich:vrc -> formattedContent:fc -> roopDocument:ac;
 	velaDiv:vdd -> velaRich:vrd -> roopDocument:rd;
 	formattedContent:flvi -> listview:lvi;
 	pageMenu:pcm -> roopDocument:dcm -> listview:lcm;
-	velaVeil -> pageMenu:pml;
-	velaVanillaModule:velav -> velaVeil;
+	velaVeil -> pageMenu:pml -> gui:menu;
+	luaHooks:vv -> velaVanillaModule:velav -> velaVeil;
 	pageMenu:pml -> velaRebound -> velaResource:vrh -> velaVanillaModule:velac;
 	pageMenu:pw -> listview:lwin -> gui:win;
 	listview:lpane -> gui:pn;

@@ -11,7 +11,7 @@ libs/vela/velagent
 libs/vela/velahandler
 libs/vela/velaveil
 guicore/guiimpl
-guiapps/velavanilla
+guiapps/velashake
 guiapps/filecommands
 guiapps/historycommands
 guiapps/velapad

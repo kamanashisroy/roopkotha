@@ -13,9 +13,8 @@ using roopkotha.velagent;
  * [-Maturity- 10]
  */
 internal class roopkotha.velapad.VelaPadMenu : Replicable {
-	PageWindow pg;
+	public PageWindow pg;
 	VelaDivDocument emptyDoc;
-	velavanilla.VelaVanilla vagent;
 	public VelaPadMenu() {
 		setupGUI();
 	}
@@ -28,12 +27,9 @@ internal class roopkotha.velapad.VelaPadMenu : Replicable {
 		/*extring elem = extring.set_static_string("Write something here..");
 		emptyDoc.addLine(&elem);*/
 		//pg.setDocument(emptyDoc, 0);
-		vagent = velavanilla.VelaVanillaModule.vanilla;
-		vagent.plugPage(pg);
 		extring baseUrl = extring.set_static_string("");
 		extring url = extring.set_static_string("file://empty");
 		VelaResource res = new VelaResource(&baseUrl, &url, emptyDoc);
-		vagent.onContentReady(res, emptyDoc);
 	}
 	protected void show(VelaDivDocument doc) {
 		pg.setDocument(doc, 0);

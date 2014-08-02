@@ -25,7 +25,7 @@ using roopkotha.gui;
 /** \addtogroup gui
  *  @{
  */
-public class roopkotha.gui.EventOwner : Replicable {
+public class roopkotha.gui.EventOwner : Searchable {
 	Replicable?source;
 	extring label;
 	public EventOwner.from_extring(extring*target) {

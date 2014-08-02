@@ -1,17 +1,31 @@
 using aroop;
+using shotodol;
 using roopkotha.velawidget;
+using roopkotha.velahandler;
 
 
-public class roopkotha.velavanilla.VelaVanillaScripted : roopkotha.velavanilla.VelaVanilla {
+/** \addtogroup velashake
+ *  @{
+ */
+internal class roopkotha.velashake.VelaShake : Replicable {
 	shotodol.M100Script? script;
 	shotodol.StandardOutputStream stdo;
-	public VelaVanillaScripted() {
-		base();
+	public M100CommandSet velac;
+	public CompoundResourceHandler cHandler;
+	public VelaShake() {
+		cHandler = new CompoundResourceHandler();
+		velac = new M100CommandSet();
+		setupHandlers();
 		script = null;
-		extring rls = extring.set_static_string("velapp/velavanilla.mk");
+		extring rls = extring.set_static_string("velapp/velashake.ske");
 		loadRules(&rls);
 		stdo = new shotodol.StandardOutputStream();
 		loadall();
+	}
+	void setupHandlers() {
+		CommandResourceHandler hdlr = new CommandResourceHandler.givenCommandSet(velac);
+		xtring vxecute = new xtring.set_static_string("velaxecute");
+		cHandler.setHandler(vxecute, hdlr);
 	}
 	public void loadRules(extring*fn) {
 		try {
@@ -82,3 +96,4 @@ public class roopkotha.velavanilla.VelaVanillaScripted : roopkotha.velavanilla.V
 	}
 }
 
+/** @} */

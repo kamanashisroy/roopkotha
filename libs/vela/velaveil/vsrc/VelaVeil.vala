@@ -1,15 +1,39 @@
 using aroop;
+using roopkotha.vela;
 using roopkotha.velagent;
 
-public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.VelaRebound {
-	protected HashTable<xtring,xtring>veils;
-	public VelaVeil(VelaResourceHandler handler) {
+/**
+ * \ingroup velawidget
+ * \defgroup velaveil Veil is the menu system for vela.
+ */
+
+/** \addtogroup velaveil
+ *  @{
+ */
+public class roopkotha.velawidget.VelaVeil : /*roopkotha.velagent.VelaRebound*/ Replicable {
+	HashTable<xtring,xtring>veils;
+	PageWindow?page;
+	VelaResourceHandler?handler;
+	public VelaVeil() {
 		veils = HashTable<xtring,xtring>(xtring.hCb,xtring.eCb);
-		base(handler);
+		handler = null;
+		page = null;
 	}
 
 	~VelaVeil() {
 		veils.destroy();
+	}
+
+	public void plugPage(PageWindow?pg) {
+		if(pg == null) {
+			veils.markAll(0x02);
+			veils.pruneMarked(0x02);
+		}
+		page = pg;
+	}
+
+	public void plugHandler(VelaResourceHandler?givenHandler) {
+		handler = givenHandler;
 	}
 
 	public void addVeil(xtring name, xtring menuMl) {
@@ -25,12 +49,13 @@ public class roopkotha.velawidget.VelaVeil : roopkotha.velagent.VelaRebound {
 		return 0;
 	}
 
-	public override void onContentDisplay(VelaResource id, Replicable content) {
-		if(changeVeil(&id.url) != 0) {
+	public void onContentDisplay(extring*url) {
+		if(changeVeil(url) != 0) {
 			extring default = extring.set_static_string("default");
 			changeVeil(&default);
 		}
 	}
+
 	void traverseMenu(onubodh.XMLIterator*xit) {
 		if(xit.nextIsText) {
 			return;

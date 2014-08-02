@@ -3,7 +3,7 @@ digraph Vela {
 		label="Vela";
 		rankdir=LR;
 		style=filled;
-		color=silver;
+		color=gray;
 		pageMenu [label="<pw>PageWindow|<pml>PageMenuLoader|<pcm>PageContentModel",shape=record];
 		formattedContent [label="<fc>FormattedContent|<flvi>FormatedListViewItem",shape=record];
 	}
@@ -11,7 +11,7 @@ digraph Vela {
 	subgraph cluster1 {
 		label="Velagent";
 		style=filled;
-		color=seagreen;
+		color=gray;
 		node [shape=box]
 		velaRebound [label="VelaRebound",shape=diamond];
 		velaResource [label="VelaResource|VelaVars|<vrh>VelaResourceHandler",shape=record];
@@ -20,30 +20,30 @@ digraph Vela {
 	subgraph cluster2 {
 		label="Vela Rich ML";
 		style=filled;
-		color=mintcream;
+		color=gray;
 		node [shape=box]
 		velaRich [label="<vrc>VelaRichContent|<vrd>VelaRichDocument",shape=record];
 	}
 	subgraph cluster3 {
 		label="Vela Div ML";
 		style=filled;
-		color=mintcream;
+		color=gray;
 		node [shape=box]
 		velaDiv [label="<vdc>VelaDivContent|<vdd>VelaDivDocument",shape=record];
 	}
 	subgraph cluster4 {
 		label="Vela Veil";
 		style=filled;
-		color=mintcream;
+		color=gray;
 		node [shape=box]
-		velaVeil [label="VelaVeil"];
+		velaVeil [label="<vv>VelaVeil|<ocd>[vela/onContentDisplay]",shape=record];
 	}
 	subgraph cluster5 {
-		label="Vela Vanilla";
+		label="Vela Shake";
 		style=filled;
-		color="#f3e5ab";
+		color=gray;
 		node [shape=box]
-		velaVanillaModule [label="velaVanillaModule|{<velac>vela/command|<velav>vela/veil}",shape=record];
+		velaShakeModule [label="<velac>[vela/command]",shape=record];
 	}
 	subgraph cluster6 {
 		label="Document";
@@ -54,10 +54,11 @@ digraph Vela {
 	}
 	subgraph cluster7 {
 		label="gui";
+		url="libs/gui/README.md"
 		rankdir=LR;
 		style=filled;
 		color=gray;
-		gui [label="<win>Window|<menu>Menu|<pn>Pane",shape=record];
+		gui [label="<win>Window|<menu>Menu|<pn>Pane",shape=record,url="libs/gui/README.md"];
 	}
 	subgraph cluster8 {
 		label="List View";
@@ -71,16 +72,27 @@ digraph Vela {
 		rankdir=LR;
 		style=filled;
 		color=gray;
-		luaHooks [label="<vv>vela/veil",shape=record];
+		luaHooks [label="<vv>[vela/veil]",shape=record];
+	}
+	subgraph cluster10 {
+		label="Vela Pad";
+		rankdir=LR;
+		style=filled;
+		color=lightgray;
+		velaPad [label="<vp>[vela/page]|<vc>[command]",shape=record];
 	}
 	velaDiv:vdc -> velaRich:vrc -> formattedContent:fc -> roopDocument:ac;
 	velaDiv:vdd -> velaRich:vrd -> roopDocument:rd;
 	formattedContent:flvi -> listview:lvi;
 	pageMenu:pcm -> roopDocument:dcm -> listview:lcm;
-	velaVeil -> pageMenu:pml -> gui:menu;
-	luaHooks:vv -> velaVanillaModule:velav -> velaVeil;
-	pageMenu:pml -> velaRebound -> velaResource:vrh -> velaVanillaModule:velac;
+	velaVeil:vv -> pageMenu:pml -> gui:menu;
+	velaRebound -> velaVeil:ocd -> velaVeil:vv;
+	luaHooks:vv -> velaVeil;
+	gui:win -> pageMenu:pw -> velaPad:vp;
+	velaRebound -> velaResource:vrh -> velaShakeModule:velac;
 	pageMenu:pw -> listview:lwin -> gui:win;
 	listview:lpane -> gui:pn;
-
+	velaVeil -> velaPad:vp;
+	velaRebound -> velaPad:vp;
+	velaPad:vc -> velaVeil:ocd;
 }

@@ -13,7 +13,7 @@ using roopkotha;
  */
 /** \ingroup textcommand */
 internal class roopkotha.velapad.VelaCommand : M100Command {
-	VelaPad? vpad;
+	public VelaPad? vpad;
 	enum Options {
 		INFILE = 1,
 		OUTFILE,

@@ -13,9 +13,9 @@ using roopkotha.vela;
  *  @{
  */
 public class roopkotha.velagent.VelaRebound : Replicable {
-	protected PageWindow?page;
+	PageWindow?page;
 	RoopDocument?content;
-	protected VelaResourceHandler handler;
+	VelaResourceHandler?handler;
 	//MediaHandler ml;
 	//WebEventListener el;
 	//WebActionListener al;
@@ -29,7 +29,7 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 	xtring BACK_ACTION;
 	xtring VELA;
 
-	public VelaRebound(VelaResourceHandler rl) {
+	public VelaRebound() {
 		BACK_ACTION = new xtring.set_static_string("Back");
 		VELA = new xtring.set_static_string("Vela");
 		content = null;
@@ -39,10 +39,8 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 		isGoingBack= false;
 		baseUrl = null;
 		currentUrl = null;
-		handler = rl;
-		handler.setContentCallback(onContentReady);
-		handler.setContentErrorCallback(onResourceError);
 		page = null;
+		handler = null;
 	}
 
 	~VelaRebound() {
@@ -83,78 +81,8 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 5, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dbg);
 
 		extring cmd = extring.stack(128);
-		//cmd.concat_string("velaxecute://");
 		cmd.concat(&paction.action);
 		velaxecute(&cmd, false);
-#if false
-		// Normal mode ..
-		//if(action.equals(page.default_command)) {
-		Replicable?src = action.getSource();
-		if(src == page) {
-			// GUI_INPUT_LOG("item action !\n");
-			AugmentedContent?content = (AugmentedContent)page.getSelected();
-			extring appAction = extring();
-			if(content != null) {
-				content.getAction(&appAction);
-				if(!appAction.is_empty()) {
-					velaxecute(&appAction, false);
-					return;
-				}
-			}
-		} else if(src == BACK_ACTION) {
-	//		GUI_INPUT_LOG("Back back back .. \n");
-			core.assert("Stack is unimplemented\n" == null);
-#if false
-			xultb_str_t*last = opp_indexed_list_get(&web->stack, OPP_FACTORY_USE_COUNT(&web->stack) - 1);
-			if(last) {
-	//			GUI_INPUT_LOG("It should render %s\n", last->str);
-				OPPUNREF(web->base);
-				velaxecute(last, true);
-				OPPUNREF(last);
-				return;
-			}
-#endif
-		}
-
-		// TODO specialize the target action
-#if false
-		// see if the action is menu command
-		while(action) {
-			struct xultb_ml_node*x = xultb_ml_get_node(web->root, "x");
-			if(!x) {
-				break;
-			}
-			int i = 0, j = 0;
-			struct xultb_ml_node*menu,*cmd;
-			xultb_str_t*url = NULL;
-			for(i=0;;i++) {
-				opp_at_ncode(menu, (&x->children), i,
-					if(menu->elem.type == XULTB_ELEMENT_NODE && xultb_str_equals_static(menu->name, "m")) {
-						GUI_INPUT_LOG("We are working on menu\n");
-						for(j = 0;j>=0; j++) {
-							opp_at_ncode(cmd, (&menu->children), j,
-								xultb_str_t*target = xultb_ml_get_text(cmd);
-								GUI_INPUT_LOG("Menu:%s,Action:%s\n", target?target->str:"NULL",action->str);
-								if(target == action) {
-									url = xultb_ml_get_attribute_value(cmd, "href");
-									j = -2;
-								}
-							) else {
-								break;
-							}
-						}
-					}
-				) else {
-					break;
-				}
-			}
-			if(url) {
-				velaxecute(url, false);
-			}
-			break;
-		}
-#endif
-#endif
 	}
 
 	public void onPageEvent(extring*target) {
@@ -175,7 +103,9 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 #endif
 	}
 
-	public virtual void onContentDisplay(VelaResource id, Replicable content) {
+	public void onContentDisplay(VelaResource id, Replicable content) {
+		extring entry = extring.set_static_string("vela/onContentDisplay");
+		Plugin.swarm(&entry, &id.url, null);
 	}
 
 	public void onContentReady(VelaResource id, Replicable content) {
@@ -201,13 +131,20 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 		Window.pushBalloon("Error ..", null, hashCode(), 2000);
 #endif
 	}
-	public void plugPage(PageWindow view) {
+	public void plugPage(PageWindow?view) {
 		page = view;
+		if(page == null) return; // TODO retract all the event handler when page is null
 		page.setActionCB(onWindowEvent);
 		page.setPageEvent(onPageEvent);
 		page.setImageLoader(getImage);
 	}
 
+	public void plugHandler(VelaResourceHandler?givenHandler) {
+		handler = givenHandler;
+		if(handler == null) return; // TODO set all the callbacks to null when the handler is null
+		handler.setContentCallback(onContentReady);
+		handler.setContentErrorCallback(onResourceError);
+	}
 }
 
 /** @} */

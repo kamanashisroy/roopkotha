@@ -1,12 +1,11 @@
 using aroop;
 using shotodol;
 using roopkotha.velawidget;
-using roopkotha.velavanilla;
 
-/** \addtogroup velavanilla
+/** \addtogroup velaveil
  *  @{
  */
-internal class roopkotha.velavanilla.VelaVeilCommand : M100Command {
+internal class roopkotha.velawidget.VelaVeilCommand : M100Command {
 	VelaVeil veil;
 	public VelaVeilCommand(VelaVeil gvl) {
 		extring prefix = extring.set_static_string("menu");

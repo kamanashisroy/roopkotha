@@ -1,0 +1,39 @@
+digraph Vela {
+	label="Vela";
+	style=filled;
+	color=gray;
+	node [shape=box]
+	windowDisp [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"> \
+		<TR><TD COLSPAN="106" PORT="pageMenu">Menu</TD></TR> \
+		<TR> \
+			<TD ROWSPAN="100" COLSPAN="100" PORT="pageWindow">Layered Content</TD> \
+			<TD ROWSPAN="100" PORT="documentWindow"></TD> \
+			<TD ROWSPAN="100" PORT="listWindow"></TD> \
+			<TD ROWSPAN="100" PORT="window"></TD> \
+		</TR>
+		</TABLE>>];
+
+	subgraph cluster1 {
+		label = "View"
+		color=green;
+		pageWindow [label="PageWindow"]
+		pageMenu [label="PageMenu"]
+		documentWindow [label="documentWindow"]
+		listWindow [label="listWindow"]
+		window [label="window"]
+	}
+	subgraph cluster2 {
+		label = "Control"
+		color=green;
+		velaRebound [label="velaRebound"]
+		veil [label="veil"]
+		velaShake [label="velaShake"]
+	}
+	pageWindow -> windowDisp:pageWindow;
+	pageMenu -> windowDisp:pageMenu;
+	documentWindow -> windowDisp:documentWindow;
+	listWindow -> windowDisp:listWindow;
+	window -> windowDisp:window;
+	veil ->  pageMenu -> velaRebound -> velaShake;
+	velaShake -> velaRebound -> pageWindow;
+}

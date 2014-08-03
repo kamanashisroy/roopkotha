@@ -17,4 +17,4 @@ Roadmap
 - [ ] Study scintilla for scrolling.
 - [ ] Study scintilla for editing.
 - [ ] Compile and distribute for different platforms.
-- [ ] Remove the generated architecture svg file.
+- [x] Remove the generated architecture svg file.

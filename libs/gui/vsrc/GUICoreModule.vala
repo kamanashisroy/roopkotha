@@ -22,13 +22,10 @@ public class roopkotha.gui.GUICoreModule : Module {
 	}
 
 	int rehashHook(extring*msg, extring*output) {
-		extring x = extring.set_static_string("gcore");
-		Extension?root = Plugin.get(&x);
-		while(root != null) {
-			gcore = (GUICore)root.getInterface(null);
-			Extension?next = root.getNext();
-			root = next;
-		}
+		extring ex = extring.set_static_string("gcore");
+		Plugin.acceptVisitor(&ex, (x) => {
+			gcore = (GUICore)x.getInterface(null);
+		});
 		return 0;
 	}
 

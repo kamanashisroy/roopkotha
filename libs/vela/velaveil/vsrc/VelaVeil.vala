@@ -10,7 +10,7 @@ using roopkotha.velagent;
 /** \addtogroup velaveil
  *  @{
  */
-public class roopkotha.velawidget.VelaVeil : /*roopkotha.velagent.VelaRebound*/ Replicable {
+public class roopkotha.velawidget.VelaVeil : Replicable {
 	HashTable<xtring,xtring>veils;
 	PageWindow?page;
 	VelaResourceHandler?handler;

@@ -31,21 +31,19 @@ public class roopkotha.velagent.VelagentModule : Module {
 
 	int loadPage() {
 		extring pgcb = extring.set_static_string("vela/page");
-		AnyInterfaceExtension pageExtension = (AnyInterfaceExtension)Plugin.get(&pgcb);
-		if(pageExtension == null)
-			return -1;
-		PageWindow page = (PageWindow)pageExtension.getInterface(null);
-		agent.plugPage(page);
+		Plugin.acceptVisitor(&pgcb, (x) => {
+			PageWindow page = (PageWindow)x.getInterface(null);
+			agent.plugPage(page);
+		});
 		return 0;
 	}
 
 	int loadHandler() {
 		extring pageHandler = extring.set_static_string("vela/page/handler");
-		AnyInterfaceExtension handlerExtension = (AnyInterfaceExtension)Plugin.get(&pageHandler);
-		if(handlerExtension == null)
-			return -1;
-		VelaResourceHandler handler = (VelaResourceHandler)handlerExtension.getInterface(null);
-		agent.plugHandler(handler);
+		Plugin.acceptVisitor(&pageHandler, (x) => {
+			VelaResourceHandler handler = (VelaResourceHandler)x.getInterface(null);
+			agent.plugHandler(handler);
+		});
 		return 0;
 	}
 

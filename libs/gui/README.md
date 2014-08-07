@@ -11,7 +11,7 @@ Events in this module are executed in a [chain of reponsiblitiy pattern](http://
 GUICore
 =======
 
-GUICore is a [mediator](http://en.wikipedia.org/wiki/Abstract_factory_pattern) of the underlying implementation of gui library. GUICore follows an [abstract factory pattern](http://en.wikipedia.org/wiki/Abstract_factory_pattern) to build GUIInput and GUITask objects.
+GUICore is a [mediator](http://en.wikipedia.org/wiki/Mediator_pattern) of the underlying implementation of gui library. GUICore follows an [abstract factory pattern](http://en.wikipedia.org/wiki/Abstract_factory_pattern) to build GUIInput and GUITask objects.
 
 
 Menu

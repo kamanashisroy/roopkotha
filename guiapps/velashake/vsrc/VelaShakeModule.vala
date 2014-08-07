@@ -35,8 +35,7 @@ public class roopkotha.velashake.VelaShakeModule : DynamicModule {
 		 * make the command available for velashake
 		 */
 		extring command = extring.set_static_string("vela/command");
-		Extension?root = Plugin.get(&command);
-		shake.velac.rehash(root);
+		shake.velac.rehash(&command);
 		return 0;
 	}
 

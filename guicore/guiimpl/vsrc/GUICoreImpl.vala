@@ -12,24 +12,15 @@ using roopkotha.gui;
  */
 public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 	GUICorePlatformImpl plat;
-	public Factory<GUITask>taskFactory;
 	internal ArrayList<Window>windows;
 	public GUICoreImpl() {
 		print("Creating new platform application\n");
 		plat = GUICorePlatformImpl.create();
-		taskFactory = Factory<GUITask>.for_type(64);
 		windows = ArrayList<Window>();
 		base();
 	}
 	
 	~GUICoreImpl() {
-		taskFactory.destroy();
-	}
-
-	public override GUITask createTask(uint16 sz) {
-		GUITask task = taskFactory.alloc_full(sz);
-		task.build(sz);
-		return task;
 	}
 
 	public override GUIInput createInputHandler(Window win, int token) {

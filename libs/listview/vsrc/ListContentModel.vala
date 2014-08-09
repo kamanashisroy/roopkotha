@@ -20,5 +20,6 @@ public abstract class roopkotha.gui.listview.ListContentModel : Replicable {
 	
 	public virtual void getHintAs(extring*outHint) {
 	}
+	// TODO write onChange listener here ..
 }
 /** @} */

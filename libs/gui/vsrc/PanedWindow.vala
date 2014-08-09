@@ -60,7 +60,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 	}
 
 	public override void show() {
-		GUITask showTask = GUICoreModule.gcore.createTask(32);
+		Renu showTask = GUICoreModule.renuBuilder.createRenu(32);
 		Bundler bndlr = Bundler();
 		bndlr.buildFromCarton(&showTask.msg, 32);
 		bndlr.writeInt(GUICore.entries.WINDOW_TASK, tasks.SHOW_WINDOW);

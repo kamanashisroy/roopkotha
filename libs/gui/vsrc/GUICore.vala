@@ -53,7 +53,6 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 	public override int cancel() {
 		return 0;
 	}
-	public abstract GUITask createTask(uint16 sz);
 	public abstract GUIInput createInputHandler(Window win, int token);
 	public abstract void pushTask(extring*task);
 	public abstract void pushGraphicsTask(Graphics g);

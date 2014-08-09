@@ -32,7 +32,7 @@ using roopkotha.gui;
 public class roopkotha.gui.GraphicsTask : Graphics {
 	Bundler bndlr;
 	int currentColor;
-	public GUITask?task;
+	public Renu?task;
 	bool finalized;
 	int size;
 	GraphicsTask.Full(Carton*ctn, int gSize) {
@@ -42,11 +42,11 @@ public class roopkotha.gui.GraphicsTask : Graphics {
 		currentColor = 1;
 		finalized = false;
 	}
-	public GraphicsTask.fromTask(GUITask gTask) {
+	public GraphicsTask.fromTask(Renu gTask) {
 		// allocate memory from factory
 		task = gTask;
-		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "task.size", task.size);
-		GraphicsTask.Full(&task.msg, task.size);
+		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "task.size", (int)task.size);
+		GraphicsTask.Full(&task.msg, (int)task.size);
 	}
 	public override void drawImage(onubodh.RawImage img, int x, int y, int anc) {
 		try {

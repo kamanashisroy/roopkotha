@@ -18,3 +18,4 @@ Roadmap
 - [ ] Study scintilla for editing.
 - [ ] Compile and distribute for different platforms.
 - [x] Remove the generated architecture svg file.
+- [ ] Write a document to go from anjuta to roopkotha( I mean a copy of anjuta in roopkotha way) .

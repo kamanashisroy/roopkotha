@@ -89,7 +89,7 @@ public class roopkotha.gui.GraphicsTask : Graphics {
 	public override void drawString(extring*str, int x, int y, int width, int height, int anc) {
 		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_STRING);
-		bndlr.writeETxt(GUICore.entries.ARG, str);
+		bndlr.writeEXtring(GUICore.entries.ARG, str);
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
 		bndlr.writeInt(GUICore.entries.ARG, width);

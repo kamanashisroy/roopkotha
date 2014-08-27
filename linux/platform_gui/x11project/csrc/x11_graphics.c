@@ -85,7 +85,7 @@ static int perform_graphics_task(aroop_txt_t*msg, int*offset, int*cur_key, int*c
 			if(anc & ENUM_ROOPKOTHA_GRAPHICS_ANCHOR_BOTTOM) {
 				ypos = y+height;
 			}
-			XDrawString (gcore.disp, win->w,win->gc, xpos, ypos, content.str, content.len);
+			XDrawString (gcore.disp, win->w,win->gc, xpos, ypos, aroop_txt_to_string(&content), content.len);
 			break;
 		}
 	case ENUM_ROOPKOTHA_GRAPHICS_TASKS_SET_COLOR: // TODO abolish this task

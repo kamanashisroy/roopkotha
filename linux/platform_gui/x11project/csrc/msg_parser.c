@@ -3,16 +3,17 @@ static int msg_write_int(aroop_txt_t*msg, int key, unsigned int val) {
 	if((msg->size - msg->len) < 6) {
 		return -1;
 	}
-	msg->str[msg->len++] = (unsigned char)key;
+	char*str = aroop_txt_to_string(msg);
+	str[msg->len++] = (unsigned char)key;
 	if(val >= 0xFFFF) {
-		msg->str[msg->len++] = /*(0<<6) |*/ 4; // 0 means numeral , 4 is the numeral size
-		msg->str[msg->len++] = (unsigned char)((val & 0xFF000000)>>24);
-		msg->str[msg->len++] = (unsigned char)((val & 0x00FF0000)>>16);
+		str[msg->len++] = /*(0<<6) |*/ 4; // 0 means numeral , 4 is the numeral size
+		str[msg->len++] = (unsigned char)((val & 0xFF000000)>>24);
+		str[msg->len++] = (unsigned char)((val & 0x00FF0000)>>16);
 	} else {
-		msg->str[msg->len++] = /*(0<<6) |*/ 2; // 0 means numeral , 4 is the numeral size
+		str[msg->len++] = /*(0<<6) |*/ 2; // 0 means numeral , 4 is the numeral size
 	}
-	msg->str[msg->len++] = (unsigned char)((val & 0xFF00)>>8);
-	msg->str[msg->len++] = (unsigned char)(val & 0x00FF);
+	str[msg->len++] = (unsigned char)((val & 0xFF00)>>8);
+	str[msg->len++] = (unsigned char)(val & 0x00FF);
 	return 0;
 }
 
@@ -23,10 +24,11 @@ static int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*
 	if(((*offset)+2) >= msg->len) {
 		return -1;
 	}
-	*cur_key = msg->str[*offset];
+	char*str = aroop_txt_to_string(msg);
+	*cur_key = str[*offset];
 	*offset=*offset+1;
-	*cur_type = (msg->str[*offset] >> 6);
-	*cur_len = (msg->str[*offset] & 0x3F); // 11000000 
+	*cur_type = (str[*offset] >> 6);
+	*cur_len = (str[*offset] & 0x3F); //  b111111
 	*offset=*offset+1;
 	if(((*offset)+*cur_len) > msg->len) {
 		return -1;
@@ -37,54 +39,51 @@ static int msg_next(aroop_txt_t*msg, int*offset, int*cur_key, int*cur_type, int*
 unsigned int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len) {
 	SYNC_ASSERT(*cur_type == 0); // we expect numeral value 
 	unsigned int output = 0;
+	char*str = aroop_txt_to_string(msg);
 	if(*cur_len >= 1) {
-		output = (unsigned char)msg->str[*offset];
+		output = (unsigned char)str[*offset];
 	}
 	if(*cur_len >= 2) {
 		output = output << 8;
-		output |= ((unsigned char)msg->str[*offset+1]) & 0xFF;
+		output |= ((unsigned char)str[*offset+1]) & 0xFF;
 	}
 	if(*cur_len >= 3) {
 		output = output << 8;
-		output |= ((unsigned char)msg->str[*offset+2]) & 0xFF;
+		output |= ((unsigned char)str[*offset+2]) & 0xFF;
 	}
 	if(*cur_len == 4) {
 		output = output << 8;
-		output |= ((unsigned char)msg->str[*offset+3]) & 0xFF;
+		output |= ((unsigned char)str[*offset+3]) & 0xFF;
 	}
 	return output;
 }
 
 static int msg_string_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aroop_txt_t*output) {
 	SYNC_ASSERT(*cur_type == 1); // we expect string value
-	int cmd = 0;
-	if(*cur_len > 0) {
-		output->str = msg->str+*offset;
-	} else {
-		output->str = NULL;
+	char*str = aroop_txt_to_string(msg);
+	if(*cur_len == 0) {
+		aroop_txt_destroy(output);
+		return 0;
 	}
-	output->len = *cur_len;
-	output->size = *cur_len;
-	output->proto = NULL;
+	aroop_txt_embeded_copy_on_demand(output,msg);
+	aroop_txt_shift(output, *cur_len);
 	return 0;
 }
 
 static int msg_binary_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aroop_txt_t*output) {
-	SYNC_ASSERT(*cur_type == 1); // we expect string value
-	int cmd = 0;
-	if(*cur_len > 0) {
-		output->str = msg->str+*offset;
-	} else {
-		output->str = NULL;
+	SYNC_ASSERT(*cur_type == 2); // we expect binary value
+	char*str = aroop_txt_to_string(msg);
+	if(*cur_len == 0) {
+		aroop_txt_destroy(output);
+		return 0;
 	}
-	output->len = *cur_len;
-	output->size = *cur_len;
-	output->proto = NULL;
+	aroop_txt_embeded_copy_on_demand(output,msg);
+	aroop_txt_shift(output, *cur_len);
 	return 0;
 }
 
 static int msg_enqueue(int key, int type, int argc, ...) {
-	aroop_txt_t*msg = aroop_txt_new(NULL, 64, NULL, 0);
+	aroop_txt_t*msg = aroop_txt_new_alloc(64, NULL);
 	msg->len = 0;
 	msg_write_int(msg, key, type);
 	va_list a_list;

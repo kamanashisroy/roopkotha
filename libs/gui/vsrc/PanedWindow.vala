@@ -38,7 +38,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 			if(layer < Window.layer.CONTENT_PANE) {
 				continue;
 			}
-			unowned Pane pn = ptr.get();
+			unowned Pane pn = ptr.getUnowned();
 			Watchdog.logString(core.sourceFileName(), core.sourceLineNo(), 3, "resize content()\n");
 			pn.onResize( 0, contentTop, w, h - contentTop - contentBottom, PADDING);
 		}
@@ -102,7 +102,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		getPaneIterator(&it, Replica_flags.ALL, 0);
 		while(it.next()) {
 			unowned AroopPointer<Pane> ptr = it.get_unowned();
-			unowned Pane pn = ptr.get();
+			unowned Pane pn = ptr.getUnowned();
 			if(pn.isDirty()) {
 				Graphics g = pn.getGraphics();
 				g.start(this, (int)ptr.get_hash());

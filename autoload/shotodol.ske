@@ -9,3 +9,4 @@ onLoad:
 	module -load guiapps/velapad/dynalib.so
 	rehash
 	velalynx -i velapp/welcome.txt
+	profile

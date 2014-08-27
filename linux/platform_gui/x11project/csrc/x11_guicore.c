@@ -248,13 +248,10 @@ int platform_impl_push_task(PlatformRoopkothaGUICore*UNUSED_VAR(nothing), aroop_
 	return 0;
 }
 
-int platform_impl_pop_task_as(PlatformRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*UNUSED_VAR(msg)) {
+int platform_impl_pop_task_as(PlatformRoopkothaGUICore*UNUSED_VAR(nothing), aroop_txt_t*msg) {
 	aroop_txt_t*outmsg = (aroop_txt_t*)opp_dequeue(&gcore.outgoing);
 	if(!outmsg) return 0;
-	msg->str = outmsg->str;
-	msg->len = outmsg->len;
-	msg->hash = outmsg->hash;
-	msg->proto = OPPREF(outmsg);
+	aroop_txt_embeded_copy_on_demand(msg, outmsg);
 	aroop_object_unref(aroop_txt_t*,0,outmsg);
 	return 0;
 }

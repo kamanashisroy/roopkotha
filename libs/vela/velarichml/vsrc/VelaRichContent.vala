@@ -38,9 +38,9 @@ public class roopkotha.velarichml.VelaRichContent : roopkotha.vela.FormattedCont
 		base(asciiData);
 		parser = new XMLParser();
 		map = WordMap();
-		map.kernel.buffer(asciiData.length());
+		map.kernel.rebuild_in_heap(asciiData.length());
 		map.source = extring.copy_on_demand(asciiData);
-		map.map.buffer(asciiData.length());
+		map.map.rebuild_in_heap(asciiData.length());
 		parser.transform(&map);
 		//print("FormattedContent:%s\n", asciiData.to_string());
 	}

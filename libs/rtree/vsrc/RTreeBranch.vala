@@ -55,7 +55,7 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 			child.branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 			while(it.next()) {
 				AroopPointer<RTreeBranch> can = it.get();
-				RTreeBranch b = can.get();
+				unowned RTreeBranch b = can.getUnowned();
 				if(b.rect.overlaps(r)) {
 					hitCount += b.search(r, shcb);
 				}
@@ -68,7 +68,7 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 			child.branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 			while(it.next()) {
 				AroopPointer<RTreeBranch> can = it.get();
-				RTreeBranch b = can.get();
+				unowned RTreeBranch b = can.getUnowned();
 				if(b.rect.overlaps(r)) {
 					hitCount ++;
 					if(shcb != null)// call the user-provided callback

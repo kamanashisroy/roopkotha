@@ -36,7 +36,7 @@ public struct roopkotha.rtree.RTreeNode {
 		branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 		while(it.next()) {
 			AroopPointer<RTreeBranch> can = it.get();
-			RTreeBranch b = can.get();
+			unowned RTreeBranch b = can.getUnowned();
 			if (first_time) {
 				cvr.copyFrom(&b.rect);
 				first_time = false;
@@ -67,7 +67,7 @@ public struct roopkotha.rtree.RTreeNode {
 		branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 		while(it.next()) {
 			AroopPointer<RTreeBranch> can = it.get();
-			RTreeBranch b = can.get();
+			unowned RTreeBranch b = can.getUnowned();
 			area = b.rect.sphericalVolume();
 			tmp_rect.copyFrom(r);
 			tmp_rect.combine(&b.rect);

@@ -62,9 +62,9 @@ public class roopkotha.velawidget.VelaVeil : Replicable {
 		}
 		extring key = extring.stack(128);
 		extring href = extring();
-		href.buffer(128);
+		href.rebuild_in_heap(128);
 		extring label = extring();
-		label.buffer(32);
+		label.rebuild_in_heap(32);
 		extring attrKey = extring();
 		extring attrVal = extring();
 		while(xit.nextAttr(&attrKey, &attrVal)) {
@@ -100,9 +100,9 @@ public class roopkotha.velawidget.VelaVeil : Replicable {
 		onubodh.XMLParser parser = new onubodh.XMLParser();
 		onubodh.WordMap map = onubodh.WordMap();
 		// parse the xml and show the menu
-		map.kernel.buffer(menuML.length());
+		map.kernel.rebuild_in_heap(menuML.length());
 		map.source = extring.copy_on_demand(menuML);
-		map.map.buffer(menuML.length());
+		map.map.rebuild_in_heap(menuML.length());
 		parser.transform(&map);
 
 		page.resetMenu();

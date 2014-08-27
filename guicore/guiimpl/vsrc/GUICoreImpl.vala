@@ -81,7 +81,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 				break;
 
 			Bundler bndlr = Bundler();
-			bndlr.buildFromEXtring(&task);
+			bndlr.build_extring_reader(&task);
 			int key = 0;
 			try {
 				while((key = bndlr.next()) >= 0) {

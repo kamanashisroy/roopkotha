@@ -48,7 +48,7 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 	public void tryReading() {
 		rawData.destroy();
 		// TODO get the file size and allocate memory accordingly
-		rawData.buffer(config.MAX_DIV_SIZE<<2);
+		rawData.rebuild_in_heap(config.MAX_DIV_SIZE<<2);
 		do {
 			extring data = extring.stack(config.MAX_DIV_SIZE);
 			core.assert(instrm != null);
@@ -74,7 +74,7 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 		}
 		extring key = extring.stack(config.MAX_DIV_SIZE);
 		extring href = extring();
-		href.buffer(config.MAX_DIV_SIZE);
+		href.rebuild_in_heap(config.MAX_DIV_SIZE);
 		extring attrKey = extring();
 		extring attrVal = extring();
 		while(xit.nextAttr(&attrKey, &attrVal)) {
@@ -118,9 +118,9 @@ public class roopkotha.veladivml.VelaDivDocument : roopkotha.doc.RoopDocument {
 		if(rawContent == null) {
 			rawContent = &rawData;
 		}
-		map.kernel.buffer(rawContent.length());
+		map.kernel.rebuild_in_heap(rawContent.length());
 		map.source = extring.copy_on_demand(rawContent);
-		map.map.buffer(rawContent.length());
+		map.map.rebuild_in_heap(rawContent.length());
 		parser.transform(&map);
 
 		// traverse

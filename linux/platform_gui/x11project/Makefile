@@ -17,7 +17,7 @@ TARGET=x11_impl.o
 
 all:$(TARGET)
 
-x11_impl.o:src/x11_guicore.c
+x11_impl.o:csrc/x11_guicore.c
 	$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
 
 clean:

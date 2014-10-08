@@ -20,7 +20,7 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 	//WebEventListener el;
 	//WebActionListener al;
 	ArrayList<xtring>stack;
-	ArrayList<onubodh.RawImage> images;
+	ArrayList<shotodol_media.RawImage> images;
 	bool isLoadingPage;
 	bool isGoingBack;
 	xtring?currentUrl;
@@ -34,7 +34,7 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 		VELA = new xtring.set_static_string("Vela");
 		content = null;
 		stack = ArrayList<xtring>(4);
-		images = ArrayList<onubodh.RawImage>(4);
+		images = ArrayList<shotodol_media.RawImage>(4);
 		isLoadingPage = false;
 		isGoingBack= false;
 		baseUrl = null;
@@ -90,7 +90,7 @@ public class roopkotha.velagent.VelaRebound : Replicable {
 		velaxecute(target, false);
 	}
 
-	onubodh.RawImage?getImage(extring*imgAddr) {
+	shotodol_media.RawImage?getImage(extring*imgAddr) {
 		// TODO fill me
 		return null;
 	}

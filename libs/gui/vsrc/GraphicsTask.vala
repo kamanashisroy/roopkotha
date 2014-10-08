@@ -48,10 +48,10 @@ public class roopkotha.gui.GraphicsTask : Graphics {
 		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "task.size", (int)task.size);
 		GraphicsTask.Full(&task.msg, (int)task.size);
 	}
-	public override void drawImage(onubodh.RawImage img, int x, int y, int anc) {
+	public override void drawImage(shotodol_media.RawImage img, int x, int y, int anc) {
 		try {
 		bndlr.writeInt(GUICore.entries.GRAPHICS_TASK, tasks.DRAW_IMAGE);
-		bndlr.writeBin(GUICore.entries.ARG, img.rawData, img.width*img.height*((img.type == onubodh.RawImage.RawImageType.PGM)?1:3));
+		bndlr.writeBin(GUICore.entries.ARG, img.rawData, img.width*img.height*((img.type == shotodol_media.RawImage.RawImageType.PGM)?1:3));
 		bndlr.writeInt(GUICore.entries.ARG, x);
 		bndlr.writeInt(GUICore.entries.ARG, y);
 		bndlr.writeInt(GUICore.entries.ARG, anc);

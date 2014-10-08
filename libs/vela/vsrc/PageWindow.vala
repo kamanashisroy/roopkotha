@@ -33,7 +33,7 @@ using roopkotha.vela;
  * [-Maturity- 20]
  */
 public delegate void roopkotha.vela.PageEventCB(extring*action);
-public delegate onubodh.RawImage? roopkotha.vela.GetImageCB(extring*imgAddr);
+public delegate shotodol_media.RawImage? roopkotha.vela.GetImageCB(extring*imgAddr);
 
 public class roopkotha.vela.PageWindow : roopkotha.vela.PageMenuLoader {
 	PageEventCB?pageEventCB;

@@ -60,7 +60,7 @@ public abstract class roopkotha.gui.Graphics : Replicable {
 	void drawChar(char character, int x, int y, int anc);
 	void drawChars(aroop.xtring data, int offset, int length, int x, int y, int anc);
 #endif
-	public abstract void drawImage(onubodh.RawImage img, int x, int y, int anc);
+	public abstract void drawImage(shotodol_media.RawImage img, int x, int y, int anc);
 	public abstract void drawLine(int x1, int y1, int x2, int y2);
 	public abstract void drawRect(int x, int y, int width, int height);
 #if 0

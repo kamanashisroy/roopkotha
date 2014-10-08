@@ -14,7 +14,7 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 	protected bool is_radio;
 	protected bool wrapped;
 	protected bool truncate_text_to_fit_width;
-	protected onubodh.RawImage? img;
+	protected shotodol_media.RawImage? img;
 	public roopkotha.gui.Font? ITEM_FONT;
 	public int FONT_HEIGHT;
 	public ListViewItemComplex.common() {
@@ -281,11 +281,11 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 		return ((key_code >= 0x20) && (key_code <= 0x7E));
 	}
 	
-	public ListViewItemComplex.createLabel(extring*aLabel, onubodh.RawImage*aImg) {
+	public ListViewItemComplex.createLabel(extring*aLabel, shotodol_media.RawImage*aImg) {
 		ListViewItemComplex.createLabelFull(aLabel, aImg, true, false, null);
 	}
 
-	public ListViewItemComplex.createLabelFull(extring*aLabel, onubodh.RawImage*aImg
+	public ListViewItemComplex.createLabelFull(extring*aLabel, shotodol_media.RawImage*aImg
 			, bool aChange_bg_on_focus, bool aTruncate_text_to_fit_width, EventOwner?aTarget) {
 		ListViewItemComplex.common();
 		label = extring.copy_on_demand(aLabel);

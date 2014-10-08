@@ -8,7 +8,7 @@ using roopkotha.vela;
 /** \addtogroup vela
  *  @{
  */
-public delegate onubodh.RawImage roopkotha.vela.MediaLoader(extring*src);
+public delegate shotodol_media.RawImage roopkotha.vela.MediaLoader(extring*src);
 public class roopkotha.vela.FormattedListViewItem : ListViewItem {
 	/**
 	 * y-coordinate position of the image

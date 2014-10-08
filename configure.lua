@@ -47,6 +47,8 @@ local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","aroop")
 configLines["VALA_HOME"] = prompt("Aroop path " .. ahome .. " > ", ahome)
 local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol")
 configLines["SHOTODOL_HOME"] = prompt("Shotodol path " .. ahome .. " > ", ahome)
+local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol_media")
+configLines["SHOTODOL_MEDIA_HOME"] = prompt("Onubodh path " .. ahome .. " > ", ahome)
 local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","onubodh")
 configLines["ONUBODH_HOME"] = prompt("Onubodh path " .. ahome .. " > ", ahome)
 configLines["CFLAGS+"] = ""
@@ -62,7 +64,13 @@ local shotodol_config = infile:read("*a")
 infile:close()
 conf:write(shotodol_config);
 
--- import onubodh symbols
+-- import shotodol_media symbols
+infile = assert(io.open(configLines["SHOTODOL_MEDIA_HOME"] .. "/build/.config.mk", "r"))
+local shotodol_media_config = infile:read("*a")
+infile:close()
+conf:write(shotodol_media_config);
+
+-- import shotodol_media symbols
 infile = assert(io.open(configLines["ONUBODH_HOME"] .. "/build/.config.mk", "r"))
 local onubodh_config = infile:read("*a")
 infile:close()

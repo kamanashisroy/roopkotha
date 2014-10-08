@@ -26,7 +26,7 @@ public abstract class roopkotha.doc.AugmentedContent : Replicable {
 	}
 	public virtual void getTextAs(extring*data) {
 	}
-	public virtual onubodh.RawImage?getImage() {
+	public virtual shotodol_media.RawImage?getImage() {
 		// TODO fill me
 		//Image img = null;
 		//String src = elem.getAttributeValue("src");

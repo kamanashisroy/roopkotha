@@ -10,7 +10,7 @@ You need to get the following project sources,
 
 - [aroop](https://github.com/kamanashisroy/aroop)
 - [shotodol](https://github.com/kamanashisroy/shotodol)
-- [onubodh](https://github.com/kamanashisroy/onubodh)
+- [shotodol\_media](https://github.com/kamanashisroy/shotodol_media)
 - [roopkotha](https://github.com/kamanashisroy/roopkotha)
 
 
@@ -21,18 +21,18 @@ You need to get compressed(tar.gz/zip) distribution from the servers(for example
 
 You need to create a project directory for all the associated projects. Then you need to decompress the projects in this directory.
 
-Suppose you are in _'a'_ directory. Then you need to decompress _aroop_,_shotodol_,_onubodh_,_roopkotha_ in _'a'_ directory. If you are in linux, then putting _'ls'_ command in shell looks like this,
+Suppose you are in _'a'_ directory. Then you need to decompress _aroop_,_shotodol_,_shotodol\_media_,_roopkotha_ in _'a'_ directory. If you are in linux, then putting _'ls'_ command in shell looks like this,
 
 ```
  a$ ls 
- aroop shotodol onubodh roopkotha . .. 
+ aroop shotodol shotodol_media roopkotha . .. 
 ```
 
 
 How to configure
 ===============
 
-Now you need to build the projects sequentially. Please see the readme in aroop, shotodol and onubodh to build them.
+Now you need to build the projects sequentially. Please see the readme in aroop, shotodol and shotodol\_media to build them.
 
 To build roopkotha, you need to configure and generate the makefiles. To do that you need [lua](http://www.lua.org/). And if you have filesystems module in lua then it would be easy. You need to execute the configure.lua script, like the following,
 
@@ -46,7 +46,7 @@ And you will get the output like the following,
 Project path /a/roopkotha > 
 Aroop path /a/aroop > 
 Shotodol path /a/shotodol > 
-Onubodh path /a/onubodh > 
+Shotodol Media path /a/shotodol_media > 
 enable bluetooth ?(y/n) > n
 enable debug (ggdb3) ?(y/n) > y
 enable GUI debug ?(y/n) > n

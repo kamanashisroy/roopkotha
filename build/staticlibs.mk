@@ -1,5 +1,5 @@
 
-PROJECT_OBJDIR=$(ROOPKOTHA_HOME)/build/.objects/
+PROJECT_OBJDIR=$(ROOPKOTHA_HOME)$(OBJDIR_COMMON)/
 #LIBS+=-lm
 include $(ROOPKOTHA_HOME)/$(PLATFORM)/platform_gui/staticlibs.mk
 include $(ROOPKOTHA_HOME)/libs/gui/staticlibs.mk

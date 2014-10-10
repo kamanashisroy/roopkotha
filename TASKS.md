@@ -19,3 +19,4 @@ Roadmap
 - [ ] Compile and distribute for different platforms.
 - [x] Remove the generated architecture svg file.
 - [ ] Write a document to go from anjuta to roopkotha( I mean a copy of anjuta in roopkotha way) .
+- [x] Create separate projects named roopkotha_vela, roopkotha_editor etc. 

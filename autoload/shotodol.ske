@@ -3,10 +3,5 @@ onLoad:
 	module -load ../shotodol/core/script/dynalib.so
 	rehash
 	module -load guicore/guiimpl/dynalib.so
-	module -load guiapps/velashake/dynalib.so
-	module -load guiapps/filecommands/dynalib.so
-	module -load guiapps/historycommands/dynalib.so
-	module -load guiapps/velapad/dynalib.so
 	rehash
-	velalynx -i velapp/welcome.txt
 	profile

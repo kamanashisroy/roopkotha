@@ -1,6 +1,0 @@
-vapi/*.vapi
-include/*.h
-vsrc/*.c
-dynalib.so
-static_objects.a
-

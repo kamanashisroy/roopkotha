@@ -49,8 +49,8 @@ local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol")
 configLines["SHOTODOL_HOME"] = prompt("Shotodol path " .. ahome .. " > ", ahome)
 local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol_media")
 configLines["SHOTODOL_MEDIA_HOME"] = prompt("Onubodh path " .. ahome .. " > ", ahome)
-local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","onubodh")
-configLines["ONUBODH_HOME"] = prompt("Onubodh path " .. ahome .. " > ", ahome)
+-- local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","onubodh")
+-- configLines["ONUBODH_HOME"] = prompt("Onubodh path " .. ahome .. " > ", ahome)
 configLines["CFLAGS+"] = ""
 if yes_no_to_bool(prompt_yes_no("enable GUI debug ?(y/n) > ")) then
 	configLines["VALAFLAGS+"] = " -D GUI_DEBUG"
@@ -70,11 +70,11 @@ local shotodol_media_config = infile:read("*a")
 infile:close()
 conf:write(shotodol_media_config);
 
--- import shotodol_media symbols
-infile = assert(io.open(configLines["ONUBODH_HOME"] .. "/build/.config.mk", "r"))
-local onubodh_config = infile:read("*a")
-infile:close()
-conf:write(onubodh_config);
+-- import onubodh symbols
+-- infile = assert(io.open(configLines["ONUBODH_HOME"] .. "/build/.config.mk", "r"))
+-- local onubodh_config = infile:read("*a")
+-- infile:close()
+-- conf:write(onubodh_config);
 
 for x in pairs(configLines) do
 	local op = configOps[x]

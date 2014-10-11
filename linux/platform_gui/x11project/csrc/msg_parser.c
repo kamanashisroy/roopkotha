@@ -60,25 +60,30 @@ unsigned int msg_numeric_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cu
 
 static int msg_string_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aroop_txt_t*output) {
 	SYNC_ASSERT(*cur_type == 1); // we expect string value
-	char*str = aroop_txt_to_string(msg);
 	if(*cur_len == 0) {
 		aroop_txt_destroy(output);
 		return 0;
 	}
 	aroop_txt_embeded_copy_on_demand(output,msg);
-	aroop_txt_shift(output, *cur_len);
+	aroop_txt_shift(output, *offset);
+	char*str = aroop_txt_to_string(msg);
+	if(str != NULL && str[*cur_len-1] == '\0') {
+		aroop_txt_set_length(output, *cur_len - 1);
+	} else {
+		aroop_txt_set_length(output, *cur_len);
+	}
 	return 0;
 }
 
 static int msg_binary_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_len, aroop_txt_t*output) {
 	SYNC_ASSERT(*cur_type == 2); // we expect binary value
-	char*str = aroop_txt_to_string(msg);
 	if(*cur_len == 0) {
 		aroop_txt_destroy(output);
 		return 0;
 	}
 	aroop_txt_embeded_copy_on_demand(output,msg);
-	aroop_txt_shift(output, *cur_len);
+	aroop_txt_shift(output, *offset);
+	aroop_txt_set_length(output, *cur_len);
 	return 0;
 }
 

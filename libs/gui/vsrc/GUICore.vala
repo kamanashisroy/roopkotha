@@ -33,6 +33,12 @@ public abstract class roopkotha.gui.GUICore : Spindle {
 		GRAPHICS_TASK = 1,
 		WINDOW_TASK,
 		ARG,
+		MISC_TASK,
+	}
+	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_MISC_TASK_")]
+	public enum MiscTasks {
+		ECHO_MESSAGE = 1,
+		ALERT,
 	}
 	public GUICore() {
 		painter = Queue<Window>();

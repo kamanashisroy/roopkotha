@@ -4,3 +4,4 @@ OS_PLATFORM/platform_gui
 OS_PLATFORM/platform_gui/x11project
 libs/rtree
 guicore/guiimpl
+guiapps/guitest

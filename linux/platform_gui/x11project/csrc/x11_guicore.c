@@ -83,6 +83,7 @@ int platform_impl_guicore_destroy(PlatformRoopkothaGUICore*UNUSED_VAR(nothing)) 
 #include "msg_parser.c"
 #include "x11_graphics.c"
 #include "x11_window.c"
+#include "x11_misc.c"
 static int repaint_x11() {
 	int i = 0;
 	for(i = 0; i < 24; i++) {
@@ -221,6 +222,9 @@ static int perform_task() {
 				break;
 			case ENUM_ROOPKOTHA_GUI_CORE_TASK_GRAPHICS_TASK:
 				perform_graphics_task(msg, &offset, &cur_key, &cur_type, &cur_len, &win);
+				break;
+			case ENUM_ROOPKOTHA_GUI_CORE_TASK_MISC_TASK:
+				perform_misc_task(msg, &offset, &cur_key, &cur_type, &cur_len);
 				break;
 			default:
 				break;

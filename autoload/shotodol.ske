@@ -3,5 +3,6 @@ onLoad:
 	module -load ../shotodol/core/script/dynalib.so
 	rehash
 	module -load guicore/guiimpl/dynalib.so
+	module -load guiapps/guitest/dynalib.so
 	rehash
-	profile
+	unit -t gui

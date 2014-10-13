@@ -66,8 +66,8 @@ static int msg_string_value(aroop_txt_t*msg, int*offset, int*cur_type, int*cur_l
 	}
 	aroop_txt_embeded_copy_on_demand(output,msg);
 	aroop_txt_shift(output, *offset);
-	char*str = aroop_txt_to_string(msg);
-	if(str != NULL && str[*cur_len-1] == '\0') {
+	char*str = aroop_txt_to_string(output);
+	if(str != NULL && str[(*cur_len)-1] == '\0') {
 		aroop_txt_set_length(output, *cur_len - 1);
 	} else {
 		aroop_txt_set_length(output, *cur_len);

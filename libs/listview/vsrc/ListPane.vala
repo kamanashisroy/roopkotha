@@ -182,7 +182,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 	}
 
 	public override roopkotha.gui.Graphics getGraphics() {
-		if(gfx != null)
+		if(gfx != null && !gfx.isUsed())
 			return gfx;
 		Renu task = GUICoreModule.renuBuilder.createRenu(1024);
 		gfx = new GraphicsTask.fromTask(task);

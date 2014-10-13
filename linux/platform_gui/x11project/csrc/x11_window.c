@@ -1,7 +1,8 @@
 
 
 static x11_window_t*create_window(Display*disp, Window root, int wid) {
-	x11_window_t*win = (x11_window_t*)opp_str2_alloc(sizeof(x11_window_t));
+	x11_window_t*win = NULL;
+	opp_str2_alloc2((char**)&win,sizeof(x11_window_t));
 	win->black_pixel = WhitePixel (gcore.disp, gcore.scrn);
  	win->white_pixel = BlackPixel (gcore.disp, gcore.scrn);
 	win->title = "great";

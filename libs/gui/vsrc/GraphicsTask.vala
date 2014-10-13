@@ -162,6 +162,9 @@ public class roopkotha.gui.GraphicsTask : Graphics {
 		task.finalize(&bndlr);
 		finalized = true;
 	}
+	public bool isUsed() {
+		return finalized;
+	}
 }
 
 /** @} */

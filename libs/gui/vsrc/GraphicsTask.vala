@@ -32,7 +32,7 @@ using roopkotha.gui;
 public class roopkotha.gui.GraphicsTask : Graphics {
 	Bundler bndlr;
 	int currentColor;
-	public Renu?task;
+	public Bag?task;
 	bool finalized;
 	int size;
 	GraphicsTask.Full(Carton*ctn, int gSize) {
@@ -42,7 +42,7 @@ public class roopkotha.gui.GraphicsTask : Graphics {
 		currentColor = 1;
 		finalized = false;
 	}
-	public GraphicsTask.fromTask(Renu gTask) {
+	public GraphicsTask.fromTask(Bag gTask) {
 		// allocate memory from factory
 		task = gTask;
 		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "task.size", (int)task.size);

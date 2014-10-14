@@ -13,7 +13,7 @@ internal class roopkotha.app.GUITest : UnitTest {
   }
   public override int test() throws UnitTestError {
 	print("GUITest:Sending an echo message\n");
-	Renu echoTask = GUICoreModule.renuBuilder.createRenu(32);
+	Bag echoTask = GUICoreModule.bagBuilder.createBag(32);
 	Bundler bndlr = Bundler();
 	bndlr.buildFromCarton(&echoTask.msg, 32);
 	bndlr.writeInt(GUICore.entries.MISC_TASK, GUICore.MiscTasks.ECHO_MESSAGE);

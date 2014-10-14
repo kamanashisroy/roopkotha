@@ -68,7 +68,7 @@ public class roopkotha.gui.TitlePane : roopkotha.gui.Pane {
 	public override roopkotha.gui.Graphics getGraphics() {
 		if(gfx != null && !gfx.isUsed())
 			return gfx;
-		Renu task = GUICoreModule.renuBuilder.createRenu(128);
+		Bag task = GUICoreModule.bagBuilder.createBag(128);
 		gfx = new GraphicsTask.fromTask(task);
 		return gfx;
 	}

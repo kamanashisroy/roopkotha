@@ -30,22 +30,22 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		return x;
 	}
 
-	public int performWindowTask(Bundler*bndlr) {
-		aroop_uword32 cmd = bndlr.getIntContent();
+	public int performWindowTask(Unbundler*ubndlr) {
+		aroop_uword32 cmd = ubndlr.getIntContent();
 		switch(cmd) {
 		case Window.tasks.RESIZE:
 		{
 			// get the arguments ..
 			try {
-			int key = bndlr.next();
+			int key = ubndlr.next();
 			core.assert(key == entries.ARG);
-			aroop_uword32 wid = bndlr.getIntContent();
-			key = bndlr.next();
+			aroop_uword32 wid = ubndlr.getIntContent();
+			key = ubndlr.next();
 			core.assert(key == entries.ARG);
-			aroop_uword32 w = bndlr.getIntContent();
-			key = bndlr.next();
+			aroop_uword32 w = ubndlr.getIntContent();
+			key = ubndlr.next();
 			core.assert(key == entries.ARG);
-			aroop_uword32 h = bndlr.getIntContent();
+			aroop_uword32 h = ubndlr.getIntContent();
 			Window?win = windows.get((int)wid);
 			if(win != null)win.onResize((int)w,(int)h);
 			} catch(BundlerError excp) {}
@@ -55,15 +55,15 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		{
 			// get the arguments ..
 			try {
-			int key = bndlr.next();
+			int key = ubndlr.next();
 			core.assert(key == entries.ARG);
-			aroop_uword32 wid = bndlr.getIntContent();
-			key = bndlr.next();
+			aroop_uword32 wid = ubndlr.getIntContent();
+			key = ubndlr.next();
 			core.assert(key == entries.ARG);
-			aroop_uword32 keycode = bndlr.getIntContent();
-			key = bndlr.next();
+			aroop_uword32 keycode = ubndlr.getIntContent();
+			key = ubndlr.next();
 			core.assert(key == entries.ARG);
-			aroop_uword32 shiftcode = bndlr.getIntContent();
+			aroop_uword32 shiftcode = ubndlr.getIntContent();
 			Window?win = windows.get((int)wid);
 			if(win != null)win.onEvent(null, GUIInput.eventType.KEYBOARD_EVENT, (int)keycode, (int)shiftcode, 0);
 			} catch(BundlerError excp) {}
@@ -80,14 +80,14 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			if(task.is_empty())
 				break;
 
-			Bundler bndlr = Bundler();
-			bndlr.build_extring_reader(&task);
+			Unbundler ubndlr = Unbundler();
+			ubndlr.build(&task);
 			int key = 0;
 			try {
-				while((key = bndlr.next()) >= 0) {
+				while((key = ubndlr.next()) >= 0) {
 					switch(key) {
 						case entries.WINDOW_TASK:
-							performWindowTask(&bndlr);
+							performWindowTask(&ubndlr);
 						break;
 					}
 				}

@@ -128,7 +128,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		GraphicsTask gfx = (GraphicsTask)(g);
 		gfx.finalize();
 		extring task = extring();
-		gfx.task.getTaskAs(&task);
+		gfx.task.getContentAs(&task);
 		Watchdog.logInt(core.sourceFileName(), core.sourceLineNo(), 10, "Graphics task size", task.length());
 		if(task.length() > 0)
 			plat.pushTask(&task);

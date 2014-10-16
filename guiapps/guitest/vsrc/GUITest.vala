@@ -21,7 +21,7 @@ internal class roopkotha.app.GUITest : UnitTest {
 	bndlr.writeEXtring(GUICore.entries.ARG, &msg);
 	echoTask.finalize(&bndlr);
 	extring task = extring();
-	echoTask.getTaskAs(&task);
+	echoTask.getContentAs(&task);
 	GUICoreModule.gcore.pushTask(&task);
 	return 0;
   }

@@ -68,7 +68,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		bndlr.writeInt(GUICore.entries.ARG, getWindowToken());
 		showTask.finalize(&bndlr);
 		extring task = extring();
-		showTask.getTaskAs(&task);
+		showTask.getContentAs(&task);
 		GUICoreModule.gcore.pushTask(&task);
 		setDirty();
 	}

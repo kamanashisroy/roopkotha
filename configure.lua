@@ -47,6 +47,8 @@ local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","aroop")
 configLines["VALA_HOME"] = prompt("Aroop path " .. ahome .. " > ", ahome)
 local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol")
 configLines["SHOTODOL_HOME"] = prompt("Shotodol path " .. ahome .. " > ", ahome)
+local shoto_script_home = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol_script")
+configLines["SHOTODOL_SCRIPT_HOME"] = prompt("Shotodol script path " .. shoto_script_home .. " > ", shoto_script_home)
 local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","shotodol_media")
 configLines["SHOTODOL_MEDIA_HOME"] = prompt("Onubodh path " .. ahome .. " > ", ahome)
 -- local ahome = string.gsub(configLines["PROJECT_HOME"],"roopkotha$","onubodh")
@@ -63,6 +65,12 @@ local infile = assert(io.open(configLines["SHOTODOL_HOME"] .. "/build/.config.mk
 local shotodol_config = infile:read("*a")
 infile:close()
 conf:write(shotodol_config);
+
+-- import shotodol_script symbols
+infile = assert(io.open(configLines["SHOTODOL_SCRIPT_HOME"] .. "/build/.config.mk", "r"))
+local shotodol_script_config = infile:read("*a")
+infile:close()
+conf:write(shotodol_script_config);
 
 -- import shotodol_media symbols
 infile = assert(io.open(configLines["SHOTODOL_MEDIA_HOME"] .. "/build/.config.mk", "r"))

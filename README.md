@@ -10,6 +10,7 @@ You need to get the following project sources,
 
 - [aroop](https://github.com/kamanashisroy/aroop)
 - [shotodol](https://github.com/kamanashisroy/shotodol)
+- [shotodol\_script](https://github.com/kamanashisroy/shotodol_script)
 - [shotodol\_media](https://github.com/kamanashisroy/shotodol_media)
 - [roopkotha](https://github.com/kamanashisroy/roopkotha)
 

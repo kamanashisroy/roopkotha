@@ -25,7 +25,7 @@ using roopkotha.gui;
 /** \addtogroup gui
  *  @{
  */
-public abstract class roopkotha.gui.GUICore : Spindle {
+public abstract class roopkotha.gui.GUICore : Fiber {
 	protected Queue<Window> painter;
 	GUIInput gin;
 	[CCode (lower_case_cprefix = "ENUM_ROOPKOTHA_GUI_CORE_TASK_")]

@@ -114,7 +114,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 		return 0;
 	}
 
-	public override int start(shotodol.Spindle?plr) { 
+	public override int start(shotodol.Fiber?plr) { 
 		print("GUICore stepping started..\n");
 		return 0;
 	}

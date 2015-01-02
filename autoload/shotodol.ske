@@ -1,6 +1,6 @@
 
 onLoad:
-	module -load ../shotodol/core/script/dynalib.so
+	module -load ../shotodol_script/core/script/dynalib.so
 	rehash
 	module -load guicore/guiimpl/dynalib.so
 	module -load guiapps/guitest/dynalib.so

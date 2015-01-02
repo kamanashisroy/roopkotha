@@ -13,7 +13,7 @@ public class roopkotha.gui.GUICoreModuleImpl : DynamicModule {
 	}
 	public override int init() {
 		GUICoreImpl impl = new GUICoreImpl();
-		extring entry = extring.set_static_string("MainSpindle");
+		extring entry = extring.set_static_string("MainFiber");
 		Plugin.register(&entry, new AnyInterfaceExtension(impl, this));
 		entry.rebuild_and_set_static_string("gcore");
 		Plugin.register(&entry, new AnyInterfaceExtension(impl, this));

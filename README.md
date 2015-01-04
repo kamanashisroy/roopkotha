@@ -128,6 +128,7 @@ The primary design goal is **seperation of concern**.This project consists of mo
 
 [architecture](docs/architecture/architecture.dot)
 ![architecture](https://cloud.githubusercontent.com/assets/973414/3787425/0c4aaa00-1a18-11e4-9de6-70db3d9e7d31.jpg)
+![architecture](docs/diagrams/roopkotha_components.svg)
 
 ### Building doxygen documentation
 

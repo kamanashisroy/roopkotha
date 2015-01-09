@@ -24,3 +24,7 @@ Menu
 
 Menu works like [presentation-abstraction-control](http://en.wikipedia.org/wiki/Presentation-abstraction-control) architecture. The [Menu](vsrc/Menu.vala) is the presentation part. The [Window](vsrc/Window.vala) is control part (especially see the _showFull()_ method). And a menu markup in [velagent](../velagent/README.md) is the abstraction part(specifically in the _plugMenu(extring\*menuML)_ method). The presentation part in [InteractiveMenu](vsrc/InteractiveMenu.vala) has some extra activities.
 
+Architecture
+==============
+
+![architecture](../../docs/diagrams/roopkotha_gui.svg)

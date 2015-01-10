@@ -1,7 +1,7 @@
 GUI Core
 =========
 
-The core module responsible to build an interface for other modules to render gui application.
+The core module is responsible to build an interface for other modules to render gui application.
 
 Graphics
 ==========

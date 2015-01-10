@@ -126,9 +126,9 @@ The primary design goal is **seperation of concern**.This project consists of mo
 - GUI Modules are [command pattern](http://en.wikipedia.org/wiki/Command_Pattern) execution of events.
 	- History Command 
 
-[architecture](docs/architecture/architecture.dot)
-![architecture](https://cloud.githubusercontent.com/assets/973414/3787425/0c4aaa00-1a18-11e4-9de6-70db3d9e7d31.jpg)
-![architecture](docs/diagrams/roopkotha_components.svg)
+![architecture](https://cloud.githubusercontent.com/assets/973414/5692086/20e028d8-9910-11e4-8351-6f99417b66c8.jpg)
+![component diagram](docs/diagrams/roopkotha_components.svg)
+[old architecture](docs/architecture/architecture.dot)
 
 ### Building doxygen documentation
 

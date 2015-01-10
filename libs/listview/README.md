@@ -10,4 +10,12 @@ Note that the [ListPane](vsrc/ListPane.vala) viewing code directly accesses and 
 
 Readings
 =========
+
+
 [MVC vs PAC](http://www.garfieldtech.com/blog/mvc-vs-pac)
+
+
+Architecture
+==============
+
+![architecture](../../docs/diagrams/roopkotha_gui_listview.svg)

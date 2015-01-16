@@ -1,5 +1,5 @@
 libs/iostream
-libs/turbine
+libs/spinningwheel
 core/commands
 core/base
 core/test

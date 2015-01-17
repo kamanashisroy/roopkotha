@@ -36,6 +36,10 @@
      id="defs4148">
     <inkscape:path-effect
        effect="spiro"
+       id="path-effect17835"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
        id="path-effect5483"
        is_visible="true" />
     <inkscape:path-effect
@@ -436,9 +440,9 @@
      inkscape:window-height="750"
      id="namedview4146"
      showgrid="false"
-     inkscape:zoom="0.1336103"
-     inkscape:cx="-48.028118"
-     inkscape:cy="1818.8739"
+     inkscape:zoom="1.0688824"
+     inkscape:cx="1407.7201"
+     inkscape:cy="1141.6098"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -2224,40 +2228,33 @@ polygon {
        y="959.74579">1</tspan></text>
   <path
      style="opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.59322047;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
-     d="m 623.79136,753.9046 c -6.8963,4.4136 -13.7926,8.8273 -20.6889,13.2409 6.8963,4.4136 13.7926,8.8273 20.6889,13.2409 6.8963,-4.4136 13.7926,-8.8273 20.6889,-13.2409 -6.8963,-4.4136 -13.7926,-8.8273 -20.6889,-13.2409 z"
+     d="m 1131.7914,751.9046 c -6.8963,4.4136 -13.7926,8.8273 -20.6889,13.2409 6.8963,4.4136 13.7926,8.8273 20.6889,13.2409 6.8963,-4.4136 13.7926,-8.8273 20.6889,-13.2409 -6.8963,-4.4136 -13.7926,-8.8273 -20.6889,-13.2409 z"
      id="rect3727-1-3-8"
-     inkscape:connector-curvature="0" />
-  <path
-     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 641.89674,767.76738 512.68506,0"
-     id="path5379"
-     inkscape:path-effect="#path-effect5381"
-     inkscape:original-d="m 641.89674,767.76738 512.68506,0"
      inkscape:connector-curvature="0" />
   <text
      xml:space="preserve"
      style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-     x="611.95892"
-     y="728.474"
+     x="615.95892"
+     y="408.474"
      id="text5383"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan5385"
        style="stroke:#000000"
-       x="611.95892"
-       y="728.474">0..*</tspan></text>
+       x="615.95892"
+       y="408.474">0..*</tspan></text>
   <text
      xml:space="preserve"
      style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-     x="1124.3196"
-     y="794.09186"
+     x="1104.3196"
+     y="804.09186"
      id="text5387"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan5389"
        style="stroke:#000000"
-       x="1124.3196"
-       y="794.09186">1</tspan></text>
+       x="1104.3196"
+       y="804.09186">1</tspan></text>
   <path
      style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      d="m 1300.5286,891.26085 -284.4092,87.94233"
@@ -2279,15 +2276,15 @@ polygon {
        y="884.66174">1</tspan></text>
   <path
      style="opacity:0.98999999;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.59322047;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
-     d="m 1358.39,874.42084 c 4.4136,6.8963 8.8273,13.7926 13.2409,20.6889 4.4136,-6.8963 8.8273,-13.7926 13.2409,-20.6889 -4.4136,-6.8963 -8.8273,-13.7926 -13.2409,-20.6889 -4.4136,6.8963 -8.8273,13.7926 -13.2409,20.6889 z"
+     d="m 1358.39,1067.2422 c 4.4136,-6.8963 8.8273,-13.7926 13.2409,-20.6889 4.4136,6.8963 8.8273,13.7926 13.2409,20.6889 -4.4136,6.8963 -8.8273,13.7926 -13.2409,20.6889 -4.4136,-6.8963 -8.8273,-13.7926 -13.2409,-20.6889 z"
      id="rect3727-1-3-9-7"
      inkscape:connector-curvature="0" />
   <path
      style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 1371.6309,891.26085 0,196.46685"
+     d="m 1371.6309,1050.4022 0,-196.46687"
      id="path5481"
      inkscape:path-effect="#path-effect5483"
-     inkscape:original-d="m 1371.6309,891.26085 0,196.46685"
+     inkscape:original-d="m 1371.6309,1050.4022 0,-196.46687"
      inkscape:connector-curvature="0" />
   <g
      id="g5512"
@@ -2316,4 +2313,12 @@ polygon {
          id="tspan3436-0-5-8"
          sodipodi:role="line">roopkotha.gui.listview</tspan></text>
   </g>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 952.61534,663.69238 441.90767,335.56932"
+     id="path17833"
+     inkscape:path-effect="#path-effect17835"
+     inkscape:original-d="M 952.61534,663.69238 441.90767,335.56932"
+     inkscape:connector-curvature="0"
+     transform="translate(165,100)" />
 </svg>

@@ -129,7 +129,7 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 				//extring xt = extring.same_same(&text);
 				extring xt = extring.copy_shallow(&label);
 				xt.shift(start);
-				xt.trim_to_length(pos);
+				xt.truncate(pos);
 				//print("Label:%s:%s\n", label.to_string(), xt.to_string());
 				g.drawString(&xt
 						, x + imgspacing + ListViewItem.display.PADDING
@@ -165,7 +165,7 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 							- ListViewItem.display.DPADDING)) != -1 && lineCount < 3) {
 						extring xt = extring.copy_shallow(&text);
 						xt.shift(start);
-						xt.trim_to_length(pos);
+						xt.truncate(pos);
 						g.drawString(&xt, x + ListViewItem.display.PADDING, y
 								+ ret + ListViewItem.display.PADDING, 1000, width, Graphics.anchor.TOP | Graphics.anchor.LEFT);
 						ret += FONT_HEIGHT + ListViewItem.display.DPADDING;
@@ -187,7 +187,7 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 						- ListViewItem.display.DPADDING - imgWidth - ListViewItem.display.DPADDING);
 				if (pos != -1) {
 					extring xt = extring.copy_shallow(&text);
-					xt.trim_to_length(pos);
+					xt.truncate(pos);
 					g.drawString(&xt, x + labelWidth + ListViewItem.display.PADDING,
 							y + ListViewItem.display.PADDING, 1000, width, Graphics.anchor.TOP | Graphics.anchor.LEFT);
 					if (pos < text.length()) {
@@ -252,7 +252,7 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 				// handle special editing commands ..
 				if((key_code == 0x7f) || (key_code == 8)) { // backspace
 				  if(xt.length() > 0) {
-					xt.trim_to_length(xt.length()-1);
+					xt.truncate(xt.length()-1);
 				  }
 				  changed = true;
 				} else {

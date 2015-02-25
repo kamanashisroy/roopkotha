@@ -18,7 +18,7 @@ public class roopkotha.gui.GUICoreModule : Module {
 
 	public override int init() {
 		extring x = extring.set_static_string("rehash");
-		Plugin.register(&x, new HookExtension(rehashHook, this));
+		PluginManager.register(&x, new HookExtension(rehashHook, this));
 		rehashHook(null, null); // I do not know if it good, we are just trying to load all the existing extensions .
 		return 0;
 	}
@@ -27,11 +27,11 @@ public class roopkotha.gui.GUICoreModule : Module {
 		gcore = null;
 		bagBuilder = null;
 		extring ex = extring.set_static_string("gcore");
-		Plugin.acceptVisitor(&ex, (x) => {
+		PluginManager.acceptVisitor(&ex, (x) => {
 			gcore = (GUICore)x.getInterface(null);
 		});
 		ex.rebuild_and_set_static_string("bag/factory");
-		Plugin.acceptVisitor(&ex, (x) => {
+		PluginManager.acceptVisitor(&ex, (x) => {
 			bagBuilder = (BagFactory)x.getInterface(null);
 		});
 		return 0;

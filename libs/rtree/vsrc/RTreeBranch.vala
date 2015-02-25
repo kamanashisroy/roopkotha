@@ -51,7 +51,7 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 
 		if (child.level > 0) /* this is an internal node in the tree */
 		{
-			Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
+			Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>();
 			child.branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 			while(it.next()) {
 				AroopPointer<RTreeBranch> can = it.get();
@@ -64,7 +64,7 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 		}
 		else /* this is a leaf node */
 		{
-			Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
+			Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>();
 			child.branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 			while(it.next()) {
 				AroopPointer<RTreeBranch> can = it.get();

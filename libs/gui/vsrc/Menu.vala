@@ -207,7 +207,7 @@ public abstract class roopkotha.gui.Menu : roopkotha.gui.Pane {
 	void drawHint(roopkotha.gui.Graphics g) {
 		extring hint = extring();
 		extring hintex = extring.set_static_string("gui/window/menu/hint");
-		Plugin.swarm(&hintex, &path, &hint);
+		PluginManager.swarm(&hintex, &path, &hint);
 		if (!hint.is_empty() && !isActive()) {
 			g.setColor(style.getColor(StyleTarget.MENU_BG));
 			g.setFont(BASE_FONT);

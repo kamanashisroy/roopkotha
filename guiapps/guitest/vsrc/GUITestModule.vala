@@ -12,7 +12,7 @@ public class roopkotha.app.GUITestModule : DynamicModule {
 	}
 	public override int init() {
 		extring test = extring.set_static_string("unittest");
-		Plugin.register(&test, new AnyInterfaceExtension(new GUITest(), this));
+		PluginManager.register(&test, new AnyInterfaceExtension(new GUITest(), this));
 		return 0;
 	}
 

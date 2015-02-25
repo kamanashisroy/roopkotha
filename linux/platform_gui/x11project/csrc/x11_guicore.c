@@ -34,7 +34,7 @@
 #include "aroop/opp/opp_queue.h"
 #include "shotodol_gui.h"
 #include "shotodol_watchdog.h"
-#define watchdog_log_string(x) aroop_cl_shotodol_shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
+#define watchdog_log_string(x) shotodol_watchdog_logString(__FILE__, __LINE__, 10 , x)
 #include "x11_guicore.h"
 
 

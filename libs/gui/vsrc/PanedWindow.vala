@@ -30,7 +30,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 		titlePane.onResize(0, 0, w, h, PADDING);
 		int contentTop = titlePane.getVerticalSpanBottom();
 		int contentBottom = menu.getVerticalSpanTop();
-		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>.EMPTY();
+		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>();
 		getPaneIterator(&it, Replica_flags.ALL, 0);
 		while(it.next()) {
 			unowned AroopPointer<Pane> ptr = it.get_unowned();
@@ -99,7 +99,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 
 	public int process() {
 		dirty = false;
-		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>.EMPTY();
+		Iterator<AroopPointer<Pane>>it = Iterator<AroopPointer<Pane>>();
 		getPaneIterator(&it, Replica_flags.ALL, 0);
 		while(it.next()) {
 			unowned AroopPointer<Pane> ptr = it.get_unowned();

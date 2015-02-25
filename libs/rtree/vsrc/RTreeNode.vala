@@ -32,7 +32,7 @@ public struct roopkotha.rtree.RTreeNode {
 		bool first_time=true;
 		*cvr = RTreeRect2DInt();
 
-		Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
+		Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>();
 		branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 		while(it.next()) {
 			AroopPointer<RTreeBranch> can = it.get();
@@ -63,7 +63,7 @@ public struct roopkotha.rtree.RTreeNode {
 		increase = 0;
 
 
-		Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>.EMPTY();
+		Iterator<AroopPointer<RTreeBranch>> it = Iterator<AroopPointer<RTreeBranch>>();
 		branch.iterator_hacked(&it, Replica_flags.ALL, 0, 0);
 		while(it.next()) {
 			AroopPointer<RTreeBranch> can = it.get();

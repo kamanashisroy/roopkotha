@@ -82,8 +82,8 @@ static int platform_window_init() {
 
 static int platform_window_deinit() {
 	// TODO destroy all the windows
-	opp_factory_destroy(&gcore.pwins);
-	opp_factory_destroy(&gcore.layers);
+	opp_factory_destroy_and_remove_profile(&gcore.pwins);
+	opp_factory_destroy_and_remove_profile(&gcore.layers);
 	return 0;
 }
 

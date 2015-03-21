@@ -37,7 +37,7 @@ public abstract class roopkotha.gui.listview.ListWindow : roopkotha.gui.PanedWin
 		lpane = new ListPane(model, gi);
 		content = model;
 		setPane(Window.layer.CONTENT_PANE, lpane);
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, "Created ListWindow");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.Severity.LOG, 0, 0, "Created ListWindow");
 	}
 	
 	public Replicable? getSelected() {
@@ -56,17 +56,17 @@ public abstract class roopkotha.gui.listview.ListWindow : roopkotha.gui.PanedWin
 	public override bool onEvent(EventOwner?target, int flags, int key_code, int x, int y) {
 		extring dlg = extring.stack(128);
 		dlg.printf("Handling menu command for keycode %d\n and x %d ", key_code, x);
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 		if(base.onEvent(target, flags, key_code, x, y)) {
 			return true;
 		}
 
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "Main menu has nothing to do here");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, "Main menu has nothing to do here");
 		// dispatch selected element events
 		if(this.onItemEvent(target, flags, key_code, x, y)) {
 			return true;
 		}
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "The event is on the selected item");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, "The event is on the selected item");
 		if((flags & roopkotha.gui.GUIInput.eventType.SCREEN_EVENT) != 0) {
 			ArrayList<Replicable>*items = content.getItems();
 			int i;
@@ -74,7 +74,7 @@ public abstract class roopkotha.gui.listview.ListWindow : roopkotha.gui.PanedWin
 				Replicable?obj = items.get(i);
 				if(obj == target) {
 					dlg.printf("let us make it selected: %d\n", i);
-					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 					content.selectedIndex = i;
 					lpane.setDirty(); // TODO menu.setDirty();
 					roopkotha.gui.GUICoreModule.gcore.setDirty(this); // may be we should refresh partial
@@ -84,7 +84,7 @@ public abstract class roopkotha.gui.listview.ListWindow : roopkotha.gui.PanedWin
 		} else {
 			bool consumed = false;
 			dlg.printf("Try to edit with keycode:%d, selected index:%d\n", key_code, content.selectedIndex);
-			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 			// if it is keyboard event then perform keyboard tasks
 			Replicable? obj = getSelected();
 			if(obj != null) {

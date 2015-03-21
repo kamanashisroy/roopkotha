@@ -94,7 +94,7 @@ public class roopkotha.gui.GUICoreImpl : roopkotha.gui.GUICore {
 			} catch(BundlerError e) {
 				extring dlg = extring.stack(128);
 				dlg.printf("Faulty task packet from platform");
-				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.ERROR, 0, 0, &dlg);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.ERROR, 0, 0, &dlg);
 			}
 		} while(true);
 		return 0;

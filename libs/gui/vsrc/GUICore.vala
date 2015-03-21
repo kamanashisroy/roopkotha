@@ -52,7 +52,7 @@ public abstract class roopkotha.gui.GUICore : Fiber {
 	}
 
 	public int setDirty(roopkotha.gui.Window win) {
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:setDirty: Marking it dirty");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, "GUICore:setDirty: Marking it dirty");
 		painter.enqueue(win);
 		return 0;
 	}

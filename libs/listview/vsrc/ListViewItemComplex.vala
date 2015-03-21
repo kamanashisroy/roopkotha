@@ -245,7 +245,7 @@ public class roopkotha.gui.listview.ListViewItemComplex : ListViewItem {
 				bool changed = false;
 				extring dlg = extring.stack(64);
 				dlg.printf("Edit text field , key code:%d\n", key_code);
-				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.LOG, 0, 0, &dlg);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.Severity.LOG, 0, 0, &dlg);
 				// get current text
 				extring xt = extring.stack(text.length()+1);
 				xt.concat(&text);

@@ -47,7 +47,7 @@ public class roopkotha.gui.listview.SimpleListPaneModel : ListContentModel {
 	}
 	
 	public void setListViewItem(int aIndex, ListViewItem aItem) {
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "SimpleListView:adding list item");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 3, Watchdog.Severity.DEBUG, 0, 0, "SimpleListView:adding list item");
 		myitems.set(aIndex, aItem);
 	}
 }

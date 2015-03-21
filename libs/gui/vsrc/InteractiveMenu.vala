@@ -108,7 +108,7 @@ public class roopkotha.gui.InteractiveMenu: Menu {
 					extring label = extring();
 					cmd.getLabelAs(&label);
 					dlg.printf("Left menu:%s", label.to_string());
-					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+					Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 				}
 				if(i == 0) {
 					firstOption = cmd;

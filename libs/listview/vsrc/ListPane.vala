@@ -113,7 +113,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 
 		extring dlg = extring.stack(64);
 		dlg.printf("Iterating items\n");
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 		// sanity check
 		if (items == null) {
 			return;
@@ -128,7 +128,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 			content.selectedIndex = 0;
 		}
 		dlg.printf("Iterating items(%d)\n", this.vpos);
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 		for (i = this.vpos;;i++) {
 			//print("Showing list item :%d\n", i);
 			Replicable? obj = items.get(i);
@@ -138,7 +138,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 			}
 			/* see if selected index is more than the item count */
 			dlg.printf("Showing item\n");
-			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+			Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 			posY += this.showItem(g, obj, posY, i == content.selectedIndex);
 			if (posY > (top + height - display.VMARGIN)) {
 				if (content.selectedIndex >= i && this.vpos < content.selectedIndex) {
@@ -156,7 +156,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 				g.fillTriangle(x + ListPane.display.RESOLUTION / 2, y + ListPane.display.RESOLUTION, x + ListPane.display.RESOLUTION,
 						y, x, y);
 				dlg.printf("No more place to draw\n");
-				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+				Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 				break;
 			}
 		}
@@ -165,7 +165,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 	public override void paint(roopkotha.gui.Graphics g) {
 		extring dlg = extring.stack(64);
 		dlg.printf("Drawing list...\n");
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 		/* Draw the ListView Items */
 		this.showItems(g);
 		if (this.vpos > 0) {
@@ -177,7 +177,7 @@ public class roopkotha.gui.listview.ListPane : roopkotha.gui.Pane {
 			g.fillTriangle(x + ListPane.display.RESOLUTION / 2, y, x + ListPane.display.RESOLUTION, y + ListPane.display.RESOLUTION,
 					x, y + ListPane.display.RESOLUTION);
 		}
-		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "All done");
+		Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, "All done");
 		dirty = false;
 	}
 

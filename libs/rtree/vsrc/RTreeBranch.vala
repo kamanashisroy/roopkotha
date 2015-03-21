@@ -12,10 +12,10 @@ public class roopkotha.rtree.RTreeBranch : Replicable {
 	internal RTreeNode child;
 	Replicable?target;
 	bool isRoot;
-	static Factory<RTreeBranch> factory;
+	static OPPFactory<RTreeBranch> factory;
 	
 	public RTreeBranch() {
-		factory = Factory<RTreeBranch>.for_type();
+		factory = OPPFactory<RTreeBranch>.for_type();
 		factoryBuild();
 		isRoot = true;
 	}

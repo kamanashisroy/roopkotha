@@ -109,7 +109,7 @@ public class roopkotha.gui.PanedWindow : roopkotha.gui.Window {
 				g.start(this, (int)ptr.get_hash());
 				pn.paint(g);
 				GUICoreModule.gcore.pushGraphicsTask(g);
-				Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.WatchdogSeverity.DEBUG, 0, 0, "GUICore:step():paint");
+				Watchdog.watchit_string(core.sourceFileName(), core.sourceLineNo(), 10, Watchdog.Severity.DEBUG, 0, 0, "GUICore:step():paint");
 			}
 		}
 		it.destroy();

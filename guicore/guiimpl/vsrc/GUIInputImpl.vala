@@ -26,7 +26,7 @@ public class roopkotha.gui.GUIInputImpl : GUIInput {
 		rtr.insertRect(&rect, 0, target);
 		extring dlg = extring.stack(128);
 		dlg.printf("Adding rect:(%d,%d,%d,%d)\n", x, y, x+width, y+height);
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 100, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 100, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 		return 0;
 	}
 	public override int reset(roopkotha.gui.Window aWin) { /*< This should be called before registering action */
@@ -48,7 +48,7 @@ public class roopkotha.gui.GUIInputImpl : GUIInput {
 	public int eventCallback(int flags, int key_code, int x, int y) {
 		extring dlg = extring.stack(64);
 		dlg.printf("keycode:%d, x:%d, y:%d", key_code, x, y);
-		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 100, Watchdog.WatchdogSeverity.DEBUG, 0, 0, &dlg);
+		Watchdog.watchit(core.sourceFileName(), core.sourceLineNo(), 100, Watchdog.Severity.DEBUG, 0, 0, &dlg);
 		if(win == null) {
 			//print("No window\n");
 			return 0;
